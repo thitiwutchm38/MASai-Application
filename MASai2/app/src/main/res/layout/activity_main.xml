@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_Masai_box_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="60dp"
+        android:text="MASai box Setting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_iot_security" />
+
+    <TextView
+        android:id="@+id/textView_iot_device_att"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="180dp"
+        android:text="IoT Device Attack"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.786"
+        app:layout_constraintStart_toEndOf="@+id/textView_mobileapp_attack" />
+
+    <ImageButton
+        android:id="@+id/imageButton_iot_att"
+        android:layout_width="68dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="32dp"
+        android:background="#00000000"
+        android:contentDescription="@string/descrip"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/textView_iot_device_att"
+        app:layout_constraintEnd_toEndOf="@+id/textView_iot_device_att"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set"
+        app:srcCompat="@drawable/iot_device_attack" />
+
+    <TextView
+        android:id="@+id/textView_iot_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="12dp"
+        android:text="IoT Security Tips"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_Tips" />
+
+    <TextView
+        android:id="@+id/textView_mobileapp_attack"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="180dp"
+        android:text="Mobile App Attack"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton_Tips"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:background="#00000000"
+        android:contentDescription="@string/descrip"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton_MASaibox"
+        app:layout_constraintEnd_toEndOf="@+id/textView_iot_security"
+        app:layout_constraintStart_toStartOf="@+id/textView_iot_security"
+        app:layout_constraintTop_toTopOf="@+id/imageButton_MASaibox"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/tips" />
+
+    <ImageButton
+        android:id="@+id/imageButton_MobileApp_att"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginBottom="39dp"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/descrip"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_mobileapp_attack"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_Tips"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_Tips"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_Logo"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/mobileapp_attack" />
+
+    <ImageButton
+        android:id="@+id/imageButton_MASaibox"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="28dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:contentDescription="@string/descrip"
+        android:maxWidth="42dp"
+        android:maxHeight="42dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_Masai_box_set"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_Logo"
+        app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set"
+        app:layout_constraintTop_toBottomOf="@+id/textView_iot_device_att"
+        app:srcCompat="@drawable/masai_setting" />
+
+    <ImageView
+        android:id="@+id/imageView_Logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="125dp"
+        android:maxWidth="42dp"
+        android:maxHeight="42dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/textView_mobileapp_attack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/logo_masai" />
+
+</android.support.constraint.ConstraintLayout>
