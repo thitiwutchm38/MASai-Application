@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private static int SPLASH_TIME = 4000; //This is 4 seconds
 
     private ImageButton button_MobileApp_att;
     //    imageButton_MobileApp_att
@@ -24,7 +28,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+
 
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);

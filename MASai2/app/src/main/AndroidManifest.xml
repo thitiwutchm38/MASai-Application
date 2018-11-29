@@ -4,30 +4,30 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label=""
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/masai_launcher"
+        android:label="MASai"
+        android:roundIcon="@mipmap/masai_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".MASai_setting" />
+        <activity
+            android:name=".iot_main_pentest"
+            android:label="IoT Device Pentest" />
+        <activity android:name=".Mobile_Appscan" />
+        <activity
+            android:name=".Search_Network"
+            android:label="Select Network" />
+        <activity
+            android:name=".Router_information"
+            android:label="Router information" />
+        <activity android:name=".ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MASai_setting" />
-        <activity
-            android:name=".iot_main_pentest"
-            android:label="IoT Device Pentest"></activity>
-        <activity android:name=".Mobile_Appscan" />
-        <activity
-            android:name=".Search_Network"
-            android:label="Select Network"></activity>
-        <activity
-            android:name=".Router_information"
-            android:label="Router information"
-            ></activity>
     </application>
 
 </manifest>

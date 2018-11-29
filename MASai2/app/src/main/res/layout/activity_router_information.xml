@@ -22,13 +22,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView_wifi"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/wifi_setup" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView_target_router"
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -38,12 +38,12 @@
                 android:textColor="#00A6FF" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textView_target_router_output"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Test" />
+                android:text="iiiiiiiii" />
         </LinearLayout>
 
         <Space
@@ -51,15 +51,145 @@
             android:layout_height="40dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView_wifi_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wi-Fi Description:" />
+            android:text="Wi-Fi Description:"
+            android:textAppearance="@android:style/TextAppearance.Material.Widget.TextView" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_height="20dp"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_mac"
+                android:layout_width="57dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mac address:"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info" />
+
+            <TextView
+                android:id="@+id/textView_mac_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView_RSSI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RSSI:"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info" />
+
+            <TextView
+                android:id="@+id/textView_rssi_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Company:"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info" />
+
+            <TextView
+                android:id="@+id/textView_ans_com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView_encryption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Encryption:"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info" />
+
+            <TextView
+                android:id="@+id/textView_encryption_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_phy_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PHY type:"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info" />
+
+            <TextView
+                android:id="@+id/textView_phy_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView_channel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Channel:"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info" />
+
+            <TextView
+                android:id="@+id/textView_chanel_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0" />
+
+        <Button
+            android:id="@+id/button_crack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
