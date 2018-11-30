@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bookthiti.masai2">
 
     <application
@@ -8,7 +9,8 @@
         android:label="MASai"
         android:roundIcon="@mipmap/masai_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity" />
         <activity android:name=".MASai_setting" />
         <activity
@@ -21,6 +23,9 @@
         <activity
             android:name=".Router_information"
             android:label="Router information" />
+        <activity
+            android:name=".DetailActivity"
+            android:label="DetailActivity" />
         <activity android:name=".ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".iot_suggestion"
+            android:label="@string/title_activity_iot_suggestion"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

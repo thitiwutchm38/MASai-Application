@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private static int SPLASH_TIME = 4000; //This is 4 seconds
 
     private ImageButton button_MobileApp_att;
@@ -61,10 +60,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
+        button_Tips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                openActivity_Tips();
+            }
+        });
 
     }
 
@@ -81,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
     public void openActivity_MASaibox_setting() {
 
         Intent intent = new Intent(this,MASai_setting.class);
+        startActivity(intent);
+    }
+
+    public void openActivity_Tips() {
+
+        Intent intent = new Intent(this,iot_suggestion.class);
         startActivity(intent);
     }
 }
