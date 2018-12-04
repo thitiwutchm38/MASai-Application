@@ -112,7 +112,7 @@
 
         android:layout_marginStart="24dp"
         android:layout_marginTop="22dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="18dp"
         android:layout_marginBottom="28dp"
         android:adjustViewBounds="true"
         android:background="#00000000"
@@ -122,8 +122,10 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/textView_Masai_box_set"
         app:layout_constraintEnd_toEndOf="@+id/imageView_Logo"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set"
         app:layout_constraintTop_toBottomOf="@+id/textView_iot_device_att"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/masai_setting" />
 
     <ImageView

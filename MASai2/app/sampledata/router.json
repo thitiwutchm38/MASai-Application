@@ -1,0 +1,48 @@
+{
+  "count":"9",
+  "1": {
+    "SSID": "MU-WiFi",
+    "Mode": "WPA2",
+    "Signal": "High"
+  },
+  "2": {
+    "SSID": ".@ TRUEWIFI",
+    "Mode": "WPA2",
+    "Signal": "Low"
+  },
+  "3": {
+    "SSID": ".@ AIS SUPER WIFI",
+    "Mode": "WEP",
+    "Signal": "High"
+  },
+  "4": {
+    "SSID": "ICTenergy",
+    "Mode": "WPA2",
+    "Signal": "High"
+  },
+  "5": {
+    "SSID": "VoIP ICT",
+    "Mode": "WEP",
+    "Signal": "Medium"
+  },
+  "6": {
+    "SSID": "whoa",
+    "Mode": "WPA2",
+    "Signal": "Low"
+  },
+  "7": {
+    "SSID": "Free WiFi",
+    "Mode": "WPA2",
+    "Signal": "High"
+  },
+  "8": {
+    "SSID": "MAISAI A++",
+    "Mode": "WPA2",
+    "Signal" :"High"
+  },
+  "9":{
+    "SSID": "Aloha_124",
+    "Mode": "WPA2",
+    "Signal" : "High"
+  }
+}
