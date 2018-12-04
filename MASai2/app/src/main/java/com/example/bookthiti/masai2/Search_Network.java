@@ -2,6 +2,8 @@ package com.example.bookthiti.masai2;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -18,8 +21,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-    public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
+public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
 
         final String wifi_password = null;
         private final int categoryIcon[] = {
@@ -69,23 +75,37 @@ import java.util.ArrayList;
                 "High",
                 "Low"
         };
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_search__network);
-            final RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
-            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
-                    LinearLayoutManager.VERTICAL, false);
-
-            mainRecyclerView.setLayoutManager(linearLayoutManager);
 
 
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    final RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
+                    final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Search_Network.this,
+                            LinearLayoutManager.VERTICAL, false);
+                    mainRecyclerView.setLayoutManager(linearLayoutManager);
 
-            //Recycler Adapter
-            final ArrayList<MainModel> mainModelArrayList = prepareList();
-            final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(this,mainModelArrayList);
-            mainRecyclerAdapter.setOnRecyclerViewItemClickListener(this);
-            mainRecyclerView.setAdapter(mainRecyclerAdapter);
+
+                    //Recycler Adapter
+                    final ArrayList<MainModel> mainModelArrayList = prepareList();
+                    final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(Search_Network.this,mainModelArrayList);
+                    mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Search_Network.this);
+                    mainRecyclerView.setAdapter(mainRecyclerAdapter);
+
+                    final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }, 5000); // Millisecond 1000 = 1 sec
+
+
+
+
+
         }
         private ArrayList<MainModel> prepareList() {
 
@@ -175,7 +195,7 @@ import java.util.ArrayList;
             switch (view.getId()) {
                 case R.id.row_main_adapter_linear_layout:
 
-                    Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ mainModel.getOfferSSID(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ mainModel.getOfferSSID(),Toast.LENGTH_LONG).show();
                     showAddItemDialog(this,mainModel.getOfferSSID() );
                     break;
             }
