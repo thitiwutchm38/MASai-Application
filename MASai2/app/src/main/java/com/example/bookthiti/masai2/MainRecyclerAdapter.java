@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>{
@@ -46,18 +48,21 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         private TextView rowMainText_SSID;
         private TextView rowMainText_Mode;
         private TextView rowMainText_Signal;
+        private Button rowMainButton_button;
 
-
-        private LinearLayout rowMainParentLinearLayout;
+        private RelativeLayout rowMainParentLinearLayout;
         public ViewHolder(View view) {
             super(view);
             rowMainImage = view.findViewById(R.id.row_main_adapter_iv);
             rowMainText_SSID = view.findViewById(R.id.row_main_adapter_ssid);
             rowMainText_Mode =   view.findViewById(R.id.row_main_adapter_mode);
             rowMainText_Signal =   view.findViewById(R.id.row_main_adapter_signal);
+            rowMainButton_button = (Button)view.findViewById(R.id.btn_router);
+
 
             rowMainParentLinearLayout =  view.findViewById(R.id.row_main_adapter_linear_layout);
-            rowMainParentLinearLayout.setOnClickListener(new View.OnClickListener() {
+
+                rowMainButton_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (onRecyclerViewItemClickListener != null) {
@@ -65,6 +70,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                     }
                 }
             });
+
         }
     }
     public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {

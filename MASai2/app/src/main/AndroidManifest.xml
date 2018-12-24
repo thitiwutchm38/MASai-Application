@@ -37,6 +37,9 @@
             android:name=".iot_suggestion"
             android:label="@string/title_activity_iot_suggestion"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CrackRouterActivity" />
+        <activity android:name=".Bluetooth_attackActivity" />
+        <activity android:name=".Device_list"></activity>
     </application>
 
 </manifest>

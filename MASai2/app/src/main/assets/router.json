@@ -3,46 +3,94 @@
   "0": {
     "SSID": "MU-WiFi",
     "Mode": "WPA2",
-    "Signal": "High"
+    "Signal": "High",
+    "Mac_address":"e8:3a:12:6c:99:5b",
+    "Frequency":"2.4 GHz",
+    "Channel":"1",
+    "Company":"TP-LINK CO.,LTD",
+    "Security":"WPA2"
+
   },
   "1": {
     "SSID": ".@ TRUEWIFI",
     "Mode": "WPA2",
-    "Signal": "Low"
+    "Signal": "Low",
+    "Mac_address":"e7:3a:42:6c:69:5b",
+    "Frequency":"2.4 GHz",
+    "Channel":"11",
+    "Company":"TP-LINK CO.,LTD",
+    "Security":"WPA2"
+
   },
   "2": {
     "SSID": ".@ AIS SUPER WIFI",
     "Mode": "WEP",
-    "Signal": "High"
+    "Signal": "High",
+    "Mac_address":"r5:3a:e2:6c:9q:55",
+    "Frequency":"5.0 GHz",
+    "Channel":"11",
+    "Company":"D-LINK CO.,LTD",
+    "Security":"WPA2"
   },
   "3": {
     "SSID": "ICTenergy",
     "Mode": "WPA2",
-    "Signal": "High"
+    "Signal": "High",
+    "Mac_address":"d5:3a:e1:t4:9d:46",
+    "Frequency":"5.0 GHz",
+    "Channel":"1",
+    "Company":"TP-LINK CO.,LTD",
+    "Security":"WPA2"
   },
   "4": {
     "SSID": "VoIP ICT",
     "Mode": "WEP",
-    "Signal": "Medium"
+    "Signal": "Medium",
+    "Mac_address":"r5:3a:e2:6c:9q:55",
+    "Frequency":"2.4 GHz",
+    "Channel":"1",
+    "Company":"D-LINK CO.,LTD",
+    "Security":"WPA2"
   },
   "5": {
     "SSID": "whoa",
     "Mode": "WPA2",
-    "Signal": "Low"
+    "Signal": "Low",
+    "Mac_address":"r3:3a:e2:r7:10:f5",
+    "Frequency":"2.4 GHz",
+    "Channel":"1",
+    "Company":"D-LINK CO.,LTD",
+    "Security":"WPA2"
   },
   "6": {
     "SSID": "Free WiFi",
     "Mode": "WPA2",
-    "Signal": "High"
+    "Signal": "High",
+    "Mac_address":"3e:3d:e1:6c:9a:15",
+    "Frequency":"2.4 GHz",
+    "Channel":"1",
+    "Company":"TP-LINK CO.,LTD",
+    "Security":"WPA2"
   },
   "7": {
     "SSID": "MAISAI A++",
     "Mode": "WPA2",
-    "Signal" :"High"
+    "Signal" :"High",
+    "Mac_address":"r5:3a:e2:6c:9q:55",
+    "Frequency":"5.0 GHz",
+    "Channel":"1",
+    "Company":"D-LINK CO.,LTD",
+    "Security":"WPA2"
   },
   "8":{
     "SSID": "Aloha_1245",
     "Mode": "WPA2",
-    "Signal" : "High"
+    "Signal" : "High",
+    "Mac_address":"d5:3c:e1:6e:9a:11",
+    "Frequency":"5.0 GHz",
+    "Channel":"11",
+    "Company":"D-LINK CO.,LTD",
+    "Security":"WPA2"
+
   }
 }
