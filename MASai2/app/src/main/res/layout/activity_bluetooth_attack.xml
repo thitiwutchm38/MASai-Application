@@ -41,15 +41,24 @@
                 android:layout_height="wrap_content"
                 android:background="@color/masai_status"
                 android:padding="15dp"
+                android:text="Select a BLE device"
+                android:textColor="@color/ic_launcher_background"
                 android:textSize="18sp"
-                tools:text="Select a BLE device" />
+                android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_ble_list"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_ble_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/button_blue"
