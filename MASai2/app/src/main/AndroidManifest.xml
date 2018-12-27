@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bookthiti.masai2">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/masai_launcher"
@@ -40,6 +43,7 @@
         <activity android:name=".CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
         <activity android:name=".Device_list"></activity>
+        <service android:name=".service.BluetoothDataService"/>
     </application>
 
 </manifest>
