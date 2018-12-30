@@ -1,11 +1,15 @@
 package com.example.bookthiti.masai2;
 
+import android.Manifest;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+
+import com.example.bookthiti.masai2.service.BluetoothManagementService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
-
-
+        startService(new Intent(MainActivity.this, BluetoothManagementService.class));
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openActivity_MASaibox_setting() {
 
-        Intent intent = new Intent(this,MASai_setting.class);
+        Intent intent = new Intent(this,MasaiSettingActivity.class);
         startActivity(intent);
     }
 

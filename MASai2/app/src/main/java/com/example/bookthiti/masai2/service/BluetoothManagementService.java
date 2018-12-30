@@ -1,0 +1,289 @@
+package com.example.bookthiti.masai2.service;
+
+import android.app.Activity;
+import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Binder;
+import android.os.Handler;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Set;
+import java.util.UUID;
+
+public class BluetoothManagementService extends Service {
+    private final static String TAG_INFO = "Log info";
+    private final static String TAG_DEBUG = "Log debug";
+    private final static String TAG_ERROR = "Log error";
+    private static final int REQUEST_ENABLE_CODE = 0;
+    public static final String ACTION_BLUETOOTH_CONNECTED = "ACTION BLUETOOTH CONNECTED";
+    public static final String ACTION_BLUETOOTH_DISCONNECTED = "ACTION_BLUETOOTH_DISCONNECTED";
+    public static final String ACTION_BLUETOOTH_MESSAGE_RECEIVED = "ACTION BLUETOOTH MESSAGE RECEIVED";
+    public static final String ACTION_PAIRED_DEVICE_FOUND = "ACTION PAIRED DEVICE FOUND";
+
+    private BluetoothAdapter mBluetoothAdapter;
+    private Set<BluetoothDevice> mPairedDevices;
+
+    private UUID mBoxUuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
+    private String mBoxName = "kali";
+    private String mBoxAddress = "B8:27:EB:CC:2F:48";
+
+    private ConnectingThread mConnectingThread;
+    private ConnectedThread mConnectedThread;
+    private final IBinder mBinder = new LocalBinder();
+    private Context mContext;
+
+    private boolean mThreadStopped;
+
+    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.i(TAG_INFO, "Receive ACTION_FOUND from broadcast receiver");
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                String deviceName = device.getName();
+                String deviceAddress = device.getAddress();
+                Log.i(TAG_INFO, "A Device (" + deviceName + " " + deviceAddress + ")" + " is found");
+                if (mBoxName.equals(deviceName) && mBoxAddress.equals(deviceAddress)) {
+                    mConnectingThread = new ConnectingThread(device);
+                    mConnectingThread.start();
+                    Log.i(TAG_INFO, "Connecting to " + deviceName + " " + deviceAddress);
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d(TAG_DEBUG, "Bluetooth service is created");
+        mThreadStopped = false;
+        mContext = this.getApplicationContext();
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        this.registerReceiver(mBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        /**
+         * This override method will be called by MainActivity to start the service.
+         * It will allow the service run in the background.
+         *
+         * First, the service will get bluetooth adapter by default and check whether the device \
+         * support bluetooth or not
+         */
+        Log.i(TAG_INFO, "Bluetooth service is started");
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG_DEBUG, "Bluetooth service is stopped");
+        mThreadStopped = true;
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+        }
+        if (mConnectingThread != null) {
+            mConnectingThread.cancel();
+        }
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return this.mBinder;
+    }
+
+    public void sendMessageToRemoteDevice(String message) {
+        if (mConnectedThread != null) {
+            mConnectedThread.write(message);
+        } else {
+            Log.i(TAG_INFO, "No Connected Thread, cannot send msg");
+            Toast.makeText(this, "No Connected Thread, cannot send msg", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void connectRemoteDevice(JSONObject deviceInformation, Activity activity) {
+        if (isBluetoothAdapterSupported(mBluetoothAdapter)) {
+            if (!mBluetoothAdapter.isEnabled()) {
+                // Prompt user to enable
+                Intent callingDialogIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                activity.startActivityForResult(callingDialogIntent, REQUEST_ENABLE_CODE);
+                Log.i(TAG_INFO, "Connect Remote Device from service is called");
+            } else {
+                try {
+                    mBoxName = deviceInformation.getString("name");
+                    mBoxAddress = deviceInformation.getString("address");
+                    mBoxUuid = UUID.fromString(deviceInformation.getString("uuid"));
+                } catch (JSONException e) {
+                    Log.e(TAG_ERROR, e.toString());
+                }
+
+                mPairedDevices = mBluetoothAdapter.getBondedDevices();
+                if (mPairedDevices.size() > 0) {
+                    for (BluetoothDevice device : mPairedDevices) {
+                        String deviceName = device.getName();
+                        String deviceAddress = device.getAddress();
+                        if (mBoxName.equals(deviceName) && mBoxAddress.equals(deviceAddress)) {
+                            LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND));
+                            Thread connectingThread = new Thread(new ConnectingThread(device));
+                            connectingThread.start();
+                            Log.i(TAG_INFO, "Connecting to " + deviceName + " " + deviceAddress);
+                            break;
+                        }
+                    }
+                } else {
+                    if (!mBluetoothAdapter.isDiscovering()) {
+                        mBluetoothAdapter.startDiscovery();
+                        Log.i(TAG_INFO, "Start discovering");
+                        Toast.makeText(this, "Start Discovering", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.i(TAG_INFO, "Already discovering");
+                        Toast.makeText(this, "Already discovering", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isBluetoothAdapterSupported(BluetoothAdapter bluetoothAdapter) {
+        if (mBluetoothAdapter == null) {
+            Log.i(TAG_INFO, "This device does not support bluetooth");
+            Toast.makeText(this, "Does not support bluetooth", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private class ConnectingThread extends Thread {
+        /**
+         * This class is a thread class which will handle the bluetooth connection \
+         * between this application and remote devices.
+         */
+        private final BluetoothSocket mmBluetoothSocket;
+        private final BluetoothDevice mmBluetoothDevice;
+
+        public ConnectingThread(BluetoothDevice device) {
+            BluetoothSocket tmp = null;
+            mmBluetoothDevice = device;
+            Log.i(TAG_INFO, "Thread is initiated");
+            try {
+                tmp = mmBluetoothDevice.createRfcommSocketToServiceRecord(mBoxUuid);
+            } catch (IOException e) {
+                Log.e(TAG_ERROR, "Socket's create() method failed", e);
+            }
+            mmBluetoothSocket = tmp;
+        }
+
+        public void run() {
+            mBluetoothAdapter.cancelDiscovery();
+            try {
+                mmBluetoothSocket.connect();
+            } catch (IOException connectException) {
+                try {
+                    mmBluetoothSocket.close();
+                } catch (IOException closeException) {
+                    Log.e(TAG_ERROR, "Could not close the client socket", closeException);
+                }
+                return;
+            }
+            // Manage Connection through new thread called ManageThread
+            mConnectedThread = new ConnectedThread(mmBluetoothSocket);
+            mConnectedThread.start();
+        }
+
+        public void cancel() {
+            try {
+                mmBluetoothSocket.close();
+            } catch (IOException e) {
+                Log.e(TAG_ERROR, "Could not close the client socket", e);
+            }
+        }
+    }
+
+    private class ConnectedThread extends Thread {
+        private final BluetoothSocket mmBluetoothSocket;
+        private final InputStream mmInputStream;
+        private final OutputStream mmOutputStream;
+        private byte[] mmBuffer;
+
+        public ConnectedThread(BluetoothSocket bluetoothSocket) {
+            mmBluetoothSocket = bluetoothSocket;
+            InputStream tmpIn = null;
+            OutputStream tmpOut = null;
+
+            try {
+                tmpIn = mmBluetoothSocket.getInputStream();
+            } catch (IOException e) {
+                Log.e(TAG_ERROR, "Error occured when creating input stream", e);
+            }
+            try {
+                tmpOut = mmBluetoothSocket.getOutputStream();
+            } catch (IOException e) {
+                Log.e(TAG_ERROR, "Error occured when creating output stream", e);
+            }
+
+            mmInputStream = tmpIn;
+            mmOutputStream = tmpOut;
+        }
+
+        public void run() {
+            mmBuffer = new byte[1024];
+            int numBytes;
+            LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED));
+            while (true && !mThreadStopped) {
+                try {
+                    numBytes = mmInputStream.read(mmBuffer);
+                    //TODO: get result from box using switch case
+                } catch (IOException e) {
+                    Log.i(TAG_INFO, "Input stream was disconnected", e);
+                    break;
+                }
+            }
+        }
+
+        public void write(String string) {
+            //TODO: find format for object
+            try {
+                mmOutputStream.write(string.getBytes());
+            } catch (IOException e) {
+                Log.e(TAG_ERROR, "Error occured when sending data", e);
+            }
+        }
+
+        public void cancel() {
+            try {
+                mmInputStream.close();
+                mmOutputStream.close();
+            } catch (IOException e) {
+                Log.e(TAG_ERROR, "Could not close the connected socket", e);
+            }
+        }
+    }
+
+    public class LocalBinder extends Binder {
+        public BluetoothManagementService getBluetoothManagementServiceInstance() {
+            return BluetoothManagementService.this;
+        }
+    }
+}
