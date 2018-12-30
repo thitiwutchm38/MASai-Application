@@ -35,6 +35,7 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_BLUETOOTH_DISCONNECTED = "ACTION_BLUETOOTH_DISCONNECTED";
     public static final String ACTION_BLUETOOTH_MESSAGE_RECEIVED = "ACTION BLUETOOTH MESSAGE RECEIVED";
     public static final String ACTION_PAIRED_DEVICE_FOUND = "ACTION PAIRED DEVICE FOUND";
+    public static final String ACTION_BLUETOOTH_UNABLE_TO_CONNECT = "ACTION BLUETOOTH UNABLE TO CONNECT";
 
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> mPairedDevices;
@@ -47,6 +48,7 @@ public class BluetoothManagementService extends Service {
     private ConnectedThread mConnectedThread;
     private final IBinder mBinder = new LocalBinder();
     private Context mContext;
+    private LocalBroadcastManager mLocalBroadcastManager;
 
     private boolean mThreadStopped;
 
@@ -75,6 +77,7 @@ public class BluetoothManagementService extends Service {
         Log.d(TAG_DEBUG, "Bluetooth service is created");
         mThreadStopped = false;
         mContext = this.getApplicationContext();
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(mContext);
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         this.registerReceiver(mBroadcastReceiver, intentFilter);
@@ -111,7 +114,14 @@ public class BluetoothManagementService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Log.i(TAG_INFO, "Service is bind");
         return this.mBinder;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.i(TAG_INFO, "Service is unbind");
+        return super.onUnbind(intent);
     }
 
     public void sendMessageToRemoteDevice(String message) {
@@ -145,7 +155,7 @@ public class BluetoothManagementService extends Service {
                         String deviceName = device.getName();
                         String deviceAddress = device.getAddress();
                         if (mBoxName.equals(deviceName) && mBoxAddress.equals(deviceAddress)) {
-                            LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND));
+                            mLocalBroadcastManager.sendBroadcast(new Intent(BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND));
                             Thread connectingThread = new Thread(new ConnectingThread(device));
                             connectingThread.start();
                             Log.i(TAG_INFO, "Connecting to " + deviceName + " " + deviceAddress);
@@ -193,6 +203,9 @@ public class BluetoothManagementService extends Service {
                 Log.e(TAG_ERROR, "Socket's create() method failed", e);
             }
             mmBluetoothSocket = tmp;
+            if(mmBluetoothSocket != null) {
+                Log.i(TAG_INFO, "mmBluetoothSocket is created");
+            }
         }
 
         public void run() {
@@ -201,6 +214,8 @@ public class BluetoothManagementService extends Service {
                 mmBluetoothSocket.connect();
             } catch (IOException connectException) {
                 try {
+                    Log.i(TAG_INFO, "Could not connect the client socket");
+                    mLocalBroadcastManager.sendBroadcast(new Intent(BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT));
                     mmBluetoothSocket.close();
                 } catch (IOException closeException) {
                     Log.e(TAG_ERROR, "Could not close the client socket", closeException);
@@ -254,9 +269,13 @@ public class BluetoothManagementService extends Service {
             while (true && !mThreadStopped) {
                 try {
                     numBytes = mmInputStream.read(mmBuffer);
+                    if(numBytes == -1) {
+                        cancel();
+                    }
                     //TODO: get result from box using switch case
                 } catch (IOException e) {
                     Log.i(TAG_INFO, "Input stream was disconnected", e);
+                    cancel();
                     break;
                 }
             }

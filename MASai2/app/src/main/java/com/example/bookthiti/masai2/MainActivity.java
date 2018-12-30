@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
 import com.example.bookthiti.masai2.service.BluetoothManagementService;
+import com.example.bookthiti.masai2.service.ServiceTools;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        startService(new Intent(MainActivity.this, BluetoothManagementService.class));
+        if(!ServiceTools.isServiceRunning(BluetoothManagementService.class, getApplicationContext())) {
+            startService(new Intent(MainActivity.this, BluetoothManagementService.class));
+        } else {
+            Log.i("Log info", "Service is already started");
+        }
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);

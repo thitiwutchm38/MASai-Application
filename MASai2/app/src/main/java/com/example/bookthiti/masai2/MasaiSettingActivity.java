@@ -65,6 +65,9 @@ public class MasaiSettingActivity extends AppCompatActivity {
                 mProgressBarQrScan.setVisibility(View.GONE);
             } else if (BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND.equals(action)) {
                 mProgressBarQrScan.setVisibility(View.GONE);
+            } else if (BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT.equals(action)) {
+                mProgressBarQrScan.setVisibility(View.GONE);
+                Toast.makeText(mContext, "Please Check Box", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -80,6 +83,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
+            Log.i(TAG_INFO, "Service is unbounded");
         }
     };
 
@@ -90,15 +94,17 @@ public class MasaiSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_masai_setting);
         mContext = this.getApplicationContext();
         Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        if(!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
 
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         //TODO: Add Action that will receive from BluetoothManagementService when it broadcasts the message received from MASai Box
         intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED);
         intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_DISCONNECTED);
+        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT);
         this.registerReceiver(mBroadcastReceiver, intentFilter);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
 
         mScanQrButton = (Button) this.findViewById(R.id.button_scan_qr);
@@ -126,6 +132,9 @@ public class MasaiSettingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(mBroadcastReceiver);
+        if(mBound){
+            unbindService(mConnection);
+        }
         Log.i(TAG_INFO, "unregister broadcast receiver");
         super.onDestroy();
     }
