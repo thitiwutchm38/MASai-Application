@@ -81,6 +81,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
 
 
 
+
+
         private RelativeLayout rowMainParentLinearLayout;
         public Holder(View view) {
             super(view);

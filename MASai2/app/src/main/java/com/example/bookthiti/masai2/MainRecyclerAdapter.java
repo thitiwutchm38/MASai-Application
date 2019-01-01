@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +35,36 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         viewHolder.rowMainText_SSID.setText(offersListModel.getOfferSSID());
         viewHolder.rowMainText_Mode.setText(offersListModel.getOfferMode());
         viewHolder.rowMainText_Signal.setText(offersListModel.getOfferSignal());
-
-
         viewHolder.rowMainParentLinearLayout.setTag(offersListModel);
+
+        int signal = Integer.parseInt(offersListModel.getOfferSignal()) ;
+
+
+        if ((signal <= 100 )&&(signal>=75)){
+
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#008000"));
+
+
+        }else if((signal<75)&&(signal>=50)) {
+
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#9ACD32"));
+
+
+        }else if((signal<50)&&(signal>=25)) {
+
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#BDB76B"));
+
+
+        }else if(signal<25) {
+
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#FA8072"));
+
+        }
+
+
+
+
+
     }
     @Override
     public int getItemCount() {
@@ -47,8 +75,10 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         private TextView rowMainText_SSID;
         private TextView rowMainText_Mode;
-        private TextView rowMainText_Signal;
+        final TextView rowMainText_Signal;
         private Button rowMainButton_button;
+        private LinearLayout device_lin ;
+
 
         private RelativeLayout rowMainParentLinearLayout;
         public ViewHolder(View view) {
@@ -57,8 +87,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
             rowMainText_SSID = view.findViewById(R.id.row_main_adapter_ssid);
             rowMainText_Mode =   view.findViewById(R.id.row_main_adapter_mode);
             rowMainText_Signal =   view.findViewById(R.id.row_main_adapter_signal);
+
+
             rowMainButton_button = (Button)view.findViewById(R.id.btn_router);
 
+            device_lin = view.findViewById(R.id.linear_search);
 
             rowMainParentLinearLayout =  view.findViewById(R.id.row_main_adapter_linear_layout);
 

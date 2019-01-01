@@ -1,9 +1,11 @@
 package com.example.bookthiti.masai2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 
 import android.os.Handler;
@@ -21,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -34,7 +37,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
+public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener, View.OnClickListener  {
 
         final String wifi_password = null;
         private final int categoryIcon[] = {
@@ -91,6 +94,7 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
             setContentView(R.layout.activity_search__network);
             final Button reScan_btt = (Button) findViewById(R.id.button_rescan);
 
+
             reScan_btt.setVisibility(View.GONE);
 
             new Handler().postDelayed(new Runnable() {
@@ -103,12 +107,10 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                     final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Search_Network.this,
                             LinearLayoutManager.VERTICAL, false);
 
-
-
                     mainRecyclerView.setLayoutManager(linearLayoutManager);
 
-
                     //Recycler Adapter
+
                     final ArrayList<MainModel> mainModelArrayList = prepareList();
 
                     Collections.sort(mainModelArrayList, MainModel.modelSigno);
@@ -124,6 +126,7 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                     reScan_btt.setVisibility(View.VISIBLE);
 
 
+
                 }
             }, 5000); // Millisecond 1000 = 1 sec
 
@@ -132,7 +135,21 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
 
         }
-        private ArrayList<MainModel> prepareList() {
+
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId()) {
+            case R.id.button_rescan:
+
+            System.out.print("Helloooo");
+        }
+    }
+
+
+
+
+    private ArrayList<MainModel> prepareList() {
 
             ArrayList<MainModel> mainModelList = new ArrayList<>();
             ArrayList<MainModel> sortModelList = new ArrayList<>();
@@ -323,6 +340,14 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                             pass_intent_blu.putExtra("router_information", prepareList().get(position));
                             pass_intent_blu.putExtra("password", value);
 
+                            System.out.println("Password is"+value);
+
+
+                            if(value.equals("12345")){
+                                //aleartWrongPass(prepareList().get(position).getOfferSSID());
+                                return;
+
+                            }
                             startActivity(pass_intent_blu);
                         }
                     },prepareList().get(position).getOfferSSID());
@@ -373,6 +398,32 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         });
         alert.show();
     }
+
+    void aleartWrongPass(String ssid ) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(Search_Network.this);
+        dialog.setCancelable(false);
+        dialog.setTitle("Dialog on Android");
+        dialog.setMessage("Are you sure you want to delete this entry?" );
+        dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                //Action for "Delete".
+            }
+        })
+                .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
+
+    }
+
 
 
     class PromptRunnable implements Runnable {

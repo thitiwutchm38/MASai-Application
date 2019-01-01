@@ -4,7 +4,6 @@
     android:id="@+id/layout_device"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#249BDB"
     android:padding="10dp">
 
     <ImageView
@@ -25,7 +24,8 @@
         android:layout_toEndOf="@+id/device_device_icon"
         android:layout_toRightOf="@+id/device_device_icon"
         android:text="IP address:"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/device_data_ip"
@@ -47,7 +47,8 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/device_device_icon"
         android:layout_toRightOf="@+id/device_device_icon"
-        android:text="MAC address:" />
+        android:text="MAC address:"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/device_data_mac"
@@ -73,7 +74,8 @@
         android:layout_toRightOf="@+id/device_device_icon"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Device Type:" />
+        android:text="Device Type:"
+        android:textStyle="bold" />
 
 
     <TextView

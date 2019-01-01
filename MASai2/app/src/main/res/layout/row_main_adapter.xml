@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -24,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/row_main_adapter_iv"
             android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/row_main_adapter_iv"
             android:layout_weight="0"
             android:text="SSID:"
             android:textColor="@color/colorBlue" />
@@ -34,18 +35,18 @@
             android:id="@+id/row_main_adapter_ssid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/textView_SSID"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/textView_SSID"
             android:textSize="13sp" />
 
         <TextView
             android:id="@+id/textView_Mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/row_main_adapter_ssid"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/row_main_adapter_ssid"
             android:layout_weight="0"
             android:text="Mode:"
             android:textColor="@color/colorBlue" />
@@ -55,8 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/textView_Mode"
             android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/textView_Mode"
             android:layout_weight="0"
             android:textSize="13sp" />
 
@@ -65,8 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/row_main_adapter_mode"
             android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/row_main_adapter_mode"
             android:layout_weight="0"
             android:text="Signal:"
             android:textColor="@color/colorBlue" />
@@ -76,8 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/textView_signal"
             android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/textView_signal"
             android:layout_weight="0"
             android:textSize="13sp" />
 
