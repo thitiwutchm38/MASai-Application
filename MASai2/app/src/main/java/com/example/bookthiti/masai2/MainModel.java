@@ -2,8 +2,10 @@ package com.example.bookthiti.masai2;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.util.Comparator;
 
-public class MainModel implements Parcelable {
+
+public class MainModel implements Parcelable  {
     private String offerSSID;
     private String offerMode;
     private String offerSignal;
@@ -20,9 +22,26 @@ public class MainModel implements Parcelable {
 
     private int offerIcon;
 
+
+    private int modelsignal;
+    private MainModel comparestu;
+
+
     public MainModel() {
 
+//        this.getOfferChannel();
+//        this.getOfferSecurity();
+//        this.getOfferMac_address();
+//        this.getOfferFrequency();
+//        this.getOfferMode();
+//        this.getOfferSSID();
+//        this.getOfferCompany();
+//        this.getOfferFrequency();
+//        this.getOfferIcon();
+
     }
+
+
 
 
     @Override
@@ -46,6 +65,7 @@ public class MainModel implements Parcelable {
         dest.writeString(offerMac_address);
 
     }
+
 
 
     MainModel(Parcel in){
@@ -75,6 +95,8 @@ public class MainModel implements Parcelable {
             return new MainModel[size];
         }
     };
+
+
 
 
 
@@ -145,4 +167,24 @@ public class MainModel implements Parcelable {
     public void setOfferSecurity(String offerSecurity) {
         this.offerSecurity = offerSecurity;
     }
+
+
+
+    public static Comparator<MainModel> modelSigno = new Comparator<MainModel>() {
+
+        public int compare(MainModel s1, MainModel s2) {
+
+            int rollno1 = Integer.parseInt(s1.getOfferSignal());
+            int rollno2 = Integer.parseInt(s2.getOfferSignal());
+
+            /*For ascending order*/
+            return rollno2-rollno1;
+
+            /*For descending order*/
+            //rollno1-rollno2;
+        }};
+
+
+
+
 }
