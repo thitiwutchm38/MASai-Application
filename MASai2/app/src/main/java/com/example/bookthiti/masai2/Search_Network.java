@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -36,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
 
         final String wifi_password = null;
-
         private final int categoryIcon[] = {
                 R.drawable.wifi_device,
                 R.drawable.wifi_device,
@@ -89,6 +89,9 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_search__network);
+            final Button reScan_btt = (Button) findViewById(R.id.button_rescan);
+
+            reScan_btt.setVisibility(View.GONE);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -117,6 +120,10 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
                     final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
                     progressBar.setVisibility(View.GONE);
+
+                    reScan_btt.setVisibility(View.VISIBLE);
+
+
                 }
             }, 5000); // Millisecond 1000 = 1 sec
 

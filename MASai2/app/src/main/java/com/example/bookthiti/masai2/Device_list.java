@@ -77,14 +77,12 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
 
-        // currentLayout = (RelativeLayout) findViewById(R.id.layout_device_main);
 
         final RecyclerView mainRecyclerView = findViewById(R.id.recyclerview_device_item);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         mainRecyclerView.setLayoutManager(linearLayoutManager);
 
-       // currentLayout.setBackgroundColor(Color.parseColor("#D3DFEE"));
 
         //Recycler Adapter
         final ArrayList<Devices> mainModelArrayList = prepareList();
@@ -106,7 +104,40 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
             mainModel.setmDevice_types(type[i]);
 
 
-            mainModel.setOfferIcon(categoryIcon[i]);
+            String types = type[i];
+
+            switch(types) {
+                case "phone":
+                    mainModel.setOfferIcon(R.drawable.icons_phone);
+                    break; // optional
+
+                case "printer":
+                    mainModel.setOfferIcon(R.drawable.icons_printer);
+                    break; // optional
+
+                case "router":
+                    mainModel.setOfferIcon(R.drawable.icons_router);
+                    break; // optional
+                case "webcam":
+                    mainModel.setOfferIcon(R.drawable.icons_cam);
+                    break; // optional
+
+                case "general purpose":
+                mainModel.setOfferIcon(R.drawable.icons_general);
+                break; // optional
+
+                case "media device":
+                    mainModel.setOfferIcon(R.drawable.icons_media);
+                    break; // optional
+
+
+
+
+                // You can have any number of case statements.
+                default : // Optional
+                    // Statements
+            }
+            //mainModel.setOfferIcon(categoryIcon[i]);
 
             mainModelList.add(mainModel);
 
