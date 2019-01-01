@@ -14,7 +14,7 @@
   "1": {
     "SSID": ".@ TRUEWIFI",
     "Mode": "WPA2",
-    "Signal": "60",
+    "Signal": "46",
     "Mac_address":"e7:3a:42:6c:69:5b",
     "Frequency":"2.4 GHz",
     "Channel":"11",
@@ -55,7 +55,7 @@
   "5": {
     "SSID": "whoa",
     "Mode": "WPA2",
-    "Signal": "77",
+    "Signal": "3",
     "Mac_address":"r3:3a:e2:r7:10:f5",
     "Frequency":"2.4 GHz",
     "Channel":"1",
@@ -65,7 +65,7 @@
   "6": {
     "SSID": "Free WiFi",
     "Mode": "WPA2",
-    "Signal": "89",
+    "Signal": "74",
     "Mac_address":"3e:3d:e1:6c:9a:15",
     "Frequency":"2.4 GHz",
     "Channel":"1",
@@ -85,7 +85,7 @@
   "8":{
     "SSID": "Aloha_1245",
     "Mode": "WPA2",
-    "Signal" : "78",
+    "Signal" : "12",
     "Mac_address":"d5:3c:e1:6e:9a:11",
     "Frequency":"5.0 GHz",
     "Channel":"11",

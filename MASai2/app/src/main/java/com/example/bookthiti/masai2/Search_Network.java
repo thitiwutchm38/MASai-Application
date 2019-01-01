@@ -237,8 +237,30 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                     e.printStackTrace();
                 }
 
+                int signal = Integer.parseInt(Signal);
 
-                mainModel.setOfferIcon(categoryIcon[i]);
+                if ((signal <= 100 )&&(signal>=75)){
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_4);
+
+
+                }else if((signal<75)&&(signal>=50)) {
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_3);
+
+
+                }else if((signal<50)&&(signal>=25)) {
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_2);
+
+
+                }else if(signal<25) {
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_1);
+
+                }
+
+
 
                 mainModel.setOfferSSID(SSID);
                 mainModel.setOfferMode(Mode);
