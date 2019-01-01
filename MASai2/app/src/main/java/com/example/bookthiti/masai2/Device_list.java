@@ -1,15 +1,18 @@
 package com.example.bookthiti.masai2;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class Device_list extends AppCompatActivity implements OnRecyclerViewItemClickListener {
+
 
 
     private final int categoryIcon[] = {
@@ -62,16 +65,26 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
             "general purpose"
     };
 
+    // RelativeLayout currentLayout;
+    // Now get a handle to any View contained
+    // within the main layout you are using
+    //final View someView = findViewById(R.id.layout_device);
+
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
+
+        // currentLayout = (RelativeLayout) findViewById(R.id.layout_device_main);
+
         final RecyclerView mainRecyclerView = findViewById(R.id.recyclerview_device_item);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         mainRecyclerView.setLayoutManager(linearLayoutManager);
 
+       // currentLayout.setBackgroundColor(Color.parseColor("#D3DFEE"));
 
         //Recycler Adapter
         final ArrayList<Devices> mainModelArrayList = prepareList();
@@ -96,6 +109,11 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
             mainModel.setOfferIcon(categoryIcon[i]);
 
             mainModelList.add(mainModel);
+
+
+
+
+
         }
         return mainModelList;
     }
