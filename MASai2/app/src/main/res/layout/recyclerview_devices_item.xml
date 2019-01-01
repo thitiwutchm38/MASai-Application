@@ -1,47 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout"
+    android:id="@+id/layout_device"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#249BDB"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/tvEmailSender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/tvIcon"
-        android:layout_toRightOf="@+id/tvIcon"
-        android:text="IP address: "
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/device_device_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <TextView
-        android:id="@+id/tvEmailTitle"
+        android:id="@+id/device_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEmailSender"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvIcon"
-        android:layout_toRightOf="@+id/tvIcon"
-        android:text="MAC address :"
-        android:textStyle="bold" />
+        android:layout_toEndOf="@+id/device_device_icon"
+        android:layout_toRightOf="@+id/device_device_icon"
+        android:text="IP address:"
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/tvEmailTitle3"
+        android:id="@+id/device_data_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEmailSender"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="31dp"
-        android:layout_toEndOf="@+id/tvIcon"
-        android:layout_toRightOf="@+id/tvIcon"
-        android:text="Vendor:"
-        android:textStyle="bold" />
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/device_ip"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/device_mac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_ip"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/device_device_icon"
+        android:layout_toRightOf="@+id/device_device_icon"
+        android:text="MAC address:" />
+
+    <TextView
+        android:id="@+id/device_data_mac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_data_ip"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/device_mac"
+        android:layout_toRightOf="@id/device_mac"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/device_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_mac"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/device_device_icon"
+        android:layout_toRightOf="@+id/device_device_icon"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Device Type:" />
+
+
+    <TextView
+        android:id="@+id/device_data_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_data_mac"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/device_type"
+        android:layout_toRightOf="@id/device_type"
+        android:textSize="14sp" />
+
 
 </RelativeLayout>
