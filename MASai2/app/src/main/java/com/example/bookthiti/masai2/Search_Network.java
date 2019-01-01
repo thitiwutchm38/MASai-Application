@@ -5,10 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-
 import android.os.Handler;
 import android.os.Parcelable;
-
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.View;
-
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,7 +25,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
 
         final String wifi_password = null;
-
         private final int categoryIcon[] = {
                 R.drawable.wifi_device,
                 R.drawable.wifi_device,
@@ -101,15 +96,11 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                             LinearLayoutManager.VERTICAL, false);
 
 
-
                     mainRecyclerView.setLayoutManager(linearLayoutManager);
 
 
                     //Recycler Adapter
                     final ArrayList<MainModel> mainModelArrayList = prepareList();
-
-                    Collections.sort(mainModelArrayList, MainModel.modelSigno);
-
 
                     final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(Search_Network.this,mainModelArrayList);
                     mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Search_Network.this);
@@ -128,8 +119,6 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         private ArrayList<MainModel> prepareList() {
 
             ArrayList<MainModel> mainModelList = new ArrayList<>();
-            ArrayList<MainModel> sortModelList = new ArrayList<>();
-
 
             //Convert JSON File
             String json = null;
@@ -256,16 +245,9 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                 mainModelList.add(mainModel);
             }
             return mainModelList;
-
         }
 
-
-
-
-
-
-
-    @Override
+       @Override
         public void onItemClick(final int position, View view) {
         //    MainModel mainModel = (MainModel) view.getTag();
 
