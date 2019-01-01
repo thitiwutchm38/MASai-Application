@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/device_ip"
+        android:id="@+id/tvEmailSender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,10 +19,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/device_mac"
+        android:id="@+id/tvEmailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/device_ip"
+        android:layout_below="@+id/tvEmailSender"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
@@ -32,10 +32,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/device_vendor"
+        android:id="@+id/tvEmailTitle3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/device_ip"
+        android:layout_below="@+id/tvEmailSender"
         android:layout_marginStart="11dp"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="31dp"
@@ -43,13 +43,5 @@
         android:layout_toRightOf="@+id/tvIcon"
         android:text="Vendor:"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/output_ip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@id/row_main_adapter_mode"
-        android:text="output_ip" />
 
 </RelativeLayout>
