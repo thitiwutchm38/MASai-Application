@@ -17,11 +17,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.View;
 
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -343,8 +345,8 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                             System.out.println("Password is"+value);
 
 
-                            if(value.equals("12345")){
-                                //aleartWrongPass(prepareList().get(position).getOfferSSID());
+                            if(!value.equals("12345")){
+                                aleartWrongPass(prepareList().get(position).getOfferSSID());
                                 return;
 
                             }
@@ -403,23 +405,19 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(Search_Network.this);
         dialog.setCancelable(false);
-        dialog.setTitle("Dialog on Android");
-        dialog.setMessage("Are you sure you want to delete this entry?" );
-        dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                //Action for "Delete".
+        dialog.setTitle(ssid+"'s password is incorrect");
+        dialog.setMessage("Check your password, then type your password again." );
+        dialog.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() { // define the 'Cancel' button
+            public void onClick(DialogInterface dialog, int which) {
+                //Either of the following two lines should work.
+                dialog.cancel();
+                //dialog.dismiss();
             }
-        })
-                .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
+        });
 
         final AlertDialog alert = dialog.create();
         alert.show();
+
 
 
     }
