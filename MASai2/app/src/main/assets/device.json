@@ -1,0 +1,48 @@
+{
+  "count" : "9",
+  "0" : {
+    "IP_Address" : "150.131.46.125",
+    "Mac_Address" : "4b:d3:f0:a9:ef:a5",
+    "Device_Types" : "media device"
+  },
+  "1" : {
+    "IP_Address" : "244.96.176.231",
+    "Mac_Address" : "b7:66:6b:a7:01:57",
+    "Device_Types" : "phone"
+  },
+  "2" : {
+    "IP_Address" : "32.117.159.216",
+    "Mac_Address" : "63:d4:41:a8:d0:b1",
+    "Device_Types" : "general purpose"
+  },
+  "3" : {
+    "IP_Address" : "73.66.169.227",
+    "Mac_Address" : "a7:c4:13:42:56:3b",
+    "Device_Types" : "printer"
+  },
+  "4" : {
+    "IP_Address" : "73.66.169.227",
+    "Mac_Address" : "32:54:f1:c5:49:07",
+    "Device_Types" : "phone"
+  },
+  "5" : {
+    "IP_Address" : "227.176.98.15",
+    "Mac_Address" : "12:eb:32:e2:be:93",
+    "Device_Types" : "webcam"
+  },
+  "6" : {
+    "IP_Address" : "69.39.88.44",
+    "Mac_Address" : "17:1f:cb:24:6f:90",
+    "Device_Types" : "phone"
+  },
+  "7" : {
+    "IP_Address" : "75.178.15.237",
+    "Mac_Address" : "e7:35:35:ea:5c:af",
+    "Device_Types" : "router"
+  },
+  "8" : {
+    "IP_Address" : "61.22.220.21",
+    "Mac_Address" : "17:cf:ff:09:42:d4",
+    "Device_Types" : "general purpose"
+  }
+}

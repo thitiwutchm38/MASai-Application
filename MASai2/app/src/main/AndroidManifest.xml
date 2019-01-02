@@ -39,7 +39,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
-        <activity android:name=".Device_list"></activity>
+        <activity android:name=".Device_list" />
+        <activity android:name=".ScanResultActivity"></activity>
     </application>
 
 </manifest>

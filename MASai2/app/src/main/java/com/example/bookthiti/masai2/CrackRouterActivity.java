@@ -2,9 +2,12 @@ package com.example.bookthiti.masai2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class CrackRouterActivity extends AppCompatActivity {
+public class CrackRouterActivity extends AppCompatActivity{
 
 
     TextView TextView_mac;
@@ -16,6 +19,8 @@ public class CrackRouterActivity extends AppCompatActivity {
 
     TextView TextView_cha;
     TextView TextView_ssid;
+    ProgressBar progressBar;
+    Button button;
 
 
 
@@ -32,6 +37,12 @@ public class CrackRouterActivity extends AppCompatActivity {
         TextView_fre = (TextView)findViewById(R.id.fre_value);
         TextView_cha = (TextView)findViewById(R.id.cha_value);
         TextView_ssid = (TextView)findViewById(R.id.textView_ssid);
+
+
+        progressBar = (ProgressBar)findViewById(R.id.progressBar_crack);
+
+
+
 
 
         MainModel information_data = (MainModel) getIntent().getParcelableExtra("router_information");
@@ -63,6 +74,20 @@ public class CrackRouterActivity extends AppCompatActivity {
 
 
 
+
+        button=(Button)findViewById(R.id.crack_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                progressBar.setVisibility(View.GONE);
+
+
+            }
+        });
+
+
         //TextView TextView_fre = (TextView)findViewById(R.id.fre_value);
 
 
@@ -70,9 +95,6 @@ public class CrackRouterActivity extends AppCompatActivity {
         //   tvTitle.setText("Title: " + movie.title);
 
 
-
-
-
-
     }
+
 }

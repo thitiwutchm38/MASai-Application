@@ -42,7 +42,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         if ((signal <= 100 )&&(signal>=75)){
 
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#008000"));
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#32CD32"));
 
 
         }else if((signal<75)&&(signal>=50)) {
@@ -52,12 +52,12 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         }else if((signal<50)&&(signal>=25)) {
 
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#BDB76B"));
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#F0E68C"));
 
 
         }else if(signal<25) {
 
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#FA8072"));
+            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#E9967A"));
 
         }
 

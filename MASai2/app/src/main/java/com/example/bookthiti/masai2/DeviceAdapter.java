@@ -1,27 +1,15 @@
 package com.example.bookthiti.masai2;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
-import java.util.Random;
 
 import java.util.ArrayList;
-
-import static com.example.bookthiti.masai2.DeviceAdapter.Holder.*;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
     private ArrayList<Devices> mainModelArrayList;
@@ -88,10 +76,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
             super(view);
 
 
-            rowMainImage = view.findViewById(R.id.device_device_icon);
+            rowMainImage = view.findViewById(R.id.app_data_icon);
 
-            ip_Text = view.findViewById(R.id.device_data_ip);
-            mac_Text = view.findViewById(R.id.device_data_mac);
+            ip_Text = view.findViewById(R.id.app_data_ip);
+            mac_Text = view.findViewById(R.id.app_data_id);
             type_Text = view.findViewById(R.id.device_data_type);
             device_layout = view.findViewById(R.id.layout_device);
 

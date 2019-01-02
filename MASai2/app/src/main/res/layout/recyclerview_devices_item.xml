@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/device_device_icon"
+        android:id="@+id/app_data_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
@@ -15,63 +15,63 @@
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <TextView
-        android:id="@+id/device_ip"
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/device_device_icon"
-        android:layout_toRightOf="@+id/device_device_icon"
+        android:layout_toEndOf="@+id/app_data_icon"
+        android:layout_toRightOf="@+id/app_data_icon"
         android:text="IP address:"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/device_data_ip"
+        android:id="@+id/app_data_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/device_ip"
+        android:layout_toRightOf="@id/app_name"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/device_mac"
+        android:id="@+id/app_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/device_ip"
+        android:layout_below="@+id/app_name"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/device_device_icon"
-        android:layout_toRightOf="@+id/device_device_icon"
+        android:layout_toEndOf="@+id/app_data_icon"
+        android:layout_toRightOf="@+id/app_data_icon"
         android:text="MAC address:"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/device_data_mac"
+        android:id="@+id/app_data_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/device_data_ip"
+        android:layout_below="@+id/app_data_ip"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/device_mac"
-        android:layout_toRightOf="@id/device_mac"
+        android:layout_toEndOf="@+id/app_id"
+        android:layout_toRightOf="@id/app_id"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/device_type"
+        android:id="@+id/app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/device_mac"
+        android:layout_below="@+id/app_id"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/device_device_icon"
-        android:layout_toRightOf="@+id/device_device_icon"
+        android:layout_toEndOf="@+id/app_data_icon"
+        android:layout_toRightOf="@+id/app_data_icon"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Device Type:"
@@ -82,12 +82,12 @@
         android:id="@+id/device_data_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/device_data_mac"
+        android:layout_below="@+id/app_data_id"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/device_type"
-        android:layout_toRightOf="@id/device_type"
+        android:layout_toEndOf="@+id/app_version"
+        android:layout_toRightOf="@id/app_version"
         android:textSize="14sp" />
 
 
