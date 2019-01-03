@@ -40,7 +40,11 @@
         <activity android:name=".CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
         <activity android:name=".Device_list" />
-        <activity android:name=".ScanResultActivity"></activity>
+        <activity android:name=".ScanResultActivity" />
+        <activity android:name=".Device_information"
+                  android:label="Device Information">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.bookthiti.masai2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -223,9 +224,18 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
         switch (view.getId()) {
             case R.id.layout_device:
                 Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();
+                openActivity_port_info();
                 break;
         }
 
 
     }
+
+    public void openActivity_port_info() {
+
+        Intent intent = new Intent(this,Device_information.class);
+        startActivity(intent);
+    }
+
+
 }
