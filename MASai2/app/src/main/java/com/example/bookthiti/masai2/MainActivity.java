@@ -1,8 +1,6 @@
 package com.example.bookthiti.masai2;
 
-import android.Manifest;
 import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
+import com.example.bookthiti.masai2.MobileApplicationScanning.MobileApplicationScannerActivity;
 import com.example.bookthiti.masai2.service.BluetoothManagementService;
 import com.example.bookthiti.masai2.service.ServiceTools;
 
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity_MobileApp_att() {
 
-        Intent intent = new Intent(this,Mobile_Appscan.class);
+        Intent intent = new Intent(this,MobileApplicationScannerActivity.class);
         startActivity(intent);
     }
     public void openActivity_iot_att() {
