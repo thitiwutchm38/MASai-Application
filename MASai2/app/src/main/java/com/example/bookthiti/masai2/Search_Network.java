@@ -41,7 +41,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener, View.OnClickListener  {
 
-        final String wifi_password = null;
+
+    final String wifi_password = null;
         private final int categoryIcon[] = {
                 R.drawable.wifi_device,
                 R.drawable.wifi_device,
