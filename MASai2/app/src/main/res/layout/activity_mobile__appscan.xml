@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Mobile_Appscan"
+    tools:context=".MobileApplicationScanning.MobileApplicationScannerActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
@@ -36,10 +36,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/button_select_from_google_play"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_google_play"
+                android:drawablePadding="8dp"
+                android:paddingLeft="0dp"
+                android:text="Select from GooglePlay"
+                android:textAlignment="viewStart"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textColor="?android:attr/colorForeground"
+                android:textSize="18sp" />
+
         </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,21 +75,6 @@
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="411dp"
             tools:layout_editor_absoluteY="350dp">
-
-            <EditText
-                android:id="@+id/editText_search_apk"
-                android:layout_width="360dp"
-                android:layout_height="70dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Upload your apk file " />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/folder" />
 
         </LinearLayout>
 
