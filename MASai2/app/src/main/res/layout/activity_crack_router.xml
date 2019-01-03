@@ -29,7 +29,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView_target_router"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,8 +65,10 @@
             android:layout_height="30dp" />
 
         <LinearLayout
+            android:id="@+id/wifi_des_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -234,6 +236,15 @@
             android:layout_height="30dp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="57dp" />
+
+        <TextView
+            android:id="@+id/textView_crack_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Crack status:"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ProgressBar
             android:id="@+id/progressBar_crack"

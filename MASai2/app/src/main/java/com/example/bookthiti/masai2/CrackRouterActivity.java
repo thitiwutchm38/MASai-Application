@@ -3,6 +3,7 @@ package com.example.bookthiti.masai2;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,9 @@ public class CrackRouterActivity extends AppCompatActivity{
     Button button;
 
 
+    TextView textView_crack_status;
+
+
     RelativeLayout pass_wifi_relative;
 
     EditText pass_result;
@@ -65,6 +69,8 @@ public class CrackRouterActivity extends AppCompatActivity{
         TextView_cha = (TextView)findViewById(R.id.cha_value);
         TextView_ssid = (TextView)findViewById(R.id.textView_ssid);
 
+        textView_crack_status = (TextView)findViewById(R.id.textView_crack_status);
+
         myprogress_crack= (TextView)findViewById(R.id.textView_progress_crack);
 
         progressBar = (ProgressBar)findViewById(R.id.progressBar_crack);
@@ -80,6 +86,7 @@ public class CrackRouterActivity extends AppCompatActivity{
         progressBar.setVisibility(View.INVISIBLE);
         myprogress_crack.setVisibility(View.INVISIBLE);
         pass_wifi_relative.setVisibility(View.INVISIBLE);
+        textView_crack_status.setVisibility(View.INVISIBLE);
 
         information_data = (MainModel) getIntent().getParcelableExtra("router_information");
 
@@ -145,14 +152,20 @@ public class CrackRouterActivity extends AppCompatActivity{
 
                         if(pass_status){
 
+                            textView_crack_status.setVisibility(View.VISIBLE);
                             pass_result.setText("Muict555");
+                            textView_crack_status.setText("Cracked success !");
+                            textView_crack_status.setTextColor(Color.GREEN);
+
                             pass_wifi_relative.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
                             myprogress_crack.setVisibility(View.INVISIBLE);
                         }else {
 
-
+                            textView_crack_status.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
+                            textView_crack_status.setText("Cracked fail !");
+                            textView_crack_status.setTextColor(Color.RED);
                             myprogress_crack.setVisibility(View.INVISIBLE);
                             aleartWrongPass(information_data.getOfferSSID());
 

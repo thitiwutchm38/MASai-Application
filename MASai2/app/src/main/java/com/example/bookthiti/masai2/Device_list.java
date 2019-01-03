@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Device_list extends AppCompatActivity implements OnRecyclerViewItemClickListener {
@@ -92,21 +97,85 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
     }
 
     private ArrayList<Devices> prepareList() {
+
+
         ArrayList<Devices> mainModelList = new ArrayList<>();
 
-        for (int i = 0; i < categoryName.length; i++) {
+        //Convert JSON File
+        String json = null;
+        Integer count = null;
+
+        try {
+            InputStream is = getAssets().open("device.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+        JSONObject reader = null;
+        try {
+            reader = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            count = Integer.parseInt(reader.getString("count"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String device_ip = null;
+        String device_mac = null;
+        String device_type= null;
+
+
+
+
+        for (int i = 0; i < count; i++) {
 
 
             Devices mainModel = new Devices();
 
-            mainModel.setmIP_address(categoryName[i]);
-            mainModel.setmMac_address(mac[i]);
-            mainModel.setmDevice_types(type[i]);
+            JSONObject temp = null;
+
+            try {
+                temp = reader.getJSONObject(Integer.toString(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                device_ip  = temp.getString("IP_Address");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                device_mac  = temp.getString("Mac_Address");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                device_type  = temp.getString("Device_Types");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-            String types = type[i];
+            mainModel.setmIP_address(device_ip);
+            mainModel.setmMac_address(device_mac);
+            mainModel.setmDevice_types(device_type);
 
-            switch(types) {
+
+
+            switch(device_type) {
                 case "phone":
                     mainModel.setOfferIcon(R.drawable.icons_phone);
                     break; // optional
@@ -130,14 +199,13 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
                     mainModel.setOfferIcon(R.drawable.icons_media);
                     break; // optional
 
-
-
-
                 // You can have any number of case statements.
                 default : // Optional
                     // Statements
             }
+
             //mainModel.setOfferIcon(categoryIcon[i]);
+
 
             mainModelList.add(mainModel);
 
