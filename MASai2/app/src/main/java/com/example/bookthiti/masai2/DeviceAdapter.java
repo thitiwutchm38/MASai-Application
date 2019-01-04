@@ -45,7 +45,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
 
 
         if(position % 2 == 0) {
-        ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#A0D4EF")); }
+        ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#A0D4EF"));
+        }
         else
             {
         ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#D3DFEE"));

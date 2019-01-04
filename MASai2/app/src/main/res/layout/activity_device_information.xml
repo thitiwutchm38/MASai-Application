@@ -131,7 +131,8 @@
                     android:gravity="center"
                     android:text="Port Name"
                     android:textColor="@android:color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -149,7 +150,8 @@
                     android:gravity="center"
                     android:text="Port Status"
                     android:textColor="@android:color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -167,7 +169,8 @@
                     android:gravity="center"
                     android:text="Port Number"
                     android:textColor="@android:color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -175,7 +178,7 @@
         <RelativeLayout
             android:id="@+id/relative_ports_information_result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 

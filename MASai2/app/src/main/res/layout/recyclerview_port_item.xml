@@ -14,15 +14,15 @@
 
         <RelativeLayout
             android:id="@+id/port_nam_recyc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1">
 
             <TextView
                 android:id="@+id/textView_result_portnum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
@@ -33,33 +33,34 @@
 
         <RelativeLayout
             android:id="@+id/port_status_recyc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1">
 
             <TextView
                 android:id="@+id/textView_result_portstatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
                 android:gravity="center"
-                android:text="9"
+                android:text="Open"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1">
 
             <TextView
                 android:id="@+id/textView_result_portname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
