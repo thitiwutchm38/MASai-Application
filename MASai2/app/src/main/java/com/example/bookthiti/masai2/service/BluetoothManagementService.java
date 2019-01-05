@@ -75,8 +75,8 @@ public class BluetoothManagementService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG_DEBUG, "Bluetooth service is created");
-        mThreadStopped = false;
         mContext = this.getApplicationContext();
+        mThreadStopped = true;
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(mContext);
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
@@ -131,6 +131,10 @@ public class BluetoothManagementService extends Service {
             Log.i(TAG_INFO, "No Connected Thread, cannot send msg");
             Toast.makeText(this, "No Connected Thread, cannot send msg", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean isRemoteDeviceConnected() {
+        return !mThreadStopped;
     }
 
     public void connectRemoteDevice(JSONObject deviceInformation, Activity activity) {
@@ -223,6 +227,7 @@ public class BluetoothManagementService extends Service {
                 return;
             }
             // Manage Connection through new thread called ManageThread
+            mThreadStopped = false;
             mConnectedThread = new ConnectedThread(mmBluetoothSocket);
             mConnectedThread.start();
         }
