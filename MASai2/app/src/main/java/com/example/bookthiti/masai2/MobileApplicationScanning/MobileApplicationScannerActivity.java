@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.bookthiti.masai2.R;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,14 +38,18 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
 
     private Context mContext;
     private Button mSelectFromGooglePlayButton;
+    private Button mStartAppScanButton;
     private Menu mMenu;
     private SearchView mSearchView;
     private ProgressBar mSpinner;
     private boolean flag = false;
+    private boolean hasSuggestionClicked = false;
     private String mQuery;
 
     private CursorAdapter mCursorAdapter;
     private List<TargetApplicationInfo> mSuggestions;
+
+    private TargetApplicationInfo selectedApplication;
 
     private Handler stopTypingHandler = new Handler(new Handler.Callback() {
         @Override
@@ -72,14 +78,11 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
 
         setTitle("Mobile App Scan");
         mContext = this.getApplicationContext();
-//        hideKeyboard();
         mSelectFromGooglePlayButton = (Button) findViewById(R.id.button_select_from_google_play);
         mSelectFromGooglePlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMenu.findItem(R.id.search_google_play).setVisible(true);
-//                mMenu.findItem(R.id.search_google_play_icon).setVisible(true);
-//                mSearchView= (SearchView) mMenu.findItem(R.id.search_google_play).getActionView();
                 flag = !flag;
                 if (flag) {
                     mSearchView.setIconified(false);
@@ -87,8 +90,17 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                     Log.i(TAG_INFO, "" + mSearchView.requestFocus());
                 } else {
                     mSearchView.setVisibility(View.GONE);
-//                    mMenu.findItem(R.id.search_google_play_icon).setVisible(false);
                     mMenu.findItem(R.id.search_google_play).setVisible(false);
+                }
+            }
+        });
+
+        mStartAppScanButton = (Button) findViewById(R.id.button_start_app_scan);
+        mStartAppScanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selectedApplication != null) {
+
                 }
             }
         });
@@ -131,6 +143,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 mMenu.findItem(R.id.search_google_play_spinner).setVisible(false);
                 mMenu.findItem(R.id.search_google_play).setVisible(false);
                 flag = false;
+                Log.i(TAG_INFO, "Search view close");
                 return true;
             }
         });
@@ -143,11 +156,12 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                     mSearchView.setVisibility(View.GONE);
                     mMenu.findItem(R.id.search_google_play_spinner).setVisible(false);
                     mMenu.findItem(R.id.search_google_play).setVisible(false);
+                    Log.i(TAG_INFO, "focus elsewhere");
                 } else {
                     flag = true;
                     mSearchView.setVisibility(View.VISIBLE);
                     mMenu.findItem(R.id.search_google_play).setVisible(true);
-
+                    Log.i(TAG_INFO, "focus at search");
                 }
             }
         });
@@ -156,7 +170,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Log.i(TAG_INFO, "onQueryTextSubmit: " + s);
-//                searchApplication(s, mCursorAdapter, mSuggestions);
+//                resetStopTypingTime(0);
                 return true;
             }
 
@@ -172,7 +186,10 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
 //                MatrixCursor cursor = new MatrixCursor(columns);
 //                mCursorAdapter.swapCursor(cursor);
 //                mCursorAdapter.notifyDataSetChanged();
-                resetStopTypingTimer();
+                if(!hasSuggestionClicked) {
+                    resetStopTypingTimer();
+                }
+                hasSuggestionClicked = false;
                 return true;
             }
         });
@@ -184,6 +201,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
 
             @Override
             public boolean onSuggestionClick(int i) {
+                hasSuggestionClicked = true;
                 mSearchView.setQuery(mSuggestions.get(i).getAppName(), false);
                 Log.i(TAG_INFO, "" + mSuggestions.size());
                 mSelectFromGooglePlayButton.setText(mSuggestions.get(i).getAppName());
@@ -216,13 +234,14 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 int i = 0;
                 for (TargetApplicationInfo targetApplicationInfo : targetApplicationInfos) {
                     Log.i(TAG_INFO, "appId: " + targetApplicationInfo.getAppId() + ", appName: " + targetApplicationInfo.getAppName());
+                    Log.i(TAG_INFO, "iconUrl: " + targetApplicationInfo.getAppIcon().getUrl());
                     String[] tmp = {Integer.toString(i), targetApplicationInfo.getAppName(), targetApplicationInfo.getAppName()};
                     cursor.addRow(tmp);
                     i++;
                 }
                 mCursorAdapter.swapCursor(cursor);
                 mMenu.findItem(R.id.search_google_play_spinner).setVisible(false);
-                mSearchView.requestFocus();
+                mSearchView.setIconified(false);
             }
 
             @Override
@@ -237,5 +256,10 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
     private void resetStopTypingTimer() {
         stopTypingHandler.removeCallbacks(stopTypingCallback);
         stopTypingHandler.postDelayed(stopTypingCallback, STOP_TYPING_TIMEOUT);
+    }
+
+    private void resetStopTypingTime(long timeout) {
+        stopTypingHandler.removeCallbacks(stopTypingCallback);
+        stopTypingHandler.postDelayed(stopTypingCallback, timeout);
     }
 }
