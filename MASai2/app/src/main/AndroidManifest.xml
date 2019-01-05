@@ -19,7 +19,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MasaiSettingActivity" />
         <activity
-            android:name=".iot_main_pentest"
+            android:name=".IoTMainPentestActivity"
             android:label="IoT Device Pentest" />
         <activity android:name=".Mobile_Appscan" />
         <activity

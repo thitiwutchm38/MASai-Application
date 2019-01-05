@@ -1,8 +1,6 @@
 package com.example.bookthiti.masai2;
 
-import android.Manifest;
 import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openActivity_iot_att() {
 
-        Intent intent = new Intent(this,iot_main_pentest.class);
+        Intent intent = new Intent(this,IoTMainPentestActivity.class);
         startActivity(intent);
     }
     public void openActivity_MASaibox_setting() {
