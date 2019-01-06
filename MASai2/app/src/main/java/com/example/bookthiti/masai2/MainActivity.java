@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openActivity_iot_att() {
 
-        Intent intent = new Intent(this,iot_main_pentest.class);
+        Intent intent = new Intent(this,IoTMainPentestActivity.class);
         startActivity(intent);
     }
     public void openActivity_MASaibox_setting() {

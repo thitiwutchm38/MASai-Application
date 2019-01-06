@@ -24,6 +24,15 @@ public class MainModel implements Parcelable {
 
     }
 
+    public MainModel(String offerSSID, String offerMode, String offerSignal, String offerChannel, String offerMac_address, String offerSecurity, int offerIcon) {
+        this.offerSSID = offerSSID;
+        this.offerMode = offerMode;
+        this.offerSignal = offerSignal;
+        this.offerChannel = offerChannel;
+        this.offerMac_address = offerMac_address;
+        this.offerSecurity = offerSecurity;
+        this.offerIcon = offerIcon;
+    }
 
     @Override
     public int describeContents() {
