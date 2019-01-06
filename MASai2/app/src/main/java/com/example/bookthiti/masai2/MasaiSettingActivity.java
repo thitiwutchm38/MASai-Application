@@ -132,6 +132,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(mBroadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalBroadcastReceiver);
         if(mBound){
             unbindService(mConnection);
         }

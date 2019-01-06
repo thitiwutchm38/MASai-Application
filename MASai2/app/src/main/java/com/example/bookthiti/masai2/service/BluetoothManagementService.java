@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -17,11 +18,20 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
@@ -34,6 +44,7 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_BLUETOOTH_CONNECTED = "ACTION BLUETOOTH CONNECTED";
     public static final String ACTION_BLUETOOTH_DISCONNECTED = "ACTION_BLUETOOTH_DISCONNECTED";
     public static final String ACTION_BLUETOOTH_MESSAGE_RECEIVED = "ACTION BLUETOOTH MESSAGE RECEIVED";
+    public static final String ACTION_WIFI_SCAN = "ACTION WIFI SCAN";
     public static final String ACTION_PAIRED_DEVICE_FOUND = "ACTION PAIRED DEVICE FOUND";
     public static final String ACTION_BLUETOOTH_UNABLE_TO_CONNECT = "ACTION BLUETOOTH UNABLE TO CONNECT";
 
@@ -207,7 +218,7 @@ public class BluetoothManagementService extends Service {
                 Log.e(TAG_ERROR, "Socket's create() method failed", e);
             }
             mmBluetoothSocket = tmp;
-            if(mmBluetoothSocket != null) {
+            if (mmBluetoothSocket != null) {
                 Log.i(TAG_INFO, "mmBluetoothSocket is created");
             }
         }
@@ -268,16 +279,49 @@ public class BluetoothManagementService extends Service {
         }
 
         public void run() {
-            mmBuffer = new byte[1024];
-            int numBytes;
+            int bufferSize = 1024;
+            mmBuffer = new byte[bufferSize];
+            int bytesRead;
+            int readBufferPosition = 0;
+            int count = 0;
+            StringBuilder sb = new StringBuilder();
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED));
             while (true && !mThreadStopped) {
                 try {
-                    numBytes = mmInputStream.read(mmBuffer);
-                    if(numBytes == -1) {
-                        cancel();
+                    bytesRead = mmInputStream.read(mmBuffer);
+                    String message = new String(mmBuffer, 0, bytesRead);
+                    if (!message.contains("|")) {
+                        sb.append(message);
+                        count += message.length();
+                    } else {
+                        String[] splitString = message.split("\\|");
+                        if(splitString.length > 0) {
+                            message = splitString[0];
+                            sb.append(message);
+                        }
+
+                        JsonParser jsonParser = new JsonParser();
+                        JsonElement jsonElement = jsonParser.parse(sb.toString());
+                        if (jsonElement.isJsonObject()) {
+                            JsonObject jsonObject = jsonElement.getAsJsonObject();
+                            String resultType = jsonObject.get("resultType").getAsString();
+                            if (resultType.equals("wifiScan")) {
+                                Intent intent = new Intent();
+                                Bundle bundle = new Bundle();
+                                Gson gson = new Gson();
+                                String jsonString = gson.toJson(jsonObject.get("payload"));
+                                bundle.putString("payload", jsonString);
+                                intent.putExtras(bundle);
+                                intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+                                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                            }
+                        }
                     }
+
+
                     //TODO: get result from box using switch case
+
+
                 } catch (IOException e) {
                     Log.i(TAG_INFO, "Input stream was disconnected", e);
                     cancel();
