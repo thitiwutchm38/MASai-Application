@@ -145,7 +145,6 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         switch (view.getId()) {
             case R.id.button_rescan:
 
-            System.out.print("Helloooo");
         }
     }
 

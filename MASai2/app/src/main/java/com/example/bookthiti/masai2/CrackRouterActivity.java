@@ -49,7 +49,10 @@ public class CrackRouterActivity extends AppCompatActivity{
 
     MainModel information_data;
 
-    Boolean pass_status = true;
+
+    // True can crqck
+    // False cannot crack
+    Boolean pass_status = false;
 
 
     private ClipboardManager myClipboard;
