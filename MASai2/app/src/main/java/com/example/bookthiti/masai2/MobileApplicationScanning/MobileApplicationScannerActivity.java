@@ -127,6 +127,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1},
                 new int[]{android.R.id.text1},
                 0);
+
         final List<TargetApplicationInfo> suggestions = new ArrayList<>();
 
         mCursorAdapter = suggestionAdapter;
@@ -234,7 +235,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 int i = 0;
                 for (TargetApplicationInfo targetApplicationInfo : targetApplicationInfos) {
                     Log.i(TAG_INFO, "appId: " + targetApplicationInfo.getAppId() + ", appName: " + targetApplicationInfo.getAppName());
-                    Log.i(TAG_INFO, "iconUrl: " + targetApplicationInfo.getAppIcon().getUrl());
+//                    Log.i(TAG_INFO, "iconUrl: " + targetApplicationInfo.getAppIcon().getUrl());
                     String[] tmp = {Integer.toString(i), targetApplicationInfo.getAppName(), targetApplicationInfo.getAppName()};
                     cursor.addRow(tmp);
                     i++;

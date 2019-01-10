@@ -24,15 +24,15 @@ public class TargetApplicationInfo {
     @SerializedName("versionString")
     private String appVersionString;
 
-    @SerializedName("icon")
-    private AppIcon appIcon;
+//    @SerializedName("icon")
+//    private AppIcon appIcon;
 
-    public TargetApplicationInfo(String appId, String appName, int appVersionCode, String appVersionString, AppIcon appIcon) {
+    public TargetApplicationInfo(String appId, String appName, int appVersionCode, String appVersionString){//, AppIcon appIcon) {
         this.appId = appId;
         this.appName = appName;
         this.appVersionCode = appVersionCode;
         this.appVersionString = appVersionString;
-        this.appIcon = appIcon;
+//        this.appIcon = appIcon;
     }
 
     public String getAppId() {
@@ -67,13 +67,13 @@ public class TargetApplicationInfo {
         this.appVersionString = appVersionString;
     }
 
-    public AppIcon getAppIcon() {
-        return appIcon;
-    }
-
-    public void setAppIcon(AppIcon appIcon) {
-        this.appIcon = appIcon;
-    }
+//    public AppIcon getAppIcon() {
+//        return appIcon;
+//    }
+//
+//    public void setAppIcon(AppIcon appIcon) {
+//        this.appIcon = appIcon;
+//    }
 }
 
 class AppIcon {

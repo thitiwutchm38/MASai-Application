@@ -12,12 +12,12 @@ public class RetrofitClientInstance {
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(AppIcon.class, new MyDeserializer<AppIcon>())
-                    .create();
+//            Gson gson = new GsonBuilder()
+//                    .registerTypeAdapter(AppIcon.class, new MyDeserializer<AppIcon>())
+//                    .create();
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return retrofit;
