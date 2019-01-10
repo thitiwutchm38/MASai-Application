@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.bookthiti.masai2.service.BluetoothManagementService;
 import com.google.gson.JsonElement;
@@ -42,6 +43,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
     private BluetoothManagementService mBluetoothManagementService;
     private boolean mBound = false;
     private boolean isRemoteDeviceConnected = false;
+    private ArrayList<MainModel> mMainModelArrayList;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -56,8 +58,8 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                         LinearLayoutManager.VERTICAL, false);
                 mainRecyclerView.setLayoutManager(linearLayoutManager);
                 //Recycler Adapter
-                final ArrayList<MainModel> mainModelArrayList = prepareList(jsonString);
-                final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(SearchNetworkActivity.this, mainModelArrayList);
+                mMainModelArrayList = prepareList(jsonString);
+                final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(SearchNetworkActivity.this, mMainModelArrayList);
                 mainRecyclerAdapter.setOnRecyclerViewItemClickListener(SearchNetworkActivity.this);
                 mainRecyclerView.setAdapter(mainRecyclerAdapter);
                 final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -155,7 +157,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         final Intent pass_intent_blu = new Intent(this, Device_list.class);
 
 
-//        switch (intent.getStringExtra("MyValue")) {
+        switch (intent.getStringExtra("MyValue")) {
 //            case "device_att":
 //
 //                //Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ mainModel.getOfferSSID(),Toast.LENGTH_LONG).show();
@@ -181,18 +183,18 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
 //
 //
 //                break;
-//
-//            case "router_att":
-//
-//                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + prepareList().get(position).getOfferSSID(), Toast.LENGTH_LONG).show();
-//                //showAddItemDialog(this,prepareList().get(position).getOfferSSID() );
-//
-//                pass_intent.putExtra("router_information", prepareList().get(position));
-//                //pass_intent.putExtra("iis", );
-//                startActivity(pass_intent);
-//
-//                break;
-//        }
+
+            case "router_att":
+
+                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mMainModelArrayList.get(position).getOfferSSID(), Toast.LENGTH_LONG).show();
+                //showAddItemDialog(this,prepareList().get(position).getOfferSSID() );
+
+                pass_intent.putExtra("router_information", mMainModelArrayList.get(position));
+                //pass_intent.putExtra("iis", );
+                startActivity(pass_intent);
+
+                break;
+        }
     }
 
     void promptForResult(final PromptRunnable postrun, String ssid) {

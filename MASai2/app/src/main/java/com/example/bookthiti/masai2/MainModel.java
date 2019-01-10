@@ -3,20 +3,30 @@ package com.example.bookthiti.masai2;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MainModel implements Parcelable {
+    @SerializedName("SSID")
     private String offerSSID;
+
+    @SerializedName("MODE")
     private String offerMode;
+
+    @SerializedName("SIGNAL")
     private String offerSignal;
 
     private String offerFrequency;
+
+    @SerializedName("CHAN")
     private String offerChannel;
+
     private String offerCompany;
 
-
+    @SerializedName("BSSID")
     private String offerMac_address;
 
+    @SerializedName("SECURITY")
     private String offerSecurity;
-
 
     private int offerIcon;
 
@@ -45,14 +55,11 @@ public class MainModel implements Parcelable {
         dest.writeString(offerSSID);
         dest.writeString(offerMode);
         dest.writeString(offerSignal);
-
         dest.writeString(offerFrequency);
         dest.writeString(offerChannel);
         dest.writeString(offerCompany);
-
-        dest.writeString(offerSecurity);
-
         dest.writeString(offerMac_address);
+        dest.writeString(offerSecurity);
 
     }
 
@@ -64,9 +71,7 @@ public class MainModel implements Parcelable {
         this.offerFrequency = in.readString();
         this.offerChannel = in.readString();
         this.offerCompany = in.readString();
-
         this.offerMac_address = in.readString();
-
         this.offerSecurity = in.readString();
     }
 

@@ -47,6 +47,7 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_WIFI_SCAN = "ACTION WIFI SCAN";
     public static final String ACTION_PAIRED_DEVICE_FOUND = "ACTION PAIRED DEVICE FOUND";
     public static final String ACTION_BLUETOOTH_UNABLE_TO_CONNECT = "ACTION BLUETOOTH UNABLE TO CONNECT";
+    public static final String ACTION_WIFI_ATTACK = "ACTION WIFI ATTACK";
 
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> mPairedDevices;
@@ -305,15 +306,21 @@ public class BluetoothManagementService extends Service {
                         if (jsonElement.isJsonObject()) {
                             JsonObject jsonObject = jsonElement.getAsJsonObject();
                             String resultType = jsonObject.get("resultType").getAsString();
-                            if (resultType.equals("wifiScan")) {
-                                Intent intent = new Intent();
-                                Bundle bundle = new Bundle();
-                                Gson gson = new Gson();
-                                String jsonString = gson.toJson(jsonObject.get("payload"));
-                                bundle.putString("payload", jsonString);
-                                intent.putExtras(bundle);
-                                intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
-                                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                            Intent intent = new Intent();
+                            Bundle bundle = new Bundle();
+                            Gson gson = new Gson();
+                            String jsonString = gson.toJson(jsonObject.get("payload"));
+                            bundle.putString("payload", jsonString);
+                            intent.putExtras(bundle);
+                            switch (resultType) {
+                                case "wifiScan":
+                                    intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                                    break;
+                                case "wifiCracking":
+                                    intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
+                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                                    break;
                             }
                         }
                         sb = new StringBuilder();
