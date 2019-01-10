@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
@@ -20,23 +19,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bookthiti.masai2.service.BluetoothManagementService;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener {
+public class SearchNetworkActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
     private final static String TAG_INFO = "Log info";
     private final static String TAG_DEBUG = "Log debug";
     private final static String TAG_ERROR = "Log error";
@@ -61,13 +52,13 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                 String jsonString = bundle.getString("payload");
                 Log.i(TAG_INFO, jsonString);
                 final RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
-                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Search_Network.this,
+                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchNetworkActivity.this,
                         LinearLayoutManager.VERTICAL, false);
                 mainRecyclerView.setLayoutManager(linearLayoutManager);
                 //Recycler Adapter
                 final ArrayList<MainModel> mainModelArrayList = prepareList(jsonString);
-                final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(Search_Network.this, mainModelArrayList);
-                mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Search_Network.this);
+                final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(SearchNetworkActivity.this, mainModelArrayList);
+                mainRecyclerAdapter.setOnRecyclerViewItemClickListener(SearchNetworkActivity.this);
                 mainRecyclerView.setAdapter(mainRecyclerAdapter);
                 final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
                 progressBar.setVisibility(View.GONE);
@@ -82,7 +73,11 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
             mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
             mBound = true;
             isRemoteDeviceConnected = isRemoteDeviceConnected();
-            mBluetoothManagementService.sendMessageToRemoteDevice("wifiScan");
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("command", "wifiScan");
+            jsonObject.add("payload", null);
+            String jsonString = jsonObject.toString();
+            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
         }
 
         @Override

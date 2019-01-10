@@ -316,6 +316,7 @@ public class BluetoothManagementService extends Service {
                                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                             }
                         }
+                        sb = new StringBuilder();
                     }
 
 

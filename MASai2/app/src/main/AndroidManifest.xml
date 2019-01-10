@@ -26,7 +26,7 @@
             android:label="IoT Device Pentest" />
         <activity android:name=".MobileApplicationScanning.MobileApplicationScannerActivity" />
         <activity
-            android:name=".Search_Network"
+            android:name=".SearchNetworkActivity"
             android:label="Select Network" />
         <activity
             android:name=".Router_information"
