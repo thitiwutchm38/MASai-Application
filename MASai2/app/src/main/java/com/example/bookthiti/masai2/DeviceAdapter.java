@@ -82,6 +82,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
             ip_Text = view.findViewById(R.id.app_data_ip);
             mac_Text = view.findViewById(R.id.app_data_id);
             type_Text = view.findViewById(R.id.device_data_type);
+
             device_layout = view.findViewById(R.id.layout_device);
 
             rowMainParentLinearLayout =  view.findViewById(R.id.layout_device);

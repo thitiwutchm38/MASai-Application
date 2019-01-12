@@ -1,31 +1,46 @@
 {
   "port summary" : {
-    "ip"  : "10.226.160.103",
+    "ip" : "10.226.160.103",
     "closed" : 994,
-    "opened" : 6
+    "opened" : 8
   },
   "0" : {
-    "p_number" : "22/tcp",
+    "p_number" : "22",
+    "p_protocal" : "tcp",
     "p_name" : "ssh"
   },
   "1" : {
-    "p_number" : "25/tcp",
+    "p_number" : "25",
+    "p_protocal" : "tcp",
     "p_name" : "smtp"
   },
   "2" : {
-    "p_number" : "53/tcp",
+    "p_number" : "53",
+    "p_protocal" : "tcp",
     "p_name" : "smtp"
   },
   "3" : {
-    "p_number" : "80/tcp",
+    "p_number" : "80",
+    "p_protocal" : "tcp",
     "p_name" : "http"
   },
   "4" : {
-    "p_number" : "443/tcp",
+    "p_number" : "443",
+    "p_protocal" : "tcp",
     "p_name" : "https"
   },
   "5" : {
-    "p_number" : "9929/tcp",
-    "p_name" : "nping-echo"
-  }
+    "p_number" : "9929",
+    "p_name" : "nping-echo",
+    "p_protocal" : "tcp"
+  },
+  "6" : {
+  "p_number" : "68",
+  "p_name" : "dhcpc",
+  "p_protocal" : "udp"
+  },
+  "7" : {
+  "p_number" : "111",
+  "p_name" : "rpcbind",
+  "p_protocal" : "udp"}
 }

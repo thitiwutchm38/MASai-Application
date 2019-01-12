@@ -37,29 +37,29 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         viewHolder.rowMainText_Signal.setText(offersListModel.getOfferSignal());
         viewHolder.rowMainParentLinearLayout.setTag(offersListModel);
 
-        int signal = Integer.parseInt(offersListModel.getOfferSignal()) ;
-
-
-        if ((signal <= 100 )&&(signal>=75)){
-
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#32CD32"));
-
-
-        }else if((signal<75)&&(signal>=50)) {
-
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#9ACD32"));
-
-
-        }else if((signal<50)&&(signal>=25)) {
-
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#F0E68C"));
-
-
-        }else if(signal<25) {
-
-            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#E9967A"));
-
-        }
+//        int signal = Integer.parseInt(offersListModel.getOfferSignal()) ;
+//
+//
+//        if ((signal <= 100 )&&(signal>=75)){
+//
+//            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#32CD32"));
+//
+//
+//        }else if((signal<75)&&(signal>=50)) {
+//
+//            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#9ACD32"));
+//
+//
+//        }else if((signal<50)&&(signal>=25)) {
+//
+//            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#F0E68C"));
+//
+//
+//        }else if(signal<25) {
+//
+//            viewHolder.device_lin.setBackgroundColor(Color.parseColor("#E9967A"));
+//
+//        }
 
 
 
@@ -80,7 +80,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         private LinearLayout device_lin ;
 
 
-        private RelativeLayout rowMainParentLinearLayout;
+        private LinearLayout rowMainParentLinearLayout;
         public ViewHolder(View view) {
             super(view);
             rowMainImage = view.findViewById(R.id.row_main_adapter_iv);
@@ -93,7 +93,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
             device_lin = view.findViewById(R.id.linear_search);
 
-            rowMainParentLinearLayout =  view.findViewById(R.id.row_main_adapter_linear_layout);
+            rowMainParentLinearLayout =  view.findViewById(R.id.linearlayout_show_router);
 
                 rowMainButton_button.setOnClickListener(new View.OnClickListener() {
                 @Override

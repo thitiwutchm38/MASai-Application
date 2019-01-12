@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 public class ActivitySplash extends AppCompatActivity {
 
-    private static int SPLASH_TIME = 5000; //This is 5 seconds
+    private static int SPLASH_TIME = 4000; //This is 5 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +40,29 @@ public class ActivitySplash extends AppCompatActivity {
 
 
 
-        AnimationDrawable animation = new AnimationDrawable();
-        animation.addFrame(getResources().getDrawable(R.drawable.logo_ict), 3000);
-        animation.addFrame(getResources().getDrawable(R.drawable.logo_mu), 3000);
+        AnimationDrawable animation_ict = new AnimationDrawable();
+        AnimationDrawable animation_mu = new AnimationDrawable();
+
+        animation_ict.addFrame(getResources().getDrawable(R.drawable.logo_ict), 3000);
+        animation_mu.addFrame(getResources().getDrawable(R.drawable.logo_mu), 3000);
 
 
-        animation.setOneShot(false);
+        animation_ict.setOneShot(false);
+        animation_mu.setOneShot(false);
 
-        View imageAnim = findViewById(R.id.view_temp);
-        imageAnim.setBackgroundDrawable(animation);
+        View imageAnim_mu = findViewById(R.id.view_temp_mu);
+
+        View imageAnim_ict = findViewById(R.id.view_temp_ict);
+
+
+
+
+        imageAnim_ict.setBackgroundDrawable(animation_ict);
+        imageAnim_mu.setBackgroundDrawable(animation_mu);
+
 
         // start the animation!
-        animation.start();
+        animation_ict.start();
+        animation_mu.start();
     }
 }

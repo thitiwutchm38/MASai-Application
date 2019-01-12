@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_ports"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
     <LinearLayout
-        android:id="@+id/linearlayout_show_ports"
+        android:id="@+id/linearlayout_show_router"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:orientation="horizontal">
@@ -20,7 +20,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/textView_result_portnum"
+                android:id="@+id/textView_result_portname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -39,14 +39,14 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/textView_result_portstatus"
+                android:id="@+id/textView_result_protocal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
                 android:gravity="center"
-                android:text="Open"
+                android:text="result"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -58,7 +58,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/textView_result_portname"
+                android:id="@+id/textView_result_portnum"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"

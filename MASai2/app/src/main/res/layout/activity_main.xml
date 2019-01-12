@@ -8,17 +8,24 @@
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:id="@+id/linearLayout6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></LinearLayout>
 
     <TextView
         android:id="@+id/textView_Masai_box_set"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="56dp"
         android:text="MASai box Setting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="IoT Security Tips"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton_Tips" />
@@ -95,8 +102,8 @@
         android:layout_marginTop="41dp"
         android:layout_marginBottom="39dp"
         android:background="#00000000"
-        android:scaleType="fitXY"
         android:contentDescription="@string/descrip"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/textView_mobileapp_attack"
         app:layout_constraintEnd_toEndOf="@+id/imageButton_Tips"
         app:layout_constraintHorizontal_bias="0.0"
@@ -135,7 +142,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="125dp"
+        android:layout_marginBottom="130dp"
         android:maxWidth="42dp"
         android:maxHeight="42dp"
         android:scaleType="fitXY"

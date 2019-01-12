@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Parcelable;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,10 +40,34 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener, View.OnClickListener  {
+public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener  {
 
 
     final String wifi_password = null;
+
+
+    private ArrayList<MainModel> mainModelArrayList;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+
+    private MainRecyclerAdapter mainRecyclerAdapter;
+
+    Button reScan_btt;
+
+
+    TextView textView_ssid;
+    TextView textView_mode;
+    TextView textView_signal;
+
+
+
+
+    boolean ssid_temp = true;
+    boolean mode_temp = true;
+    boolean signal_temp = true;
+
+
         private final int categoryIcon[] = {
                 R.drawable.wifi_device,
                 R.drawable.wifi_device,
@@ -95,7 +120,20 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_search__network);
-            final Button reScan_btt = (Button) findViewById(R.id.button_rescan);
+
+
+
+            //Sort by Topic
+            textView_ssid = (TextView)findViewById(R.id.textView_ssid);
+
+            textView_mode  = (TextView)findViewById(R.id.textView_mode);
+
+            textView_signal = (TextView)findViewById(R.id.textView_signal);
+
+
+
+            reScan_btt = (Button) findViewById(R.id.button_rescan);
+
 
 
             reScan_btt.setVisibility(View.GONE);
@@ -103,6 +141,8 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
+                    mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
                     final RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
 
@@ -114,14 +154,17 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
                     //Recycler Adapter
 
-                    final ArrayList<MainModel> mainModelArrayList = prepareList();
+                    mainModelArrayList = prepareList();
 
                     Collections.sort(mainModelArrayList, MainModel.modelSigno);
 
 
-                    final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(Search_Network.this,mainModelArrayList);
+                    mainRecyclerAdapter = new MainRecyclerAdapter(Search_Network.this,mainModelArrayList);
+
                     mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Search_Network.this);
                     mainRecyclerView.setAdapter(mainRecyclerAdapter);
+
+
 
                     final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
                     progressBar.setVisibility(View.GONE);
@@ -133,6 +176,31 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                 }
             }, 5000); // Millisecond 1000 = 1 sec
 
+
+            textView_signal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    sortSignal();
+
+                }
+            });
+
+            textView_mode.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    sortMode();
+                }
+            });
+
+            textView_ssid.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    sortSSID();
+                }
+            });
 
 
 
@@ -149,7 +217,17 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
     }
 
 
+    @Override
+    public void onRefresh() {
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        },1000);
+    }
 
     private ArrayList<MainModel> prepareList() {
 
@@ -422,6 +500,51 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
     }
 
+    void sortSignal() {
+
+        if (signal_temp == true){
+            signal_temp =false;
+            Collections.sort(mainModelArrayList, MainModel.modelSig_des);
+            mainRecyclerAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+        }else{
+            signal_temp =true;
+            Collections.sort(mainModelArrayList, MainModel.modelSigno);
+            mainRecyclerAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+        }
+    }
+
+    void sortSSID() {
+
+        if (ssid_temp == true){
+            ssid_temp =false;
+            Collections.sort(mainModelArrayList, MainModel.modelssid_asc);
+            mainRecyclerAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+        }else{
+            ssid_temp =true;
+            Collections.sort(mainModelArrayList, MainModel.modelssid_des);
+            mainRecyclerAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+        }
+    }
+
+
+    void sortMode() {
+
+        if (mode_temp == true){
+            mode_temp =false;
+            Collections.sort(mainModelArrayList, MainModel.modelmode_asc);
+            mainRecyclerAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+        }else{
+            mode_temp =true;
+            Collections.sort(mainModelArrayList, MainModel.modelmode_des);
+            mainRecyclerAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+        }
+    }
 
 
     class PromptRunnable implements Runnable {

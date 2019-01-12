@@ -40,6 +40,7 @@ public class PortsAdapter extends RecyclerView.Adapter<PortsAdapter.Holder>{
 
         Holder.p_num_Text.setText(offersListModel.getP_number());
         Holder.p_name_Text.setText(offersListModel.getP_name());
+        Holder.p_protocal_Text.setText(offersListModel.getP_protocal());
 
 
 
@@ -49,7 +50,7 @@ public class PortsAdapter extends RecyclerView.Adapter<PortsAdapter.Holder>{
 
 
         if(position % 2 == 0) {
-           // ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#A0D4EF"));
+           ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#A0D4EF"));
         }
         else
         {
@@ -69,6 +70,10 @@ public class PortsAdapter extends RecyclerView.Adapter<PortsAdapter.Holder>{
 
         private TextView p_num_Text;
         private TextView p_name_Text;
+        private TextView p_protocal_Text;
+
+
+
         private RelativeLayout device_layout ;
 
 
@@ -83,6 +88,7 @@ public class PortsAdapter extends RecyclerView.Adapter<PortsAdapter.Holder>{
 
             p_num_Text = view.findViewById(R.id.textView_result_portnum);
             p_name_Text = view.findViewById(R.id.textView_result_portname);
+            p_protocal_Text  = view.findViewById(R.id.textView_result_protocal);
 
             device_layout = view.findViewById(R.id.layout_ports);
 

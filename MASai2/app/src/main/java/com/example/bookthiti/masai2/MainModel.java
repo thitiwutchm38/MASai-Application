@@ -183,6 +183,111 @@ public class MainModel implements Parcelable  {
             /*For descending order*/
             //rollno1-rollno2;
         }};
+    public static Comparator<MainModel> modelSig_des = new Comparator<MainModel>() {
+
+        public int compare(MainModel s1, MainModel s2) {
+
+            int rollno1 = Integer.parseInt(s1.getOfferSignal());
+            int rollno2 = Integer.parseInt(s2.getOfferSignal());
+
+            /*For ascending order*/
+            //return rollno2-rollno1;
+
+            /*For descending order*/
+            return rollno1-rollno2;
+        }};
+
+
+    public static Comparator<MainModel> modelssid_asc = new Comparator<MainModel>() {
+
+        public int compare(MainModel s1, MainModel s2) {
+
+
+            String c1 = s1.getOfferSSID();
+            String c2 = s2.getOfferSSID();
+
+
+
+            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
+                return 1;
+            }
+
+            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
+                return -1;
+            }
+
+            return c1.compareTo(c2);
+
+        }};
+
+    public static Comparator<MainModel> modelssid_des = new Comparator<MainModel>() {
+
+        public int compare(MainModel s1, MainModel s2) {
+
+
+            String c1 = s1.getOfferSSID();
+            String c2 = s2.getOfferSSID();
+
+
+
+            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
+                return 1;
+            }
+
+            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
+                return -1;
+            }
+
+            return c2.compareTo(c1);
+
+        }};
+
+
+
+    public static Comparator<MainModel> modelmode_asc = new Comparator<MainModel>() {
+
+        public int compare(MainModel s1, MainModel s2) {
+
+
+            String c1 = s1.getOfferMode();
+            String c2 = s2.getOfferMode();
+
+
+
+            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
+                return 1;
+            }
+
+            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
+                return -1;
+            }
+
+            return c1.compareTo(c2);
+
+        }};
+
+    public static Comparator<MainModel> modelmode_des = new Comparator<MainModel>() {
+
+        public int compare(MainModel s1, MainModel s2) {
+
+
+            String c1 = s1.getOfferMode();
+            String c2 = s2.getOfferMode();
+
+
+
+            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
+                return 1;
+            }
+
+            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
+                return -1;
+            }
+
+            return c2.compareTo(c1);
+
+        }};
+
 
 
 

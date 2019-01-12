@@ -9,19 +9,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout_device_information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:id="@+id/relativelayout_show_ip"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/app_result_shape_top">
 
             <TextView
@@ -30,27 +31,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="39dp"
-                android:layout_marginTop="8dp"
-                android:text="Your IP:"
-                android:textColor="@color/colorbgS"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="6dp"
+                android:text="Device Summary:"
+                android:textColor="@android:color/background_dark"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView_show_ip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="59dp"
-                android:layout_marginTop="8dp"
-
-                android:layout_marginEnd="125dp"
-                android:layout_marginRight="-200dp"
-                android:layout_toLeftOf="@+id/textView_ip_information"
-                android:layout_toEndOf="@+id/textView_ip_information"
-                android:text="#"
-                android:textColor="@color/colorbgS" />
 
         </RelativeLayout>
 
@@ -62,61 +47,143 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <TextView
-                android:id="@+id/textView_port_sum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <ImageView
+                android:id="@+id/type_icon_sum"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="33dp"
-                android:layout_marginTop="20dp"
-                android:text="Port Summary:" />
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:gravity="center_horizontal"
+                app:srcCompat="@android:drawable/sym_def_app_icon" />
+
 
             <TextView
-                android:id="@+id/textView_port_closed"
+                android:id="@+id/textView_show_ip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="195dp"
-                android:layout_marginTop="20dp"
-                android:layout_toLeftOf="@+id/textView_port_sum"
-                android:layout_toEndOf="@+id/textView_port_sum"
-                android:text="# closed Ports"
-                android:textColor="@android:color/holo_green_dark"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/type_icon_sum"
+                android:layout_toRightOf="@+id/type_icon_sum"
+                android:text="IP address:"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_data_ip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/textView_show_ip"
+                android:text="#"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="13sp" />
+
+
+            <TextView
+                android:id="@+id/textView_show_mac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_show_ip"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/type_icon_sum"
+                android:layout_toRightOf="@+id/type_icon_sum"
+                android:text="MAC address:"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_data_mac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView_show_mac"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/textView_show_mac"
+                android:layout_toRightOf="@id/textView_show_mac"
+                android:text="#"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/textView_show_device_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_show_mac"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/type_icon_sum"
+                android:layout_toRightOf="@+id/type_icon_sum"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Device Type:"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_data_device_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView_show_device_type"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/textView_show_device_type"
+                android:layout_toRightOf="@id/textView_show_device_type"
+                android:text="#"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/textView_port_opened"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="196dp"
-                android:layout_marginTop="47dp"
-                android:text="# opened Ports"
-                android:textColor="@android:color/holo_red_dark"
+                android:layout_below="@+id/textView_show_device_type"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/type_icon_sum"
+                android:layout_toRightOf="@+id/type_icon_sum"
+                android:text="Opened Port:"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_data_port_opened"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView_port_opened"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/textView_port_opened"
+                android:layout_toRightOf="@id/textView_port_opened"
+                android:text="#"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="13sp" />
 
         </RelativeLayout>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="0dp" />
-
         <LinearLayout
-            android:id="@+id/linearlayout_show_ports"
+            android:id="@+id/linearlayout_show_router"
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/app_result_shape_top"
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/port_num"
+                android:id="@+id/port_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -129,13 +196,14 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="Port Name"
+                    android:text="Services"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/port_protocal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -148,13 +216,14 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="Port Status"
+                    android:text="Protocal"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/port_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -178,20 +247,83 @@
         <RelativeLayout
             android:id="@+id/relative_ports_information_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="220dp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_ports_info"
+            <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/swipe_refresh_layout_ports"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:scrollbars="vertical" />
+                android:visibility="visible">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_ports_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:scrollbars="vertical" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_show_route_close"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/app_result_shape_down"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_ports_attack"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:gravity="center"
+                android:text="Ports Attack"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/button_CVSS_score"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:gravity="center"
+                android:text="CVSS Score"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
 
     </LinearLayout>
 

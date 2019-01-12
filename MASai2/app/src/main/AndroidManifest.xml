@@ -39,12 +39,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
-        <activity android:name=".Device_list" />
+        <activity
+            android:name=".Device_list"
+            android:label="List of Devices" />
         <activity android:name=".ScanResultActivity" />
-        <activity android:name=".Device_information"
-                  android:label="Device Information">
-
-        </activity>
+        <activity
+            android:name=".Device_information"
+            android:label="Device Information"></activity>
+        <activity android:name=".CVSS_score_Activity"></activity>
     </application>
 
 </manifest>

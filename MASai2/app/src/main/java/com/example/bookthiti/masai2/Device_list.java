@@ -20,6 +20,11 @@ import java.util.ArrayList;
 public class Device_list extends AppCompatActivity implements OnRecyclerViewItemClickListener {
 
 
+    ArrayList<Devices> mainModelList;
+
+    String device_ip;
+    String device_mac;
+    String device_type;
 
     private final int categoryIcon[] = {
             R.drawable.wifi_device_4,
@@ -100,7 +105,7 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
     private ArrayList<Devices> prepareList() {
 
 
-        ArrayList<Devices> mainModelList = new ArrayList<>();
+        mainModelList = new ArrayList<>();
 
         //Convert JSON File
         String json = null;
@@ -131,9 +136,9 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
             e.printStackTrace();
         }
 
-        String device_ip = null;
-        String device_mac = null;
-        String device_type= null;
+        device_ip = null;
+        device_mac = null;
+        device_type= null;
 
 
 
@@ -224,16 +229,27 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
         switch (view.getId()) {
             case R.id.layout_device:
                 Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();
-                openActivity_port_info();
+                openActivity_port_info(position);
                 break;
         }
 
 
     }
 
-    public void openActivity_port_info() {
+    public void openActivity_port_info(int position) {
 
         Intent intent = new Intent(this,Device_information.class);
+
+        //Bundle
+        Bundle bundle = new Bundle();
+        bundle.putString("IP_Address", mainModelList.get(position).getmIP_address());
+        bundle.putString("Mac_Address", mainModelList.get(position).getmMac_address());
+        bundle.putString("Device_Types", mainModelList.get(position).getmDevice_types());
+        bundle.putInt("icon",mainModelList.get(position).getOfferIcon());
+
+
+        intent.putExtras(bundle);
+
         startActivity(intent);
     }
 
