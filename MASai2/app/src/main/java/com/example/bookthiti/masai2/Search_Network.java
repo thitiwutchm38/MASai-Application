@@ -211,8 +211,6 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
             });
 
 
-
-
         }
 
     @Override
@@ -237,10 +235,11 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         },1000);
     }
 
-    private ArrayList<MainModel> prepareList() {
+    private ArrayList<MainModel> prepareList(){
 
             ArrayList<MainModel> mainModelList = new ArrayList<>();
             //ArrayList<MainModel> sortModelList = new ArrayList<>();
+            JSONArray values = null;
 
 
             //Convert JSON File
@@ -278,43 +277,33 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                 }
 
 
-        JSONObject temp2 = null;
-
-        try {
-            temp2 = temp.getJSONObject("routers");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
             String SSID = null;
             String Mode = null;
             String Signal= null;
 
             String Frequency= null;
             String Channel= null;
-            String Company= null;
 
             String Mac_address= null;
 
             String Security= null;
 
-        String routers = temp2.toString();
-
 
         try {
-            jsonarray = new JSONArray(routers);
+            values = temp.getJSONArray("routers");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < jsonarray.length(); i++) {
+
+        for (int i = 0; i < values.length(); i++) {
 
             MainModel mainModel = new MainModel();
 
             JSONObject jsonobject = null;
 
             try {
-                jsonobject = jsonarray.getJSONObject(i);
+                jsonobject = values.getJSONObject(i);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -351,6 +340,36 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                 e.printStackTrace();
             }
 
+            try {
+                Channel  = jsonobject.getString("CHAN");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+            int signal = Integer.parseInt(Signal);
+
+                if ((signal <= 100 )&&(signal>=75)){
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_4);
+
+
+                }else if((signal<75)&&(signal>=50)) {
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_3);
+
+
+                }else if((signal<50)&&(signal>=25)) {
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_2);
+
+
+                }else if(signal<25) {
+
+                    mainModel.setOfferIcon( R.drawable.wifi_device_1);
+
+                }
 
 
             mainModel.setOfferSSID(SSID);
@@ -359,124 +378,14 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
             mainModel.setOfferFrequency(Frequency);
             mainModel.setOfferChannel(Channel);
-            mainModel.setOfferCompany(Company);
+            //mainModel.setOfferCompany(Company);
 
             mainModel.setOfferMac_address(Mac_address);
 
             mainModel.setOfferSecurity(Security);
 
-
             mainModelList.add(mainModel);
         }
-
-//
-//            for (int i = 0; i < count; i++) {
-//
-//               System.out.println(SSID);
-//               System.out.println(Mode);
-//               System.out.println(Signal);
-//
-//
-//                MainModel mainModel = new MainModel();
-//                JSONObject temp = null;
-//
-//                try {
-//                    temp = reader.getJSONObject(Integer.toString(i));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    SSID  = temp.getString("SSID");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Mode  = temp.getString("MODE");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Signal  = temp.getString("Signal");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Frequency  = temp.getString("Frequency");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Channel  = temp.getString("Channel");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Company  = temp.getString("Company");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    Mac_address  = temp.getString("Mac_address");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    Security  = temp.getString("Security");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//
-//
-//
-//
-//                int signal = Integer.parseInt(Signal);
-//
-//                if ((signal <= 100 )&&(signal>=75)){
-//
-//                    mainModel.setOfferIcon( R.drawable.wifi_device_4);
-//
-//
-//                }else if((signal<75)&&(signal>=50)) {
-//
-//                    mainModel.setOfferIcon( R.drawable.wifi_device_3);
-//
-//
-//                }else if((signal<50)&&(signal>=25)) {
-//
-//                    mainModel.setOfferIcon( R.drawable.wifi_device_2);
-//
-//
-//                }else if(signal<25) {
-//
-//                    mainModel.setOfferIcon( R.drawable.wifi_device_1);
-//
-//                }
-//
-//
-//
-//                mainModel.setOfferSSID(SSID);
-//                mainModel.setOfferMode(Mode);
-//                mainModel.setOfferSignal(Signal);
-//
-//                mainModel.setOfferFrequency(Frequency);
-//                mainModel.setOfferChannel(Channel);
-//                mainModel.setOfferCompany(Company);
-//
-//                mainModel.setOfferMac_address(Mac_address);
-//
-//                mainModel.setOfferSecurity(Security);
-//
-//
-//                mainModelList.add(mainModel);
-//            }
             return mainModelList;
 
         }

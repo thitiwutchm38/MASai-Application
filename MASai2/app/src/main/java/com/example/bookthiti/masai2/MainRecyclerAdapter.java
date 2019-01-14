@@ -1,8 +1,11 @@
 package com.example.bookthiti.masai2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -74,12 +77,12 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         private TextView rowMainText_SSID;
         private TextView rowMainText_Mode;
         final TextView rowMainText_Signal;
-        private Button rowMainButton_button;
         private LinearLayout device_lin ;
 
 
         private LinearLayout rowMainParentLinearLayout;
-        public ViewHolder(View view) {
+        @SuppressLint("ClickableViewAccessibility")
+        public ViewHolder( View view) {
             super(view);
             rowMainImage = view.findViewById(R.id.row_main_adapter_iv);
             rowMainText_SSID = view.findViewById(R.id.row_main_adapter_ssid);
@@ -87,13 +90,36 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
             rowMainText_Signal =   view.findViewById(R.id.row_main_adapter_signal);
 
 
-            rowMainButton_button = (Button)view.findViewById(R.id.btn_router);
 
-            device_lin = view.findViewById(R.id.linear_search);
+            device_lin = view.findViewById(R.id.layout_router);
 
-            rowMainParentLinearLayout =  view.findViewById(R.id.lin_port_att);
+            rowMainParentLinearLayout =  view.findViewById(R.id.layout_router);
 
-                rowMainButton_button.setOnClickListener(new View.OnClickListener() {
+
+
+//            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+//
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//
+//                            // TODO Auto-generated method stub
+//                            switch(event.getAction())
+//                            {
+//                                case MotionEvent.ACTION_DOWN:
+//                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
+//                                    break;
+//                                case MotionEvent.ACTION_UP:
+//
+//                                    //set color back to default
+//                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
+//                                    break;
+//                            }
+//                            return true;
+//                        }
+//
+//            });
+
+            rowMainParentLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (onRecyclerViewItemClickListener != null) {
