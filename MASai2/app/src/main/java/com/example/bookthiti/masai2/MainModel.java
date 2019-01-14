@@ -4,18 +4,32 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.Comparator;
 
+import com.google.gson.annotations.SerializedName;
 
 public class MainModel implements Parcelable  {
+
+    @SerializedName("SSID")
     private String offerSSID;
+
+    @SerializedName("MODE")
     private String offerMode;
+
+    @SerializedName("SIGNAL")
     private String offerSignal;
 
     private String offerFrequency;
+
+    @SerializedName("CHAN")
     private String offerChannel;
+
     private String offerCompany;
 
 
+    @SerializedName("BSSID")
+
     private String offerMac_address;
+
+    @SerializedName("SECURITY")
 
     private String offerSecurity;
 
@@ -27,21 +41,20 @@ public class MainModel implements Parcelable  {
     private MainModel comparestu;
 
 
-    public MainModel() {
 
-//        this.getOfferChannel();
-//        this.getOfferSecurity();
-//        this.getOfferMac_address();
-//        this.getOfferFrequency();
-//        this.getOfferMode();
-//        this.getOfferSSID();
-//        this.getOfferCompany();
-//        this.getOfferFrequency();
-//        this.getOfferIcon();
-
+    public MainModel(String offerSSID, String offerMode, String offerSignal, String offerChannel, String offerMac_address, String offerSecurity, int offerIcon) {
+        this.offerSSID = offerSSID;
+        this.offerMode = offerMode;
+        this.offerSignal = offerSignal;
+        this.offerChannel = offerChannel;
+        this.offerMac_address = offerMac_address;
+        this.offerSecurity = offerSecurity;
+        this.offerIcon = offerIcon;
     }
 
+    public MainModel() {
 
+    }
 
 
     @Override
@@ -55,14 +68,11 @@ public class MainModel implements Parcelable  {
         dest.writeString(offerSSID);
         dest.writeString(offerMode);
         dest.writeString(offerSignal);
-
         dest.writeString(offerFrequency);
         dest.writeString(offerChannel);
         dest.writeString(offerCompany);
-
-        dest.writeString(offerSecurity);
-
         dest.writeString(offerMac_address);
+        dest.writeString(offerSecurity);
 
     }
 
@@ -75,9 +85,7 @@ public class MainModel implements Parcelable  {
         this.offerFrequency = in.readString();
         this.offerChannel = in.readString();
         this.offerCompany = in.readString();
-
         this.offerMac_address = in.readString();
-
         this.offerSecurity = in.readString();
     }
 
@@ -180,8 +188,7 @@ public class MainModel implements Parcelable  {
             /*For ascending order*/
             return rollno2-rollno1;
 
-            /*For descending order*/
-            //rollno1-rollno2;
+
         }};
     public static Comparator<MainModel> modelSig_des = new Comparator<MainModel>() {
 
@@ -189,9 +196,6 @@ public class MainModel implements Parcelable  {
 
             int rollno1 = Integer.parseInt(s1.getOfferSignal());
             int rollno2 = Integer.parseInt(s2.getOfferSignal());
-
-            /*For ascending order*/
-            //return rollno2-rollno1;
 
             /*For descending order*/
             return rollno1-rollno2;
@@ -202,16 +206,13 @@ public class MainModel implements Parcelable  {
 
         public int compare(MainModel s1, MainModel s2) {
 
-
             String c1 = s1.getOfferSSID();
             String c2 = s2.getOfferSSID();
-
 
 
             if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
                 return 1;
             }
-
             if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
                 return -1;
             }
@@ -233,7 +234,6 @@ public class MainModel implements Parcelable  {
             if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
                 return 1;
             }
-
             if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
                 return -1;
             }
@@ -275,11 +275,9 @@ public class MainModel implements Parcelable  {
             String c2 = s2.getOfferMode();
 
 
-
             if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
                 return 1;
             }
-
             if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
                 return -1;
             }
