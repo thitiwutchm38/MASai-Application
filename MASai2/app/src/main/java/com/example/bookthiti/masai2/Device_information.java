@@ -44,6 +44,10 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
     ImageView type_icon_sum;
 
 
+    //Button click
+    Button button_ports_attack;
+    Button button_CVSS_score;
+
     //Recycleview&Swipe
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private PortsAdapter mainRecyclerAdapter;
@@ -109,6 +113,12 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
             textView_data_device_type  = (TextView) findViewById(R.id.textView_data_device_type);
             textView_data_port_opened  = (TextView) findViewById(R.id.textView_data_port_opened);
 
+
+            //Button id
+           button_ports_attack = (Button)findViewById(R.id.button_ports_attack);
+           button_CVSS_score  = (Button)findViewById(R.id.button_CVSS_score);
+
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_ports);
 
 
@@ -155,6 +165,24 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
             @Override
             public void onClick(View v) {
                 sortpNum() ;
+            }
+        });
+
+        //Button click
+        button_CVSS_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                openActivity_CVSS_score();
+            }
+        });
+
+
+        button_ports_attack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+
+
+                openActivity_port_att();
             }
         });
 
@@ -341,4 +369,21 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
             mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
         }
     }
+
+    public void openActivity_CVSS_score() {
+
+        Intent intent = new Intent(this,CVSS_score_Activity.class);
+        startActivity(intent);
+    }
+
+    public void openActivity_port_att() {
+
+        Intent intent = new Intent(this,Port_attackActivity.class);
+
+        startActivity(intent);
+    }
+
+
+
+
 }

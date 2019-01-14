@@ -43,7 +43,7 @@
             android:textSize="16sp" />
 
         <LinearLayout
-            android:id="@+id/linearlayout_show_router"
+            android:id="@+id/lin_port_att"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_below="@+id/textView_founded_router"
@@ -186,7 +186,7 @@
             android:id="@+id/linearLayout_recycle_searching_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearlayout_show_router"
+            android:layout_below="@+id/lin_port_att"
             android:layout_marginTop="-15dp">
 
             <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"

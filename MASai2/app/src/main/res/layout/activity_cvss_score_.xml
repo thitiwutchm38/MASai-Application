@@ -4,6 +4,193 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CVSS_score_Activity">
+    android:scrollbars="vertical"
+    tools:context=".CVSS_score_Activity"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/app_result_shape_top"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Overall CVSS Score"
+            android:textColor="@color/colorbgS"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/rela_app_security_flow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/app_result_shape"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:id="@+id/relative_min_score"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_score"
+                android:backgroundTint="@android:color/holo_red_light">
+
+                <TextView
+                    android:id="@+id/textView_min_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="#"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_min_score_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center_horizontal"
+                    android:text="Min"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_avg_score"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_score"
+                android:backgroundTint="#F0E544">
+
+                <TextView
+                    android:id="@+id/textView_avg_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center"
+                    android:text="#"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_avg_score_label"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center"
+                    android:text="Average"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_max_score"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_score"
+                android:backgroundTint="@android:color/holo_green_dark">
+
+                <TextView
+                    android:id="@+id/textView_max_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center"
+                    android:text="#"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_max_score_label"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Max"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="495dp"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/profile2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorAccent"
+                app:expandOnClick="true"
+                app:inner_view="@layout/cvss_description"
+                app:title="23/Telnet">
+
+            </com.alespero.expandablecardview.ExpandableCardView>
+            <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                app:expandOnClick="true"
+                app:inner_view="@layout/recycleview_cvss"
+                app:title="22/FTP">
+
+            </com.alespero.expandablecardview.ExpandableCardView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

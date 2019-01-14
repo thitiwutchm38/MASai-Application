@@ -13,7 +13,7 @@
         android:layout_width="324dp"
         android:layout_height="479dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
@@ -41,7 +41,7 @@
 
 
             <ImageView
-                android:id="@+id/app_data_icon"
+                android:id="@+id/icon_device_type"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentStart="true"
@@ -50,40 +50,40 @@
                 app:srcCompat="@android:drawable/sym_def_app_icon" />
 
             <TextView
-                android:id="@+id/app_name"
+                android:id="@+id/textView_label_ip_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_data_icon"
-                android:layout_toRightOf="@+id/app_data_icon"
+                android:layout_toEndOf="@+id/icon_device_type"
+                android:layout_toRightOf="@+id/icon_device_type"
                 android:text="App Name:"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/app_data_ip"
+                android:id="@+id/textView_data_ip_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="49dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_name"
-                android:layout_toRightOf="@id/app_name"
+                android:layout_toEndOf="@+id/textView_label_ip_address"
+                android:layout_toRightOf="@id/textView_label_ip_address"
                 android:text="result"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/app_id"
+                android:id="@+id/textView_label_port_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/app_name"
+                android:layout_below="@+id/textView_label_ip_address"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_data_icon"
-                android:layout_toRightOf="@+id/app_data_icon"
+                android:layout_toEndOf="@+id/icon_device_type"
+                android:layout_toRightOf="@+id/icon_device_type"
                 android:text="App ID:"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -92,25 +92,25 @@
                 android:id="@+id/app_data_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/app_data_ip"
+                android:layout_below="@+id/textView_data_ip_address"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_name"
-                android:layout_toRightOf="@id/app_name"
+                android:layout_toEndOf="@+id/textView_label_ip_address"
+                android:layout_toRightOf="@id/textView_label_ip_address"
                 android:text="result"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/app_version"
+                android:id="@+id/port_cvss_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/app_id"
+                android:layout_below="@+id/textView_label_port_address"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_data_icon"
-                android:layout_toRightOf="@+id/app_data_icon"
+                android:layout_toEndOf="@+id/icon_device_type"
+                android:layout_toRightOf="@+id/icon_device_type"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="App Version:"
@@ -126,8 +126,8 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_name"
-                android:layout_toRightOf="@id/app_name"
+                android:layout_toEndOf="@+id/textView_label_ip_address"
+                android:layout_toRightOf="@id/textView_label_ip_address"
                 android:text="result"
                 android:textSize="12sp" />
 
@@ -136,12 +136,12 @@
                 android:id="@+id/app_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/app_version"
+                android:layout_below="@+id/port_cvss_score"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="4dp"
-                android:layout_toEndOf="@+id/app_data_icon"
-                android:layout_toRightOf="@+id/app_data_icon"
+                android:layout_toEndOf="@+id/icon_device_type"
+                android:layout_toRightOf="@+id/icon_device_type"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="App Type:"
@@ -156,8 +156,8 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/app_name"
-                android:layout_toRightOf="@id/app_name"
+                android:layout_toEndOf="@+id/textView_label_ip_address"
+                android:layout_toRightOf="@id/textView_label_ip_address"
                 android:text="result"
                 android:textSize="12sp" />
 
@@ -197,7 +197,8 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/shape_score"
-                android:backgroundTint="#13CE66">
+                android:backgroundTint="#13CE66"
+                android:clickable="true">
 
                 <TextView
                     android:id="@+id/textView_warning"
@@ -273,7 +274,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_score"
-                android:backgroundTint="#FFBA5C">
+                android:backgroundTint="#F95F62">
 
                 <TextView
                     android:id="@+id/textView_high_risk"
@@ -313,7 +314,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_score"
-                android:backgroundTint="#F95F62">
+                android:backgroundTint="#FFBA5C">
 
                 <TextView
                     android:id="@+id/textView_medium"
@@ -408,6 +409,7 @@
         android:layout_marginStart="113dp"
         android:layout_marginTop="180dp"
         android:layout_marginEnd="8dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -187,7 +187,7 @@ public class CrackRouterActivity extends AppCompatActivity{
         AlertDialog.Builder dialog = new AlertDialog.Builder(CrackRouterActivity.this);
         dialog.setCancelable(false);
         dialog.setTitle("Cannot decrypt password");
-        dialog.setMessage(ssid+"'s password is too strong");
+        dialog.setMessage("The password's "+ssid+"'cannot be cracked");
         dialog.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() { // define the 'Cancel' button
             public void onClick(DialogInterface dialog, int which) {
                 //Either of the following two lines should work.

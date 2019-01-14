@@ -1,6 +1,5 @@
 package com.example.bookthiti.masai2;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +43,14 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
 
 
 
-        if(position % 2 == 0) {
-        ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#A0D4EF"));
-        }
-        else
-            {
-        ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#D3DFEE"));
-            }
-
+//        if(position % 2 == 0) {
+//        ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#A0D4EF"));
+//        }
+//        else
+//            {
+//        ((RelativeLayout)Holder.device_layout).setBackgroundColor(Color.parseColor("#D3DFEE"));
+//            }
+//
     }
 
 
@@ -77,9 +76,9 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
             super(view);
 
 
-            rowMainImage = view.findViewById(R.id.app_data_icon);
+            rowMainImage = view.findViewById(R.id.icon_device_type);
 
-            ip_Text = view.findViewById(R.id.app_data_ip);
+            ip_Text = view.findViewById(R.id.textView_data_ip_address);
             mac_Text = view.findViewById(R.id.app_data_id);
             type_Text = view.findViewById(R.id.device_data_type);
 

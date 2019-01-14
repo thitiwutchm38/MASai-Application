@@ -5,6 +5,7 @@
 
     <application
         android:allowBackup="true"
+        tools:replace="android:label"
         android:icon="@mipmap/masai_launcher"
         android:label="MASai"
         android:roundIcon="@mipmap/masai_launcher_round"
@@ -45,8 +46,10 @@
         <activity android:name=".ScanResultActivity" />
         <activity
             android:name=".Device_information"
-            android:label="Device Information"></activity>
-        <activity android:name=".CVSS_score_Activity"></activity>
+            android:label="Device Information" />
+        <activity android:name=".CVSS_score_Activity"
+            android:label="Service Assessment" />
+        <activity android:name=".Port_attackActivity"></activity>
     </application>
 
 </manifest>

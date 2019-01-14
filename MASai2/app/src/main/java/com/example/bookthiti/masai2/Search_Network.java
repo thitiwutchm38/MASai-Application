@@ -61,6 +61,7 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
     TextView textView_signal;
 
 
+    LinearLayout lin_port_att;
 
 
     boolean ssid_temp = true;
@@ -134,9 +135,12 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
             reScan_btt = (Button) findViewById(R.id.button_rescan);
 
+            lin_port_att = (LinearLayout) findViewById(R.id.lin_port_att);
 
 
             reScan_btt.setVisibility(View.GONE);
+            lin_port_att.setVisibility(View.GONE);
+
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -145,7 +149,6 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                     mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
                     final RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
-
 
                     final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Search_Network.this,
                             LinearLayoutManager.VERTICAL, false);
@@ -168,6 +171,9 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
                     final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
                     progressBar.setVisibility(View.GONE);
+
+                    lin_port_att.setVisibility(View.VISIBLE);
+
 
                     reScan_btt.setVisibility(View.VISIBLE);
 

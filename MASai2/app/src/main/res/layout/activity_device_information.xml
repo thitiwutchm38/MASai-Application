@@ -175,7 +175,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/linearlayout_show_router"
+            android:id="@+id/lin_port_att"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_marginTop="30dp"

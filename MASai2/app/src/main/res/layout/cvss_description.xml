@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_cve"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/textView_label_ip_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/icon_device_type"
+        android:layout_toRightOf="@+id/icon_device_type"
+        android:text="CVE:"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_data_ip_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/textView_label_ip_address"
+        android:text="#"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView_label_port_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_label_ip_address"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/icon_device_type"
+        android:layout_toRightOf="@+id/icon_device_type"
+        android:text="Description:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/app_data_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_data_ip_address"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/textView_label_port_address"
+        android:layout_toRightOf="@id/textView_label_port_address"
+        android:text="#"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/port_cvss_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_data_id"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/icon_device_type"
+        android:layout_toRightOf="@+id/icon_device_type"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="CVSS score:"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/port_data_cvss_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_data_id"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/port_cvss_score"
+        android:layout_toRightOf="@id/port_cvss_score"
+        android:text="#"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>

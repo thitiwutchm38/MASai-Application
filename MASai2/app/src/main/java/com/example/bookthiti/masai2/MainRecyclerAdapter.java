@@ -1,7 +1,6 @@
 package com.example.bookthiti.masai2;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>{
@@ -93,7 +91,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
             device_lin = view.findViewById(R.id.linear_search);
 
-            rowMainParentLinearLayout =  view.findViewById(R.id.linearlayout_show_router);
+            rowMainParentLinearLayout =  view.findViewById(R.id.lin_port_att);
 
                 rowMainButton_button.setOnClickListener(new View.OnClickListener() {
                 @Override
