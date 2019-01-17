@@ -1,7 +1,6 @@
 package com.example.bookthiti.masai2;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -372,7 +371,7 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
 
     public void openActivity_CVSS_score() {
 
-        Intent intent = new Intent(this,CVSS_score_Activity.class);
+        Intent intent = new Intent(this,CvssScoreActivity.class);
         startActivity(intent);
     }
 

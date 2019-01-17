@@ -1,323 +1,323 @@
 {
-    "resultType": "wifiScan",
-    "payload": {
-        "routers": [
-            {
-                "NAME": "AP[1]",
-                "SSID": "TP-Link_BBB6",
-                "BSSID": "0C:80:63:C2:BB:B6",
-                "MODE": "Infra",
-                "CHAN": "11",
-                "SIGNAL": "100",
-                "SECURITY": "WPA1 WPA2"
-            },
-            {
-                "NAME": "AP[2]",
-                "SSID": "TP-Link_BBB6_5G",
-                "BSSID": "0C:80:63:C2:BB:B5",
-                "MODE": "Infra",
-                "CHAN": "40",
-                "SIGNAL": "100",
-                "SECURITY": "WPA2"
-            },
-            {
-                "NAME": "AP[3]",
-                "SSID": "whoa",
-                "BSSID": "3E:F8:62:39:EF:68",
-                "MODE": "Infra",
-                "CHAN": "1",
-                "SIGNAL": "90",
-                "SECURITY": "WPA2"
-            },
-            {
-                "NAME": "AP[4]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:F7:81",
-                "MODE": "Infra",
-                "CHAN": "11",
-                "SIGNAL": "89",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[5]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:F7:82",
-                "MODE": "Infra",
-                "CHAN": "11",
-                "SIGNAL": "89",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[6]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:F7:80",
-                "MODE": "Infra",
-                "CHAN": "11",
-                "SIGNAL": "82",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[7]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:F7:83",
-                "MODE": "Infra",
-                "CHAN": "11",
-                "SIGNAL": "82",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[8]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:F7:90",
-                "MODE": "Infra",
-                "CHAN": "100",
-                "SIGNAL": "82",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[9]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:F7:91",
-                "MODE": "Infra",
-                "CHAN": "100",
-                "SIGNAL": "82",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[10]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:F7:92",
-                "MODE": "Infra",
-                "CHAN": "100",
-                "SIGNAL": "82",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[11]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:F7:93",
-                "MODE": "Infra",
-                "CHAN": "100",
-                "SIGNAL": "82",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[12]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:A0:E0",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "69",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[13]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:A0:E1",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "60",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[14]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:A0:E2",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "60",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[15]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:EC:81",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "45",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[16]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:EC:82",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "45",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[17]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:F7:43",
-                "MODE": "Infra",
-                "CHAN": "1",
-                "SIGNAL": "44",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[18]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:A0:E3",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "44",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[19]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:F7:40",
-                "MODE": "Infra",
-                "CHAN": "1",
-                "SIGNAL": "42",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[20]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:F7:42",
-                "MODE": "Infra",
-                "CHAN": "1",
-                "SIGNAL": "42",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[21]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:F7:41",
-                "MODE": "Infra",
-                "CHAN": "1",
-                "SIGNAL": "42",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[22]",
-                "SSID": "SetMeUp-C8:7E:08",
-                "BSSID": "C8:B5:AD:07:E0:80",
-                "MODE": "Infra",
-                "CHAN": "1",
-                "SIGNAL": "42",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[23]",
-                "SSID": "MUICTenergy",
-                "BSSID": "60:38:E0:95:7C:CE",
-                "MODE": "Infra",
-                "CHAN": "36",
-                "SIGNAL": "42",
-                "SECURITY": "WPA2"
-            },
-            {
-                "NAME": "AP[24]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:EC:80",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "37",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[25]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:EC:83",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "37",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[26]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:A0:F0",
-                "MODE": "Infra",
-                "CHAN": "44",
-                "SIGNAL": "37",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[27]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:A0:F1",
-                "MODE": "Infra",
-                "CHAN": "44",
-                "SIGNAL": "37",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[28]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:A0:F2",
-                "MODE": "Infra",
-                "CHAN": "44",
-                "SIGNAL": "37",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[29]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:A0:F3",
-                "MODE": "Infra",
-                "CHAN": "44",
-                "SIGNAL": "37",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[30]",
-                "SSID": ".@ AIS SUPER WiFi",
-                "BSSID": "24:F2:7F:02:F7:50",
-                "MODE": "Infra",
-                "CHAN": "140",
-                "SIGNAL": "34",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[31]",
-                "SSID": "MU-WiFi",
-                "BSSID": "24:F2:7F:02:F7:51",
-                "MODE": "Infra",
-                "CHAN": "140",
-                "SIGNAL": "34",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[32]",
-                "SSID": "ICTenergy",
-                "BSSID": "24:F2:7F:02:F7:52",
-                "MODE": "Infra",
-                "CHAN": "140",
-                "SIGNAL": "34",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[33]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:F7:53",
-                "MODE": "Infra",
-                "CHAN": "140",
-                "SIGNAL": "34",
-                "SECURITY": "--"
-            },
-            {
-                "NAME": "AP[34]",
-                "SSID": "FingerPrint",
-                "BSSID": "00:22:6B:73:64:7C",
-                "MODE": "Infra",
-                "CHAN": "6",
-                "SIGNAL": "25",
-                "SECURITY": "WPA2"
-            },
-            {
-                "NAME": "AP[35]",
-                "SSID": ".@   TRUEWIFI",
-                "BSSID": "24:F2:7F:02:F6:03",
-                "MODE": "Infra",
-                "CHAN": "11",
-                "SIGNAL": "22",
-                "SECURITY": "--"
-            }
-        ],
-        "count": 35
-    }
+  "resultType" : "wifiScan",
+  "payload" : {
+    "routers" : [
+      {
+        "NAME" : "AP[1]",
+        "SSID" : "TP-Link_BBB6",
+        "BSSID" : "0C:80:63:C2:BB:B6",
+        "MODE" : "Infra",
+        "CHAN" : "11",
+        "SIGNAL" : "100",
+        "SECURITY" : "WPA1 WPA2"
+      },
+      {
+        "NAME" : "AP[2]",
+        "SSID" : "TP-Link_BBB6_5G",
+        "BSSID" : "0C:80:63:C2:BB:B5",
+        "MODE" : "Infra",
+        "CHAN" : "40",
+        "SIGNAL" : "100",
+        "SECURITY" : "WPA2"
+      },
+      {
+        "NAME" : "AP[3]",
+        "SSID" : "whoa",
+        "BSSID" : "3E:F8:62:39:EF:68",
+        "MODE" : "Infra",
+        "CHAN" : "1",
+        "SIGNAL" : "90",
+        "SECURITY" : "WPA2"
+      },
+      {
+        "NAME" : "AP[4]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:F7:81",
+        "MODE" : "Infra",
+        "CHAN" : "11",
+        "SIGNAL" : "89",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[5]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:F7:82",
+        "MODE" : "Infra",
+        "CHAN" : "11",
+        "SIGNAL" : "89",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[6]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:F7:80",
+        "MODE" : "Infra",
+        "CHAN" : "11",
+        "SIGNAL" : "82",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[7]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:F7:83",
+        "MODE" : "Infra",
+        "CHAN" : "11",
+        "SIGNAL" : "82",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[8]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:F7:90",
+        "MODE" : "Infra",
+        "CHAN" : "100",
+        "SIGNAL" : "82",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[9]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:F7:91",
+        "MODE" : "Infra",
+        "CHAN" : "100",
+        "SIGNAL" : "82",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[10]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:F7:92",
+        "MODE" : "Infra",
+        "CHAN" : "100",
+        "SIGNAL" : "82",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[11]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:F7:93",
+        "MODE" : "Infra",
+        "CHAN" : "100",
+        "SIGNAL" : "82",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[12]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:A0:E0",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "69",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[13]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:A0:E1",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "60",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[14]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:A0:E2",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "60",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[15]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:EC:81",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "45",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[16]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:EC:82",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "45",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[17]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:F7:43",
+        "MODE" : "Infra",
+        "CHAN" : "1",
+        "SIGNAL" : "44",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[18]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:A0:E3",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "44",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[19]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:F7:40",
+        "MODE" : "Infra",
+        "CHAN" : "1",
+        "SIGNAL" : "42",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[20]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:F7:42",
+        "MODE" : "Infra",
+        "CHAN" : "1",
+        "SIGNAL" : "42",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[21]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:F7:41",
+        "MODE" : "Infra",
+        "CHAN" : "1",
+        "SIGNAL" : "42",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[22]",
+        "SSID" : "SetMeUp-C8:7E:08",
+        "BSSID" : "C8:B5:AD:07:E0:80",
+        "MODE" : "Infra",
+        "CHAN" : "1",
+        "SIGNAL" : "42",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[23]",
+        "SSID" : "MUICTenergy",
+        "BSSID" : "60:38:E0:95:7C:CE",
+        "MODE" : "Infra",
+        "CHAN" : "36",
+        "SIGNAL" : "42",
+        "SECURITY" : "WPA2"
+      },
+      {
+        "NAME" : "AP[24]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:EC:80",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "37",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[25]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:EC:83",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "37",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[26]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:A0:F0",
+        "MODE" : "Infra",
+        "CHAN" : "44",
+        "SIGNAL" : "37",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[27]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:A0:F1",
+        "MODE" : "Infra",
+        "CHAN" : "44",
+        "SIGNAL" : "37",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[28]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:A0:F2",
+        "MODE" : "Infra",
+        "CHAN" : "44",
+        "SIGNAL" : "37",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[29]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:A0:F3",
+        "MODE" : "Infra",
+        "CHAN" : "44",
+        "SIGNAL" : "37",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[30]",
+        "SSID" : ".@ AIS SUPER WiFi",
+        "BSSID" : "24:F2:7F:02:F7:50",
+        "MODE" : "Infra",
+        "CHAN" : "140",
+        "SIGNAL" : "34",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[31]",
+        "SSID" : "MU-WiFi",
+        "BSSID" : "24:F2:7F:02:F7:51",
+        "MODE" : "Infra",
+        "CHAN" : "140",
+        "SIGNAL" : "34",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[32]",
+        "SSID" : "ICTenergy",
+        "BSSID" : "24:F2:7F:02:F7:52",
+        "MODE" : "Infra",
+        "CHAN" : "140",
+        "SIGNAL" : "34",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[33]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:F7:53",
+        "MODE" : "Infra",
+        "CHAN" : "140",
+        "SIGNAL" : "34",
+        "SECURITY" : "--"
+      },
+      {
+        "NAME" : "AP[34]",
+        "SSID" : "FingerPrint",
+        "BSSID" : "00:22:6B:73:64:7C",
+        "MODE" : "Infra",
+        "CHAN" : "6",
+        "SIGNAL" : "25",
+        "SECURITY" : "WPA2"
+      },
+      {
+        "NAME" : "AP[35]",
+        "SSID" : ".@   TRUEWIFI",
+        "BSSID" : "24:F2:7F:02:F6:03",
+        "MODE" : "Infra",
+        "CHAN" : "11",
+        "SIGNAL" : "22",
+        "SECURITY" : "--"
+      }
+    ],
+    "count" : 35
+  }
 }

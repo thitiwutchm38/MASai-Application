@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +13,7 @@ import com.alespero.expandablecardview.ExpandableCardView;
 
 import java.util.ArrayList;
 
-public class CVSS_score_Activity extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
+public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
 
     ExpandableCardView card1 ;
     ExpandableCardView card2 ;
@@ -33,14 +34,15 @@ public class CVSS_score_Activity extends AppCompatActivity implements OnRecycler
         setContentView(R.layout.activity_cvss_score_);
 
         mainRecyclerView = findViewById(R.id.recyclerview_cvss);
-        linearLayoutManager = new LinearLayoutManager(CVSS_score_Activity.this,
+        Log.i("Info", "" + mainRecyclerView);
+        linearLayoutManager = new LinearLayoutManager(CvssScoreActivity.this,
                 LinearLayoutManager.VERTICAL, false);
         mainRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Recycler Adapter
        mainModelArrayList = prepareList();
-       mainRecyclerAdapter = new CVEAdapter(CVSS_score_Activity.this, mainModelArrayList);
-        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(CVSS_score_Activity.this);
+       mainRecyclerAdapter = new CVEAdapter(CvssScoreActivity.this, mainModelArrayList);
+        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(CvssScoreActivity.this);
         mainRecyclerView.setAdapter(mainRecyclerAdapter);
 
         app_data_ip = (TextView) findViewById(R.id.textView_data_ip_address);
@@ -56,7 +58,7 @@ public class CVSS_score_Activity extends AppCompatActivity implements OnRecycler
 
 
 
-                Toast.makeText(CVSS_score_Activity.this, isExpanded ? "Expanded!" : "Collapsed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CvssScoreActivity.this, isExpanded ? "Expanded!" : "Collapsed!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -68,7 +70,7 @@ public class CVSS_score_Activity extends AppCompatActivity implements OnRecycler
                 //app_data_ip.setText("4321");
 
 
-                Toast.makeText(CVSS_score_Activity.this, isExpanded ? "Expanded!" : "Collapsed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CvssScoreActivity.this, isExpanded ? "Expanded!" : "Collapsed!", Toast.LENGTH_SHORT).show();
             }
         });
 

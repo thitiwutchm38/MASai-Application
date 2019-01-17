@@ -55,20 +55,19 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
     private MainRecyclerAdapter mainRecyclerAdapter;
 
-    Button reScan_btt;
+    //Button reScan_btt;
 
 
-    TextView textView_ssid;
-    TextView textView_mode;
-    TextView textView_signal;
-
+//    TextView textView_mode;
+//    TextView textView_signal;
+//
 
     LinearLayout lin_port_att;
 
 
-    boolean ssid_temp = true;
-    boolean mode_temp = true;
-    boolean signal_temp = true;
+//    boolean ssid_temp = true;
+//    boolean mode_temp = true;
+//    boolean signal_temp = true;
 
 
         private final int categoryIcon[] = {
@@ -127,20 +126,20 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
 
             //Sort by Topic
-            textView_ssid = (TextView)findViewById(R.id.textView_ssid);
+//            textView_ssid = (TextView)findViewById(R.id.textView_ssid);
+//
+//            textView_mode  = (TextView)findViewById(R.id.textView_mode);
+//
+//            textView_signal = (TextView)findViewById(R.id.textView_signal);
 
-            textView_mode  = (TextView)findViewById(R.id.textView_mode);
-
-            textView_signal = (TextView)findViewById(R.id.textView_signal);
 
 
-
-            reScan_btt = (Button) findViewById(R.id.button_rescan);
+            //reScan_btt = (Button) findViewById(R.id.button_rescan);
 
             lin_port_att = (LinearLayout) findViewById(R.id.lin_port_att);
 
 
-            reScan_btt.setVisibility(View.GONE);
+           // reScan_btt.setVisibility(View.GONE);
             lin_port_att.setVisibility(View.GONE);
 
 
@@ -177,7 +176,7 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                     lin_port_att.setVisibility(View.VISIBLE);
 
 
-                    reScan_btt.setVisibility(View.VISIBLE);
+                   // reScan_btt.setVisibility(View.VISIBLE);
 
 
 
@@ -185,30 +184,30 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
             }, 5000); // Millisecond 1000 = 1 sec
 
 
-            textView_signal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    sortSignal();
-
-                }
-            });
-
-            textView_mode.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    sortMode();
-                }
-            });
-
-            textView_ssid.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    sortSSID();
-                }
-            });
+//            textView_signal.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    sortSignal();
+//
+//                }
+//            });
+//
+//            textView_mode.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    sortMode();
+//                }
+//            });
+//
+//            textView_ssid.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    sortSSID();
+//                }
+//            });
 
 
         }
@@ -504,52 +503,52 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
 
     }
-
-    void sortSignal() {
-
-        if (signal_temp == true){
-            signal_temp =false;
-            Collections.sort(mainModelArrayList, MainModel.modelSig_des);
-            mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
-        }else{
-            signal_temp =true;
-            Collections.sort(mainModelArrayList, MainModel.modelSigno);
-            mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
-        }
-    }
-
-    void sortSSID() {
-
-        if (ssid_temp == true){
-            ssid_temp =false;
-            Collections.sort(mainModelArrayList, MainModel.modelssid_asc);
-            mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
-        }else{
-            ssid_temp =true;
-            Collections.sort(mainModelArrayList, MainModel.modelssid_des);
-            mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
-        }
-    }
-
-
-    void sortMode() {
-
-        if (mode_temp == true){
-            mode_temp =false;
-            Collections.sort(mainModelArrayList, MainModel.modelmode_asc);
-            mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
-        }else{
-            mode_temp =true;
-            Collections.sort(mainModelArrayList, MainModel.modelmode_des);
-            mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
-        }
-    }
+//
+//    void sortSignal() {
+//
+//        if (signal_temp == true){
+//            signal_temp =false;
+//            Collections.sort(mainModelArrayList, MainModel.modelSig_des);
+//            mainRecyclerAdapter.notifyDataSetChanged();
+//            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+//        }else{
+//            signal_temp =true;
+//            Collections.sort(mainModelArrayList, MainModel.modelSigno);
+//            mainRecyclerAdapter.notifyDataSetChanged();
+//            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+//        }
+//    }
+//
+//    void sortSSID() {
+//
+//        if (ssid_temp == true){
+//            ssid_temp =false;
+//            Collections.sort(mainModelArrayList, MainModel.modelssid_asc);
+//            mainRecyclerAdapter.notifyDataSetChanged();
+//            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+//        }else{
+//            ssid_temp =true;
+//            Collections.sort(mainModelArrayList, MainModel.modelssid_des);
+//            mainRecyclerAdapter.notifyDataSetChanged();
+//            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+//        }
+//    }
+//
+//
+//    void sortMode() {
+//
+//        if (mode_temp == true){
+//            mode_temp =false;
+//            Collections.sort(mainModelArrayList, MainModel.modelmode_asc);
+//            mainRecyclerAdapter.notifyDataSetChanged();
+//            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+//        }else{
+//            mode_temp =true;
+//            Collections.sort(mainModelArrayList, MainModel.modelmode_des);
+//            mainRecyclerAdapter.notifyDataSetChanged();
+//            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
+//        }
+//    }
 
 
     class PromptRunnable implements Runnable {
@@ -563,6 +562,8 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         public void run() {
             this.run();
         }
+
+
     }
 
 }

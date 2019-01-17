@@ -6,25 +6,45 @@
     "App Type" : "Tools"
   },
   "Poten_security" : {
-    "warning" : {
-      "amount" : 2,
-      "0" : "Weak hashing algorithms,M5",
-      "1" : "Dynamic load of code,M7"
-    },
-    "low" : {
-      "amount" : 3,
-      "0" : "Exported broadcast receivers,M1",
-      "1" : "Exported services, M1",
-      "2" : "Exposure of potentially sensitive data,M2"
-    },
-    "medium" : {
-      "amount" : 2,
-      "0" : "Hardcoded encryption keys,M5",
-      "1" : "Usage of unencrypted http protocal,M3"
-    },
-    "high" : {
-      "amount" : 1,
-      "0" : "Possible Man-in-the-middle attack,M3"
-    }
+    "warning" : [
+      {
+        "Problem" : "Weak hashing algorithms",
+        "OWASP" : "M5"
+      },
+      {
+        "Problem" : "Dynamic load of code",
+        "OWASP" : "M7"
+      }
+    ],
+    "low" : [
+      {
+        "Problem" : "Exported broadcast receivers",
+        "OWASP" : "M1"
+      },
+      {
+        "Problem" : "Exported services",
+        "OWASP" : "M1"
+      },
+      {
+        "Problem" : "Exposure of potentially sensitive data",
+        "OWASP" : "M2"
+      }
+    ],
+    "medium" : [
+      {
+        "Problem" : "Hardcoded encryption keys",
+        "OWASP" : "M5"
+      },
+      {
+        "Problem" : "Usage of unencrypted http protocal",
+        "OWASP" : "M3"
+      }
+    ],
+    "high" : [
+      {
+        "Problem" : "Possible Man-in-the-middle attack",
+        "OWASP" : "M3"
+      }
+    ]
   }
 }

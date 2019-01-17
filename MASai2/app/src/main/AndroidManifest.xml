@@ -5,13 +5,13 @@
 
     <application
         android:allowBackup="true"
-        tools:replace="android:label"
         android:icon="@mipmap/masai_launcher"
         android:label="MASai"
         android:roundIcon="@mipmap/masai_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:label">
         <activity android:name=".MainActivity" />
         <activity android:name=".MASai_setting" />
         <activity
@@ -47,9 +47,12 @@
         <activity
             android:name=".Device_information"
             android:label="Device Information" />
-        <activity android:name=".CVSS_score_Activity"
+        <activity
+            android:name=".CvssScoreActivity"
             android:label="Service Assessment" />
-        <activity android:name=".Port_attackActivity"></activity>
+        <activity android:name=".Port_attackActivity" />
+        <activity android:name=".OWASPM10.M1Activity" />
+        <activity android:name=".TopMobileOWASP.OMActivity"></activity>
     </application>
 
 </manifest>

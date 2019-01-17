@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
+import android.view.ContextMenu;
+
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>{
     private ArrayList<MainModel> mainModelArrayList;
     private Context context;
@@ -21,11 +23,16 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     public MainRecyclerAdapter(Context context,ArrayList<MainModel> mainModelArrayList) {
         this.context = context;
         this.mainModelArrayList = mainModelArrayList;
+
+
     }
+
+ 
     @Override
     public MainRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_main_adapter, viewGroup, false);
         return new MainRecyclerAdapter.ViewHolder(view);
+
     }
     @Override
     public void onBindViewHolder(MainRecyclerAdapter.ViewHolder viewHolder, int position) {
@@ -79,7 +86,6 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         final TextView rowMainText_Signal;
         private LinearLayout device_lin ;
 
-
         private LinearLayout rowMainParentLinearLayout;
         @SuppressLint("ClickableViewAccessibility")
         public ViewHolder( View view) {
@@ -97,27 +103,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
 
 
-//            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
-//
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//
-//                            // TODO Auto-generated method stub
-//                            switch(event.getAction())
-//                            {
-//                                case MotionEvent.ACTION_DOWN:
-//                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
-//                                    break;
-//                                case MotionEvent.ACTION_UP:
-//
-//                                    //set color back to default
-//                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
-//                                    break;
-//                            }
-//                            return true;
-//                        }
-//
-//            });
+
+
 
             rowMainParentLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,11 +114,35 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                     }
                 }
             });
+            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                            // TODO Auto-generated method stub
+                            switch(event.getAction())
+                            {
+                                case MotionEvent.ACTION_DOWN:
+                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
+                                    break;
+                                case MotionEvent.ACTION_UP:
+
+                                    //set color back to default
+                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
+                                    break;
+                            }
+                            return false;
+                        }
+
+            });
+
+
 
         }
     }
     public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
         this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
+
     }
 
 

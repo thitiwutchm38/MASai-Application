@@ -5,7 +5,6 @@
     android:id="@+id/constrain_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorbgS"
     tools:context=".Search_Network"
     tools:layout_editor_absoluteY="81dp">
 
@@ -45,12 +44,13 @@
         <LinearLayout
             android:id="@+id/lin_port_att"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_below="@+id/textView_founded_router"
             android:layout_marginBottom="19dp"
             android:background="@drawable/search_frame"
 
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <RelativeLayout
                 android:id="@+id/relative_img"
@@ -82,32 +82,9 @@
                     android:layout_centerHorizontal="true"
                     android:scaleType="fitXY"
                     android:src="@mipmap/ic_launcher"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
             </RelativeLayout>
 
-
-            <RelativeLayout
-                android:id="@+id/relative_SSID"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0.9">
-
-                <TextView
-                    android:id="@+id/textView_ssid"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:onClick="onClick"
-                    android:text="SSID"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relative_mode"
@@ -154,32 +131,6 @@
             </RelativeLayout>
 
 
-            <RelativeLayout
-                android:id="@+id/relative_btt_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1">
-
-                <Button
-                    android:id="@+id/btn_router_test"
-                    android:layout_width="55dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/button_shape_router_select"
-                    android:shadowColor="#A8A8A8"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="5"
-                    android:text="Select"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -208,21 +159,6 @@
 
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/button_rescan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="3"
-        android:background="@drawable/button_background"
-        android:text="Rescan"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
