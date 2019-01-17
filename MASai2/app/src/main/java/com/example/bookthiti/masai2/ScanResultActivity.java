@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
@@ -584,6 +585,49 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             case R.id.layout_pop_up_result:
                 Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                 //openActivity_port_info(position);
+
+                Intent intent = new Intent(this,OwaspMobileActivity.class);
+
+                //Bundle
+                Bundle bundle = new Bundle();
+
+                switch(mainModel.getOwasp_num()) {
+                    case "M1" :
+                        bundle.putString("M", "M1");
+                        break;
+                    case "M2" :
+                        bundle.putString("M", "M2");
+                        break;
+                    case "M3" :
+                        bundle.putString("M", "M3");
+                        break;
+                    case "M4" :
+                        bundle.putString("M", "M4");
+                        break;
+                    case "M5" :
+                        bundle.putString("M", "M5");
+                        break;
+                    case "M6" :
+                        bundle.putString("M", "M6");
+                        break;
+                    case "M7" :
+                        bundle.putString("M", "M7");
+                        break;
+                    case "M8" :
+                        bundle.putString("M", "M8");
+                        break;
+                    case "M9" :
+                        bundle.putString("M", "M9");
+                        break;
+                    case "M10" :
+                        bundle.putString("M", "M10");
+                        break;
+
+                    default :
+                }
+                intent.putExtras(bundle);
+
+                startActivity(intent);
                 break;
         }
     }

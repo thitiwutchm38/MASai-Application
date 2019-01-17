@@ -399,18 +399,13 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         public void onItemClick(final int position, View view) {
         //    MainModel mainModel = (MainModel) view.getTag();
 
-           Intent intent = getIntent();
-           Intent pass_intent = new Intent(this,CrackRouterActivity.class);
+        Intent intent = getIntent();
+           final Intent pass_intent = new Intent(this,CrackRouterActivity.class);
            final Intent pass_intent_blu = new Intent(this,Device_list.class);
 
 
            switch (intent.getStringExtra("MyValue")) {
                 case "device_att" :
-
-                    //Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ mainModel.getOfferSSID(),Toast.LENGTH_LONG).show();
-                    //showAddItemDialog(this,prepareList().get(position).getOfferSSID() );
-
-                    //pass_intent_blu.putExtra("router_information", prepareList().get(position));
 
                     promptForResult(new PromptRunnable(){
                         // put whatever code you want to run after user enters a result

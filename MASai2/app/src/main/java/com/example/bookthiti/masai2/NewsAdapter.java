@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -83,10 +81,10 @@ class MailViewHolder extends RecyclerView.ViewHolder {
     MailViewHolder(View itemView) {
         super(itemView);
 
-        mIcon = itemView.findViewById(R.id.tvIcon);
-        mSender = itemView.findViewById(R.id.tvEmailSender);
+        mIcon = itemView.findViewById(R.id.tvOwaspIcon);
+        mSender = itemView.findViewById(R.id.tvOwaspTopic);
         mEmailTitle = itemView.findViewById(R.id.tvEmailTitle);
-        mEmailDetails = itemView.findViewById(R.id.tvEmailDetails);
+        mEmailDetails = itemView.findViewById(R.id.tvOwaspDetails);
         mEmailTime = itemView.findViewById(R.id.tvEmailTime);
         mLayout = itemView.findViewById(R.id.layout);
 

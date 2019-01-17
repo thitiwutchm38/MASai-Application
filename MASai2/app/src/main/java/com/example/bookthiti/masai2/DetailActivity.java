@@ -22,10 +22,10 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mIcon = findViewById(R.id.tvIcon);
-        mSender = findViewById(R.id.tvEmailSender);
+        mIcon = findViewById(R.id.tvOwaspIcon);
+        mSender = findViewById(R.id.tvOwaspTopic);
         mEmailTitle = findViewById(R.id.tvEmailTitle);
-        mEmailDetails = findViewById(R.id.tvEmailDetails);
+        mEmailDetails = findViewById(R.id.tvOwaspDetails);
         mEmailTime = findViewById(R.id.tvEmailTime);
         mFavorite = findViewById(R.id.ivFavorite);
 

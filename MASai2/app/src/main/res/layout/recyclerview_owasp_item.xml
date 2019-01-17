@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout"
+    android:id="@+id/layout_owasp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/layout_device" />
 
     <TextView
         android:id="@+id/tvOwaspIcon"
@@ -29,8 +22,8 @@
         android:id="@+id/tvOwaspTopic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_toEndOf="@+id/tvOwaspIcon"
         android:layout_toRightOf="@+id/tvOwaspIcon"
         android:text="TextView"
@@ -42,12 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvOwaspTopic"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvOwaspIcon"
         android:layout_toRightOf="@+id/tvOwaspIcon"
-        android:text="TextView"
+        android:text="Detail:"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
@@ -55,8 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvEmailTitle"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvOwaspIcon"
         android:layout_toRightOf="@+id/tvOwaspIcon"
@@ -64,13 +58,5 @@
         android:maxLines="1"
         android:text="This is a very long text and we need to show 3...(dots)" />
 
-    <TextView
-        android:id="@+id/tvEmailTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/tvOwaspTopic"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="TextView" />
 
 </RelativeLayout>

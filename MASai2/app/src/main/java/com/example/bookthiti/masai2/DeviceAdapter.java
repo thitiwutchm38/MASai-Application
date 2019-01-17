@@ -22,7 +22,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
     }
     @Override
     public DeviceAdapter.Holder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_devices_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_owasp_item, viewGroup, false);
 
         return new DeviceAdapter.Holder(view);
     }

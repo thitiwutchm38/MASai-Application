@@ -36,7 +36,7 @@
     android:background="#D3D3D3" />
 
   <TextView
-    android:id="@+id/tvIcon"
+    android:id="@+id/tvOwaspIcon"
     android:layout_width="40dp"
     android:layout_height="40dp"
     android:layout_below="@+id/line"
@@ -50,14 +50,14 @@
     android:textSize="20sp" />
 
   <TextView
-    android:id="@+id/tvEmailSender"
+    android:id="@+id/tvOwaspTopic"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignTop="@+id/tvIcon"
+    android:layout_alignTop="@+id/tvOwaspIcon"
     android:layout_marginLeft="10dp"
     android:layout_marginStart="10dp"
-    android:layout_toEndOf="@+id/tvIcon"
-    android:layout_toRightOf="@+id/tvIcon"
+    android:layout_toEndOf="@+id/tvOwaspIcon"
+    android:layout_toRightOf="@+id/tvOwaspIcon"
     android:text="TextView"
     android:textSize="18sp"
     android:textStyle="bold" />
@@ -66,16 +66,16 @@
     android:id="@+id/tvEmailTime"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/tvEmailSender"
-    android:layout_alignStart="@+id/tvEmailSender"
-    android:layout_below="@+id/tvEmailSender"
+    android:layout_alignLeft="@+id/tvOwaspTopic"
+    android:layout_alignStart="@+id/tvOwaspTopic"
+    android:layout_below="@+id/tvOwaspTopic"
     android:text="TextView" />
 
   <TextView
-    android:id="@+id/tvEmailDetails"
+    android:id="@+id/tvOwaspDetails"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/tvIcon"
+    android:layout_below="@+id/tvOwaspIcon"
     android:layout_marginLeft="12dp"
     android:layout_marginStart="12dp"
     android:layout_marginTop="20dp"

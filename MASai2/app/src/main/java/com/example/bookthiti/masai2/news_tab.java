@@ -17,7 +17,6 @@ import java.util.List;
 
 public class news_tab extends Fragment {
 
-    Toolbar mToolbar;
     RecyclerView mRecyclerView;
     List<NewsData> mEmailData = new ArrayList<>();
 
