@@ -1,20 +1,13 @@
-package com.example.bookthiti.masai2.TopMobileOWASP;
+package com.example.bookthiti.masai2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.bookthiti.masai2.R;
-
-public class OMActivity extends AppCompatActivity {
+public class OwaspMobileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_m_top_10);
+        setContentView(R.layout.activity_owasp_mobile);
     }
-
-
-
-
-
 }

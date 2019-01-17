@@ -51,8 +51,7 @@
             android:name=".CvssScoreActivity"
             android:label="Service Assessment" />
         <activity android:name=".Port_attackActivity" />
-        <activity android:name=".OWASPM10.M1Activity" />
-        <activity android:name=".TopMobileOWASP.OMActivity"></activity>
+        <activity android:name=".OwaspMobileActivity"></activity>
     </application>
 
 </manifest>
