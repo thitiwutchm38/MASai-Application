@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Mobile_Appscan"
+    tools:context=".MobileApplicationScanning.MobileApplicationScannerActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
@@ -39,37 +39,38 @@
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
-
-            <SearchView
-                android:id="@+id/SearchView_GooglePlay"
-                android:layout_width="293dp"
-                android:layout_height="wrap_content"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search from GooglePlay" />
-
-            <ListView
-                android:id="@+id/listview"
+            <Button
+                android:id="@+id/button_select_from_google_play"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@+id/SearchView_GooglePlay"
-                android:scrollbars="vertical"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/imageView_googleplay_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="294dp"
-                android:layout_marginTop="1dp"
-                app:srcCompat="@drawable/playstore" />
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_google_play"
+                android:drawablePadding="8dp"
+                android:paddingLeft="0dp"
+                android:text="Select from GooglePlay"
+                android:textAlignment="viewStart"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textColor="?android:attr/colorForeground"
+                android:textSize="18sp" />
 
         </RelativeLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,21 +80,6 @@
             tools:layout_editor_absoluteX="411dp"
             tools:layout_editor_absoluteY="350dp">
 
-            <SearchView
-                android:id="@+id/SearchView_search_apk"
-                android:layout_width="293dp"
-                android:layout_height="wrap_content"
-                android:iconifiedByDefault="false"
-                android:queryHint="Upload your apk file " />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="visible"
-                app:srcCompat="@drawable/folder" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +88,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button_rescan"
+                android:id="@+id/button_start_app_scan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"

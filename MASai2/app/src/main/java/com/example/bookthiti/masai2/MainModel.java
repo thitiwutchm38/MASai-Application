@@ -6,8 +6,7 @@ import java.util.Comparator;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MainModel implements Parcelable  {
-
+public class MainModel implements Parcelable {
     @SerializedName("SSID")
     private String offerSSID;
 
@@ -24,15 +23,11 @@ public class MainModel implements Parcelable  {
 
     private String offerCompany;
 
-
     @SerializedName("BSSID")
-
     private String offerMac_address;
 
     @SerializedName("SECURITY")
-
     private String offerSecurity;
-
 
     private int offerIcon;
 
@@ -56,6 +51,15 @@ public class MainModel implements Parcelable  {
 
     }
 
+    public MainModel(String offerSSID, String offerMode, String offerSignal, String offerChannel, String offerMac_address, String offerSecurity, int offerIcon) {
+        this.offerSSID = offerSSID;
+        this.offerMode = offerMode;
+        this.offerSignal = offerSignal;
+        this.offerChannel = offerChannel;
+        this.offerMac_address = offerMac_address;
+        this.offerSecurity = offerSecurity;
+        this.offerIcon = offerIcon;
+    }
 
     @Override
     public int describeContents() {

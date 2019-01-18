@@ -16,17 +16,45 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class CrackRouterActivity extends AppCompatActivity{
+import com.example.bookthiti.masai2.service.BluetoothManagementService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+public class CrackRouterActivity extends AppCompatActivity {
+    private final static String TAG_INFO = "Log info";
+    private final static String TAG_DEBUG = "Log debug";
+    private final static String TAG_ERROR = "Log error";
 
+    private Context mContext;
+    private BluetoothManagementService mBluetoothManagementService;
+    private boolean mBound = false;
+    private boolean isRemoteDeviceConnected = false;
+
+    Button mStartCrackingButton;
     TextView TextView_mac;
-    TextView TextView_sig ;
+    TextView TextView_sig;
 
     TextView TextView_company;
     TextView TextView_sec;
@@ -58,31 +86,63 @@ public class CrackRouterActivity extends AppCompatActivity{
     private ClipboardManager myClipboard;
     private ClipData myClip;
 
+    private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothManagementService.ACTION_WIFI_ATTACK.equals(action)) {
+                Bundle bundle = intent.getExtras();
+                String jsonString = bundle.getString("payload");
+                Log.i(TAG_INFO, "Receive ACTION_WIFI_ATTACK: " + jsonString);
+            }
+        }
+    };
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BluetoothManagementService.LocalBinder binder = (BluetoothManagementService.LocalBinder) service;
+            mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
+            mBound = true;
+            isRemoteDeviceConnected = isRemoteDeviceConnected();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("command", "wifiScan");
+            jsonObject.add("payload", null);
+            String jsonString = jsonObject.toString();
+            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+            Log.i(TAG_INFO, "Service is unbounded");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crack_router);
 
-        TextView_mac = (TextView)findViewById(R.id.mac_value);
-        TextView_sig = (TextView)findViewById(R.id.sig_value);
-        TextView_company = (TextView)findViewById(R.id.comp_value);
-        TextView_sec = (TextView)findViewById(R.id.sec_value);
-        TextView_fre = (TextView)findViewById(R.id.fre_value);
-        TextView_cha = (TextView)findViewById(R.id.cha_value);
-        TextView_ssid = (TextView)findViewById(R.id.textView_ssid);
+        TextView_mac = (TextView) findViewById(R.id.mac_value);
+        TextView_sig = (TextView) findViewById(R.id.sig_value);
+        TextView_company = (TextView) findViewById(R.id.comp_value);
+        TextView_sec = (TextView) findViewById(R.id.sec_value);
+        TextView_fre = (TextView) findViewById(R.id.fre_value);
+        TextView_cha = (TextView) findViewById(R.id.cha_value);
+        TextView_ssid = (TextView) findViewById(R.id.textView_ssid);
 
-        textView_crack_status = (TextView)findViewById(R.id.textView_crack_status);
+        textView_crack_status = (TextView) findViewById(R.id.textView_crack_status);
 
-        myprogress_crack= (TextView)findViewById(R.id.textView_progress_crack);
+        myprogress_crack = (TextView) findViewById(R.id.textView_progress_crack);
 
-        progressBar = (ProgressBar)findViewById(R.id.progressBar_crack);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar_crack);
 
-        copy_pass =  (ImageButton)findViewById(R.id.imageButton_copy_pass);
+        copy_pass = (ImageButton) findViewById(R.id.imageButton_copy_pass);
 
-        pass_result = (EditText)findViewById(R.id.editText_pass_wifi);
+        pass_result = (EditText) findViewById(R.id.editText_pass_wifi);
 
-        pass_wifi_relative =   (RelativeLayout) findViewById(R.id.pass_wifi_relative);
+        pass_wifi_relative = (RelativeLayout) findViewById(R.id.pass_wifi_relative);
 
 
         //Status
@@ -96,29 +156,44 @@ public class CrackRouterActivity extends AppCompatActivity{
 
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-        //String test = information_data.getOfferSSID();
-//        information_data.getOfferSignal();
-//        information_data.getOfferCompany();
-//        information_data.getOfferSecurity();
-//        information_data.getOfferFrequency();
-//        information_data.getOfferChannel();
+        mContext = getApplicationContext();
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
 
+        final MainModel information_data = (MainModel) getIntent().getParcelableExtra("router_information");
 
         TextView_ssid.setText(information_data.getOfferSSID());
-
-
         TextView_sec.setText(information_data.getOfferMac_address());
         TextView_mac.setText(information_data.getOfferSecurity());
-
-
         TextView_sig.setText(information_data.getOfferSignal());
         TextView_company.setText(information_data.getOfferCompany());
-
-
-
         TextView_fre.setText(information_data.getOfferFrequency());
         TextView_cha.setText(information_data.getOfferChannel());
 
+        mStartCrackingButton = (Button) findViewById(R.id.button_start_wifi_cracking);
+        mStartCrackingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isRemoteDeviceConnected) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("command", "wifiCracking");
+                    Gson gson = new Gson();
+                    String payloadJsonString = gson.toJson(information_data, MainModel.class);
+                    Log.i(TAG_INFO, payloadJsonString);
+//                    jsonObject.addProperty("payload", payloadJsonString);
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
+                    jsonObject.add("payload", payloadJsonElement);
+                    String jsonString = jsonObject.toString();
+                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                }
+            }
+        });
 
         copy_pass.setOnClickListener(new View.OnClickListener() {
 
@@ -136,7 +211,7 @@ public class CrackRouterActivity extends AppCompatActivity{
         });
 
 
-        button=(Button)findViewById(R.id.crack_btn);
+        button = (Button) findViewById(R.id.crack_btn);
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -145,49 +220,27 @@ public class CrackRouterActivity extends AppCompatActivity{
                 progressBar.setVisibility(View.VISIBLE);
                 myprogress_crack.setVisibility(View.VISIBLE);
 
-                myprogress_crack.setText("Cracking....."+information_data.getOfferSSID()+"'s password.");
-
-
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if(pass_status){
-
-                            textView_crack_status.setVisibility(View.VISIBLE);
-                            pass_result.setText("Muict555");
-                            textView_crack_status.setText("Cracked success !");
-                            textView_crack_status.setTextColor(Color.GREEN);
-
-                            pass_wifi_relative.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.INVISIBLE);
-                            myprogress_crack.setVisibility(View.INVISIBLE);
-                        }else {
-
-                            textView_crack_status.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.INVISIBLE);
-                            textView_crack_status.setText("Cracked fail !");
-                            textView_crack_status.setTextColor(Color.RED);
-                            myprogress_crack.setVisibility(View.INVISIBLE);
-                            aleartWrongPass(information_data.getOfferSSID());
-
-                            return;
-                        }
-                    }
-                }, 10000); // Millisecond 1000 = 1 sec
-
+                myprogress_crack.setText("Cracking....." + information_data.getOfferSSID() + "'s password.");
             }
         });
 
     }
 
-    void aleartWrongPass(String ssid ) {
+    @Override
+    protected void onDestroy() {
+        if (mBound) {
+            unbindService(mConnection);
+        }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalBroadcastReceiver);
+        super.onDestroy();
+    }
+
+    void aleartWrongPass(String ssid) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(CrackRouterActivity.this);
         dialog.setCancelable(false);
         dialog.setTitle("Cannot decrypt password");
-        dialog.setMessage("The password's "+ssid+"'cannot be cracked");
+        dialog.setMessage("The password's " + ssid + "'cannot be cracked");
         dialog.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() { // define the 'Cancel' button
             public void onClick(DialogInterface dialog, int which) {
                 //Either of the following two lines should work.
@@ -198,10 +251,12 @@ public class CrackRouterActivity extends AppCompatActivity{
 
         final AlertDialog alert = dialog.create();
         alert.show();
-
     }
 
-
-
-
+    private boolean isRemoteDeviceConnected() {
+        if (mBluetoothManagementService != null && mBound) {
+            return mBluetoothManagementService.isRemoteDeviceConnected();
+        }
+        return false;
+    }
 }

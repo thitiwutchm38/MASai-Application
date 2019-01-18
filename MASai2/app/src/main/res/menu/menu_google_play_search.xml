@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/search_google_play_spinner"
+        app:actionViewClass="android.widget.ProgressBar"
+        android:visible="false"
+        app:showAsAction="always"
+        android:title="spinner" />
+    <item android:id="@+id/search_google_play"
+        android:title="google play search"
+        android:icon="@drawable/ic_google_play"
+        app:showAsAction="always"
+        android:visible="false"
+        app:actionViewClass="android.widget.SearchView" />
+
+</menu>
