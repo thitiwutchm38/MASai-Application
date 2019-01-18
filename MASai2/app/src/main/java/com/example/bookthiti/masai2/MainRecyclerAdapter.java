@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import android.view.ContextMenu;
+
+import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>{
     private ArrayList<MainModel> mainModelArrayList;
@@ -111,30 +114,52 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                 public void onClick(View view) {
                     if (onRecyclerViewItemClickListener != null) {
                         onRecyclerViewItemClickListener.onItemClick(getAdapterPosition(), view);
+
+
                     }
                 }
             });
-            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+            rowMainParentLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
 
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                public boolean onLongClick(View v) {
 
-                            // TODO Auto-generated method stub
-                            switch(event.getAction())
-                            {
-                                case MotionEvent.ACTION_DOWN:
-                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
-                                    break;
-                                case MotionEvent.ACTION_UP:
+                        BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                        builder.setContentView(R.layout.pop_up_wifi_connect);
+                        builder.setGravity(Gravity.BOTTOM);
+                        builder.setScaleRatio(0.2f);
+                        builder.setBlurRadius(5);
+                        builder.setTintColor(0x3000000);
+                        BlurPopupWindow blurPopupWindow = builder.build();
+                        blurPopupWindow.show();
 
-                                    //set color back to default
-                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
-                                    break;
-                            }
-                            return false;
-                        }
+                    return false;
+                }
 
             });
+
+
+//            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+//
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//
+//                            // TODO Auto-generated method stub
+//                            switch(event.getAction())
+//                            {
+//                                case MotionEvent.ACTION_DOWN:
+//                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
+//                                    break;
+//                                case MotionEvent.ACTION_UP:
+//
+//                                    //set color back to default
+//                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
+//                                    break;
+//                            }
+//                            return false;
+//                        }
+//
+//            });
 
 
 
