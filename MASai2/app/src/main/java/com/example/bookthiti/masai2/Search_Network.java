@@ -82,11 +82,12 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
             //reScan_btt = (Button) findViewById(R.id.button_rescan);
 
-            lin_port_att = (LinearLayout) findViewById(R.id.lin_port_att);
+           // lin_port_att = (LinearLayout) findViewById(R.id.lin_port_att);
 
 
            // reScan_btt.setVisibility(View.GONE);
-            lin_port_att.setVisibility(View.GONE);
+            //
+            // lin_port_att.setVisibility(View.GONE);
 
 
             new Handler().postDelayed(new Runnable() {
@@ -119,7 +120,7 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
                     final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
                     progressBar.setVisibility(View.GONE);
 
-                    lin_port_att.setVisibility(View.VISIBLE);
+                    //lin_port_att.setVisibility(View.VISIBLE);
 
 
                    // reScan_btt.setVisibility(View.VISIBLE);

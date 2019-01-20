@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_router"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:divider="@drawable/vertical_divider"
     android:orientation="vertical"
     android:padding="5dp">
@@ -10,38 +10,27 @@
     <LinearLayout
         android:id="@+id/lin_port_att"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/relative_img"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/row_main_adapter_iv"
+                android:id="@+id/image_wifi_signal"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
                 android:scaleType="fitXY"
-                android:src="@mipmap/ic_launcher"
-                android:visibility="visible" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/relative_ssid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.9">
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/row_main_adapter_ssid"
+                android:id="@+id/text_ssid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -63,46 +52,25 @@
 
 
             <TextView
-                android:id="@+id/row_main_adapter_mode"
+                android:id="@+id/text_security"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="Mode"
-                android:textColor="@android:color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relative_signal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1">
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="27dp"
+                android:layout_toRightOf="@id/row_main_adapter_iv"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView" />
 
             <TextView
-                android:id="@+id/row_main_adapter_signal"
+                android:id="@+id/text_signal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="Signal"
-                android:textColor="@android:color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                android:layout_alignBottom="@+id/row_main_adapter_ssid"
 
-
-        <RelativeLayout
-            android:id="@+id/relative_btt_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
-
+                android:layout_marginBottom="-27dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView" />
         </RelativeLayout>
 
 

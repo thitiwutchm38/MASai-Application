@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.devicediscoveryscreen.Devices;
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Port_attackActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
+public class Port_attackActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
 
 
 

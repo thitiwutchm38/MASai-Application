@@ -1,14 +1,24 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.devicediscoveryscreen;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,11 +27,61 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Device_list extends AppCompatActivity implements OnRecyclerViewItemClickListener {
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
+public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
+    private Context mContext;
+    private BluetoothManagementService mBluetoothManagementService;
+    private boolean mBound = false;
+    private boolean isRemoteDeviceConnected = false;
+    private ArrayList<RouterModel> mRouterModelArrayList;
 
-    ArrayList<Devices> mainModelList;
+    private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO: listen to ACTION_DEVICE_SCAN
+//            String action = intent.getAction();
+//            if (BluetoothManagementService.ACTION_WIFI_SCAN.equals(action)) {
+//                Bundle bundle = intent.getExtras();
+//                String jsonString = bundle.getString("payload");
+//                Log.i(TAG_INFO, jsonString);
+//                RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchNetworkActivity.this,
+//                        LinearLayoutManager.VERTICAL, false);
+//                mainRecyclerView.setLayoutManager(linearLayoutManager);
+//                //Recycler Adapter
+//                mRouterModelArrayList = loadRouterModelList(jsonString);
+//                RouterRecyclerAdapter routerRecyclerAdapter = new RouterRecyclerAdapter(SearchNetworkActivity.this, mRouterModelArrayList);
+//                routerRecyclerAdapter.setOnRecyclerViewItemClickListener(SearchNetworkActivity.this);
+//                mainRecyclerView.setAdapter(routerRecyclerAdapter);
+//                ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+//                progressBar.setVisibility(View.GONE);
+//            }
+        }
+    };
 
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BluetoothManagementService.LocalBinder binder = (BluetoothManagementService.LocalBinder) service;
+            mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
+            mBound = true;
+            isRemoteDeviceConnected = isRemoteDeviceConnected();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("command", "deviceScan");
+            jsonObject.add("payload", null);
+            String jsonString = jsonObject.toString();
+            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+            Log.i(TAG_INFO, "Service is unbounded");
+        }
+    };
+
+    private ArrayList<Devices> mDeviceList;
     String device_ip;
     String device_mac;
     String device_type;
@@ -98,14 +158,14 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
         //Recycler Adapter
         final ArrayList<Devices> mainModelArrayList = prepareList();
         final DeviceAdapter mainRecyclerAdapter = new DeviceAdapter(this, mainModelArrayList);
-        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Device_list.this);
+        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(DeviceDiscoveryActivity.this);
         mainRecyclerView.setAdapter(mainRecyclerAdapter);
     }
 
     private ArrayList<Devices> prepareList() {
 
 
-        mainModelList = new ArrayList<>();
+        mDeviceList = new ArrayList<>();
 
         //Convert JSON File
         String json = null;
@@ -201,26 +261,52 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
                 mainModel.setOfferIcon(R.drawable.icons_general);
                 break; // optional
 
-                case "media device":
-                    mainModel.setOfferIcon(R.drawable.icons_media);
+                case "bridge":
+                case "broadband router":
+                    mainModel.setOfferIcon(R.drawable.icons_router);
                     break; // optional
 
+                case "game console":
+                    mainModel.setOfferIcon(R.drawable.icons_console);
+                    break; // optional
+
+                case "hub":
+                case "switch":
+                    mainModel.setOfferIcon(R.drawable.icons_hub);
+                    break; // optional
+                case "pda":
+                    mainModel.setOfferIcon(R.drawable.icons_pda);
+                    break; // optional
+                case "VoIP phone":
+                case "VoIP adapter":
+                    mainModel.setOfferIcon(R.drawable.icons_voip);
+                    break; // optional
+                case "specialized":
+                    mainModel.setOfferIcon(R.drawable.icons_specialized);
+                    break; // optional
+                case "terminal server":
+                case "terminal":
+                    mainModel.setOfferIcon(R.drawable.icons_terminal);
+                    break; // optional
+                case "firewall":
+                    mainModel.setOfferIcon(R.drawable.icons_firewall);
+                    break; // optional
                 // You can have any number of case statements.
                 default : // Optional
                     // Statements
             }
 
-            //mainModel.setOfferIcon(categoryIcon[i]);
+            //mainModel.setmIconSignalId(categoryIcon[i]);
 
 
-            mainModelList.add(mainModel);
+            mDeviceList.add(mainModel);
 
 
 
 
 
         }
-        return mainModelList;
+        return mDeviceList;
     }
 
     @Override
@@ -242,10 +328,10 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
 
         //Bundle
         Bundle bundle = new Bundle();
-        bundle.putString("IP_Address", mainModelList.get(position).getmIP_address());
-        bundle.putString("Mac_Address", mainModelList.get(position).getmMac_address());
-        bundle.putString("Device_Types", mainModelList.get(position).getmDevice_types());
-        bundle.putInt("icon",mainModelList.get(position).getOfferIcon());
+        bundle.putString("IP_Address", mDeviceList.get(position).getmIP_address());
+        bundle.putString("Mac_Address", mDeviceList.get(position).getmMac_address());
+        bundle.putString("Device_Types", mDeviceList.get(position).getmDevice_types());
+        bundle.putInt("icon", mDeviceList.get(position).getOfferIcon());
 
 
         intent.putExtras(bundle);
@@ -253,5 +339,11 @@ public class Device_list extends AppCompatActivity implements OnRecyclerViewItem
         startActivity(intent);
     }
 
+    private boolean isRemoteDeviceConnected() {
+        if(mBluetoothManagementService != null && mBound) {
+            return mBluetoothManagementService.isRemoteDeviceConnected();
+        }
+        return false;
+    }
 
 }

@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CrackRouterActivity"
+    tools:context=".routercrackingscreen.CrackRouterActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,8 +29,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView_target_router"
-                android:layout_width="match_parent"
+                android:id="@+id/text_static_crack_router_target_routers"
+                android:layout_width="292dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Target Routers:"
@@ -38,7 +38,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_ssid"
+                android:id="@+id/text_crack_router_ssid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -83,14 +83,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/mac_label"
+                        android:id="@+id/text_static_crack_router_bssid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mac address:"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/mac_value"
+                        android:id="@+id/text_crack_router_bssid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -109,14 +109,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/comp_label"
+                        android:id="@+id/text_static_crack_router_channel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Company:"
+                        android:text="Channel:"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/comp_value"
+                        android:id="@+id/text_crack_router_channel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -134,14 +134,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/phy_label"
+                        android:id="@+id/text_static_crack_router_frequency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Frequency:"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/fre_value"
+                        android:id="@+id/text_crack_router_frequency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -162,14 +162,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/sig_label"
+                        android:id="@+id/text_static_crack_router_signal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Signal:"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/sig_value"
+                        android:id="@+id/text_crack_router_signal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -188,14 +188,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/sec_label"
+                        android:id="@+id/text_static_crack_router_security"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Security:"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/sec_value"
+                        android:id="@+id/text_crack_router_security"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -216,15 +216,13 @@
                         android:id="@+id/cha_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Channel:"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/cha_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="output" />
+                        android:layout_weight="1" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -238,7 +236,7 @@
             tools:layout_editor_absoluteY="57dp" />
 
         <TextView
-            android:id="@+id/textView_crack_status"
+            android:id="@+id/text_static_crack_router_crack_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -247,13 +245,13 @@
             android:textStyle="bold" />
 
         <ProgressBar
-            android:id="@+id/progressBar_crack"
+            android:id="@+id/progress_crack_router"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textView_progress_crack"
+            android:id="@+id/text_crack_router_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -265,7 +263,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/editText_pass_wifi"
+                android:id="@+id/edit_crack_router_password"
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -276,7 +274,7 @@
                 android:inputType="textPersonName" />
 
             <ImageButton
-                android:id="@+id/imageButton_copy_pass"
+                android:id="@+id/image_crack_router_clipboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -293,8 +291,7 @@
             tools:layout_editor_absoluteY="57dp" />
 
         <Button
-            android:id="@+id/crack_btn"
-
+            android:id="@+id/button_start_wifi_cracking"
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_gravity="center"

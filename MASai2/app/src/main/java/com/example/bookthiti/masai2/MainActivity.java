@@ -3,9 +3,15 @@ package com.example.bookthiti.masai2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+
+import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
+import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
-
-
+        if(!ServiceTools.isServiceRunning(BluetoothManagementService.class, getApplicationContext())) {
+            startService(new Intent(MainActivity.this, BluetoothManagementService.class));
+        } else {
+            Log.i("Log info", "Service is already started");
+        }
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
@@ -71,17 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity_MobileApp_att() {
 
-        Intent intent = new Intent(this,Mobile_Appscan.class);
+        Intent intent = new Intent(this,MobileApplicationScannerActivity.class);
         startActivity(intent);
     }
     public void openActivity_iot_att() {
 
-        Intent intent = new Intent(this,iot_main_pentest.class);
+        Intent intent = new Intent(this,IoTMainPentestActivity.class);
         startActivity(intent);
     }
     public void openActivity_MASaibox_setting() {
 
-        Intent intent = new Intent(this,CvssScoreActivity.class);
+        Intent intent = new Intent(this,MasaiSettingActivity.class);
         startActivity(intent);
     }
 

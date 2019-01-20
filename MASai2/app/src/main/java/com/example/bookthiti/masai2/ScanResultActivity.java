@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
 import org.json.JSONArray;
@@ -31,8 +32,6 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
     LinearLayout line_layout;
     NotificationCompat.Builder mBuilder;
-
-
 
     //Show app detail
     TextView app_data_name;
@@ -160,7 +159,8 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 //                        .bindClickListener(new View.OnClickListener() {
 //                            @Override
 //                            public void onClick(View v) {
-//                                Toast.makeText(v.getContext(), "Click Button", Toast.LENGTH_SHORT).show();
+//
+//                  Toast.makeText(v.getContext(), "Click Button", Toast.LENGTH_SHORT).show();
 //                            }
 //                        }, R.id.relativeLayout_popup)
 //                        .setGravity(Gravity.CENTER)

@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="56dp"
         android:text="MASai box Setting"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -65,9 +65,9 @@
         android:id="@+id/textView_iot_security"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
-        android:text="IoT Security Tips"
+        android:text="IoT Security Information"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton_Tips" />
 

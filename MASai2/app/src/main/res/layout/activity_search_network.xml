@@ -5,7 +5,7 @@
     android:id="@+id/constrain_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Search_Network"
+    tools:context=".networksearchingscreen.SearchNetworkActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <ProgressBar
@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
             android:gravity="center_horizontal|center_vertical"
             android:padding="10dp"
             android:text="Founded Wi-Fi Router List:"
@@ -46,11 +47,11 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_below="@+id/textView_founded_router"
-            android:layout_marginBottom="19dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/search_frame"
 
             android:orientation="horizontal"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/relative_img"
@@ -68,7 +69,6 @@
                     android:layout_marginTop="0dp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="onClick"
                     android:text="Status"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
@@ -101,7 +101,6 @@
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="onClick"
                     android:text="Mode"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
@@ -123,7 +122,6 @@
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="onClick"
                     android:text="Signal"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
