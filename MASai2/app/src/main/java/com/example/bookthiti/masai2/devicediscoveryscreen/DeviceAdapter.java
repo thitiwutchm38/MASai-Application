@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.devicediscoveryscreen;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;

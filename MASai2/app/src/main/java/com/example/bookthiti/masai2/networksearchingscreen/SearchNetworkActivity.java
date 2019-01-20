@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +16,17 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
-import com.example.bookthiti.masai2.DeviceDiscoveryActivity;
+import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceDiscoveryActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.google.gson.Gson;
@@ -71,9 +75,11 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                 JsonObject payload = jsonElement.getAsJsonObject();
                 String connection_status = payload.get("status").getAsString();
                 if (connection_status.equals("success")) {
-                    // TODO:
+                    startActivity(new Intent(mContext, DeviceDiscoveryActivity.class));
                 } else if (connection_status.equals("failure")) {
-                    if (mConnectingRouterModel != null) promptForPassword(mConnectingRouterModel, false);
+                    Log.i(TAG_INFO, "Wrong password was input");
+                    if (mConnectingRouterModel != null)
+                        promptForPassword(mConnectingRouterModel, false);
                 }
             }
         }
@@ -106,17 +112,18 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         setContentView(R.layout.activity_search_network);
         mContext = getApplicationContext();
         Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if(!mBound) {
+        if (!mBound) {
             bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
         }
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     @Override
     protected void onDestroy() {
-        if(mBound){
+        if (mBound) {
             unbindService(mConnection);
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalBroadcastReceiver);
@@ -131,9 +138,9 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         int count = jsonObject.get("count").getAsInt();
         JsonArray jsonArray = jsonObject.getAsJsonArray("routers");
 
-        for (JsonElement router:jsonArray) {
+        for (JsonElement router : jsonArray) {
             JsonObject temp = router.getAsJsonObject();
-            if(temp != null) {
+            if (temp != null) {
                 String ssid = temp.get("SSID").getAsString();
                 String mode = temp.get("MODE").getAsString();
                 float signal = temp.get("SIGNAL").getAsFloat();
@@ -157,26 +164,6 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         Intent deviceDiscoveryIntent = new Intent(this, DeviceDiscoveryActivity.class);
         switch (intent.getStringExtra("MyValue")) {
             case "device_att":
-
-                //Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ mainModel.getmSsid(),Toast.LENGTH_LONG).show();
-                //showAddItemDialog(this,loadRouterModelList().get(position).getmSsid() );
-
-                //pass_intent_blu.putExtra("router_information", loadRouterModelList().get(position));
-
-//                promptForPassword(new PromptRunnable(deviceDiscoveryIntent) {
-//                    // put whatever code you want to run after user enters a result
-//                    public void run() {
-//                        // get the value we stored from the dialog
-//                        String value = this.getPassword();
-//                        // do something with this value...
-//                        // In our example we are taking our value and passing it to
-//                        // an activity intent, then starting the activity.
-//                        //pass_intent_blu.putExtra("extraValue", value);
-//                        this.getIntent().putExtra("router_information", mRouterModelArrayList.get(position));
-//                        this.getIntent().putExtra("password", value);
-//
-//                    }
-//                }, mRouterModelArrayList.get(position).getSsid());
                 promptForPassword(mRouterModelArrayList.get(position), true);
                 break;
 
@@ -195,13 +182,30 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         alert.setTitle("Please input your WiFi Password");
         alert.setMessage("Your SSID: " + routerModel.getSsid());
         // Create textbox to put into the dialog
-        final EditText input = new EditText(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View customLayout = inflater.inflate(R.layout.dialog_incorrect_password, null);
+        final EditText input = customLayout.findViewById(R.id.edit_password);
+        final TextInputLayout textInputLayout = customLayout.findViewById(R.id.text_input_layout);
         if (!isFirstAttempt) {
-            input.setError("Incorrect password");
+            textInputLayout.setError("Incorrect password");
         }
-        // put the textbox into the dialog
-        alert.setView(input);
-        // procedure for when the ok button is clicked.
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                textInputLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        alert.setView(customLayout);
         alert.setPositiveButton("Confirmed", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 mConnectingRouterModel = routerModel;
@@ -215,6 +219,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                 JsonParser jsonParser = new JsonParser();
                 JsonElement routerObject = jsonParser.parse(routerModelString);
                 payload.add("router", routerObject);
+                jsonObject.add("payload", payload);
                 String jsonString = jsonObject.toString();
                 mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
                 dialog.dismiss();
@@ -229,41 +234,8 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         alert.show();
     }
 
-
-    class PromptRunnable implements Runnable {
-        private String mmPassword;
-        private Intent mmIntent;
-
-        public PromptRunnable() {
-        }
-
-        public PromptRunnable(Intent intent) {
-            this.mmIntent = intent;
-        }
-
-        void setPassword(String password) {
-            this.mmPassword = password;
-        }
-
-        String getPassword() {
-            return this.mmPassword;
-        }
-
-        public Intent getIntent() {
-            return mmIntent;
-        }
-
-        public void setIntent(Intent intent) {
-            this.mmIntent = intent;
-        }
-
-        public void run() {
-            this.run();
-        }
-    }
-
     private boolean isRemoteDeviceConnected() {
-        if(mBluetoothManagementService != null && mBound) {
+        if (mBluetoothManagementService != null && mBound) {
             return mBluetoothManagementService.isRemoteDeviceConnected();
         }
         return false;

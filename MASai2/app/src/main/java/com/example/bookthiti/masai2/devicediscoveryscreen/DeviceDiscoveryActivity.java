@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.devicediscoveryscreen;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
@@ -67,7 +68,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
             mBound = true;
             isRemoteDeviceConnected = isRemoteDeviceConnected();
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("command", "wifiScan");
+            jsonObject.addProperty("command", "deviceScan");
             jsonObject.add("payload", null);
             String jsonString = jsonObject.toString();
             mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");

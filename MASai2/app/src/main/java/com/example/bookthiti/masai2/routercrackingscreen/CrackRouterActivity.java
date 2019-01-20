@@ -106,7 +106,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         mTextViewFrequency = (TextView) findViewById(R.id.text_crack_router_frequency);
         mTextViewChannel = (TextView) findViewById(R.id.text_crack_router_channel);
         mTextViewSsid = (TextView) findViewById(R.id.text_crack_router_ssid);
-        mTextViewCrackStatus = (TextView) findViewById(R.id.textView_crack_status);
+        mTextViewCrackStatus = (TextView) findViewById(R.id.text_static_crack_router_crack_status);
         mTextViewProgressCrack = (TextView) findViewById(R.id.text_crack_router_progress);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_crack_router);
         mImageButtonClipboard = (ImageButton) findViewById(R.id.image_crack_router_clipboard);

@@ -58,10 +58,10 @@ public class RouterRecyclerAdapter extends RecyclerView.Adapter<RouterRecyclerAd
         @SuppressLint("ClickableViewAccessibility")
         public ViewHolder(View view) {
             super(view);
-            mImageViewWifiSignal = view.findViewById(R.id.row_main_adapter_iv);
-            mTextViewSsid = view.findViewById(R.id.row_main_adapter_ssid);
-            mTextViewSecurity = view.findViewById(R.id.row_main_adapter_mode);
-            mTextViewSignal = view.findViewById(R.id.row_main_adapter_signal);
+            mImageViewWifiSignal = view.findViewById(R.id.image_wifi_signal);
+            mTextViewSsid = view.findViewById(R.id.text_ssid);
+            mTextViewSecurity = view.findViewById(R.id.text_security);
+            mTextViewSignal = view.findViewById(R.id.text_signal);
 //            device_lin = view.findViewById(R.id.layout_router);
             mLinearLayout = view.findViewById(R.id.layout_router);
             mLinearLayout.setOnClickListener(new View.OnClickListener() {

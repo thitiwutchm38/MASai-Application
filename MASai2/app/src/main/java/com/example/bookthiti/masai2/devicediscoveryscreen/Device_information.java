@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.devicediscoveryscreen;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.CvssScoreActivity;
+import com.example.bookthiti.masai2.Port_attackActivity;
+import com.example.bookthiti.masai2.Ports;
+import com.example.bookthiti.masai2.PortsAdapter;
+import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import org.json.JSONException;

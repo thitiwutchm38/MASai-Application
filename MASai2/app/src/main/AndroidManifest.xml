@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".MainActivity" />
+        <!--<activity android:name=".MainActivity" />-->
         <activity android:name=".MasaiSettingActivity" />
         <activity
             android:name=".iotpentestmainscreen.IoTMainPentestActivity"
@@ -34,7 +34,7 @@
         <activity
             android:name=".DetailActivity"
             android:label="DetailActivity" />
-        <activity android:name=".ActivitySplash">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,11 +48,11 @@
         <activity android:name=".routercrackingscreen.CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
         <activity
-            android:name=".DeviceDiscoveryActivity"
+            android:name=".devicediscoveryscreen.DeviceDiscoveryActivity"
             android:label="List of Devices" />
         <activity android:name=".ScanResultActivity" />
         <activity
-            android:name=".Device_information"
+            android:name=".devicediscoveryscreen.Device_information"
             android:label="Device Information" />
         <activity
             android:name=".CvssScoreActivity"
