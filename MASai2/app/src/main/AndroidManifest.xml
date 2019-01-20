@@ -22,11 +22,11 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MasaiSettingActivity" />
         <activity
-            android:name=".IoTMainPentestActivity"
+            android:name=".iotpentestmainscreen.IoTMainPentestActivity"
             android:label="IoT Device Pentest" />
-        <activity android:name=".MobileApplicationScanning.MobileApplicationScannerActivity" />
+        <activity android:name=".mobileapplicationscanningscreen.MobileApplicationScannerActivity" />
         <activity
-            android:name=".SearchNetworkActivity"
+            android:name=".networksearchingscreen.SearchNetworkActivity"
             android:label="Select Network" />
         <activity
             android:name=".Router_information"
@@ -45,10 +45,10 @@
             android:name=".iot_suggestion"
             android:label="@string/title_activity_iot_suggestion"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CrackRouterActivity" />
+        <activity android:name=".routercrackingscreen.CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
         <activity
-            android:name=".Device_list"
+            android:name=".DeviceDiscoveryActivity"
             android:label="List of Devices" />
         <activity android:name=".ScanResultActivity" />
         <activity
@@ -63,7 +63,7 @@
             android:screenOrientation="portrait"
             tools:replace="android:screenOrientation"
             android:stateNotNeeded="true" />
-        <service android:name=".service.BluetoothManagementService"/>
+        <service android:name=".bluetoothservice.BluetoothManagementService"/>
     </application>
 
 </manifest>

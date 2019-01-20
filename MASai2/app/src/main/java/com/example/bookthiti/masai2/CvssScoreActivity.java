@@ -10,10 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alespero.expandablecardview.ExpandableCardView;
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 
-public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener  {
+public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
 
     ExpandableCardView card1 ;
     ExpandableCardView card2 ;

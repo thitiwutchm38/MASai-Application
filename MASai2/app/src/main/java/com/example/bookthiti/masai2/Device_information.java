@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

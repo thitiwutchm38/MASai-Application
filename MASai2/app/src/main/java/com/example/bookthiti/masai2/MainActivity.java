@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
-import com.example.bookthiti.masai2.MobileApplicationScanning.MobileApplicationScannerActivity;
-import com.example.bookthiti.masai2.service.BluetoothManagementService;
-import com.example.bookthiti.masai2.service.ServiceTools;
+import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
+import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.MobileApplicationScanning;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -20,8 +20,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.R;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;

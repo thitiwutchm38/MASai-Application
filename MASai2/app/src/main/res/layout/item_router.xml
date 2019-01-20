@@ -21,7 +21,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/row_main_adapter_iv"
+                android:id="@+id/image_wifi_signal"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
@@ -41,7 +41,7 @@
             android:layout_weight="0.9">
 
             <TextView
-                android:id="@+id/row_main_adapter_ssid"
+                android:id="@+id/text_ssid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -63,7 +63,7 @@
 
 
             <TextView
-                android:id="@+id/row_main_adapter_mode"
+                android:id="@+id/text_security"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -83,7 +83,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/row_main_adapter_signal"
+                android:id="@+id/text_signal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"

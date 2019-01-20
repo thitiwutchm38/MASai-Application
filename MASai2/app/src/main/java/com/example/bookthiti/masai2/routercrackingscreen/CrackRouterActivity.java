@@ -1,21 +1,15 @@
-package com.example.bookthiti.masai2;
-
+package com.example.bookthiti.masai2.routercrackingscreen;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,58 +18,40 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
-import com.example.bookthiti.masai2.service.BluetoothManagementService;
+import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class CrackRouterActivity extends AppCompatActivity {
-    private final static String TAG_INFO = "Log info";
-    private final static String TAG_DEBUG = "Log debug";
-    private final static String TAG_ERROR = "Log error";
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
+public class CrackRouterActivity extends AppCompatActivity {
     private Context mContext;
     private BluetoothManagementService mBluetoothManagementService;
     private boolean mBound = false;
     private boolean isRemoteDeviceConnected = false;
 
-    Button mStartCrackingButton;
-    TextView TextView_mac;
-    TextView TextView_sig;
+    private Button mStartCrackingButton;
+    private TextView mTextViewBssid;
+    private TextView mTextViewSignal;
+    private TextView mTextViewSecurity;
+    private TextView mTextViewFrequency;
+    private TextView mTextViewChannel;
+    private TextView mTextViewSsid;
+    private TextView mTextViewCrackStatus;
+    private TextView mTextViewProgressCrack;
+    private ProgressBar mProgressBar;
 
-    TextView TextView_company;
-    TextView TextView_sec;
-    TextView TextView_fre;
+    private EditText mEditTextPassword;
+    private ImageButton mImageButtonClipboard;
 
-    TextView TextView_cha;
-    TextView TextView_ssid;
-    ProgressBar progressBar;
-    Button button;
-
-
-    TextView textView_crack_status;
-
-
-    RelativeLayout pass_wifi_relative;
-
-    EditText pass_result;
-    TextView myprogress_crack;
-    ImageButton copy_pass;
-
-    MainModel information_data;
+    private RouterModel mRouterModel;
 
 
     // True can crqck
@@ -83,8 +59,8 @@ public class CrackRouterActivity extends AppCompatActivity {
     Boolean pass_status = false;
 
 
-    private ClipboardManager myClipboard;
-    private ClipData myClip;
+    private ClipboardManager mClipboardManager;
+    private ClipData mClipData;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -94,6 +70,7 @@ public class CrackRouterActivity extends AppCompatActivity {
                 Bundle bundle = intent.getExtras();
                 String jsonString = bundle.getString("payload");
                 Log.i(TAG_INFO, "Receive ACTION_WIFI_ATTACK: " + jsonString);
+                //TODO: load payload to crack result
             }
         }
     };
@@ -123,39 +100,22 @@ public class CrackRouterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crack_router);
-
-        TextView_mac = (TextView) findViewById(R.id.mac_value);
-        TextView_sig = (TextView) findViewById(R.id.sig_value);
-        TextView_company = (TextView) findViewById(R.id.comp_value);
-        TextView_sec = (TextView) findViewById(R.id.sec_value);
-        TextView_fre = (TextView) findViewById(R.id.fre_value);
-        TextView_cha = (TextView) findViewById(R.id.cha_value);
-        TextView_ssid = (TextView) findViewById(R.id.textView_ssid);
-
-        textView_crack_status = (TextView) findViewById(R.id.textView_crack_status);
-
-        myprogress_crack = (TextView) findViewById(R.id.textView_progress_crack);
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar_crack);
-
-        copy_pass = (ImageButton) findViewById(R.id.imageButton_copy_pass);
-
-        pass_result = (EditText) findViewById(R.id.editText_pass_wifi);
-
-        pass_wifi_relative = (RelativeLayout) findViewById(R.id.pass_wifi_relative);
-
-
-        //Status
-        progressBar.setVisibility(View.INVISIBLE);
-        myprogress_crack.setVisibility(View.INVISIBLE);
-        pass_wifi_relative.setVisibility(View.INVISIBLE);
-        textView_crack_status.setVisibility(View.INVISIBLE);
-
-        information_data = (MainModel) getIntent().getParcelableExtra("router_information");
-
-
-        myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-
+        mTextViewBssid = (TextView) findViewById(R.id.text_crack_router_bssid);
+        mTextViewSignal = (TextView) findViewById(R.id.text_crack_router_signal);
+        mTextViewSecurity = (TextView) findViewById(R.id.text_crack_router_security);
+        mTextViewFrequency = (TextView) findViewById(R.id.text_crack_router_frequency);
+        mTextViewChannel = (TextView) findViewById(R.id.text_crack_router_channel);
+        mTextViewSsid = (TextView) findViewById(R.id.text_crack_router_ssid);
+        mTextViewCrackStatus = (TextView) findViewById(R.id.textView_crack_status);
+        mTextViewProgressCrack = (TextView) findViewById(R.id.text_crack_router_progress);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_crack_router);
+        mImageButtonClipboard = (ImageButton) findViewById(R.id.image_crack_router_clipboard);
+        mEditTextPassword = (EditText) findViewById(R.id.edit_crack_router_password);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mTextViewProgressCrack.setVisibility(View.INVISIBLE);
+        mTextViewCrackStatus.setVisibility(View.INVISIBLE);
+        mRouterModel = (RouterModel) getIntent().getParcelableExtra("router_information");
+        mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         mContext = getApplicationContext();
         Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
         if (!mBound) {
@@ -165,15 +125,12 @@ public class CrackRouterActivity extends AppCompatActivity {
         intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
 
-        final MainModel information_data = (MainModel) getIntent().getParcelableExtra("router_information");
-
-        TextView_ssid.setText(information_data.getOfferSSID());
-        TextView_sec.setText(information_data.getOfferMac_address());
-        TextView_mac.setText(information_data.getOfferSecurity());
-        TextView_sig.setText(information_data.getOfferSignal());
-        TextView_company.setText(information_data.getOfferCompany());
-        TextView_fre.setText(information_data.getOfferFrequency());
-        TextView_cha.setText(information_data.getOfferChannel());
+        mTextViewSsid.setText(mRouterModel.getSsid());
+        mTextViewSecurity.setText(mRouterModel.getSecurity());
+        mTextViewBssid.setText(mRouterModel.getBssid());
+        mTextViewSignal.setText(Float.toString(mRouterModel.getSignal()));
+//        mTextViewFrequency.setText(mRouterModel.getmFrequency());
+        mTextViewChannel.setText(Integer.toString(mRouterModel.getChannel()));
 
         mStartCrackingButton = (Button) findViewById(R.id.button_start_wifi_cracking);
         mStartCrackingButton.setOnClickListener(new View.OnClickListener() {
@@ -183,9 +140,8 @@ public class CrackRouterActivity extends AppCompatActivity {
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("command", "wifiCracking");
                     Gson gson = new Gson();
-                    String payloadJsonString = gson.toJson(information_data, MainModel.class);
+                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
                     Log.i(TAG_INFO, payloadJsonString);
-//                    jsonObject.addProperty("payload", payloadJsonString);
                     JsonParser jsonParser = new JsonParser();
                     JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
                     jsonObject.add("payload", payloadJsonElement);
@@ -195,32 +151,18 @@ public class CrackRouterActivity extends AppCompatActivity {
             }
         });
 
-        copy_pass.setOnClickListener(new View.OnClickListener() {
+        mImageButtonClipboard.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 String text;
-                text = pass_result.getText().toString();
+                text = mEditTextPassword.getText().toString();
 
-                myClip = ClipData.newPlainText("text", text);
-                myClipboard.setPrimaryClip(myClip);
+                mClipData = ClipData.newPlainText("text", text);
+                mClipboardManager.setPrimaryClip(mClipData);
 
                 Toast.makeText(getApplicationContext(), "Text Copied",
                         Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        button = (Button) findViewById(R.id.crack_btn);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                progressBar.setVisibility(View.VISIBLE);
-                myprogress_crack.setVisibility(View.VISIBLE);
-
-                myprogress_crack.setText("Cracking....." + information_data.getOfferSSID() + "'s password.");
             }
         });
 
@@ -241,7 +183,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setTitle("Cannot decrypt password");
         dialog.setMessage("The password's " + ssid + "'cannot be cracked");
-        dialog.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() { // define the 'Cancel' button
+        dialog.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() { // define the 'Cancel' mButton
             public void onClick(DialogInterface dialog, int which) {
                 //Either of the following two lines should work.
                 dialog.cancel();

@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.bookthiti.masai2.service.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 

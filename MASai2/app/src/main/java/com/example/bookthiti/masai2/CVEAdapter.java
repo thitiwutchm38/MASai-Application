@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+
 import java.util.ArrayList;
 
 public class CVEAdapter extends RecyclerView.Adapter<CVEAdapter.Holder>{
@@ -35,7 +37,7 @@ public class CVEAdapter extends RecyclerView.Adapter<CVEAdapter.Holder>{
         Holder.data_des_Text.setText(offersListModel.getmPort_des());
         Holder.data_cvss_score_Text.setText(offersListModel.getmCVSS_score());
 
-        //Holder.rowMainImage.setImageResource(offersListModel.getOfferIcon());
+        //Holder.rowMainImage.setImageResource(offersListModel.getmIconSignalId());
 
         Holder.rowMainParentLinearLayout.setTag(offersListModel);
 

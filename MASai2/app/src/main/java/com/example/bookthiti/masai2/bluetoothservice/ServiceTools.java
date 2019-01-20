@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.service;
+package com.example.bookthiti.masai2.bluetoothservice;
 
 import android.app.ActivityManager;
 import android.content.Context;

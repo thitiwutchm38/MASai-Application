@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.MobileApplicationScanning;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
@@ -6,8 +6,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 

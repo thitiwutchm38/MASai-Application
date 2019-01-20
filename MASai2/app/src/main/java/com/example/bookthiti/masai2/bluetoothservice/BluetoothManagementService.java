@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.service;
+package com.example.bookthiti.masai2.bluetoothservice;
 
 import android.app.Activity;
 import android.app.Service;
@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -21,17 +20,13 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
@@ -48,6 +43,7 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_PAIRED_DEVICE_FOUND = "ACTION PAIRED DEVICE FOUND";
     public static final String ACTION_BLUETOOTH_UNABLE_TO_CONNECT = "ACTION BLUETOOTH UNABLE TO CONNECT";
     public static final String ACTION_WIFI_ATTACK = "ACTION WIFI ATTACK";
+    public static final String ACTION_WIFI_CONNECT = "ACTION WIFI CONNECT";
 
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> mPairedDevices;
@@ -319,6 +315,10 @@ public class BluetoothManagementService extends Service {
                                     break;
                                 case "wifiCracking":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
+                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                                    break;
+                                case "wifiConnect":
+                                    intent.setAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
                                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                             }

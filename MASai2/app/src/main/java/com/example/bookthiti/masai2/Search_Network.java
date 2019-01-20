@@ -1,15 +1,9 @@
 package com.example.bookthiti.masai2;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.AsyncTask;
 
 import android.os.Handler;
-import android.os.Parcelable;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -18,17 +12,17 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.networksearchingscreen.RouterRecyclerAdapter;
+import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
+import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,9 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class Search_Network extends AppCompatActivity implements OnRecyclerViewItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener  {
 
@@ -48,12 +39,12 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
     final String wifi_password = null;
 
 
-    private ArrayList<MainModel> mainModelArrayList;
+    private ArrayList<RouterModel> routerModelArrayList;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-    private MainRecyclerAdapter mainRecyclerAdapter;
+    private RouterRecyclerAdapter routerRecyclerAdapter;
 
     //Button reScan_btt;
 
@@ -158,15 +149,15 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
                     //Recycler Adapter
 
-                    mainModelArrayList = prepareList();
+                    routerModelArrayList = prepareList();
 
-                    Collections.sort(mainModelArrayList, MainModel.modelSigno);
+                    Collections.sort(routerModelArrayList, RouterModel.modelSigno);
 
 
-                    mainRecyclerAdapter = new MainRecyclerAdapter(Search_Network.this,mainModelArrayList);
+                    routerRecyclerAdapter = new RouterRecyclerAdapter(Search_Network.this, routerModelArrayList);
 
-                    mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Search_Network.this);
-                    mainRecyclerView.setAdapter(mainRecyclerAdapter);
+                    routerRecyclerAdapter.setOnRecyclerViewItemClickListener(Search_Network.this);
+                    mainRecyclerView.setAdapter(routerRecyclerAdapter);
 
 
 
@@ -234,10 +225,10 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         },1000);
     }
 
-    private ArrayList<MainModel> prepareList(){
+    private ArrayList<RouterModel> prepareList(){
 
-            ArrayList<MainModel> mainModelList = new ArrayList<>();
-            //ArrayList<MainModel> sortModelList = new ArrayList<>();
+            ArrayList<RouterModel> routerModelList = new ArrayList<>();
+            //ArrayList<RouterModel> sortModelList = new ArrayList<>();
             JSONArray values = null;
 
 
@@ -297,7 +288,7 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
         for (int i = 0; i < values.length(); i++) {
 
-            MainModel mainModel = new MainModel();
+            RouterModel routerModel = new RouterModel();
 
             JSONObject jsonobject = null;
 
@@ -351,41 +342,41 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
                 if ((signal <= 100 )&&(signal>=75)){
 
-                    mainModel.setOfferIcon( R.drawable.wifi_device_4);
+                    routerModel.setmIconSignalId( R.drawable.wifi_device_4);
 
 
                 }else if((signal<75)&&(signal>=50)) {
 
-                    mainModel.setOfferIcon( R.drawable.wifi_device_3);
+                    routerModel.setmIconSignalId( R.drawable.wifi_device_3);
 
 
                 }else if((signal<50)&&(signal>=25)) {
 
-                    mainModel.setOfferIcon( R.drawable.wifi_device_2);
+                    routerModel.setmIconSignalId( R.drawable.wifi_device_2);
 
 
                 }else if(signal<25) {
 
-                    mainModel.setOfferIcon( R.drawable.wifi_device_1);
+                    routerModel.setmIconSignalId( R.drawable.wifi_device_1);
 
                 }
 
 
-            mainModel.setOfferSSID(SSID);
-            mainModel.setOfferMode(Mode);
-            mainModel.setOfferSignal(Signal);
+            routerModel.setmSsid(SSID);
+            routerModel.setmMode(Mode);
+            routerModel.setmSignal(Signal);
 
-            mainModel.setOfferFrequency(Frequency);
-            mainModel.setOfferChannel(Channel);
-            //mainModel.setOfferCompany(Company);
+            routerModel.setmFrequency(Frequency);
+            routerModel.setmChannel(Channel);
+            //routerModel.setmCompany(Company);
 
-            mainModel.setOfferMac_address(Mac_address);
+            routerModel.setmBssid(Mac_address);
 
-            mainModel.setOfferSecurity(Security);
+            routerModel.setmSecurity(Security);
 
-            mainModelList.add(mainModel);
+            routerModelList.add(routerModel);
         }
-            return mainModelList;
+            return routerModelList;
 
         }
 
@@ -397,11 +388,11 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
     @Override
         public void onItemClick(final int position, View view) {
-        //    MainModel mainModel = (MainModel) view.getTag();
+        //    RouterModel mainModel = (RouterModel) view.getTag();
 
         Intent intent = getIntent();
            final Intent pass_intent = new Intent(this,CrackRouterActivity.class);
-           final Intent pass_intent_blu = new Intent(this,Device_list.class);
+           final Intent pass_intent_blu = new Intent(this,DeviceDiscoveryActivity.class);
 
 
            switch (intent.getStringExtra("MyValue")) {
@@ -423,21 +414,21 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
 
                             if(!value.equals("12345")){
-                                aleartWrongPass(prepareList().get(position).getOfferSSID());
+                                aleartWrongPass(prepareList().get(position).getmSsid());
                                 return;
 
                             }
                             startActivity(pass_intent_blu);
                         }
-                    },prepareList().get(position).getOfferSSID());
+                    },prepareList().get(position).getmSsid());
 
 
                     break;
 
                 case "router_att" :
 
-                    Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ prepareList().get(position).getOfferSSID(),Toast.LENGTH_LONG).show();
-                    //showAddItemDialog(this,prepareList().get(position).getOfferSSID() );
+                    Toast.makeText(this,"Position clicked: " + String.valueOf(position) + ", "+ prepareList().get(position).getmSsid(),Toast.LENGTH_LONG).show();
+                    //showAddItemDialog(this,prepareList().get(position).getmSsid() );
 
                     pass_intent.putExtra("router_information", prepareList().get(position));
                     //pass_intent.putExtra("iis", );
@@ -503,13 +494,13 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 //
 //        if (signal_temp == true){
 //            signal_temp =false;
-//            Collections.sort(mainModelArrayList, MainModel.modelSig_des);
-//            mainRecyclerAdapter.notifyDataSetChanged();
+//            Collections.sort(routerModelArrayList, RouterModel.modelSig_des);
+//            routerRecyclerAdapter.notifyDataSetChanged();
 //            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
 //        }else{
 //            signal_temp =true;
-//            Collections.sort(mainModelArrayList, MainModel.modelSigno);
-//            mainRecyclerAdapter.notifyDataSetChanged();
+//            Collections.sort(routerModelArrayList, RouterModel.modelSigno);
+//            routerRecyclerAdapter.notifyDataSetChanged();
 //            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
 //        }
 //    }
@@ -518,13 +509,13 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 //
 //        if (ssid_temp == true){
 //            ssid_temp =false;
-//            Collections.sort(mainModelArrayList, MainModel.modelssid_asc);
-//            mainRecyclerAdapter.notifyDataSetChanged();
+//            Collections.sort(routerModelArrayList, RouterModel.modelssid_asc);
+//            routerRecyclerAdapter.notifyDataSetChanged();
 //            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
 //        }else{
 //            ssid_temp =true;
-//            Collections.sort(mainModelArrayList, MainModel.modelssid_des);
-//            mainRecyclerAdapter.notifyDataSetChanged();
+//            Collections.sort(routerModelArrayList, RouterModel.modelssid_des);
+//            routerRecyclerAdapter.notifyDataSetChanged();
 //            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
 //        }
 //    }
@@ -534,13 +525,13 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 //
 //        if (mode_temp == true){
 //            mode_temp =false;
-//            Collections.sort(mainModelArrayList, MainModel.modelmode_asc);
-//            mainRecyclerAdapter.notifyDataSetChanged();
+//            Collections.sort(routerModelArrayList, RouterModel.modelmode_asc);
+//            routerRecyclerAdapter.notifyDataSetChanged();
 //            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
 //        }else{
 //            mode_temp =true;
-//            Collections.sort(mainModelArrayList, MainModel.modelmode_des);
-//            mainRecyclerAdapter.notifyDataSetChanged();
+//            Collections.sort(routerModelArrayList, RouterModel.modelmode_des);
+//            routerRecyclerAdapter.notifyDataSetChanged();
 //            mSwipeRefreshLayout.setOnRefreshListener(Search_Network.this);
 //        }
 //    }

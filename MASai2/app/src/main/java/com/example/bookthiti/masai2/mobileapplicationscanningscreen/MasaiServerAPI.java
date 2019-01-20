@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.MobileApplicationScanning;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import java.util.List;
 
