@@ -81,7 +81,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         }
     };
 
-    private ArrayList<Devices> mDeviceList;
+    private ArrayList<DeviceModel> mDeviceList;
     String device_ip;
     String device_mac;
     String device_type;
@@ -156,13 +156,13 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
 
 
         //Recycler Adapter
-        final ArrayList<Devices> mainModelArrayList = prepareList();
+        final ArrayList<DeviceModel> mainModelArrayList = prepareList();
         final DeviceAdapter mainRecyclerAdapter = new DeviceAdapter(this, mainModelArrayList);
         mainRecyclerAdapter.setOnRecyclerViewItemClickListener(DeviceDiscoveryActivity.this);
         mainRecyclerView.setAdapter(mainRecyclerAdapter);
     }
 
-    private ArrayList<Devices> prepareList() {
+    private ArrayList<DeviceModel> prepareList() {
 
 
         mDeviceList = new ArrayList<>();
@@ -206,7 +206,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         for (int i = 0; i < count; i++) {
 
 
-            Devices mainModel = new Devices();
+            DeviceModel mainModel = new DeviceModel();
 
             JSONObject temp = null;
 
@@ -285,7 +285,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
 
     @Override
     public void onItemClick( int position, View view ) {
-        Devices mainModel = (Devices) view.getTag();
+        DeviceModel mainModel = (DeviceModel) view.getTag();
         switch (view.getId()) {
             case R.id.layout_device:
                 Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();

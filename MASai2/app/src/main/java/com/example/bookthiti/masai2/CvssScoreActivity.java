@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alespero.expandablecardview.ExpandableCardView;
-import com.example.bookthiti.masai2.devicediscoveryscreen.Devices;
+import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceModel;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
@@ -146,7 +146,7 @@ public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerVi
 
     @Override
     public void onItemClick( int position, View view ) {
-        Devices mainModel = (Devices) view.getTag();
+        DeviceModel mainModel = (DeviceModel) view.getTag();
         switch (view.getId()) {
             case R.id.layout_device:
                 Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();

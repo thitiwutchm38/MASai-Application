@@ -14,12 +14,12 @@ import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemCli
 import java.util.ArrayList;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
-    private ArrayList<Devices> mainModelArrayList;
+    private ArrayList<DeviceModel> mainModelArrayList;
     private Context context;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
 
-    public DeviceAdapter(Context context,ArrayList<Devices> mainModelArrayList) {
+    public DeviceAdapter(Context context,ArrayList<DeviceModel> mainModelArrayList) {
         this.context = context;
         this.mainModelArrayList = mainModelArrayList;
     }
@@ -31,7 +31,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.Holder>{
     }
     @Override
     public void onBindViewHolder(DeviceAdapter.Holder Holder, int position) {
-        final Devices offersListModel = mainModelArrayList.get(position);
+        final DeviceModel offersListModel = mainModelArrayList.get(position);
 
         Holder.ip_Text.setText(offersListModel.getmIP_address());
         Holder.mac_Text.setText(offersListModel.getmMac_address());

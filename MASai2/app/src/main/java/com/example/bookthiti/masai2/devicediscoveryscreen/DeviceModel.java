@@ -1,6 +1,6 @@
 package com.example.bookthiti.masai2.devicediscoveryscreen;
 
-public class Devices {
+public class DeviceModel {
 
     private String mIP_address;
     private String mMac_address;
@@ -8,7 +8,7 @@ public class Devices {
     private int mIcon;
 
 
-//    public Devices( String mIP_address, String mMac_address, String mDevice_types) {
+//    public DeviceModel( String mIP_address, String mMac_address, String mDevice_types) {
 ////        this.mIP_address = mIP_address;
 ////        this.mMac_address = mMac_address;
 ////        this.mDevice_types = mDevice_types;
