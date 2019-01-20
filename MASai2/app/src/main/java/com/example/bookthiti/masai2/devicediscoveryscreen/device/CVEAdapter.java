@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,19 +7,20 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 
 public class CVEAdapter extends RecyclerView.Adapter<CVEAdapter.Holder>{
 
-    private ArrayList<CVE> mainModelArrayList;
+    private ArrayList<CVEModel> mainModelArrayList;
     private Context context;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
 
 
-    public CVEAdapter( Context context, ArrayList<CVE> mainModelArrayList) {
+    public CVEAdapter( Context context, ArrayList<CVEModel> mainModelArrayList) {
         this.context = context;
         this.mainModelArrayList = mainModelArrayList;
     }
@@ -31,11 +32,11 @@ public class CVEAdapter extends RecyclerView.Adapter<CVEAdapter.Holder>{
     }
     @Override
     public void onBindViewHolder( CVEAdapter.Holder Holder, int position) {
-        final CVE offersListModel = mainModelArrayList.get(position);
+        final CVEModel offersListModel = mainModelArrayList.get(position);
 
-        Holder.data_cve_Text.setText(offersListModel.getmCVE());
-        Holder.data_des_Text.setText(offersListModel.getmPort_des());
-        Holder.data_cvss_score_Text.setText(offersListModel.getmCVSS_score());
+//        Holder.data_cve_Text.setText(offersListModel.getmCVE());
+//        Holder.data_des_Text.setText(offersListModel.getmPort_des());
+//        Holder.data_cvss_score_Text.setText(offersListModel.getmCVSS_score());
 
         //Holder.rowMainImage.setImageResource(offersListModel.getmIconSignalId());
 

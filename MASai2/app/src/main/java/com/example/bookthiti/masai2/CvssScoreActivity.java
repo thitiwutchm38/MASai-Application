@@ -10,7 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alespero.expandablecardview.ExpandableCardView;
-import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceModel;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEAdapter;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerVi
     CVEAdapter mainRecyclerAdapter;
 
 
-    private ArrayList<CVE> mainModelArrayList;
+    private ArrayList<CVEModel> mainModelArrayList;
     TextView app_data_ip;
 
     @Override
@@ -80,9 +82,9 @@ public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerVi
 
     }
 
-    private ArrayList<CVE> prepareList() {
+    private ArrayList<CVEModel> prepareList() {
 
-        ArrayList<CVE> mainModelList = new ArrayList<>();
+        ArrayList<CVEModel> mainModelList = new ArrayList<>();
 
 
 //        //Convert JSON File
@@ -114,26 +116,26 @@ public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerVi
 //            e.printStackTrace();
 //        }
 
-        String SSID = "CVE-2017-xxxx [high]";
+        String SSID = "CVEModel-2017-xxxx [high]";
         String  Signal = "Certain response codes in FTP connections can result in the use of uninitialized values for ports in FTP operations.";
         String Mode= "8.2";
 
 
 
-        CVE mainModel1 = new CVE();
-        CVE mainModel2 = new CVE();
+        CVEModel mainModel1 = new CVEModel();
+        CVEModel mainModel2 = new CVEModel();
 
 
 
 
 
-        mainModel1.setmCVE(SSID);
-        mainModel1.setmCVSS_score(Mode);
-        mainModel1.setmPort_des(Signal);
-
-        mainModel2.setmCVE(SSID);
-        mainModel2.setmCVSS_score(Mode);
-        mainModel2.setmPort_des(Signal);
+//        mainModel1.setmCVE(SSID);
+//        mainModel1.setmCVSS_score(Mode);
+//        mainModel1.setmPort_des(Signal);
+//
+//        mainModel2.setmCVE(SSID);
+//        mainModel2.setmCVSS_score(Mode);
+//        mainModel2.setmPort_des(Signal);
 
         mainModelList.add(mainModel1);
         mainModelList.add(mainModel2);
@@ -149,8 +151,8 @@ public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerVi
         DeviceModel mainModel = (DeviceModel) view.getTag();
         switch (view.getId()) {
             case R.id.layout_device:
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();
-                //openActivity_port_info(position);
+                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getIpAddress(), Toast.LENGTH_LONG).show();
+                //openActivityPortInfo(position);
                 break;
         }
     }

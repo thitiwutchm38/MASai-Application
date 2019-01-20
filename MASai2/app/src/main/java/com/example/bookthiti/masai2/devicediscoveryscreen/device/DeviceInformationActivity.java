@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.devicediscoveryscreen;
+package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import com.example.bookthiti.masai2.CvssScoreActivity;
 import com.example.bookthiti.masai2.Port_attackActivity;
-import com.example.bookthiti.masai2.Ports;
-import com.example.bookthiti.masai2.PortsAdapter;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
@@ -28,13 +26,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Device_information extends AppCompatActivity implements OnRecyclerViewItemClickListener, SwipeRefreshLayout.OnRefreshListener  {
+public class DeviceInformationActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener, SwipeRefreshLayout.OnRefreshListener  {
 
 
     // Arraylist of all ports
 
-    ArrayList<Ports> mainModelList;
-    ArrayList<Ports> mainModelArrayList;
+    ArrayList<ServiceModel> mainModelList;
+    ArrayList<ServiceModel> mainModelArrayList;
 
     // Click textView for sorting
     TextView textView_show_portname;
@@ -147,7 +145,7 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
 
 
             mainRecyclerAdapter = new PortsAdapter(this, mainModelArrayList);
-            mainRecyclerAdapter.setOnRecyclerViewItemClickListener(Device_information.this);
+            mainRecyclerAdapter.setOnRecyclerViewItemClickListener(DeviceInformationActivity.this);
             mainRecyclerView.setAdapter(mainRecyclerAdapter);
 
         textView_show_portname.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +194,7 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
     }
 
 
-    private ArrayList<Ports> prepareList() {
+    private ArrayList<ServiceModel> prepareList() {
 
         mainModelList = new ArrayList<>();
 
@@ -268,7 +266,7 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
         for (int i = 0; i < opened; i++) {
 
 
-            Ports mainModel = new Ports();
+            ServiceModel mainModel = new ServiceModel();
 
             JSONObject temp = null;
 
@@ -297,9 +295,9 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
 
 
 
-            mainModel.setP_name(p_name);
-            mainModel.setP_number(p_number);
-            mainModel.setP_protocal(p_protocal);
+            mainModel.setName(p_name);
+//            mainModel.setPort(p_number);
+            mainModel.setProtocol(p_protocal);
 
 
 
@@ -324,10 +322,10 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
 
     @Override
     public void onItemClick( int position, View view ) {
-        Ports mainModel = (Ports) view.getTag();
+        ServiceModel mainModel = (ServiceModel) view.getTag();
         switch (view.getId()) {
             case R.id.layout_ports:
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getP_name(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getName(), Toast.LENGTH_LONG).show();
                 break;
         }
 
@@ -337,42 +335,42 @@ public class Device_information extends AppCompatActivity implements OnRecyclerV
 
         if (pNumber_temp == true){
             pNumber_temp =false;
-            Collections.sort(mainModelList, Ports.portNum_asc);
+            Collections.sort(mainModelList, ServiceModel.portNum_asc);
             mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
+            mSwipeRefreshLayout.setOnRefreshListener(DeviceInformationActivity.this);
         }else{
             pNumber_temp =true;
-            Collections.sort(mainModelList, Ports.portNum_des);
+            Collections.sort(mainModelList, ServiceModel.portNum_des);
             mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
+            mSwipeRefreshLayout.setOnRefreshListener(DeviceInformationActivity.this);
         }
     }
     void sortpName() {
 
         if (pNumber_temp == true){
             pNumber_temp =false;
-            Collections.sort(mainModelList, Ports.portsName_asc);
+            Collections.sort(mainModelList, ServiceModel.portsName_asc);
             mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
+            mSwipeRefreshLayout.setOnRefreshListener(DeviceInformationActivity.this);
         }else{
             pNumber_temp =true;
-            Collections.sort(mainModelList, Ports.portsName_des);
+            Collections.sort(mainModelList, ServiceModel.portsName_des);
             mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
+            mSwipeRefreshLayout.setOnRefreshListener(DeviceInformationActivity.this);
         }
     }
     void sortpProtocal() {
 
         if (pNumber_temp == true){
             pNumber_temp =false;
-            Collections.sort(mainModelList, Ports.portsProtocal_asc);
+            Collections.sort(mainModelList, ServiceModel.portsProtocal_asc);
             mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
+            mSwipeRefreshLayout.setOnRefreshListener(DeviceInformationActivity.this);
         }else{
             pNumber_temp =true;
-            Collections.sort(mainModelList, Ports.portsProtocal_des);
+            Collections.sort(mainModelList, ServiceModel.portsProtocal_des);
             mainRecyclerAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setOnRefreshListener(Device_information.this);
+            mSwipeRefreshLayout.setOnRefreshListener(DeviceInformationActivity.this);
         }
     }
 

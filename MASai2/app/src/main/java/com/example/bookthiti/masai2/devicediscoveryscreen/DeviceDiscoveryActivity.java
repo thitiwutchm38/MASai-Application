@@ -4,28 +4,30 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceInformationActivity;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
-import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
@@ -34,29 +36,32 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
     private BluetoothManagementService mBluetoothManagementService;
     private boolean mBound = false;
     private boolean isRemoteDeviceConnected = false;
-    private ArrayList<RouterModel> mRouterModelArrayList;
+    private List<DeviceModel> mDeviceModelList;
+    private DeviceDiscoveryModel mDeviceDiscoveryModel;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // TODO: listen to ACTION_DEVICE_SCAN
-//            String action = intent.getAction();
-//            if (BluetoothManagementService.ACTION_WIFI_SCAN.equals(action)) {
-//                Bundle bundle = intent.getExtras();
-//                String jsonString = bundle.getString("payload");
-//                Log.i(TAG_INFO, jsonString);
-//                RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
-//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchNetworkActivity.this,
-//                        LinearLayoutManager.VERTICAL, false);
-//                mainRecyclerView.setLayoutManager(linearLayoutManager);
-//                //Recycler Adapter
-//                mRouterModelArrayList = loadRouterModelList(jsonString);
-//                RouterRecyclerAdapter routerRecyclerAdapter = new RouterRecyclerAdapter(SearchNetworkActivity.this, mRouterModelArrayList);
-//                routerRecyclerAdapter.setOnRecyclerViewItemClickListener(SearchNetworkActivity.this);
-//                mainRecyclerView.setAdapter(routerRecyclerAdapter);
-//                ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-//                progressBar.setVisibility(View.GONE);
-//            }
+            String action = intent.getAction();
+            if (BluetoothManagementService.ACTION_DEVICE_SCAN.equals(action)) {
+                Bundle bundle = intent.getExtras();
+                String jsonString = bundle.getString("payload");
+                Log.i(TAG_INFO, jsonString);
+                RecyclerView mainRecyclerView = findViewById(R.id.recyclerview_device_item);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DeviceDiscoveryActivity.this,
+                        LinearLayoutManager.VERTICAL, false);
+                mainRecyclerView.setLayoutManager(linearLayoutManager);
+
+                mDeviceModelList = loadDeviceModelList(jsonString);
+                //        //Recycler Adapter
+                DeviceDiscoveryRecyclerAdapter mainRecyclerAdapter = new DeviceDiscoveryRecyclerAdapter(mContext, mDeviceModelList);
+                mainRecyclerAdapter.setOnRecyclerViewItemClickListener(DeviceDiscoveryActivity.this);
+                mainRecyclerView.setAdapter(mainRecyclerAdapter);
+
+                ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
+                progressBar.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -77,14 +82,9 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
-            Log.i(TAG_INFO, "Service is unbounded");
+            Log.i(TAG_INFO, "ServiceModel is unbounded");
         }
     };
-
-    private ArrayList<DeviceModel> mDeviceList;
-    String device_ip;
-    String device_mac;
-    String device_type;
 
     private final int categoryIcon[] = {
             R.drawable.wifi_device_4,
@@ -142,179 +142,197 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
     //final View someView = findViewById(R.id.layout_device);
 
 
-
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
+        mContext = getApplicationContext();
 
-
-        final RecyclerView mainRecyclerView = findViewById(R.id.recyclerview_device_item);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        mainRecyclerView.setLayoutManager(linearLayoutManager);
-
-
-        //Recycler Adapter
-        final ArrayList<DeviceModel> mainModelArrayList = prepareList();
-        final DeviceAdapter mainRecyclerAdapter = new DeviceAdapter(this, mainModelArrayList);
-        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(DeviceDiscoveryActivity.this);
-        mainRecyclerView.setAdapter(mainRecyclerAdapter);
-    }
-
-    private ArrayList<DeviceModel> prepareList() {
-
-
-        mDeviceList = new ArrayList<>();
-
-        //Convert JSON File
-        String json = null;
-        Integer count = null;
-
-        try {
-            InputStream is = getAssets().open("device.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
         }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
 
+//        RecyclerView mainRecyclerView = findViewById(R.id.recyclerview_device_item);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
+//                LinearLayoutManager.VERTICAL, false);
+//        mainRecyclerView.setLayoutManager(linearLayoutManager);
 
-        JSONObject reader = null;
-        try {
-            reader = new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            count = Integer.parseInt(reader.getString("count"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        device_ip = null;
-        device_mac = null;
-        device_type= null;
-
-
-
-
-        for (int i = 0; i < count; i++) {
-
-
-            DeviceModel mainModel = new DeviceModel();
-
-            JSONObject temp = null;
-
-            try {
-                temp = reader.getJSONObject(Integer.toString(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                device_ip  = temp.getString("IP_Address");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                device_mac  = temp.getString("Mac_Address");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                device_type  = temp.getString("Device_Types");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            mainModel.setmIP_address(device_ip);
-            mainModel.setmMac_address(device_mac);
-            mainModel.setmDevice_types(device_type);
-
-
-
-            switch(device_type) {
-                case "phone":
-                    mainModel.setOfferIcon(R.drawable.icons_phone);
-                    break; // optional
-
-                case "printer":
-                    mainModel.setOfferIcon(R.drawable.icons_printer);
-                    break; // optional
-
-                case "router":
-                    mainModel.setOfferIcon(R.drawable.icons_router);
-                    break; // optional
-                case "webcam":
-                    mainModel.setOfferIcon(R.drawable.icons_cam);
-                    break; // optional
-
-                case "general purpose":
-                mainModel.setOfferIcon(R.drawable.icons_general);
-                break; // optional
-
-                case "media device":
-                    mainModel.setOfferIcon(R.drawable.icons_media);
-                    break; // optional
-
-                // You can have any number of case statements.
-                default : // Optional
-                    // Statements
-            }
-
-            //mainModel.setmIconSignalId(categoryIcon[i]);
-
-
-            mDeviceList.add(mainModel);
-
-
-
-
-
-        }
-        return mDeviceList;
+//        //Recycler Adapter
+//        final ArrayList<DeviceModel> mainModelArrayList = prepareList();
+//        final DeviceDiscoveryRecyclerAdapter mainRecyclerAdapter = new DeviceDiscoveryRecyclerAdapter(this, mainModelArrayList);
+//        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(DeviceDiscoveryActivity.this);
+//        mainRecyclerView.setAdapter(mainRecyclerAdapter);
     }
 
     @Override
-    public void onItemClick( int position, View view ) {
+    protected void onDestroy() {
+        if (mBound) {
+            unbindService(mConnection);
+        }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalBroadcastReceiver);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onItemClick(int position, View view) {
         DeviceModel mainModel = (DeviceModel) view.getTag();
         switch (view.getId()) {
             case R.id.layout_device:
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();
-                openActivity_port_info(position);
+                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getIpAddress(), Toast.LENGTH_LONG).show();
+                openActivityPortInfo(position);
                 break;
         }
 
-
     }
 
-    public void openActivity_port_info(int position) {
+    private void openActivityPortInfo(int position) {
 
-        Intent intent = new Intent(this,Device_information.class);
+        Intent intent = new Intent(this, DeviceInformationActivity.class);
 
         //Bundle
         Bundle bundle = new Bundle();
-        bundle.putString("IP_Address", mDeviceList.get(position).getmIP_address());
-        bundle.putString("Mac_Address", mDeviceList.get(position).getmMac_address());
-        bundle.putString("Device_Types", mDeviceList.get(position).getmDevice_types());
-        bundle.putInt("icon", mDeviceList.get(position).getOfferIcon());
-
+        bundle.putString("IP_Address", mDeviceModelList.get(position).getIpAddress());
+        bundle.putString("Mac_Address", mDeviceModelList.get(position).getMacAddress());
+        bundle.putString("Device_Types", mDeviceModelList.get(position).getDeviceType());
+//        bundle.putInt("icon", mDeviceList.get(position).getOfferIcon());
 
         intent.putExtras(bundle);
 
         startActivity(intent);
     }
 
+    private List<DeviceModel> loadDeviceModelList(String jsonString) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(DeviceModel.class, new DeviceModel.DeviceModelDeserializer());
+        gsonBuilder.registerTypeAdapter(ServiceModel.class, new ServiceModel.ServiceModelDeserializer());
+        gsonBuilder.registerTypeAdapter(CVEModel.Severity.class, new CVEModel.SeverityDeserializer());
+        mDeviceDiscoveryModel = gsonBuilder.create().fromJson(jsonString, DeviceDiscoveryModel.class);
+        List<DeviceModel> deviceModels = mDeviceDiscoveryModel.getHosts();
+        return deviceModels;
+//        mDeviceList = new ArrayList<>();
+//
+//        //Convert JSON File
+//        String json = null;
+//        Integer count = null;
+//
+//        try {
+//            InputStream is = getAssets().open("device.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            json = new String(buffer, "UTF-8");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//
+//        JSONObject reader = null;
+//        try {
+//            reader = new JSONObject(json);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            count = Integer.parseInt(reader.getString("count"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        device_ip = null;
+//        device_mac = null;
+//        device_type= null;
+//
+//
+//
+//
+//        for (int i = 0; i < count; i++) {
+//
+//
+//            DeviceModel mainModel = new DeviceModel();
+//
+//            JSONObject temp = null;
+//
+//            try {
+//                temp = reader.getJSONObject(Integer.toString(i));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                device_ip  = temp.getString("IP_Address");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                device_mac  = temp.getString("Mac_Address");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                device_type  = temp.getString("Device_Types");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//            mainModel.setIpAddress(device_ip);
+//            mainModel.setMacAddress(device_mac);
+//            mainModel.setDeviceType(device_type);
+//
+
+
+//            switch(device_type) {
+//                case "phone":
+//                    mainModel.setOfferIcon(R.drawable.icons_phone);
+//                    break; // optional
+//
+//                case "printer":
+//                    mainModel.setOfferIcon(R.drawable.icons_printer);
+//                    break; // optional
+//
+//                case "router":
+//                    mainModel.setOfferIcon(R.drawable.icons_router);
+//                    break; // optional
+//                case "webcam":
+//                    mainModel.setOfferIcon(R.drawable.icons_cam);
+//                    break; // optional
+//
+//                case "general purpose":
+//                mainModel.setOfferIcon(R.drawable.icons_general);
+//                break; // optional
+//
+//                case "media device":
+//                    mainModel.setOfferIcon(R.drawable.icons_media);
+//                    break; // optional
+//
+//                // You can have any number of case statements.
+//                default : // Optional
+//                    // Statements
+//            }
+
+        //mainModel.setmIconSignalId(categoryIcon[i]);
+
+//
+//            mDeviceList.add(mainModel);
+//
+//
+//
+//
+//
+//        }
+//        return mDeviceList;
+    }
+
     private boolean isRemoteDeviceConnected() {
-        if(mBluetoothManagementService != null && mBound) {
+        if (mBluetoothManagementService != null && mBound) {
             return mBluetoothManagementService.isRemoteDeviceConnected();
         }
         return false;

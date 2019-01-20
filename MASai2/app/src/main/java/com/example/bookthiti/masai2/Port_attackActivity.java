@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceModel;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import org.json.JSONException;
@@ -23,8 +24,8 @@ public class Port_attackActivity extends AppCompatActivity implements OnRecycler
 
 
 
-    ArrayList<Ports> mainModelList;
-    ArrayList<Ports> checkList;
+    ArrayList<ServiceModel> mainModelList;
+    ArrayList<ServiceModel> checkList;
 
     PortAttdapter mainRecyclerAdapter;
 
@@ -60,26 +61,26 @@ public class Port_attackActivity extends AppCompatActivity implements OnRecycler
         for(int i=0 ; i < opened;i++){
 
 
-            System.out.println(checkList.get(i).getP_number());
-
-            if(checkList.get(i).getP_number().equals("22")){
-                PortAtt att = new PortAtt();
-
-                att.setPort_att_type("Bruteforce");
-                att.setPortname("SSH");
-                att.setPortnum("22");
-
-                mainModelArrayList.add(att);
-            }
-            if(checkList.get(i).getP_number().equals("80")){
-                PortAtt att = new PortAtt();
-
-                att.setPort_att_type("Bruteforce");
-                att.setPortname("HTTP");
-                att.setPortnum("80");
-
-                mainModelArrayList.add(att);
-            }
+            System.out.println(checkList.get(i).getPort());
+//
+//            if(checkList.get(i).getPort().equals("22")){
+//                PortAtt att = new PortAtt();
+//
+//                att.setPort_att_type("Bruteforce");
+//                att.setPortname("SSH");
+//                att.setPortnum("22");
+//
+//                mainModelArrayList.add(att);
+//            }
+//            if(checkList.get(i).getPort().equals("80")){
+//                PortAtt att = new PortAtt();
+//
+//                att.setPort_att_type("Bruteforce");
+//                att.setPortname("HTTP");
+//                att.setPortnum("80");
+//
+//                mainModelArrayList.add(att);
+//            }
 
 
         }
@@ -89,7 +90,7 @@ public class Port_attackActivity extends AppCompatActivity implements OnRecycler
         mainRecyclerView.setAdapter(mainRecyclerAdapter);
 
     }
-    private ArrayList<Ports> prepareList() {
+    private ArrayList<ServiceModel> prepareList() {
 
         mainModelList = new ArrayList<>();
 
@@ -161,7 +162,7 @@ public class Port_attackActivity extends AppCompatActivity implements OnRecycler
         for (int i = 0; i < opened; i++) {
 
 
-            Ports mainModel = new Ports();
+            ServiceModel mainModel = new ServiceModel();
 
             JSONObject temp = null;
 
@@ -190,9 +191,9 @@ public class Port_attackActivity extends AppCompatActivity implements OnRecycler
 
 
 
-            mainModel.setP_name(p_name);
-            mainModel.setP_number(p_number);
-            mainModel.setP_protocal(p_protocal);
+            mainModel.setName(p_name);
+//            mainModel.setPort(p_number);
+            mainModel.setProtocol(p_protocal);
 
 
 
@@ -211,8 +212,8 @@ public class Port_attackActivity extends AppCompatActivity implements OnRecycler
             DeviceModel mainModel = (DeviceModel) view.getTag();
             switch (view.getId()) {
                 case R.id.layout_device:
-                    Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getmIP_address(), Toast.LENGTH_LONG).show();
-                    //openActivity_port_info(position);
+                    Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getIpAddress(), Toast.LENGTH_LONG).show();
+                    //openActivityPortInfo(position);
                     break;
             }
         }

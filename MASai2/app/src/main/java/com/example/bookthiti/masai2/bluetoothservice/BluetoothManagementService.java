@@ -44,6 +44,7 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_BLUETOOTH_UNABLE_TO_CONNECT = "ACTION BLUETOOTH UNABLE TO CONNECT";
     public static final String ACTION_WIFI_ATTACK = "ACTION WIFI ATTACK";
     public static final String ACTION_WIFI_CONNECT = "ACTION WIFI CONNECT";
+    public static final String ACTION_DEVICE_SCAN = "ACTION DEVICE SCAN";
 
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> mPairedDevices;
@@ -122,13 +123,13 @@ public class BluetoothManagementService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.i(TAG_INFO, "Service is bind");
+        Log.i(TAG_INFO, "ServiceModel is bind");
         return this.mBinder;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.i(TAG_INFO, "Service is unbind");
+        Log.i(TAG_INFO, "ServiceModel is unbind");
         return super.onUnbind(intent);
     }
 
@@ -319,6 +320,10 @@ public class BluetoothManagementService extends Service {
                                     break;
                                 case "wifiConnect":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
+                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                                    break;
+                                case "nmapScan":
+                                    intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
                                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                             }

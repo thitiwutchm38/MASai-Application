@@ -5,7 +5,7 @@
     android:id="@+id/scan_result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanResultActivity"
+    tools:mContext=".ScanResultActivity"
     tools:layout_editor_absoluteY="81dp">
     <LinearLayout
         android:id="@+id/linearLayout_scan_result"

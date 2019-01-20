@@ -83,7 +83,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
-            Log.i(TAG_INFO, "Service is unbounded");
+            Log.i(TAG_INFO, "ServiceModel is unbounded");
         }
     };
 

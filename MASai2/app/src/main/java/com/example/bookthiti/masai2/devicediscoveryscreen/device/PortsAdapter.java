@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,19 +9,20 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 
 public class PortsAdapter extends RecyclerView.Adapter<PortsAdapter.Holder>{
 
-    private ArrayList<Ports> mainModelArrayList;
+    private ArrayList<ServiceModel> mainModelArrayList;
 
 
     private Context context;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
-    public PortsAdapter(Context context,ArrayList<Ports> mainModelArrayList) {
+    public PortsAdapter(Context context,ArrayList<ServiceModel> mainModelArrayList) {
         this.context = context;
         this.mainModelArrayList = mainModelArrayList;
     }
@@ -36,11 +37,11 @@ public class PortsAdapter extends RecyclerView.Adapter<PortsAdapter.Holder>{
 
     @Override
     public void onBindViewHolder(PortsAdapter.Holder Holder, int position) {
-        final Ports offersListModel = mainModelArrayList.get(position);
+        final ServiceModel offersListModel = mainModelArrayList.get(position);
 
-        Holder.p_num_Text.setText(offersListModel.getP_number());
-        Holder.p_name_Text.setText(offersListModel.getP_name());
-        Holder.p_protocal_Text.setText(offersListModel.getP_protocal());
+        Holder.p_num_Text.setText(offersListModel.getPort());
+        Holder.p_name_Text.setText(offersListModel.getName());
+        Holder.p_protocal_Text.setText(offersListModel.getProtocol());
 
 
 

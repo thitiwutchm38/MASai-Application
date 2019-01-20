@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".iot_suggestion$PlaceholderFragment"
+    tools:mContext=".iot_suggestion$PlaceholderFragment"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView

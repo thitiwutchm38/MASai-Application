@@ -52,7 +52,7 @@
             android:label="List of Devices" />
         <activity android:name=".ScanResultActivity" />
         <activity
-            android:name=".devicediscoveryscreen.Device_information"
+            android:name=".devicediscoveryscreen.device.DeviceInformationActivity"
             android:label="Device Information" />
         <activity
             android:name=".CvssScoreActivity"

@@ -585,7 +585,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
         switch (view.getId()) {
             case R.id.layout_pop_up_result:
                 Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
-                //openActivity_port_info(position);
+                //openActivityPortInfo(position);
 
                 Intent intent = new Intent(this,OwaspMobileActivity.class);
 
