@@ -114,27 +114,27 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                     }
                 }
             });
-            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                            // TODO Auto-generated method stub
-                            switch(event.getAction())
-                            {
-                                case MotionEvent.ACTION_DOWN:
-                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
-                                    break;
-                                case MotionEvent.ACTION_UP:
-
-                                    //set color back to default
-                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
-                                    break;
-                            }
-                            return false;
-                        }
-
-            });
+//            rowMainParentLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+//
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//
+//                            // TODO Auto-generated method stub
+//                            switch(event.getAction())
+//                            {
+//                                case MotionEvent.ACTION_DOWN:
+//                                    rowMainParentLinearLayout.setBackgroundColor(Color.RED);
+//                                    break;
+//                                case MotionEvent.ACTION_UP:
+//
+//                                    //set color back to default
+//                                    rowMainParentLinearLayout.setBackgroundColor(Color.WHITE);
+//                                    break;
+//                            }
+//                            return false;
+//                        }
+//
+//            });
 
 
 
