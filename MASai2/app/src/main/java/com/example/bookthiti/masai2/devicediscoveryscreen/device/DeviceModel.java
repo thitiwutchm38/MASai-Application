@@ -1,6 +1,8 @@
 package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 
 import android.app.Service;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.example.bookthiti.masai2.R;
 import com.google.gson.JsonDeserializationContext;
@@ -11,10 +13,23 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DeviceModel {
+public class DeviceModel implements Parcelable {
+
+    public static final Creator<DeviceModel> CREATOR = new Creator<DeviceModel>() {
+        @Override
+        public DeviceModel createFromParcel(Parcel in) {
+            return new DeviceModel(in);
+        }
+
+        @Override
+        public DeviceModel[] newArray(int size) {
+            return new DeviceModel[size];
+        }
+    };
 
     @SerializedName("status")
     private String status;
@@ -44,6 +59,19 @@ public class DeviceModel {
 
     public DeviceModel() {
 
+    }
+
+    public DeviceModel(Parcel parcel) {
+        this.status = parcel.readString();
+        this.ipAddress = parcel.readString();
+        this.macAddress = parcel.readString();
+        this.deviceType = parcel.readString();
+        this.osName = parcel.readString();
+        this.osVendor = parcel.readString();
+        this.osCpe = parcel.readString();
+        this.serviceModels = new ArrayList<ServiceModel>();
+        parcel.readTypedList(this.serviceModels, ServiceModel.CREATOR);
+        this.iconId = parcel.readInt();
     }
 
     public DeviceModel(String status, String ipAddress, String macAddress, String deviceType, String osName, String osVendor, String osCpe, List<ServiceModel> serviceModels) {
@@ -151,6 +179,25 @@ public class DeviceModel {
         this.iconId = iconId;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(status);
+        parcel.writeString(ipAddress);
+        parcel.writeString(macAddress);
+        parcel.writeString(deviceType);
+        parcel.writeString(osName);
+        parcel.writeString(osVendor);
+        parcel.writeString(osCpe);
+        parcel.writeTypedList(serviceModels);
+        parcel.writeInt(iconId);
+
+    }
+
     public static class DeviceModelDeserializer implements JsonDeserializer<DeviceModel> {
         @Override
         public DeviceModel deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -167,6 +214,4 @@ public class DeviceModel {
             return new DeviceModel(status, ipAddress, macAddress, deviceType, osName, osVendor, osCpe, serviceModels);
         }
     }
-
-
 }

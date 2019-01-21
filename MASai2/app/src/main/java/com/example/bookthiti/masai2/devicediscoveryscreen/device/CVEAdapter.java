@@ -68,8 +68,8 @@ public class CVEAdapter extends RecyclerView.Adapter<CVEAdapter.Holder>{
 
 
 
-            data_cve_Text = view.findViewById(R.id.textView_data_ip_address);
-            data_des_Text = view.findViewById(R.id.app_data_id);
+            data_cve_Text = view.findViewById(R.id.text_ip_address);
+            data_des_Text = view.findViewById(R.id.text_mac_address);
             data_cvss_score_Text = view.findViewById(R.id.port_data_cvss_score);
 
             device_layout = view.findViewById(R.id.layout_cve);

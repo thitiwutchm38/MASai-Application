@@ -42,7 +42,6 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // TODO: listen to ACTION_DEVICE_SCAN
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_DEVICE_SCAN.equals(action)) {
                 Bundle bundle = intent.getExtras();
@@ -86,61 +85,6 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         }
     };
 
-    private final int categoryIcon[] = {
-            R.drawable.wifi_device_4,
-            R.drawable.wifi_device_4,
-            R.drawable.wifi_device_4,
-
-            R.drawable.wifi_device_4,
-            R.drawable.wifi_device_4,
-            R.drawable.wifi_device_4,
-
-            R.drawable.wifi_device_4,
-            R.drawable.wifi_device_4,
-            R.drawable.wifi_device_4
-
-    };
-
-    private final String categoryName[] = {
-            "Apple",
-            "Samsung",
-            "MI",
-            "Motorola",
-            "Nokia",
-            "Oppo",
-            "Micromax",
-            "Honor",
-            "Lenovo"
-    };
-
-    private final String mac[] = {
-            "4b:d3:f0:a9:ef:a5",
-            "b7:66:6b:a7:01:57",
-            "63:d4:41:a8:d0:b1",
-            "a7:c4:13:42:56:3b",
-            "32:54:f1:c5:49:07",
-            "12:eb:32:e2:be:93",
-            "17:1f:cb:24:6f:90",
-            "e7:35:35:ea:5c:af",
-            "17:cf:ff:09:42:d4"
-    };
-    private final String type[] = {
-            "media device",
-            "phone",
-            "general purpose",
-            "printer",
-            "phone",
-            "webcam",
-            "phone",
-            "router",
-            "general purpose"
-    };
-
-    // RelativeLayout currentLayout;
-    // Now get a handle to any View contained
-    // within the main layout you are using
-    //final View someView = findViewById(R.id.layout_device);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,10 +123,10 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
 
     @Override
     public void onItemClick(int position, View view) {
-        DeviceModel mainModel = (DeviceModel) view.getTag();
+        DeviceModel deviceModel = (DeviceModel) view.getTag();
         switch (view.getId()) {
             case R.id.layout_device:
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getIpAddress(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + deviceModel.getIpAddress(), Toast.LENGTH_LONG).show();
                 openActivityPortInfo(position);
                 break;
         }
@@ -192,24 +136,20 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
     private void openActivityPortInfo(int position) {
 
         Intent intent = new Intent(this, DeviceInformationActivity.class);
-
-        //Bundle
-        Bundle bundle = new Bundle();
-        bundle.putString("IP_Address", mDeviceModelList.get(position).getIpAddress());
-        bundle.putString("Mac_Address", mDeviceModelList.get(position).getMacAddress());
-        bundle.putString("Device_Types", mDeviceModelList.get(position).getDeviceType());
-//        bundle.putInt("icon", mDeviceList.get(position).getOfferIcon());
-
-        intent.putExtras(bundle);
-
+        intent.putExtra("targetDeviceModel", mDeviceModelList.get(position));
+//        bundle.putString("IP_Address", mDeviceModelList.get(position).getIpAddress());
+//        bundle.putString("Mac_Address", mDeviceModelList.get(position).getMacAddress());
+//        bundle.putString("Device_Types", mDeviceModelList.get(position).getDeviceType());
+//        bundle.putInt("icon", mDeviceModelList.get(position).getIconId());
         startActivity(intent);
     }
 
     private List<DeviceModel> loadDeviceModelList(String jsonString) {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(DeviceModel.class, new DeviceModel.DeviceModelDeserializer());
-        gsonBuilder.registerTypeAdapter(ServiceModel.class, new ServiceModel.ServiceModelDeserializer());
         gsonBuilder.registerTypeAdapter(CVEModel.Severity.class, new CVEModel.SeverityDeserializer());
+        gsonBuilder.registerTypeAdapter(ServiceModel.class, new ServiceModel.ServiceModelDeserializer());
+        gsonBuilder.registerTypeAdapter(DeviceModel.class, new DeviceModel.DeviceModelDeserializer());
+        gsonBuilder.registerTypeAdapter(DeviceDiscoveryModel.class, new DeviceDiscoveryModel.DeviceDiscoveryModelDeserializer());
         mDeviceDiscoveryModel = gsonBuilder.create().fromJson(jsonString, DeviceDiscoveryModel.class);
         List<DeviceModel> deviceModels = mDeviceDiscoveryModel.getHosts();
         return deviceModels;

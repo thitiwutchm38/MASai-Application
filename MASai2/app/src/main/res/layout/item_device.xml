@@ -21,7 +21,7 @@
 
 
         <ImageView
-            android:id="@+id/icon_device_type"
+            android:id="@+id/image_device_type"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
@@ -30,61 +30,61 @@
             app:srcCompat="@android:drawable/sym_def_app_icon" />
 
         <TextView
-            android:id="@+id/textView_label_ip_address"
+            android:id="@+id/text_static_ip_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_toEndOf="@+id/icon_device_type"
-            android:layout_toRightOf="@+id/icon_device_type"
+            android:layout_toEndOf="@+id/image_device_type"
+            android:layout_toRightOf="@+id/image_device_type"
             android:text="IP address:"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView_data_ip_address"
+            android:id="@+id/text_ip_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="16dp"
-            android:layout_toRightOf="@id/textView_label_ip_address"
+            android:layout_toRightOf="@id/text_static_ip_address"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView_label_port_address"
+            android:id="@+id/text_static_mac_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_label_ip_address"
+            android:layout_below="@+id/text_static_ip_address"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/icon_device_type"
-            android:layout_toRightOf="@+id/icon_device_type"
+            android:layout_toEndOf="@+id/image_device_type"
+            android:layout_toRightOf="@+id/image_device_type"
             android:text="MAC address:"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/app_data_id"
+            android:id="@+id/text_mac_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_data_ip_address"
+            android:layout_below="@+id/text_ip_address"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/textView_label_port_address"
-            android:layout_toRightOf="@id/textView_label_port_address"
+            android:layout_toEndOf="@+id/text_static_mac_address"
+            android:layout_toRightOf="@id/text_static_mac_address"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/port_cvss_score"
+            android:id="@+id/text_static_device_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_label_port_address"
+            android:layout_below="@+id/text_static_mac_address"
             android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/icon_device_type"
-            android:layout_toRightOf="@+id/icon_device_type"
+            android:layout_toEndOf="@+id/image_device_type"
+            android:layout_toRightOf="@+id/image_device_type"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Device Type:"
@@ -92,15 +92,15 @@
 
 
         <TextView
-            android:id="@+id/device_data_type"
+            android:id="@+id/text_device_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/app_data_id"
+            android:layout_below="@+id/text_mac_address"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/port_cvss_score"
-            android:layout_toRightOf="@id/port_cvss_score"
+            android:layout_toEndOf="@+id/text_static_device_type"
+            android:layout_toRightOf="@id/text_static_device_type"
             android:textSize="14sp" />
 
 

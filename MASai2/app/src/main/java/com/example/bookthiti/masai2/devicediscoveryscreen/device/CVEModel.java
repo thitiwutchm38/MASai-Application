@@ -1,5 +1,8 @@
 package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -7,10 +10,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CVEModel {
+public class CVEModel implements Parcelable {
 
     private String id;
     private String description;
@@ -24,6 +28,24 @@ public class CVEModel {
 
     public CVEModel() {
     }
+
+    public CVEModel(Parcel in) {
+        id = in.readString();
+        description = in.readString();
+        severity = in.readTypedObject(Severity.CREATOR);
+    }
+
+    public static final Creator<CVEModel> CREATOR = new Creator<CVEModel>() {
+        @Override
+        public CVEModel createFromParcel(Parcel in) {
+            return new CVEModel(in);
+        }
+
+        @Override
+        public CVEModel[] newArray(int size) {
+            return new CVEModel[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -49,7 +71,19 @@ public class CVEModel {
         this.severity = severity;
     }
 
-    public static class Severity {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(description);
+        parcel.writeTypedObject(severity, 0);
+    }
+
+    public static class Severity implements Parcelable{
         private String severity;
         private boolean topVulnerable;
         private boolean topAlert;
@@ -64,6 +98,26 @@ public class CVEModel {
 
         public Severity() {
         }
+
+        protected Severity(Parcel in) {
+            severity = in.readString();
+            topVulnerable = in.readByte() != 0;
+            topAlert = in.readByte() != 0;
+            cvssList = new ArrayList<CVSS>();
+            in.readTypedList(cvssList, CVSS.CREATOR);
+        }
+
+        public static final Creator<Severity> CREATOR = new Creator<Severity>() {
+            @Override
+            public Severity createFromParcel(Parcel in) {
+                return new Severity(in);
+            }
+
+            @Override
+            public Severity[] newArray(int size) {
+                return new Severity[size];
+            }
+        };
 
         public String getSeverity() {
             return severity;
@@ -96,9 +150,22 @@ public class CVEModel {
         public void setCvssList(List<CVSS> cvssList) {
             this.cvssList = cvssList;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(severity);
+            parcel.writeByte((byte) (topVulnerable ? 1 : 0));
+            parcel.writeByte((byte) (topAlert ? 1 : 0));
+            parcel.writeTypedList(cvssList);
+        }
     }
 
-    public class CVSS {
+    public static class CVSS implements Parcelable{
         private String accessComplexity;
         private String accessVector;
         private String authentication;
@@ -122,6 +189,31 @@ public class CVEModel {
             this.exploitability = exploitability;
             this.impact = impact;
         }
+
+        protected CVSS(Parcel in) {
+            accessComplexity = in.readString();
+            accessVector = in.readString();
+            authentication = in.readString();
+            availability = in.readString();
+            confidentiality = in.readString();
+            integrity = in.readString();
+            vector = in.readString();
+            base = in.readFloat();
+            exploitability = in.readFloat();
+            impact = in.readFloat();
+        }
+
+        public static final Creator<CVSS> CREATOR = new Creator<CVSS>() {
+            @Override
+            public CVSS createFromParcel(Parcel in) {
+                return new CVSS(in);
+            }
+
+            @Override
+            public CVSS[] newArray(int size) {
+                return new CVSS[size];
+            }
+        };
 
         public String getAccessComplexity() {
             return accessComplexity;
@@ -201,6 +293,25 @@ public class CVEModel {
 
         public void setImpact(float impact) {
             this.impact = impact;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(accessComplexity);
+            parcel.writeString(accessVector);
+            parcel.writeString(authentication);
+            parcel.writeString(availability);
+            parcel.writeString(confidentiality);
+            parcel.writeString(integrity);
+            parcel.writeString(vector);
+            parcel.writeFloat(base);
+            parcel.writeFloat(exploitability);
+            parcel.writeFloat(impact);
         }
     }
 

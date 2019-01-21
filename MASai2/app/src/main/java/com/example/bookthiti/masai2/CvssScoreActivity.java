@@ -49,7 +49,7 @@ public class CvssScoreActivity extends AppCompatActivity implements OnRecyclerVi
         mainRecyclerAdapter.setOnRecyclerViewItemClickListener(CvssScoreActivity.this);
         mainRecyclerView.setAdapter(mainRecyclerAdapter);
 
-        app_data_ip = (TextView) findViewById(R.id.textView_data_ip_address);
+        app_data_ip = (TextView) findViewById(R.id.text_ip_address);
 
 
         card1 = findViewById(R.id.profile);

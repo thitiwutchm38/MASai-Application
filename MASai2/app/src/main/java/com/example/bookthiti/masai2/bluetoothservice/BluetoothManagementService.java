@@ -38,7 +38,6 @@ public class BluetoothManagementService extends Service {
     private static final int REQUEST_ENABLE_CODE = 0;
     public static final String ACTION_BLUETOOTH_CONNECTED = "ACTION BLUETOOTH CONNECTED";
     public static final String ACTION_BLUETOOTH_DISCONNECTED = "ACTION_BLUETOOTH_DISCONNECTED";
-    public static final String ACTION_BLUETOOTH_MESSAGE_RECEIVED = "ACTION BLUETOOTH MESSAGE RECEIVED";
     public static final String ACTION_WIFI_SCAN = "ACTION WIFI SCAN";
     public static final String ACTION_PAIRED_DEVICE_FOUND = "ACTION PAIRED DEVICE FOUND";
     public static final String ACTION_BLUETOOTH_UNABLE_TO_CONNECT = "ACTION BLUETOOTH UNABLE TO CONNECT";

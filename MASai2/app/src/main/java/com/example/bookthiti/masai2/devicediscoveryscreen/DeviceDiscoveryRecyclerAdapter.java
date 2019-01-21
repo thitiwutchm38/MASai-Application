@@ -50,8 +50,6 @@ public class DeviceDiscoveryRecyclerAdapter extends RecyclerView.Adapter<DeviceD
 //
     }
 
-
-
     @Override
     public int getItemCount() {
         return mDeviceModelList.size();
@@ -63,18 +61,14 @@ public class DeviceDiscoveryRecyclerAdapter extends RecyclerView.Adapter<DeviceD
         private TextView mTextViewIpAddress;
         private TextView mTextViewMacAddress;
         private TextView mTextViewDeviceType;
-        private RelativeLayout device_layout ;
         private RelativeLayout rowMainParentLinearLayout;
 
         public Holder(View view) {
             super(view);
-            mImageViewDeviceIcon = view.findViewById(R.id.icon_device_type);
-            mTextViewIpAddress = view.findViewById(R.id.textView_data_ip_address);
-            mTextViewMacAddress = view.findViewById(R.id.app_data_id);
-            mTextViewDeviceType = view.findViewById(R.id.device_data_type);
-
-            device_layout = view.findViewById(R.id.layout_device);
-
+            mImageViewDeviceIcon = view.findViewById(R.id.image_device_type);
+            mTextViewIpAddress = view.findViewById(R.id.text_ip_address);
+            mTextViewMacAddress = view.findViewById(R.id.text_mac_address);
+            mTextViewDeviceType = view.findViewById(R.id.text_device_type);
             rowMainParentLinearLayout =  view.findViewById(R.id.layout_device);
 
             rowMainParentLinearLayout.setOnClickListener(new View.OnClickListener() {

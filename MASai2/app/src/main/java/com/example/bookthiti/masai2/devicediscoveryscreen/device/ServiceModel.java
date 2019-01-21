@@ -1,5 +1,8 @@
 package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -13,7 +16,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class ServiceModel {
+public class ServiceModel implements Parcelable {
 
     private int port;
     private String name;
@@ -49,6 +52,32 @@ public class ServiceModel {
     public ServiceModel() {
 
     }
+
+    public ServiceModel(Parcel in) {
+        port = in.readInt();
+        name = in.readString();
+        protocol = in.readString();
+        state = in.readString();
+        product = in.readString();
+        version = in.readString();
+        cves = new ArrayList<CVEModel>();
+        in.readTypedList(cves, CVEModel.CREATOR);
+//        cves = in.createTypedArrayList(CVEModel.CREATOR);
+        cpe = new ArrayList<String>();
+        in.readStringList(cpe);
+    }
+
+    public static final Creator<ServiceModel> CREATOR = new Creator<ServiceModel>() {
+        @Override
+        public ServiceModel createFromParcel(Parcel in) {
+            return new ServiceModel(in);
+        }
+
+        @Override
+        public ServiceModel[] newArray(int size) {
+            return new ServiceModel[size];
+        }
+    };
 
     public void setPort(int port) {
         this.port = port;
@@ -190,6 +219,23 @@ public class ServiceModel {
         }
     };
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(port);
+        parcel.writeString(name);
+        parcel.writeString(protocol);
+        parcel.writeString(state);
+        parcel.writeString(product);
+        parcel.writeString(version);
+        parcel.writeTypedList(cves);
+        parcel.writeStringList(cpe);
+    }
+
     public static class ServiceModelDeserializer implements JsonDeserializer<ServiceModel> {
         @Override
         public ServiceModel deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -207,6 +253,4 @@ public class ServiceModel {
             return new ServiceModel(port, name, protocol, state, product, version, cves, cpe);
         }
     }
-
-
 }

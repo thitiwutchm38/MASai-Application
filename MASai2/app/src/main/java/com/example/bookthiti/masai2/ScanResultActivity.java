@@ -108,8 +108,8 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
 
         //Show app detail
-        app_data_name = (TextView) findViewById(R.id.textView_data_ip_address);
-        app_data_id = (TextView) findViewById(R.id.app_data_id);
+        app_data_name = (TextView) findViewById(R.id.text_ip_address);
+        app_data_id = (TextView) findViewById(R.id.text_mac_address);
         app_data_version = (TextView) findViewById(R.id.app_data_version);
         app_data_type = (TextView) findViewById(R.id.app_data_type);
 
