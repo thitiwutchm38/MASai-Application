@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
-import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;

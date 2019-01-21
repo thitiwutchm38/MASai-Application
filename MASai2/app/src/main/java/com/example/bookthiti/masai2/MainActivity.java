@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         if(!ServiceTools.isServiceRunning(BluetoothManagementService.class, getApplicationContext())) {
             startService(new Intent(MainActivity.this, BluetoothManagementService.class));
         } else {
-            Log.i("Log info", "ServiceModel is already started");
+            Log.i("Log info", "Service is already started");
         }
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);

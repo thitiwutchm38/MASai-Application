@@ -28,10 +28,9 @@ public class RouterModel implements Parcelable {
     private String mSecurity;
 
     private int mIconSignalId;
-//    private String mFrequency;
-//    private String mCompany;
-//    private int modelsignal;
-//    private RouterModel comparestu;
+    private boolean isConnecting = false;
+
+    //    private String mFrequency;
 
     public RouterModel() {
     }
@@ -155,114 +154,11 @@ public class RouterModel implements Parcelable {
         this.mSecurity = security;
     }
 
+    public boolean isConnecting() {
+        return isConnecting;
+    }
+
+    public void setConnecting(boolean connecting) {
+        isConnecting = connecting;
+    }
 }
-//    public static Comparator<RouterModel> modelSigno = new Comparator<RouterModel>() {
-//
-//        public int compare(RouterModel s1, RouterModel s2) {
-//
-//            int rollno1 = Integer.parseInt(s1.getmSignal());
-//            int rollno2 = Integer.parseInt(s2.getmSignal());
-//
-//            /*For ascending order*/
-//            return rollno2 - rollno1;
-//
-//
-//        }
-//    };
-//    public static Comparator<RouterModel> modelSig_des = new Comparator<RouterModel>() {
-//
-//        public int compare(RouterModel s1, RouterModel s2) {
-//
-//            int rollno1 = Integer.parseInt(s1.getmSignal());
-//            int rollno2 = Integer.parseInt(s2.getmSignal());
-//
-//            /*For descending order*/
-//            return rollno1 - rollno2;
-//        }
-//    };
-//
-//
-//    public static Comparator<RouterModel> modelssid_asc = new Comparator<RouterModel>() {
-//
-//        public int compare(RouterModel s1, RouterModel s2) {
-//
-//            String c1 = s1.getmSsid();
-//            String c2 = s2.getmSsid();
-//
-//
-//            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
-//                return 1;
-//            }
-//            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
-//                return -1;
-//            }
-//
-//            return c1.compareTo(c2);
-//
-//        }
-//    };
-//
-//    public static Comparator<RouterModel> modelssid_des = new Comparator<RouterModel>() {
-//
-//        public int compare(RouterModel s1, RouterModel s2) {
-//
-//
-//            String c1 = s1.getmSsid();
-//            String c2 = s2.getmSsid();
-//
-//
-//            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
-//                return 1;
-//            }
-//            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
-//                return -1;
-//            }
-//
-//            return c2.compareTo(c1);
-//
-//        }
-//    };
-//
-//
-//    public static Comparator<RouterModel> modelmode_asc = new Comparator<RouterModel>() {
-//
-//        public int compare(RouterModel s1, RouterModel s2) {
-//
-//
-//            String c1 = s1.getmMode();
-//            String c2 = s2.getmMode();
-//
-//
-//            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
-//                return 1;
-//            }
-//
-//            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
-//                return -1;
-//            }
-//
-//            return c1.compareTo(c2);
-//
-//        }
-//    };
-//
-//    public static Comparator<RouterModel> modelmode_des = new Comparator<RouterModel>() {
-//
-//        public int compare(RouterModel s1, RouterModel s2) {
-//
-//
-//            String c1 = s1.getmMode();
-//            String c2 = s2.getmMode();
-//
-//
-//            if (c1.toLowerCase().equals(s1) && c2.toUpperCase().equals(s2)) {
-//                return 1;
-//            }
-//            if (c1.toUpperCase().equals(s1) && c2.toLowerCase().equals(s2)) {
-//                return -1;
-//            }
-//
-//            return c2.compareTo(c1);
-//
-//        }
-//    };

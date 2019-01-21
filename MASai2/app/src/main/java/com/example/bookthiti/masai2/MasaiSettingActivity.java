@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
@@ -29,15 +31,18 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.bookthiti.masai2.LogConstants.TAG_ERROR;
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+
 public class MasaiSettingActivity extends AppCompatActivity {
-    private final static String TAG_INFO = "Log info";
-    private final static String TAG_DEBUG = "Log debug";
-    private final static String TAG_ERROR = "Log error";
     private final static int REQUEST_ENABLE_BLUETOOTH = 0;
     private final Activity activity = this;
 
     private boolean mBound = false;
 
+    private TextView mTextViewTopic;
+    private TextView mTextViewInstructionDescription;
+    private ImageView mImageViewInstruction;
     private Button mScanQrButton;
     private ProgressBar mProgressBarQrScan;
 
@@ -63,11 +68,14 @@ public class MasaiSettingActivity extends AppCompatActivity {
             if (BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED.equals(action)) {
                 Log.i(TAG_INFO, "Bluetooth is connected to remote device");
                 mProgressBarQrScan.setVisibility(View.GONE);
+                mTextViewTopic.setText("CONNECTED");
+                mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
+                mScanQrButton.setText("Disconnect");
             } else if (BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND.equals(action)) {
                 mProgressBarQrScan.setVisibility(View.GONE);
             } else if (BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT.equals(action)) {
                 mProgressBarQrScan.setVisibility(View.GONE);
-                Toast.makeText(mContext, "Please Check Box", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Please Check The Box", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -83,7 +91,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
-            Log.i(TAG_INFO, "ServiceModel is unbounded");
+            Log.i(TAG_INFO, "Service is unbounded");
         }
     };
 
@@ -109,6 +117,8 @@ public class MasaiSettingActivity extends AppCompatActivity {
 
         mScanQrButton = (Button) this.findViewById(R.id.button_scan_qr);
         mProgressBarQrScan = (ProgressBar) this.findViewById(R.id.progress_bar_qr_scan);
+        mTextViewTopic = (TextView) this.findViewById(R.id.text_topic);
+        mTextViewInstructionDescription = (TextView) this.findViewById(R.id.text_description);
         mProgressBarQrScan.setVisibility(View.GONE);
         mScanQrButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,7 +13,6 @@ import com.alespero.expandablecardview.ExpandableCardView;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEAdapter;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
-import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 

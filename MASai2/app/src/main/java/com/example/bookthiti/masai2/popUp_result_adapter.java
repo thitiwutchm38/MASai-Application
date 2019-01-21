@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
-
 import java.util.ArrayList;
 
 public class popUp_result_adapter extends RecyclerView.Adapter<popUp_result_adapter.ViewHolder>{

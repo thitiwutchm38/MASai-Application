@@ -12,9 +12,7 @@
 
 
     <color name="colorbgS">#d7e8f4</color>
-
-
-
+    <color name="colorScanInstruction">#b2cdeb</color>
 
 
 </resources>

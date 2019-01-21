@@ -64,6 +64,9 @@
             tools:replace="android:screenOrientation"
             android:stateNotNeeded="true" />
         <service android:name=".bluetoothservice.BluetoothManagementService"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

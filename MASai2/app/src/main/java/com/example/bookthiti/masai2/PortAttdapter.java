@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
-
 import java.util.ArrayList;
 
 public class PortAttdapter extends RecyclerView.Adapter<PortAttdapter.Holder>{

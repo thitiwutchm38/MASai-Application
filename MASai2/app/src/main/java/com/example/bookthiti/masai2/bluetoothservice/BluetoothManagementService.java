@@ -122,13 +122,13 @@ public class BluetoothManagementService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.i(TAG_INFO, "ServiceModel is bind");
+        Log.i(TAG_INFO, "Service is bind");
         return this.mBinder;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.i(TAG_INFO, "ServiceModel is unbind");
+        Log.i(TAG_INFO, "Service is unbind");
         return super.onUnbind(intent);
     }
 

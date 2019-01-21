@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
-import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 

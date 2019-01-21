@@ -17,14 +17,8 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.CvssScoreActivity;
 import com.example.bookthiti.masai2.Port_attackActivity;
 import com.example.bookthiti.masai2.R;
-import com.example.bookthiti.masai2.networksearchingscreen.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

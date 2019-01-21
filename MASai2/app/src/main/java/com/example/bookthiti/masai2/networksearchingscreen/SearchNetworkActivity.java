@@ -19,12 +19,17 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceDiscoveryActivity;
 import com.example.bookthiti.masai2.R;
@@ -36,6 +41,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
@@ -46,6 +53,10 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
     private boolean isRemoteDeviceConnected = false;
     private ArrayList<RouterModel> mRouterModelArrayList;
     private RouterModel mConnectingRouterModel;
+    private RouterRecyclerAdapter mRouterRecyclerAdapter;
+    private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
+    private int mConnectingRouterPosition;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -55,18 +66,12 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                 Bundle bundle = intent.getExtras();
                 String jsonString = bundle.getString("payload");
                 Log.i(TAG_INFO, jsonString);
-                RecyclerView mainRecyclerView = findViewById(R.id.rv_router_list);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchNetworkActivity.this,
-                        LinearLayoutManager.VERTICAL, false);
-                mainRecyclerView.setLayoutManager(linearLayoutManager);
-                //Recycler Adapter
-                mRouterModelArrayList = loadRouterModelList(jsonString);
-                RouterRecyclerAdapter routerRecyclerAdapter = new RouterRecyclerAdapter(SearchNetworkActivity.this, mRouterModelArrayList);
-                routerRecyclerAdapter.setOnRecyclerViewItemClickListener(SearchNetworkActivity.this);
-                mainRecyclerView.setAdapter(routerRecyclerAdapter);
-                ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-                progressBar.setVisibility(View.GONE);
+                setRecyclerView(jsonString);
+                mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+                mProgressBar.setVisibility(View.GONE);
             } else if (BluetoothManagementService.ACTION_WIFI_CONNECT.equals(action)) {
+                mConnectingRouterModel.setConnecting(false);
+                mRouterRecyclerAdapter.notifyItemChanged(mConnectingRouterPosition);
                 Bundle bundle = intent.getExtras();
                 String jsonString = bundle.getString("payload");
                 Log.i(TAG_INFO, jsonString);
@@ -79,7 +84,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                 } else if (connection_status.equals("failure")) {
                     Log.i(TAG_INFO, "Wrong password was input");
                     if (mConnectingRouterModel != null)
-                        promptForPassword(mConnectingRouterModel, false);
+                        promptForPassword(mConnectingRouterModel, false, mConnectingRouterPosition);
                 }
             }
         }
@@ -102,7 +107,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
-            Log.i(TAG_INFO, "ServiceModel is unbounded");
+            Log.i(TAG_INFO, "Service is unbounded");
         }
     };
 
@@ -130,6 +135,92 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         super.onDestroy();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_router_sorting, menu);
+        View viewMenuSortBySignal = menu.findItem(R.id.menu_sort_by_signal).getActionView();
+        View viewMenuSortByName = menu.findItem(R.id.menu_sort_by_name).getActionView();
+        viewMenuSortBySignal.setTag(0);
+        viewMenuSortBySignal.setTag(0);
+
+        // Sort by Name
+        viewMenuSortByName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRouterModelArrayList != null) {
+                    if (view.getTag() == 0) {
+                        Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
+                            @Override
+                            public int compare(RouterModel routerModel, RouterModel t1) {
+                                return routerModel.getSsid().compareTo(t1.getSsid());
+                            }
+                        });
+                        view.setTag(1);
+                    } else {
+                        Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
+                            @Override
+                            public int compare(RouterModel routerModel, RouterModel t1) {
+                                return t1.getSsid().compareTo(routerModel.getSsid());
+                            }
+                        });
+                        view.setTag(0);
+                    }
+                    mRouterRecyclerAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        // Sort by Signal
+        viewMenuSortBySignal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRouterModelArrayList != null) {
+                    if (view.getTag() == 0) {
+                        Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
+                            @Override
+                            public int compare(RouterModel routerModel, RouterModel t1) {
+                                return Math.round(routerModel.getSignal() - t1.getSignal());
+                            }
+                        });
+                        view.setTag(1);
+                    } else {
+                        Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
+                            @Override
+                            public int compare(RouterModel routerModel, RouterModel t1) {
+                                return Math.round(t1.getSignal() - routerModel.getSignal());
+                            }
+                        });
+                        view.setTag(0);
+                    }
+                    mRouterRecyclerAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onItemClick(final int position, View view) {
+        //    RouterModel mainModel = (RouterModel) view.getTag();
+        Intent intent = getIntent();
+        Intent crackRouterIntent = new Intent(this, CrackRouterActivity.class);
+        Intent deviceDiscoveryIntent = new Intent(this, DeviceDiscoveryActivity.class);
+        switch (intent.getStringExtra("MyValue")) {
+            case "device_att":
+                promptForPassword(mRouterModelArrayList.get(position), true, position);
+                break;
+
+            case "router_att":
+                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mRouterModelArrayList.get(position).getSsid(), Toast.LENGTH_LONG).show();
+                //showAddItemDialog(this,loadRouterModelList().get(position).getmSsid() );
+                crackRouterIntent.putExtra("router_information", mRouterModelArrayList.get(position));
+                //pass_intent.putExtra("iis", );
+                startActivity(crackRouterIntent);
+                break;
+        }
+    }
+
     private ArrayList<RouterModel> loadRouterModelList(String jsonString) {
         ArrayList<RouterModel> routerModelList = new ArrayList<>();
         JsonParser jsonParser = new JsonParser();
@@ -155,29 +246,19 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         return routerModelList;
     }
 
-    @Override
-    public void onItemClick(final int position, View view) {
-        //    RouterModel mainModel = (RouterModel) view.getTag();
-
-        Intent intent = getIntent();
-        Intent crackRouterIntent = new Intent(this, CrackRouterActivity.class);
-        Intent deviceDiscoveryIntent = new Intent(this, DeviceDiscoveryActivity.class);
-        switch (intent.getStringExtra("MyValue")) {
-            case "device_att":
-                promptForPassword(mRouterModelArrayList.get(position), true);
-                break;
-
-            case "router_att":
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mRouterModelArrayList.get(position).getSsid(), Toast.LENGTH_LONG).show();
-                //showAddItemDialog(this,loadRouterModelList().get(position).getmSsid() );
-                crackRouterIntent.putExtra("router_information", mRouterModelArrayList.get(position));
-                //pass_intent.putExtra("iis", );
-                startActivity(crackRouterIntent);
-                break;
-        }
+    private void setRecyclerView(String jsonString) {
+        mRecyclerView = findViewById(R.id.rv_router_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        //Recycler Adapter
+        mRouterModelArrayList = loadRouterModelList(jsonString);
+        mRouterRecyclerAdapter = new RouterRecyclerAdapter(mContext, mRouterModelArrayList);
+        mRouterRecyclerAdapter.setOnRecyclerViewItemClickListener(SearchNetworkActivity.this);
+        mRecyclerView.setAdapter(mRouterRecyclerAdapter);
     }
 
-    private void promptForPassword(final RouterModel routerModel, boolean isFirstAttempt) {
+    private void promptForPassword(final RouterModel routerModel, boolean isFirstAttempt, final int position) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Please input your WiFi Password");
         alert.setMessage("Your SSID: " + routerModel.getSsid());
@@ -208,7 +289,10 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         alert.setView(customLayout);
         alert.setPositiveButton("Confirmed", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                mConnectingRouterPosition = position;
                 mConnectingRouterModel = routerModel;
+                mConnectingRouterModel.setConnecting(true);
+                mRouterRecyclerAdapter.notifyItemChanged(position);
                 String value = input.getText().toString();
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("command", "wifiConnect");
