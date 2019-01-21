@@ -44,8 +44,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         viewHolder.rowMainImage.setImageResource(offersListModel.getOfferIcon());
 
         viewHolder.rowMainText_SSID.setText(offersListModel.getOfferSSID());
-        //viewHolder.rowMainText_Mode.setText(offersListModel.getOfferMode());
-        //viewHolder.rowMainText_Signal.setText(offersListModel.getOfferSignal());
+        viewHolder.rowMainText_Mode.setText(offersListModel.getOfferMode());
+        viewHolder.rowMainText_Signal.setText(offersListModel.getOfferSignal());
         viewHolder.rowMainParentLinearLayout.setTag(offersListModel);
 
 //        int signal = Integer.parseInt(offersListModel.getOfferSignal()) ;
@@ -86,16 +86,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         private TextView rowMainText_SSID;
         private TextView rowMainText_Mode;
-        //final TextView rowMainText_Signal;
+        final TextView rowMainText_Signal;
         private LinearLayout device_lin ;
-
-        private TextView popupSignal;
-        private TextView popupChannel;
-        private TextView popupSSID;
-        private TextView popupEncrypt;
-        private TextView popupMac;
-        private TextView popupMode;
-
 
         private LinearLayout rowMainParentLinearLayout;
         @SuppressLint("ClickableViewAccessibility")
@@ -103,8 +95,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
             super(view);
             rowMainImage = view.findViewById(R.id.row_main_adapter_iv);
             rowMainText_SSID = view.findViewById(R.id.row_main_adapter_ssid);
-            //rowMainText_Mode =   view.findViewById(R.id.row_main_adapter_mode);
-            //rowMainText_Signal =   view.findViewById(R.id.row_main_adapter_signal);
+            rowMainText_Mode =   view.findViewById(R.id.row_main_adapter_mode);
+            rowMainText_Signal =   view.findViewById(R.id.row_main_adapter_signal);
 
 
 
@@ -115,11 +107,14 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
 
 
+
+
             rowMainParentLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (onRecyclerViewItemClickListener != null) {
                         onRecyclerViewItemClickListener.onItemClick(getAdapterPosition(), view);
+
 
                     }
                 }
@@ -129,8 +124,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                 @Override
                 public boolean onLongClick(View v) {
 
-
-                    BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                        BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
                         builder.setContentView(R.layout.pop_up_wifi_connect);
                         builder.setGravity(Gravity.BOTTOM);
                         builder.setScaleRatio(0.2f);
@@ -138,26 +132,6 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                         builder.setTintColor(0x3000000);
                         BlurPopupWindow blurPopupWindow = builder.build();
                         blurPopupWindow.show();
-
-                    popupSSID = (TextView) blurPopupWindow.findViewById(R.id.tv_wifi_name_connect);
-                    popupSignal = (TextView) blurPopupWindow.findViewById(R.id.tv_result_signal_wifi_connect);
-                    popupChannel = (TextView) blurPopupWindow.findViewById(R.id.tv_result_chan_wifi_connect);
-
-                    popupEncrypt= (TextView) blurPopupWindow.findViewById(R.id.tv_result_encrype_wifi_connect);
-
-                    popupMac = (TextView) blurPopupWindow.findViewById(R.id.tv_result_mac_wifi_connect);
-                    popupMode= (TextView) blurPopupWindow.findViewById(R.id.tv_result_mode_wifi_connect);
-
-
-                    popupSSID.setText("Wi-Fi: "+mainModelArrayList.get(getAdapterPosition()).getOfferSSID());
-
-                    popupSignal.setText(mainModelArrayList.get(getAdapterPosition()).getOfferSignal());
-                    popupChannel.setText(mainModelArrayList.get(getAdapterPosition()).getOfferChannel());
-                    popupEncrypt.setText(mainModelArrayList.get(getAdapterPosition()).getOfferSecurity());
-
-                    popupMac.setText(mainModelArrayList.get(getAdapterPosition()).getOfferMac_address());
-                    popupMode.setText(mainModelArrayList.get(getAdapterPosition()).getOfferMode());
-
 
                     return false;
                 }
