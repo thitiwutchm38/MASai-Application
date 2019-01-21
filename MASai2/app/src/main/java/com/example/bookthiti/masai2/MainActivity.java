@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openActivity_MASaibox_setting() {
 
+        //Intent intent = new Intent(this,Device_information.class);
         Intent intent = new Intent(this,CvssScoreActivity.class);
         startActivity(intent);
     }

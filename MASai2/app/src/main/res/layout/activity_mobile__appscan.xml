@@ -67,7 +67,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="294dp"
                 android:layout_marginTop="1dp"
-                android:clickable="true"
                 app:srcCompat="@drawable/playstore" />
 
         </RelativeLayout>
@@ -84,10 +83,8 @@
                 android:id="@+id/SearchView_search_apk"
                 android:layout_width="293dp"
                 android:layout_height="wrap_content"
-                android:clickable="false"
                 android:iconifiedByDefault="false"
-                android:queryHint="Upload your apk file "
-                android:visibility="invisible" />
+                android:queryHint="Upload your apk file " />
 
             <ImageView
                 android:id="@+id/imageView3"

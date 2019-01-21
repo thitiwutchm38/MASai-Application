@@ -30,8 +30,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,12 +55,68 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
 
     private MainRecyclerAdapter mainRecyclerAdapter;
 
+    //Button reScan_btt;
+
+
+//    TextView textView_mode;
+//    TextView textView_signal;
+//
 
     LinearLayout lin_port_att;
 
 
+//    boolean ssid_temp = true;
+//    boolean mode_temp = true;
+//    boolean signal_temp = true;
 
 
+        private final int categoryIcon[] = {
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device,
+                R.drawable.wifi_device
+        };
+
+        private final String categorySSID[] = {
+                "MU-WiFi",
+                ".@ TRUEWIFI",
+                ".@ AIS SUPER WIFI",
+                "ICTenergy",
+                "VoIP ICT",
+                "whoa",
+                "Free WiFi",
+                "Aloha_124",
+                "MAISAI A++"
+        };
+
+        private final String categoryMode[] = {
+                "WPA2",
+                "WPA2",
+                "WPA2",
+                "WEP",
+                "WPA2",
+                "WPA2",
+                "WEP",
+                "WPA2",
+                "WPA2"
+        };
+
+        private final String categorySignal[] = {
+                "High",
+                "Medium",
+                "High",
+                "High",
+                "Low",
+                "High",
+                "Low",
+                "High",
+                "Low"
+        };
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -353,8 +407,6 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
            switch (intent.getStringExtra("MyValue")) {
                 case "device_att" :
 
-
-
                     promptForResult(new PromptRunnable(){
                         // put whatever code you want to run after user enters a result
                         public void run() {
@@ -441,7 +493,6 @@ public class Search_Network extends AppCompatActivity implements OnRecyclerViewI
         });
 
         final AlertDialog alert = dialog.create();
-
         alert.show();
 
 
