@@ -2,6 +2,7 @@ package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.MatrixCursor;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.ScanResultActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +100,8 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(selectedApplication != null) {
-
+                    Intent startScanResultActivityIntent = new Intent(mContext, ScanResultActivity.class);
+                    startActivity(startScanResultActivityIntent);
                 }
             }
         });
@@ -120,7 +123,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
         mSpinner = (ProgressBar) mMenu.findItem(R.id.search_google_play_spinner).getActionView();
 
         final CursorAdapter suggestionAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
+                R.layout.item_app_search_suggestion,
                 null,
                 new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1},
                 new int[]{android.R.id.text1},
@@ -201,9 +204,10 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
             @Override
             public boolean onSuggestionClick(int i) {
                 hasSuggestionClicked = true;
-                mSearchView.setQuery(mSuggestions.get(i).getAppName(), false);
+                selectedApplication = mSuggestions.get(i);
+                mSearchView.setQuery(selectedApplication.getAppName(), false);
                 Log.i(TAG_INFO, "" + mSuggestions.size());
-                mSelectFromGooglePlayButton.setText(mSuggestions.get(i).getAppName());
+                mSelectFromGooglePlayButton.setText(selectedApplication.getAppName());
                 mSearchView.clearFocus();
                 return true;
             }

@@ -50,7 +50,7 @@ public class DeviceModel implements Parcelable {
     private String osVendor;
 
     @SerializedName("osCpe")
-    private String osCpe;
+    private List<String> osCpe;
 
     @SerializedName("services")
     private List<ServiceModel> serviceModels;
@@ -68,13 +68,14 @@ public class DeviceModel implements Parcelable {
         this.deviceType = parcel.readString();
         this.osName = parcel.readString();
         this.osVendor = parcel.readString();
-        this.osCpe = parcel.readString();
+        this.osCpe = new ArrayList<String>();
+        parcel.readStringList(this.osCpe);
         this.serviceModels = new ArrayList<ServiceModel>();
         parcel.readTypedList(this.serviceModels, ServiceModel.CREATOR);
         this.iconId = parcel.readInt();
     }
 
-    public DeviceModel(String status, String ipAddress, String macAddress, String deviceType, String osName, String osVendor, String osCpe, List<ServiceModel> serviceModels) {
+    public DeviceModel(String status, String ipAddress, String macAddress, String deviceType, String osName, String osVendor, List<String> osCpe, List<ServiceModel> serviceModels) {
         this.status = status;
         this.ipAddress = ipAddress;
         this.macAddress = macAddress;
@@ -104,6 +105,8 @@ public class DeviceModel implements Parcelable {
                 default:
                     iconId = R.drawable.icons_general;
             }
+        } else {
+            iconId = R.drawable.icons_specialized;
         }
     }
 
@@ -155,11 +158,11 @@ public class DeviceModel implements Parcelable {
         this.osVendor = osVendor;
     }
 
-    public String getOsCpe() {
+    public List<String> getOsCpe() {
         return osCpe;
     }
 
-    public void setOsCpe(String osCpe) {
+    public void setOsCpe(List<String> osCpe) {
         this.osCpe = osCpe;
     }
 
@@ -192,7 +195,7 @@ public class DeviceModel implements Parcelable {
         parcel.writeString(deviceType);
         parcel.writeString(osName);
         parcel.writeString(osVendor);
-        parcel.writeString(osCpe);
+        parcel.writeStringList(osCpe);
         parcel.writeTypedList(serviceModels);
         parcel.writeInt(iconId);
 
@@ -202,22 +205,19 @@ public class DeviceModel implements Parcelable {
         @Override
         public DeviceModel deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            System.out.println(jsonObject.toString());
             String status = jsonObject.get("status").getAsString();
-            System.out.println("status: " + status);
             String ipAddress = jsonObject.get("ipv4").getAsString();
-            System.out.println("ipAddress: " + ipAddress);
             String macAddress = jsonObject.get("mac") != null && !jsonObject.get("mac").isJsonNull() ? jsonObject.get("mac").getAsString() : null;
-            System.out.println("macAddress: " + macAddress);
             String deviceType = jsonObject.get("deviceType") != null && !jsonObject.get("deviceType").isJsonNull() ? jsonObject.get("deviceType").getAsString() : null;
-            System.out.println("deviceType: " + deviceType);
             String osName = jsonObject.get("osName") != null && !jsonObject.get("osName").isJsonNull() ? jsonObject.get("osName").getAsString() : null;
-            System.out.println("osName: " + osName);
-            String osCpe = jsonObject.get("osCpe") != null && !jsonObject.get("osCpe").isJsonNull() ? jsonObject.get("osCpe").getAsString() : null;
-            System.out.println("osCpe: " + osCpe);
+            List<String> osCpe = new ArrayList<String>();
+            if (jsonObject.get("osCpe") != null && !jsonObject.get("osCpe").isJsonNull()) {
+                String[] osCpeArray = context.deserialize(jsonObject.get("osCpe"), String[].class);
+                osCpe = Arrays.asList(osCpeArray);
+
+            }
             String osVendor = jsonObject.get("osVendor") != null && !jsonObject.get("osVendor").isJsonNull() ? jsonObject.get("osVendor").getAsString() : null;
-            System.out.println("osVendor: " + osVendor);
-            List<ServiceModel> serviceModels = new ArrayList<>();
+            List<ServiceModel> serviceModels = new ArrayList<ServiceModel>();
             if (jsonObject.get("services") != null && !jsonObject.get("services").isJsonNull()) {
                 ServiceModel[] serviceModelArray = context.deserialize(jsonObject.get("services"), ServiceModel[].class);
                 serviceModels = Arrays.asList(serviceModelArray);

@@ -63,7 +63,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
             "      \"deviceType\": \"general purpose\",\n" +
             "      \"osName\": \"Linux 2.6.23\",\n" +
             "      \"osVendor\": \"Linux\",\n" +
-            "      \"osCpe\": \"cpe:/o:linux:linux_kernel:2.6.23\",\n" +
+            "      \"osCpe\": [\"cpe:/o:linux:linux_kernel:2.6.23\"],\n" +
             "      \"services\": [\n" +
             "        {\n" +
             "          \"port\": \"21\",\n" +
@@ -178,7 +178,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
             "      \"deviceType\": \"phone\",\n" +
             "      \"osName\": \"Apple iOS 11.0\",\n" +
             "      \"osVendor\": \"Apple\",\n" +
-            "      \"osCpe\": \"cpe:/o:apple:iphone_os:11.0\",\n" +
+            "      \"osCpe\": [\"cpe:/o:apple:iphone_os:11.0\"],\n" +
             "      \"services\": [\n" +
             "        {\n" +
             "          \"port\": \"83\",\n" +

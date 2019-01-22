@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,6 +57,8 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
     private RouterRecyclerAdapter mRouterRecyclerAdapter;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
+    private ConstraintLayout mConStraintLayoutHeaderLine;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private int mConnectingRouterPosition;
     private int sortingByNameState = 0;
     private int sortingBySignalState = 0;
@@ -71,6 +74,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                 setRecyclerView(jsonString);
                 mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
                 mProgressBar.setVisibility(View.GONE);
+                mConStraintLayoutHeaderLine.setVisibility(View.VISIBLE);
             } else if (BluetoothManagementService.ACTION_WIFI_CONNECT.equals(action)) {
                 mConnectingRouterModel.setConnecting(false);
                 mRouterRecyclerAdapter.notifyItemChanged(mConnectingRouterPosition);
@@ -118,6 +122,8 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_network);
         mContext = getApplicationContext();
+        mConStraintLayoutHeaderLine = findViewById(R.id.layout_header_line);
+        mConStraintLayoutHeaderLine.setVisibility(View.INVISIBLE);
         Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
         if (!mBound) {
             bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
@@ -126,6 +132,8 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
         intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+
     }
 
     @Override

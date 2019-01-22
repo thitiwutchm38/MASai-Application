@@ -1,162 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constrain_id"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".networksearchingscreen.SearchNetworkActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="150dp"
-        android:layout_height="199dp"
-        android:layout_marginBottom="260dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <RelativeLayout
-        android:id="@+id/relative_search"
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:paddingTop="-4dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_header_line"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar">
 
         <TextView
-            android:id="@+id/textView_founded_router"
+            android:id="@+id/text_founded_router_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="10dp"
-            android:text="Founded Wi-Fi Router List:"
-            android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
-            android:textSize="16sp" />
+            android:text="Founded Wi-Fi Router"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/lin_port_att"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/textView_founded_router"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/search_frame"
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/text_founded_router_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toEndOf="@+id/text_founded_router_list"
+            app:layout_constraintTop_toTopOf="@+id/text_founded_router_list" />
+    </android.support.constraint.ConstraintLayout>
 
-            android:orientation="horizontal"
-            android:visibility="gone">
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/layout_header_line"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header_line">
 
-            <RelativeLayout
-                android:id="@+id/relative_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/textView_ssid2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="Status"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:id="@+id/row_main_adapter_iv"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/relative_mode"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/textView_mode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="Mode"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relative_signal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/textView_signal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="Signal"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout_recycle_searching_list"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_router_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lin_port_att"
-            android:layout_marginTop="-15dp">
+            android:scrollbars="vertical">
 
-            <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/swipe_refresh_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_router_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="vertical">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </android.support.v4.widget.SwipeRefreshLayout>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>
