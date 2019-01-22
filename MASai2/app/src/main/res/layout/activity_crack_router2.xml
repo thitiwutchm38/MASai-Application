@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_ssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="SSID"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        app:firstBaselineToTopHeight="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textColor="@color/colorAccent"
+        app:firstBaselineToTopHeight="32sp"
+        app:layout_constraintStart_toStartOf="@+id/text_ssid"
+        app:layout_constraintTop_toBottomOf="@+id/text_ssid" />
+
+    <TextView
+        android:id="@+id/text_static_crack_router_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Security:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/text_description"
+        app:layout_constraintTop_toBottomOf="@+id/text_description" />
+
+    <TextView
+        android:id="@+id/text_crack_router_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="output"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_static_crack_router_security"
+        app:layout_constraintStart_toEndOf="@+id/text_static_crack_router_security" />
+
+    <TextView
+        android:id="@+id/text_static_crack_router_bssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mac address:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/text_static_crack_router_security"
+        app:layout_constraintTop_toBottomOf="@+id/text_static_crack_router_security" />
+
+    <TextView
+        android:id="@+id/text_crack_router_bssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="output"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_static_crack_router_bssid"
+        app:layout_constraintStart_toEndOf="@+id/text_static_crack_router_bssid" />
+
+    <TextView
+        android:id="@+id/text_static_crack_router_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Channel:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/text_static_crack_router_bssid"
+        app:layout_constraintTop_toBottomOf="@+id/text_static_crack_router_bssid" />
+
+    <TextView
+        android:id="@+id/text_crack_router_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="output"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_static_crack_router_channel"
+        app:layout_constraintStart_toEndOf="@+id/text_static_crack_router_channel" />
+
+    <TextView
+        android:id="@+id/text_static_crack_router_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Signal:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/text_static_crack_router_channel"
+        app:layout_constraintTop_toBottomOf="@+id/text_static_crack_router_channel" />
+
+    <TextView
+        android:id="@+id/text_crack_router_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="output"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_static_crack_router_signal"
+        app:layout_constraintStart_toEndOf="@+id/text_static_crack_router_signal" />
+
+    <ProgressBar
+        android:id="@+id/progress_crack_router"
+        style="@android:style/Widget.Material.Light.ProgressBar.Large"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_static_crack_router_signal" />
+
+    <TextView
+        android:id="@+id/text_cracking_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        app:layout_constraintEnd_toEndOf="@+id/progress_crack_router"
+        app:layout_constraintStart_toStartOf="@+id/progress_crack_router"
+        app:layout_constraintTop_toBottomOf="@+id/progress_crack_router" />
+
+    <ImageButton
+        android:id="@+id/image_crack_router_clipboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_crack_router_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="?android:attr/actionModeCopyDrawable" />
+
+    <EditText
+        android:id="@+id/edit_crack_router_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_wifi_cracking"
+        app:layout_constraintEnd_toStartOf="@+id/image_crack_router_clipboard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_crack_result_header" />
+
+    <Button
+        android:id="@+id/button_start_wifi_cracking"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Start Cracking"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_cracking_status" />
+
+    <TextView
+        android:id="@+id/text_crack_result_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="Result"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_static_crack_router_signal" />
 
 </android.support.constraint.ConstraintLayout>

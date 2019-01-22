@@ -29,9 +29,6 @@
             android:name=".networksearchingscreen.SearchNetworkActivity"
             android:label="Select Network" />
         <activity
-            android:name=".Router_information"
-            android:label="Router information" />
-        <activity
             android:name=".DetailActivity"
             android:label="DetailActivity" />
         <activity android:name=".MainActivity">
