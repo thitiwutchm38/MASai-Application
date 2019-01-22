@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_cve"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="0dp">
+
+
+    <TextView
+        android:id="@+id/text_cve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="CVE"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_label_cve_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="@+id/text_cve"
+        app:layout_constraintTop_toBottomOf="@+id/text_cve" />
+
+    <TextView
+        android:id="@+id/text_cve_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/text_label_cve_description"
+        app:layout_constraintTop_toBottomOf="@+id/text_cve" />
+
+    <TextView
+        android:id="@+id/text_label_severity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Severity:"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="@+id/text_label_cve_description"
+        app:layout_constraintTop_toBottomOf="@+id/text_cve_description" />
+
+    <TextView
+        android:id="@+id/text_severity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_label_severity"
+        app:layout_constraintStart_toEndOf="@+id/text_label_severity" />
+
+    <TextView
+        android:id="@+id/text_label_cvss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CVSS2: "
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="@+id/text_label_severity"
+        app:layout_constraintTop_toBottomOf="@+id/text_severity" />
+
+    <TextView
+        android:id="@+id/text_cvss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_label_cvss"
+        app:layout_constraintStart_toEndOf="@+id/text_label_cvss" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_cvss" />
+</android.support.constraint.ConstraintLayout>

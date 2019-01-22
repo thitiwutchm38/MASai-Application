@@ -323,7 +323,7 @@ public class CVEModel implements Parcelable {
             boolean topVulnerable = jsonObject.get("topVulnerable") != null && !jsonObject.get("topVulnerable").isJsonNull() ? jsonObject.get("topVulnerable").getAsBoolean() : null;
             boolean topAlert = jsonObject.get("topAlert") != null && !jsonObject.get("topAlert").isJsonNull() ? jsonObject.get("topAlert").getAsBoolean() : null;
             List<CVSS> cvssList = new ArrayList<CVSS>();
-            if (jsonObject.get("services") != null && !jsonObject.get("services").isJsonNull()) {
+            if (jsonObject.get("cvss2") != null && !jsonObject.get("cvss2").isJsonNull()) {
                 CVSS[] cvsses = context.deserialize(jsonObject.get("cvss2"), CVSS[].class);
                 cvssList = Arrays.asList(cvsses);
             }

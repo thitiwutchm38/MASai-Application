@@ -43,13 +43,13 @@ public class RouterModel implements Parcelable {
         this.mBssid = bssid;
         this.mSecurity = security;
         if ((this.mSignal <= 100) && (this.mSignal >= 75))
-            this.mIconSignalId = R.drawable.ic_signal_wifi_4_bar_green_a700_36dp;
+            this.mIconSignalId = R.drawable.wifi_device_4;
         else if ((this.mSignal < 75) && (this.mSignal >= 50))
-            this.mIconSignalId = R.drawable.ic_signal_wifi_3_bar_yellow_a200_36dp;
+            this.mIconSignalId = R.drawable.wifi_device_3;
         else if ((this.mSignal < 50) && (this.mSignal >= 25))
-            this.mIconSignalId = R.drawable.ic_signal_wifi_2_bar_orange_a700_36dp;
+            this.mIconSignalId = R.drawable.wifi_device_2;
         else if (this.mSignal < 25)
-            this.mIconSignalId = R.drawable.ic_signal_wifi_1_bar_red_400_36dp;
+            this.mIconSignalId = R.drawable.wifi_device_1;
     }
 
     public RouterModel(Parcel in) {

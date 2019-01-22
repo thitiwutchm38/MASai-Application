@@ -44,6 +44,7 @@ public class iot_suggestion extends AppCompatActivity {
         setContentView(R.layout.activity_iot_suggestion);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("IoT Security Information");
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

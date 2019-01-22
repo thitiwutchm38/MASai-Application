@@ -52,7 +52,7 @@
             android:name=".devicediscoveryscreen.device.DeviceInformationActivity"
             android:label="Device Information" />
         <activity
-            android:name=".CvssScoreActivity"
+            android:name=".deviceassessmentscreen.DeviceAssessmentActivity"
             android:label="Service Assessment" />
         <activity android:name=".Port_attackActivity" />
         <activity android:name=".OwaspMobileActivity" />

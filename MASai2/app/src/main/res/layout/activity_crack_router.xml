@@ -52,7 +52,7 @@
             android:layout_height="30dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/text_owasp_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
