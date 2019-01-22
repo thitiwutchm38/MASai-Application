@@ -109,6 +109,11 @@ public class BluetoothManagementService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG_DEBUG, "Bluetooth service is stopped");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("command", "wifiDisconnect");
+        jsonObject.add("payload", null);
+        String jsonString = jsonObject.toString();
+        sendMessageToRemoteDevice(jsonString + "|");
         mThreadStopped = true;
         if (mConnectedThread != null) {
             mConnectedThread.cancel();
@@ -309,6 +314,7 @@ public class BluetoothManagementService extends Service {
                             bundle.putString("payload", jsonString);
                             intent.putExtras(bundle);
                             switch (resultType) {
+                                // TODO: Add cases
                                 case "wifiScan":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
                                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
@@ -330,10 +336,6 @@ public class BluetoothManagementService extends Service {
                         sb = new StringBuilder();
                     }
 
-
-                    //TODO: get result from box using switch case
-
-
                 } catch (IOException e) {
                     Log.i(TAG_INFO, "Input stream was disconnected", e);
                     cancel();
@@ -343,7 +345,6 @@ public class BluetoothManagementService extends Service {
         }
 
         public void write(String string) {
-            //TODO: find format for object
             try {
                 mmOutputStream.write(string.getBytes());
             } catch (IOException e) {

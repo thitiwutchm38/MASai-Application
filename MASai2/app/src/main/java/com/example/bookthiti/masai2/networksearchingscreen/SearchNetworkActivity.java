@@ -57,6 +57,8 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private int mConnectingRouterPosition;
+    private int sortingByNameState = 0;
+    private int sortingBySignalState = 0;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -139,24 +141,22 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_router_sorting, menu);
-        View viewMenuSortBySignal = menu.findItem(R.id.menu_sort_by_signal).getActionView();
-        View viewMenuSortByName = menu.findItem(R.id.menu_sort_by_name).getActionView();
-        viewMenuSortBySignal.setTag(0);
-        viewMenuSortBySignal.setTag(0);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        // Sort by Name
-        viewMenuSortByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_sort_by_name :
                 if (mRouterModelArrayList != null) {
-                    if (view.getTag() == 0) {
+                    if (sortingByNameState == 0) {
                         Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
                             @Override
                             public int compare(RouterModel routerModel, RouterModel t1) {
                                 return routerModel.getSsid().compareTo(t1.getSsid());
                             }
                         });
-                        view.setTag(1);
+                        sortingByNameState = 1;
                     } else {
                         Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
                             @Override
@@ -164,26 +164,21 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                                 return t1.getSsid().compareTo(routerModel.getSsid());
                             }
                         });
-                        view.setTag(0);
+                        sortingByNameState = 0;
                     }
                     mRouterRecyclerAdapter.notifyDataSetChanged();
                 }
-            }
-        });
-
-        // Sort by Signal
-        viewMenuSortBySignal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                return true;
+            case R.id.menu_sort_by_signal:
                 if (mRouterModelArrayList != null) {
-                    if (view.getTag() == 0) {
+                    if (sortingBySignalState == 0) {
                         Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
                             @Override
                             public int compare(RouterModel routerModel, RouterModel t1) {
                                 return Math.round(routerModel.getSignal() - t1.getSignal());
                             }
                         });
-                        view.setTag(1);
+                        sortingBySignalState = 1;
                     } else {
                         Collections.sort(mRouterModelArrayList, new Comparator<RouterModel>() {
                             @Override
@@ -191,13 +186,13 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                                 return Math.round(t1.getSignal() - routerModel.getSignal());
                             }
                         });
-                        view.setTag(0);
+                        sortingBySignalState = 0;
                     }
                     mRouterRecyclerAdapter.notifyDataSetChanged();
                 }
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

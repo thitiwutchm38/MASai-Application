@@ -108,11 +108,14 @@ public class RouterRecyclerAdapter extends RecyclerView.Adapter<RouterRecyclerAd
                                     popupEncrypt.setText(mRouterModelArrayList.get(getAdapterPosition()).getSecurity());
                                     popupMac.setText(mRouterModelArrayList.get(getAdapterPosition()).getBssid());
                                     popupMode.setText(mRouterModelArrayList.get(getAdapterPosition()).getMode());
+                                    blurPopupWindow.show();
                                     break;
                             }
                             return false;
                         }
                     });
+                    popupMenu.setGravity(Gravity.RIGHT);
+                    popupMenu.show();
                     return false;
                 }
             });
@@ -120,7 +123,6 @@ public class RouterRecyclerAdapter extends RecyclerView.Adapter<RouterRecyclerAd
 //            mConstraintLayout.setOnTouchListener(new View.OnTouchListener() {
 //                @Override
 //                public boolean onTouch(View v, MotionEvent event) {
-//                    // TODO Auto-generated method stub
 //                    switch (event.getAction()) {
 //                        case MotionEvent.ACTION_DOWN:
 //                            mConstraintLayout.setBackgroundColor(Color.RED);

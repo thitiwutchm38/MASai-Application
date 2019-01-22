@@ -244,8 +244,8 @@ public class ServiceModel implements Parcelable {
             String protocol = jsonObject.get("protocol").getAsString();
             String state = jsonObject.get("state").getAsString();
             String name = jsonObject.get("name").getAsString();
-            String product = jsonObject.get("product") != null ? jsonObject.get("product").getAsString() : null;
-            String version = jsonObject.get("version") != null ? jsonObject.get("version").getAsString() : null;
+            String product = jsonObject.get("product") != null && !jsonObject.get("product").isJsonNull() ? jsonObject.get("product").getAsString() : null;
+            String version = jsonObject.get("version") != null && !jsonObject.get("version").isJsonNull() ? jsonObject.get("version").getAsString() : null;
             String[] serviceModelArray =  context.deserialize(jsonObject.get("cpe"), String[].class);
             List<String> cpe = Arrays.asList(serviceModelArray);
             CVEModel[] cveModels = context.deserialize(jsonObject.get("cves"), CVEModel[].class);

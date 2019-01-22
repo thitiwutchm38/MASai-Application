@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +39,9 @@ public class MasaiSettingActivity extends AppCompatActivity {
 
     private boolean mBound = false;
 
-    private TextView mTextViewTopic;
     private TextView mTextViewInstructionDescription;
     private ImageView mImageViewInstruction;
     private Button mScanQrButton;
-    private ProgressBar mProgressBarQrScan;
 
     private Context mContext;
     private BluetoothManagementService mBluetoothManagementService;
@@ -56,7 +53,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 Log.i(TAG_INFO, "Discovering is stopped");
-                mProgressBarQrScan.setVisibility(View.GONE);
+                // TODO: update image view
             }
         }
     };
@@ -67,14 +64,10 @@ public class MasaiSettingActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED.equals(action)) {
                 Log.i(TAG_INFO, "Bluetooth is connected to remote device");
-                mProgressBarQrScan.setVisibility(View.GONE);
-                mTextViewTopic.setText("CONNECTED");
                 mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
                 mScanQrButton.setText("Disconnect");
             } else if (BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND.equals(action)) {
-                mProgressBarQrScan.setVisibility(View.GONE);
             } else if (BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT.equals(action)) {
-                mProgressBarQrScan.setVisibility(View.GONE);
                 Toast.makeText(mContext, "Please Check The Box", Toast.LENGTH_SHORT).show();
             }
         }
@@ -86,6 +79,13 @@ public class MasaiSettingActivity extends AppCompatActivity {
             BluetoothManagementService.LocalBinder binder = (BluetoothManagementService.LocalBinder) service;
             mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
             mBound = true;
+            if(isRemoteDeviceConnected()) {
+                mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
+                mScanQrButton.setText("Disconnect");
+            } else {
+                mScanQrButton.setText("Connect");
+                mTextViewInstructionDescription.setText("Click connect to start QR-Code scanner, scan QR code at MASai Box, ensure that MASai Box is working");
+            }
         }
 
         @Override
@@ -101,25 +101,9 @@ public class MasaiSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_masai_setting);
         mContext = this.getApplicationContext();
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if(!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-        }
-
-        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        //TODO: Add Action that will receive from BluetoothManagementService when it broadcasts the message received from MASai Box
-        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED);
-        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_DISCONNECTED);
-        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT);
-        this.registerReceiver(mBroadcastReceiver, intentFilter);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-
+        setTitle("MASai Box Setting");
         mScanQrButton = (Button) this.findViewById(R.id.button_scan_qr);
-        mProgressBarQrScan = (ProgressBar) this.findViewById(R.id.progress_bar_qr_scan);
-        mTextViewTopic = (TextView) this.findViewById(R.id.text_topic);
         mTextViewInstructionDescription = (TextView) this.findViewById(R.id.text_description);
-        mProgressBarQrScan.setVisibility(View.GONE);
         mScanQrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +111,6 @@ public class MasaiSettingActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-                mProgressBarQrScan.setVisibility(View.VISIBLE);
                 IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 intentIntegrator.setPrompt("Scan QR Code at MASai Box");
@@ -137,6 +120,19 @@ public class MasaiSettingActivity extends AppCompatActivity {
                 intentIntegrator.initiateScan();
             }
         });
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if(!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED);
+        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_DISCONNECTED);
+        intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT);
+        this.registerReceiver(mBroadcastReceiver, intentFilter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+
     }
 
     @Override
@@ -194,5 +190,12 @@ public class MasaiSettingActivity extends AppCompatActivity {
         } else {
             Log.i(TAG_INFO, "Connect Remote Device failed");
         }
+    }
+
+    private boolean isRemoteDeviceConnected() {
+        if (mBluetoothManagementService != null && mBound) {
+            return mBluetoothManagementService.isRemoteDeviceConnected();
+        }
+        return false;
     }
 }

@@ -319,11 +319,14 @@ public class CVEModel implements Parcelable {
         @Override
         public Severity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            String severity = jsonObject.get("severity").getAsString();
-            boolean topVulnerable = jsonObject.get("topVulnerable").getAsBoolean();
-            boolean topAlert = jsonObject.get("topAlert").getAsBoolean();
-            CVSS[] cvsses = context.deserialize(jsonObject.get("cvss2"), CVSS[].class);
-            List<CVSS> cvssList = Arrays.asList(cvsses);
+            String severity = jsonObject.get("severity") != null && !jsonObject.get("severity").isJsonNull() ? jsonObject.get("severity").getAsString() : null;
+            boolean topVulnerable = jsonObject.get("topVulnerable") != null && !jsonObject.get("topVulnerable").isJsonNull() ? jsonObject.get("topVulnerable").getAsBoolean() : null;
+            boolean topAlert = jsonObject.get("topAlert") != null && !jsonObject.get("topAlert").isJsonNull() ? jsonObject.get("topAlert").getAsBoolean() : null;
+            List<CVSS> cvssList = new ArrayList<CVSS>();
+            if (jsonObject.get("services") != null && !jsonObject.get("services").isJsonNull()) {
+                CVSS[] cvsses = context.deserialize(jsonObject.get("cvss2"), CVSS[].class);
+                cvssList = Arrays.asList(cvsses);
+            }
             return new Severity(severity, topVulnerable, topAlert, cvssList);
         }
     }

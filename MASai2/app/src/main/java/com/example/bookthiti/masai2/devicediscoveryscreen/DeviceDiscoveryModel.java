@@ -138,15 +138,15 @@ public class DeviceDiscoveryModel {
             JsonObject jsonObject = json.getAsJsonObject();
             TimeStats timeStats = context.deserialize(jsonObject.get("timeStats"), TimeStats.class);
             HostStats hostStats = context.deserialize(jsonObject.get("hostStats"), HostStats.class);
-            JsonArray jsonArray = jsonObject.get("hosts").getAsJsonArray();
-            List<DeviceModel> hosts = new ArrayList<DeviceModel>();
-            for (JsonElement jsonElement : jsonArray) {
-                JsonObject jsonHost = jsonElement.getAsJsonObject();
-                DeviceModel deviceModel = context.deserialize(jsonHost, DeviceModel.class);
-                hosts.add(deviceModel);
-            }
-//            DeviceModel[] deviceModelArray = context.deserialize(jsonObject.get("hosts").getAsJsonArray(), DeviceModel[].class);
-//            List<DeviceModel> hosts = Arrays.asList(deviceModelArray);
+//            JsonArray jsonArray = jsonObject.get("hosts").getAsJsonArray();
+//            List<DeviceModel> hosts = new ArrayList<DeviceModel>();
+//            for (JsonElement jsonElement : jsonArray) {
+//                JsonObject jsonHost = jsonElement.getAsJsonObject();
+//                DeviceModel deviceModel = context.deserialize(jsonHost, DeviceModel.class);
+//                hosts.add(deviceModel);
+//            }
+            DeviceModel[] deviceModelArray = context.deserialize(jsonObject.get("hosts"), DeviceModel[].class);
+            List<DeviceModel> hosts = Arrays.asList(deviceModelArray);
             return new DeviceDiscoveryModel(timeStats, hostStats, hosts);
         }
     }

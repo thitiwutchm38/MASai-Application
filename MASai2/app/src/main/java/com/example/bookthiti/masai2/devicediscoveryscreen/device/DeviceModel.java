@@ -202,15 +202,26 @@ public class DeviceModel implements Parcelable {
         @Override
         public DeviceModel deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
+            System.out.println(jsonObject.toString());
             String status = jsonObject.get("status").getAsString();
+            System.out.println("status: " + status);
             String ipAddress = jsonObject.get("ipv4").getAsString();
-            String macAddress = jsonObject.get("mac") != null ? jsonObject.get("mac").getAsString() : null;
-            String deviceType = jsonObject.get("deviceType") != null ? jsonObject.get("deviceType").getAsString() : null;
-            String osName = jsonObject.get("osName") != null ? jsonObject.get("osName").getAsString() : null;
-            String osCpe = jsonObject.get("osCpe") != null ? jsonObject.get("osCpe").getAsString() : null;
-            String osVendor = jsonObject.get("osVendor") != null ? jsonObject.get("osVendor").getAsString() : null;
-            ServiceModel[] serviceModelArray = context.deserialize(jsonObject.get("services"), ServiceModel[].class);
-            List<ServiceModel> serviceModels = Arrays.asList(serviceModelArray);
+            System.out.println("ipAddress: " + ipAddress);
+            String macAddress = jsonObject.get("mac") != null && !jsonObject.get("mac").isJsonNull() ? jsonObject.get("mac").getAsString() : null;
+            System.out.println("macAddress: " + macAddress);
+            String deviceType = jsonObject.get("deviceType") != null && !jsonObject.get("deviceType").isJsonNull() ? jsonObject.get("deviceType").getAsString() : null;
+            System.out.println("deviceType: " + deviceType);
+            String osName = jsonObject.get("osName") != null && !jsonObject.get("osName").isJsonNull() ? jsonObject.get("osName").getAsString() : null;
+            System.out.println("osName: " + osName);
+            String osCpe = jsonObject.get("osCpe") != null && !jsonObject.get("osCpe").isJsonNull() ? jsonObject.get("osCpe").getAsString() : null;
+            System.out.println("osCpe: " + osCpe);
+            String osVendor = jsonObject.get("osVendor") != null && !jsonObject.get("osVendor").isJsonNull() ? jsonObject.get("osVendor").getAsString() : null;
+            System.out.println("osVendor: " + osVendor);
+            List<ServiceModel> serviceModels = new ArrayList<>();
+            if (jsonObject.get("services") != null && !jsonObject.get("services").isJsonNull()) {
+                ServiceModel[] serviceModelArray = context.deserialize(jsonObject.get("services"), ServiceModel[].class);
+                serviceModels = Arrays.asList(serviceModelArray);
+            }
             return new DeviceModel(status, ipAddress, macAddress, deviceType, osName, osVendor, osCpe, serviceModels);
         }
     }
