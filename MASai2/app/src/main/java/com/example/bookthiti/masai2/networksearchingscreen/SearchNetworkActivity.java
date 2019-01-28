@@ -62,6 +62,14 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
     private int mConnectingRouterPosition;
     private int sortingByNameState = 0;
     private int sortingBySignalState = 0;
+    private static final String mockJson = "{\"routers\":[{\"SSID\":\"TEST\", " +
+            "\"MODE\":\"infra\", " +
+            "\"SIGNAL\":\"99.0\", " +
+            "\"CHAN\":\"11\", " +
+            "\"SECURITY\":\"WEP\", " +
+            "\"BSSID\":\"AA:AA:AA:AA:AA:AA\"}" +
+            "], " +
+            "count:1}";
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -123,16 +131,22 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         setContentView(R.layout.activity_search_network);
         mContext = getApplicationContext();
         mConStraintLayoutHeaderLine = findViewById(R.id.layout_header_line);
-        mConStraintLayoutHeaderLine.setVisibility(View.INVISIBLE);
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-        }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
-        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+//        mConStraintLayoutHeaderLine.setVisibility(View.INVISIBLE);
+
+        setRecyclerView(mockJson);
+
+
+        //FIXME: Uncomment for real application
+//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+//        if (!mBound) {
+//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//        }
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+//        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        
 
     }
 
@@ -211,7 +225,12 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         Intent deviceDiscoveryIntent = new Intent(this, DeviceDiscoveryActivity.class);
         switch (intent.getStringExtra("MyValue")) {
             case "device_att":
-                promptForPassword(mRouterModelArrayList.get(position), true, position);
+                //FIXME: Uncomment for real application
+//                promptForPassword(mRouterModelArrayList.get(position), true, position);
+
+                //FIXME: Uncomment for mockup
+                startActivity(new Intent(mContext, DeviceDiscoveryActivity.class));
+
                 break;
 
             case "router_att":

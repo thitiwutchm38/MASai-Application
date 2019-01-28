@@ -472,7 +472,6 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         mContext = getApplicationContext();
 
         // FIXME: uncomment for mockup
-//        String jsonString = loadJsonFromAsset();
         setRecyclerView(mockJson);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
         progressBar.setVisibility(View.GONE);
@@ -541,36 +540,6 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         mDeviceDiscoveryModel = gsonBuilder.create().fromJson(jsonString, DeviceDiscoveryModel.class);
         List<DeviceModel> deviceModels = mDeviceDiscoveryModel.getHosts();
         return deviceModels;
-    }
-
-    public String loadJsonFromAsset() {
-        StringBuilder sb = new StringBuilder();
-        try {
-            InputStream inputStream = getAssets().open("nmap_result.json");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = bufferedReader.readLine();
-            while(line != null) {
-                sb.append(line + "\n");
-                line = bufferedReader.readLine();
-            }
-            bufferedReader.close();
-
-//            InputStream inputStream = getAssets().open("nmap_result.json");
-//            byte[] buffer = new byte[1024];
-//            int byteReads;
-//            while((byteReads = inputStream.read(buffer)) != -1) {
-//                sb.append(new String(buffer, 0, byteReads));
-//                Log.i(TAG_INFO, sb.toString());
-//            }
-//            inputStream.close();
-//            inputStream.read(buffer);
-            Log.i(TAG_INFO, sb.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        Log.i(TAG_INFO, sb.toString());
-        return sb.toString();
     }
 
     private boolean isRemoteDeviceConnected() {
