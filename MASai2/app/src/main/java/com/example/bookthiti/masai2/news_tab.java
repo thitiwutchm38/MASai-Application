@@ -34,49 +34,49 @@ public class news_tab extends Fragment {
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
 
-            String m1 = getResources().getString(R.string.M1);
-            String m2 = getResources().getString(R.string.M2);
-            String m3 = getResources().getString(R.string.M3);
-            String m4 = getResources().getString(R.string.M4);
-            String m5 = getResources().getString(R.string.M5);
-            String m6 = getResources().getString(R.string.M6);
-            String m7 = getResources().getString(R.string.M7);
-            String m8 = getResources().getString(R.string.M8);
-            String m9 = getResources().getString(R.string.M9);
-            String m10 = getResources().getString(R.string.M10);
+            String m1 = getResources().getString(R.string.I1);
+            String m2 = getResources().getString(R.string.I2);
+            String m3 = getResources().getString(R.string.I3);
+            String m4 = getResources().getString(R.string.I4);
+            String m5 = getResources().getString(R.string.I5);
+            String m6 = getResources().getString(R.string.I6);
+            String m7 = getResources().getString(R.string.I7);
+            String m8 = getResources().getString(R.string.I8);
+            String m9 = getResources().getString(R.string.I9);
+            String m10 = getResources().getString(R.string.I10);
 
 
-            OwaspData owasp = new OwaspData("I1", "Improper Platform Usage", m1);
+            OwaspData owasp = new OwaspData("I1", "Insecure Web Interface", m1);
 
             mOwaspList.add(owasp);
 
-            owasp = new OwaspData("I2", "Insecure Data Storage",m2);
+            owasp = new OwaspData("I2", "Insufficient Authentication/Authorization",m2);
             mOwaspList.add(owasp);
-            owasp = new OwaspData("I3", "Insecure Communication",m3);
-            mOwaspList.add(owasp);
-
-            owasp = new OwaspData("I4", "Insecure Authentication",m4);
+            owasp = new OwaspData("I3", "Insecure Network Services",m3);
             mOwaspList.add(owasp);
 
-            owasp = new OwaspData("I5", "Insufficient Cryptography",m5);
+            owasp = new OwaspData("I4", "Lack of Transport Encryption",m4);
             mOwaspList.add(owasp);
 
-            owasp = new OwaspData("I6", "Insecure Authorization",m6);
+            owasp = new OwaspData("I5", "Privacy Concerns",m5);
             mOwaspList.add(owasp);
 
-            owasp = new OwaspData("I7", "Client Code Quality",m7);
+            owasp = new OwaspData("I6", "Insecure Cloud Interface",m6);
             mOwaspList.add(owasp);
 
-
-            owasp = new OwaspData("I8", "Code Tampering",m8);
+            owasp = new OwaspData("I7", "Insecure Mobile Interface",m7);
             mOwaspList.add(owasp);
 
 
-            owasp = new OwaspData("I9", "Reverse Engineering",m9);
+            owasp = new OwaspData("I8", "Insufficient Security Configurability",m8);
             mOwaspList.add(owasp);
 
 
-            owasp = new OwaspData("I10", "Extraneous Functionality",m10);
+            owasp = new OwaspData("I9", "Insecure Software/Firmware",m9);
+            mOwaspList.add(owasp);
+
+
+            owasp = new OwaspData("I10", "Poor Physical Security",m10);
             mOwaspList.add(owasp);
 
 
