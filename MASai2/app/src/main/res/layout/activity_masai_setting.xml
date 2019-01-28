@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,6 +35,25 @@
         app:layout_constraintBottom_toTopOf="@+id/button_scan_qr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.eyalbira.loadingdots.LoadingDots xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading_dot"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        app:LoadingDots_auto_play="true"
+
+        app:LoadingDots_dots_color="@android:color/holo_blue_light"
+
+        app:LoadingDots_jump_duration="200"
+        app:LoadingDots_jump_height="4dp"
+        app:LoadingDots_loop_duration="800"
+        app:LoadingDots_loop_start_delay="100"
+        app:layout_constraintBottom_toBottomOf="@+id/image_setting_instruction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_setting_instruction" />
 
     <Button
         android:id="@+id/button_scan_qr"

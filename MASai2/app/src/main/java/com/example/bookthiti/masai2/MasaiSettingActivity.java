@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.eyalbira.loadingdots.LoadingDots;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -40,6 +41,8 @@ public class MasaiSettingActivity extends AppCompatActivity {
     private boolean mBound = false;
 
     private TextView mTextViewInstructionDescription;
+
+
     private ImageView mImageViewInstruction;
     private Button mScanQrButton;
 
@@ -104,6 +107,14 @@ public class MasaiSettingActivity extends AppCompatActivity {
         setTitle("MASai Box Setting");
         mScanQrButton = (Button) this.findViewById(R.id.button_scan_qr);
         mTextViewInstructionDescription = (TextView) this.findViewById(R.id.text_description);
+        LoadingDots mLoadingDot = (LoadingDots) this.findViewById(R.id.loading_dot);
+
+
+        mLoadingDot.setDotsCount(6);
+        mLoadingDot.setDotsSize(20);
+        mLoadingDot.setDotsSpace(20);
+
+
         mScanQrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
