@@ -11,16 +11,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +37,8 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
+
 import static com.example.bookthiti.masai2.LogConstants.TAG_ERROR;
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
@@ -42,6 +49,8 @@ public class MasaiSettingActivity extends AppCompatActivity {
     private boolean mBound = false;
 
     private TextView mTextViewInstructionDescription;
+    private ImageView mImageViewInstructionConnect;
+
 
 
 
@@ -121,13 +130,14 @@ public class MasaiSettingActivity extends AppCompatActivity {
         mImageViewBox = (ImageView) this.findViewById(R.id.imageView_Box);
         mImageViewInstruction = (ImageView) this.findViewById(R.id.image_setting_instruction);
 
+        mImageViewInstructionConnect = (ImageView) this.findViewById(R.id.image_setting_instruction2);
         mTextViewInstructionDescription = (TextView) this.findViewById(R.id.text_description);
 
         mLoadingDot = (LoadingDots) this.findViewById(R.id.loading_dot);
         mLoadingDot.setDotsCount(6);
         mLoadingDot.setDotsSize(20);
         mLoadingDot.setDotsSpace(20);
-        mLoadingDot.setDotsColor(Color.YELLOW);
+       // mLoadingDot.setDotsColor(Color.YELLOW);
         mImageViewMobile.setVisibility(View.INVISIBLE);
         mImageViewBox.setVisibility(View.INVISIBLE);
         mLoadingDot.setVisibility(View.INVISIBLE);
@@ -152,6 +162,23 @@ public class MasaiSettingActivity extends AppCompatActivity {
                 mImageViewBox.setVisibility(View.VISIBLE);
                 mLoadingDot.setVisibility(View.VISIBLE);
                 mImageViewInstruction.setVisibility(View.INVISIBLE);
+
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        mImageViewMobile.setVisibility(View.INVISIBLE);
+                        mImageViewBox.setVisibility(View.INVISIBLE);
+                        mLoadingDot.setVisibility(View.INVISIBLE);
+                        mImageViewInstructionConnect.setVisibility(View.VISIBLE);
+                        mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
+                        mScanQrButton.setText("Disconnect");
+
+
+                    }
+                }, 5000); // Millisecond 1000 = 1 sec
 
 
             }
