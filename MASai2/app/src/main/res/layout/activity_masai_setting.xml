@@ -16,7 +16,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/preview_scan"
         android:scaleType="fitXY"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/text_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
 
         app:LoadingDots_auto_play="true"
 
-        app:LoadingDots_dots_color="@android:color/holo_blue_light"
+        app:LoadingDots_dots_color="@android:color/holo_blue_dark"
 
         app:LoadingDots_jump_duration="200"
         app:LoadingDots_jump_height="4dp"
@@ -52,8 +52,10 @@
         app:LoadingDots_loop_start_delay="100"
         app:layout_constraintBottom_toBottomOf="@+id/image_setting_instruction"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/image_setting_instruction" />
+        app:layout_constraintTop_toTopOf="@+id/image_setting_instruction"
+        app:layout_constraintVertical_bias="0.634" />
 
     <Button
         android:id="@+id/button_scan_qr"
@@ -68,4 +70,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_Mobile"
+        android:layout_width="79dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/preview_scan_connection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326" />
+
+    <ImageView
+        android:id="@+id/imageView_Box"
+        android:layout_width="97dp"
+        android:layout_height="123dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/preview_scan_box_connection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.683"
+        app:layout_constraintStart_toEndOf="@+id/imageView_Mobile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
 </android.support.constraint.ConstraintLayout>

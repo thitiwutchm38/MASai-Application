@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -43,9 +44,17 @@ public class MasaiSettingActivity extends AppCompatActivity {
     private TextView mTextViewInstructionDescription;
 
 
+
     private ImageView mImageViewInstruction;
+
+    private ImageView mImageViewMobile;
+
+    private ImageView mImageViewBox;
+
+
     private Button mScanQrButton;
 
+    private  LoadingDots mLoadingDot;
     private Context mContext;
     private BluetoothManagementService mBluetoothManagementService;
     JSONObject boxInformation;
@@ -105,32 +114,49 @@ public class MasaiSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_masai_setting);
         mContext = this.getApplicationContext();
         setTitle("MASai Box Setting");
+
         mScanQrButton = (Button) this.findViewById(R.id.button_scan_qr);
+
+        mImageViewMobile = (ImageView) this.findViewById(R.id.imageView_Mobile);
+        mImageViewBox = (ImageView) this.findViewById(R.id.imageView_Box);
+        mImageViewInstruction = (ImageView) this.findViewById(R.id.image_setting_instruction);
+
         mTextViewInstructionDescription = (TextView) this.findViewById(R.id.text_description);
-        LoadingDots mLoadingDot = (LoadingDots) this.findViewById(R.id.loading_dot);
 
-
+        mLoadingDot = (LoadingDots) this.findViewById(R.id.loading_dot);
         mLoadingDot.setDotsCount(6);
         mLoadingDot.setDotsSize(20);
         mLoadingDot.setDotsSpace(20);
-
-
+        mLoadingDot.setDotsColor(Color.YELLOW);
+        mImageViewMobile.setVisibility(View.INVISIBLE);
+        mImageViewBox.setVisibility(View.INVISIBLE);
+        mLoadingDot.setVisibility(View.INVISIBLE);
+        mImageViewInstruction.setVisibility(View.VISIBLE);
         mScanQrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                intentIntegrator.setPrompt("Scan QR Code at MASai Box");
-                intentIntegrator.setCameraId(0);
-                intentIntegrator.setBeepEnabled(false);
-                intentIntegrator.setBarcodeImageEnabled(false);
-                intentIntegrator.initiateScan();
+
+//                int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+//                ActivityCompat.requestPermissions(activity,
+//                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+//                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+//                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+//                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+//                intentIntegrator.setPrompt("Scan QR Code at MASai Box");
+//                intentIntegrator.setCameraId(0);
+//                intentIntegrator.setBeepEnabled(false);
+//                intentIntegrator.setBarcodeImageEnabled(false);
+//                intentIntegrator.initiateScan();
+
+                mImageViewMobile.setVisibility(View.VISIBLE);
+                mImageViewBox.setVisibility(View.VISIBLE);
+                mLoadingDot.setVisibility(View.VISIBLE);
+                mImageViewInstruction.setVisibility(View.INVISIBLE);
+
+
             }
         });
+
         Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
         if(!mBound) {
             bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
