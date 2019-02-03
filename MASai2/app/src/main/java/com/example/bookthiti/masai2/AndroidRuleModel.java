@@ -1,6 +1,6 @@
 package com.example.bookthiti.masai2;
 
-public class popUp_result {
+public class AndroidRuleModel {
 
 
     private String problem;

@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ScanResultActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
 
@@ -44,7 +46,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
     String app_type;
 
 
-    //Show amount score
+    //Show amount Android rule
     TextView textViewWarningResult;
     TextView textViewLowRiskResult;
     TextView textViewMediumResult;
@@ -57,37 +59,73 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
 
 
+    //Show amount permission rule
+
+    TextView textViewSignatureResult;
+    TextView textViewSignatureSysResult;
+    TextView textViewNormalResult;
+    TextView textViewHighResult;
+
+    RelativeLayout RelativeLayoutSignature;
+    RelativeLayout RelativeLayoutSignatureSys;
+    RelativeLayout RelativeLayoutNormal;
+    RelativeLayout RelativeLayoutHighResult;
+
+
     //Pop up result
     RelativeLayout relativeLayout_popup;
 
     //POP UP card
-
     TextView textView_popup_show_found;
 
     LinearLayout popup;
 
-    int warning_result;
-    int low_risk_result;
-    int medium_result;
-    int high_risk_result;
+    //Android rule
+
+    int warningResult;
+    int lowResult;
+    int mediumResult;
+    int highResult;
+
+
+    //Permission rule
+
+    int signatureResult;
+    int sysResult;
+    int normalResult;
+    int highPResult;
 
     private Context mContext;
 
     popUp_result_adapter mainRecyclerAdapter;
 
 
+    popUp_permission_adapter mainRecyclerPAdapter;
 
     private JSONArray valuesWarning = null;
     private JSONArray valuesLow = null;
     private JSONArray valuesMedium = null;
     private JSONArray valuesHigh = null;
 
+    private JSONArray valuesSignature = null;
+    private JSONArray valuesSys = null;
+    private JSONArray valuesNormal = null;
+    private JSONArray valuesHighP = null;
 
 
-    private ArrayList<popUp_result> mainModelArrayListWarning = new ArrayList<>();
-    private ArrayList<popUp_result> mainModelArrayListLow = new ArrayList<>();
-    private ArrayList<popUp_result> mainModelArrayListMedium  = new ArrayList<>();
-    private ArrayList<popUp_result> mainModelArrayListHigh  = new ArrayList<>();
+
+    //Android rule
+    private ArrayList<AndroidRuleModel> mainModelArrayListWarning = new ArrayList<>();
+    private ArrayList<AndroidRuleModel> mainModelArrayListLow = new ArrayList<>();
+    private ArrayList<AndroidRuleModel> mainModelArrayListMedium  = new ArrayList<>();
+    private ArrayList<AndroidRuleModel> mainModelArrayListHigh  = new ArrayList<>();
+
+
+    // Permission
+    private ArrayList<PermissionModel> mainModelArrayListSignature = new ArrayList<>();
+    private ArrayList<PermissionModel> mainModelArrayListSys = new ArrayList<>();
+    private ArrayList<PermissionModel> mainModelArrayListNormal  = new ArrayList<>();
+    private ArrayList<PermissionModel> mainModelArrayListHighP  = new ArrayList<>();
 
 
 
@@ -96,13 +134,14 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
+
         mContext = getApplicationContext();
         //Recycler Adapter
 //        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.layout_pop_up_result);
         final RecyclerView mainRecyclerView = findViewById(R.id.recycle_popup_list);
+
  //       Toast.makeText(this," "+mainRecyclerView,Toast.LENGTH_SHORT).show();
 //
-
 
         //Show app detail
         app_data_name = (TextView) findViewById(R.id.text_ip_address);
@@ -118,14 +157,27 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
         textViewHighRiskResult = (TextView) findViewById(R.id.textView_high_risk_result);
 
 
-        popup = (LinearLayout) findViewById(R.id.relativeLayout_popup);
-
-
-
         RelativeLayoutScoreWarning = (RelativeLayout) findViewById(R.id.score_warning);
         RelativeLayoutLowRisk = (RelativeLayout) findViewById(R.id.score_low_risk);
         RelativeLayoutMediumRisk  = (RelativeLayout) findViewById(R.id.score_medium_risk);
         RelativeLayoutHighRisk  = (RelativeLayout) findViewById(R.id.score_high_risk);
+
+
+        //Show amount permission rule
+
+        textViewSignatureResult  = (TextView) findViewById(R.id.textView_signature_result);
+        textViewSignatureSysResult = (TextView) findViewById(R.id.textView_sig_sys_result);
+        textViewNormalResult = (TextView) findViewById(R.id.textView_normal_result);
+        textViewHighResult = (TextView) findViewById(R.id.textView_high_result);
+
+
+         RelativeLayoutSignature = (RelativeLayout) findViewById(R.id.permission_sig);
+         RelativeLayoutSignatureSys = (RelativeLayout) findViewById(R.id.permission_sig_sys);
+         RelativeLayoutNormal = (RelativeLayout) findViewById(R.id.permission_normal_risk);
+         RelativeLayoutHighResult = (RelativeLayout) findViewById(R.id.permission_high_risk);
+
+
+        popup = (LinearLayout) findViewById(R.id.relativeLayout_popup);
 
 
         line_layout = (LinearLayout) findViewById(R.id.linearLayout_scan_result);
@@ -143,10 +195,142 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
         app_data_type.setText(app_type);;
 
         //Amount score
-        textViewWarningResult.setText(Integer.toString(warning_result));
-        textViewLowRiskResult.setText(Integer.toString(low_risk_result));
-        textViewMediumResult.setText(Integer.toString(medium_result));
-        textViewHighRiskResult.setText(Integer.toString(high_risk_result));
+
+        textViewWarningResult.setText(Integer.toString(warningResult));
+        textViewLowRiskResult.setText(Integer.toString(lowResult));
+        textViewMediumResult.setText(Integer.toString(mediumResult));
+        textViewHighRiskResult.setText(Integer.toString(highResult));
+
+        //Show amount permission rule
+
+        textViewSignatureResult.setText(Integer.toString(signatureResult));
+        textViewSignatureSysResult.setText(Integer.toString(sysResult));
+        textViewNormalResult.setText(Integer.toString(normalResult));
+        textViewHighResult.setText(Integer.toString(highPResult));
+
+
+
+
+        RelativeLayoutSignatureSys.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setGravity(Gravity.CENTER);
+                builder.setScaleRatio(0.2f);
+                builder.setBlurRadius(5);
+                builder.setTintColor(0x3000000);
+                BlurPopupWindow blurPopupWindow = builder.build();
+                blurPopupWindow.show();
+
+                RecyclerView recyclerView = blurPopupWindow.findViewById(R.id.recycle_popup_permission_list);
+
+                popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
+                popup.setBackgroundResource(R.drawable.shape_score);
+
+                TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
+
+                textViewNumResult.setText("SYSTEM: "+ sysResult +"  permissions found");
+
+                popup.setBackgroundColor(Color.parseColor("#D3E3F5"));
+
+                //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
+
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                        LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(linearLayoutManager);
+
+                PermissionModel mainModel = new PermissionModel();
+
+                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListSys);
+
+                mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
+                recyclerView.setAdapter(mainRecyclerPAdapter);
+            }
+        });
+
+        RelativeLayoutNormal.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setGravity(Gravity.CENTER);
+                builder.setScaleRatio(0.2f);
+                builder.setBlurRadius(5);
+                builder.setTintColor(0x3000000);
+                BlurPopupWindow blurPopupWindow = builder.build();
+                blurPopupWindow.show();
+
+                RecyclerView recyclerView = blurPopupWindow.findViewById(R.id.recycle_popup_permission_list);
+
+                popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
+                popup.setBackgroundResource(R.drawable.shape_score);
+
+                TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
+
+                textViewNumResult.setText("NORMAL: "+ normalResult +"  permissions found");
+
+                popup.setBackgroundColor(Color.parseColor("#D3E3F5"));
+
+                //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
+
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                        LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(linearLayoutManager);
+
+                PermissionModel mainModel = new PermissionModel();
+
+                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListNormal);
+
+                mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
+                recyclerView.setAdapter(mainRecyclerPAdapter);
+            }
+        });
+
+        RelativeLayoutHighResult.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setGravity(Gravity.CENTER);
+                builder.setScaleRatio(0.2f);
+                builder.setBlurRadius(5);
+                builder.setTintColor(0x3000000);
+                BlurPopupWindow blurPopupWindow = builder.build();
+                blurPopupWindow.show();
+
+                RecyclerView recyclerView = blurPopupWindow.findViewById(R.id.recycle_popup_permission_list);
+
+                popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
+                popup.setBackgroundResource(R.drawable.shape_score);
+
+                TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
+
+                textViewNumResult.setText("HIGH RISK: "+ highPResult +"  permissions found");
+
+                popup.setBackgroundColor(Color.parseColor("#D3E3F5"));
+
+                //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
+
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                        LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(linearLayoutManager);
+
+                PermissionModel mainModel = new PermissionModel();
+
+                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListHighP);
+
+                mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
+                recyclerView.setAdapter(mainRecyclerPAdapter);
+            }
+        });
+
+
+
+
+
+
+
 
 
 
@@ -154,22 +338,8 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
 
-//                BlurPopupWindow blurPopupWindow =  new BlurPopupWindow.Builder(v.getContext()).setContentView(R.layout.pop_up_result)
-//                        .bindClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//
-//                  Toast.makeText(v.getContext(), "Click Button", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }, R.id.relativeLayout_popup)
-//                        .setGravity(Gravity.CENTER)
-//                        .setScaleRatio(0.2f)
-//                        .setBlurRadius(10)
-//                        .setTintColor(0x30000000)
-//                        .build();
-//                blurPopupWindow.show();
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_result);
+                builder.setContentView(R.layout.pop_up_android_rule_result);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(10);
@@ -183,17 +353,16 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 popup.setBackgroundResource(R.drawable.shape_score);
 
                 TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
-                textViewNumResult.setText("Warning Risk: "+warning_result+" Founded");
+                textViewNumResult.setText("Warning Risk: "+ warningResult +" Founded");
                 popup.setBackgroundColor(Color.parseColor("#13CE66"));
 
                 //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                 LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(linearLayoutManager);
-                popUp_result mainModel = new popUp_result();
+                AndroidRuleModel mainModel = new AndroidRuleModel();
                 
-                
-            
+
 
                 mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListWarning);
 
@@ -209,7 +378,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_result);
+                builder.setContentView(R.layout.pop_up_android_rule_result);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(10);
@@ -222,7 +391,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
 
                 TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
-                textViewNumResult.setText("LOW Risk: "+low_risk_result+" Founded !");
+                textViewNumResult.setText("LOW Risk: "+lowResult+" Founded !");
 
                 popup.setBackground(mContext.getResources().getDrawable(R.drawable.shape_score));
                 popup.setBackgroundColor(Color.parseColor("#F0E544"));
@@ -244,7 +413,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_result);
+                builder.setContentView(R.layout.pop_up_android_rule_result);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(10);
@@ -256,7 +425,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
 
                 TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
-                textViewNumResult.setText("Medium Risk: "+medium_result+" Founded !");
+                textViewNumResult.setText("Medium Risk: "+mediumResult+" Founded !");
 
                 popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
 
@@ -267,7 +436,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                         LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(linearLayoutManager);
-                popUp_result mainModel = new popUp_result();
+                AndroidRuleModel mainModel = new AndroidRuleModel();
 
                 mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListMedium);
 
@@ -281,7 +450,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_result);
+                builder.setContentView(R.layout.pop_up_android_rule_result);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(10);
@@ -293,7 +462,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
 
                 TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
-                textViewNumResult.setText("High Risk : "+high_risk_result+" Founded !");
+                textViewNumResult.setText("High Risk : "+highResult+" Founded !");
 
                 popup.setBackgroundResource(R.drawable.shape_score);
                 popup.setBackgroundColor(Color.parseColor("#F95F62"));
@@ -302,7 +471,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                         LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(linearLayoutManager);
-                popUp_result mainModel = new popUp_result();
+                AndroidRuleModel mainModel = new AndroidRuleModel();
 
                 mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListHigh);
 
@@ -393,7 +562,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             JSONObject app_poten_security_temp = null;
 
         try {
-            app_poten_security_temp = reader.getJSONObject("Poten_security");
+            app_poten_security_temp = reader.getJSONObject("android_rules");
          } catch (JSONException e) {
                 e.printStackTrace();
          }
@@ -407,7 +576,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             e.printStackTrace();
         }
 
-        warning_result = valuesWarning.length();
+        warningResult = valuesWarning.length();
 
 
 
@@ -435,7 +604,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 e.printStackTrace();
             }
 
-            popUp_result mainModel = new popUp_result();
+            AndroidRuleModel mainModel = new AndroidRuleModel();
 
 
             mainModel.setProblem(problem);
@@ -443,7 +612,13 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
             mainModelArrayListWarning.add(mainModel);
 
-
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListWarning, new Comparator<AndroidRuleModel>() {
+                        @Override
+                        public int compare( AndroidRuleModel routerModel, AndroidRuleModel t1 ) {
+                            return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                        }
+                    });
         }
 
         // ---------------- JSON scan Low result   ---------------- //
@@ -454,7 +629,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             e.printStackTrace();
         }
 
-        low_risk_result = valuesLow.length();
+        lowResult = valuesLow.length();
 
         for (int i = 0; i < valuesLow.length(); i++) {
 
@@ -479,12 +654,20 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 e.printStackTrace();
             }
 
-            popUp_result mainModel = new popUp_result();
+            AndroidRuleModel mainModel = new AndroidRuleModel();
 
             mainModel.setProblem(problem);
             mainModel.setOwasp_num(OWASP);
 
             mainModelArrayListLow.add(mainModel);
+
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListLow, new Comparator<AndroidRuleModel>() {
+                @Override
+                public int compare( AndroidRuleModel routerModel, AndroidRuleModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
 
 
         }
@@ -497,12 +680,12 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             e.printStackTrace();
         }
 
-        medium_result = valuesMedium.length();
+        mediumResult = valuesMedium.length();
 
         for (int i = 0; i < valuesMedium.length(); i++) {
 
             String problem = null;
-            String OWASP= null;
+            String OWASP = null;
 
             JSONObject jsonobject = null;
 
@@ -522,14 +705,20 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 e.printStackTrace();
             }
 
-            popUp_result mainModel = new popUp_result();
+            AndroidRuleModel mainModel = new AndroidRuleModel();
 
             mainModel.setProblem(problem);
             mainModel.setOwasp_num(OWASP);
 
             mainModelArrayListMedium.add(mainModel);
 
-
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListMedium, new Comparator<AndroidRuleModel>() {
+                @Override
+                public int compare( AndroidRuleModel routerModel, AndroidRuleModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
         }
 
         // ---------------- JSON scan High result   ---------------- //
@@ -540,7 +729,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             e.printStackTrace();
         }
 
-        high_risk_result = valuesHigh.length();
+        highResult = valuesHigh.length();
 
         for (int i = 0; i < valuesHigh.length(); i++) {
 
@@ -565,71 +754,399 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 e.printStackTrace();
             }
 
-            popUp_result mainModel = new popUp_result();
+            AndroidRuleModel mainModel = new AndroidRuleModel();
 
             mainModel.setProblem(problem);
             mainModel.setOwasp_num(OWASP);
 
             mainModelArrayListHigh.add(mainModel);
 
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListHigh, new Comparator<AndroidRuleModel>() {
+                @Override
+                public int compare( AndroidRuleModel routerModel, AndroidRuleModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
 
         }
 
+        JSONObject app_permission_temp = null;
+        try {
+            app_permission_temp = reader.getJSONObject("android_permission");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // ---------------- JSON scan Signature result   ---------------- //
+
+        try {
+            valuesSignature = app_permission_temp.getJSONArray("signature");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        signatureResult = valuesSignature.length();
+
+        for (int i = 0; i < valuesSignature.length(); i++) {
+
+            String problem = null;
+            String OWASP = null;
+            String Information = null;
+            String Description= null ;
+
+            JSONObject jsonobject = null;
+
+            try {
+                jsonobject = valuesSignature.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                problem = jsonobject.getString("Problem");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                OWASP = jsonobject.getString("OWASP");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Information = jsonobject.getString("Info");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Description = jsonobject.getString("Description");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            PermissionModel mainModel = new PermissionModel();
+
+            mainModel.setProblem(problem);
+            mainModel.setOwasp_num(OWASP);
+            mainModel.setDescription(Description);
+            mainModel.setInformation(Information);
+
+            mainModelArrayListSignature.add(mainModel);
+
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListSignature, new Comparator<PermissionModel>() {
+                @Override
+                public int compare( PermissionModel routerModel, PermissionModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
+        }
+
+
+        // ---------------- JSON scan Sys result   ---------------- //
+
+        try {
+            valuesSys = app_permission_temp.getJSONArray("system");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        sysResult = valuesSys.length();
+
+        for (int i = 0; i < valuesSys.length(); i++) {
+
+            String problem = null;
+            String OWASP = null;
+            String Information = null;
+            String Description= null ;
+
+            JSONObject jsonobject = null;
+
+            try {
+                jsonobject = valuesSys.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                problem = jsonobject.getString("Problem");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                OWASP = jsonobject.getString("OWASP");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Information = jsonobject.getString("Info");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Description = jsonobject.getString("Description");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            PermissionModel mainModel = new PermissionModel();
+
+            mainModel.setProblem(problem);
+            mainModel.setOwasp_num(OWASP);
+            mainModel.setDescription(Description);
+            mainModel.setInformation(Information);
+
+            mainModelArrayListSys.add(mainModel);
+
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListSys, new Comparator<PermissionModel>() {
+                @Override
+                public int compare( PermissionModel routerModel, PermissionModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
+        }
+        // ---------------- JSON scan Signature result   ---------------- //
+
+        try {
+            valuesNormal = app_permission_temp.getJSONArray("normal");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        normalResult = valuesNormal.length();
+
+        for (int i = 0; i < valuesNormal.length(); i++) {
+
+            String problem = null;
+            String OWASP = null;
+            String Information = null;
+            String Description= null ;
+
+            JSONObject jsonobject = null;
+
+            try {
+                jsonobject = valuesNormal.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                problem = jsonobject.getString("Problem");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                OWASP = jsonobject.getString("OWASP");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Information = jsonobject.getString("Info");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Description = jsonobject.getString("Description");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            PermissionModel mainModel = new PermissionModel();
+
+            mainModel.setProblem(problem);
+            mainModel.setOwasp_num(OWASP);
+            mainModel.setDescription(Description);
+            mainModel.setInformation(Information);
+
+            mainModelArrayListNormal.add(mainModel);
+
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListNormal, new Comparator<PermissionModel>() {
+                @Override
+                public int compare( PermissionModel routerModel, PermissionModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
+        }
+
+
+        // ---------------- JSON scan High result   ---------------- //
+
+        try {
+            valuesHighP = app_permission_temp.getJSONArray("high");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        highPResult = valuesHighP.length();
+
+        for (int i = 0; i < valuesHighP.length(); i++) {
+
+            String problem = null;
+            String OWASP = null;
+            String Information = null;
+            String Description= null ;
+
+            JSONObject jsonobject = null;
+
+            try {
+                jsonobject = valuesHighP.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                problem = jsonobject.getString("Problem");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                OWASP = jsonobject.getString("OWASP");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Information = jsonobject.getString("Info");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Description = jsonobject.getString("Description");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            PermissionModel mainModel = new PermissionModel();
+
+            mainModel.setProblem(problem);
+            mainModel.setOwasp_num(OWASP);
+            mainModel.setDescription(Description);
+            mainModel.setInformation(Information);
+
+            mainModelArrayListHighP.add(mainModel);
+
+            //Sort by M (OWASP)
+            Collections.sort(mainModelArrayListHighP, new Comparator<PermissionModel>() {
+                @Override
+                public int compare( PermissionModel routerModel, PermissionModel t1 ) {
+                    return routerModel.getOwasp_num().compareTo(t1.getOwasp_num());
+                }
+            });
+        }
     }
 
     @Override
     public void onItemClick( int position, View view ) {
-        popUp_result  mainModel = (popUp_result) view.getTag();
-        switch (view.getId()) {
-            case R.id.layout_pop_up_result:
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
-                //openActivityPortInfo(position);
 
-                Intent intent = new Intent(this,OwaspMobileActivity.class);
 
-                //Bundle
-                Bundle bundle = new Bundle();
+        if (view.getTag().getClass()==PermissionModel.class) {
 
-                switch(mainModel.getOwasp_num()) {
-                    case "M1" :
-                        bundle.putString("M", "M1");
-                        break;
-                    case "M2" :
-                        bundle.putString("M", "M2");
-                        break;
-                    case "M3" :
-                        bundle.putString("M", "M3");
-                        break;
-                    case "M4" :
-                        bundle.putString("M", "M4");
-                        break;
-                    case "M5" :
-                        bundle.putString("M", "M5");
-                        break;
-                    case "M6" :
-                        bundle.putString("M", "M6");
-                        break;
-                    case "M7" :
-                        bundle.putString("M", "M7");
-                        break;
-                    case "M8" :
-                        bundle.putString("M", "M8");
-                        break;
-                    case "M9" :
-                        bundle.putString("M", "M9");
-                        break;
-                    case "M10" :
-                        bundle.putString("M", "M10");
-                        break;
+            PermissionModel mainModel = (PermissionModel) view.getTag();
 
-                    default :
-                }
-                intent.putExtras(bundle);
+            switch (view.getId()) {
 
-                startActivity(intent);
-                break;
-        }
+                case R.id.layout_pop_up_permission_result:
+                    Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
+                    //openActivityPortInfo(position);
+                    Intent intent = new Intent(this, OwaspMobileActivity.class);
+                    //Bundle
+                    Bundle bundle = new Bundle();
+
+                    switch (mainModel.getOwasp_num()) {
+                        case "M1":
+                            bundle.putString("M", "M1");
+                            break;
+                        case "M2":
+                            bundle.putString("M", "M2");
+                            break;
+                        case "M3":
+                            bundle.putString("M", "M3");
+                            break;
+                        case "M4":
+                            bundle.putString("M", "M4");
+                            break;
+                        case "M5":
+                            bundle.putString("M", "M5");
+                            break;
+                        case "M6":
+                            bundle.putString("M", "M6");
+                            break;
+                        case "M7":
+                            bundle.putString("M", "M7");
+                            break;
+                        case "M8":
+                            bundle.putString("M", "M8");
+                            break;
+                        case "M9":
+                            bundle.putString("M", "M9");
+                            break;
+                        case "M10":
+                            bundle.putString("M", "M10");
+                            break;
+                        default:
+                    }
+                    intent.putExtras(bundle);
+
+                    startActivity(intent);
+                    break;
+
+            }
+
+        }else{
+                AndroidRuleModel mainModel = (AndroidRuleModel) view.getTag();
+
+            switch (view.getId()) {
+
+                case R.id.layout_pop_up_result:
+                    Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
+                    //openActivityPortInfo(position);
+                    Intent intent_2 = new Intent(this,OwaspMobileActivity.class);
+                    //Bundle
+                    Bundle bundle_2 = new Bundle();
+
+                    switch(mainModel.getOwasp_num()) {
+                        case "M1" :
+                            bundle_2.putString("M", "M1");
+                            break;
+                        case "M2" :
+                            bundle_2.putString("M", "M2");
+                            break;
+                        case "M3" :
+                            bundle_2.putString("M", "M3");
+                            break;
+                        case "M4" :
+                            bundle_2.putString("M", "M4");
+                            break;
+                        case "M5" :
+                            bundle_2.putString("M", "M5");
+                            break;
+                        case "M6" :
+                            bundle_2.putString("M", "M6");
+                            break;
+                        case "M7" :
+                            bundle_2.putString("M", "M7");
+                            break;
+                        case "M8" :
+                            bundle_2.putString("M", "M8");
+                            break;
+                        case "M9" :
+                            bundle_2.putString("M", "M9");
+                            break;
+                        case "M10" :
+                            bundle_2.putString("M", "M10");
+                            break;
+
+                        default :
+                    }
+                    intent_2.putExtras(bundle_2);
+
+                    startActivity(intent_2);
+                    break;
+
+            }
+            }
+
     }
-
 
 }

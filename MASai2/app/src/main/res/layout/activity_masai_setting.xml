@@ -26,7 +26,7 @@
     <ImageView
         android:id="@+id/image_setting_instruction2"
         android:layout_width="284dp"
-        android:layout_height="206dp"
+        android:layout_height="192dp"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"

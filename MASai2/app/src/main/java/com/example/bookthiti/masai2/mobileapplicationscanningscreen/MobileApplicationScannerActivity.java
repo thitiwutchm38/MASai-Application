@@ -99,10 +99,10 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
         mStartAppScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(selectedApplication != null) {
+        //        if(selectedApplication != null) {
                     Intent startScanResultActivityIntent = new Intent(mContext, ScanResultActivity.class);
                     startActivity(startScanResultActivityIntent);
-                }
+        //        }
             }
         });
     }

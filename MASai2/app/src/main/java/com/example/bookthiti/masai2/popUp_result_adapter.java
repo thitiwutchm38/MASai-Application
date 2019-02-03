@@ -13,26 +13,27 @@ import java.util.ArrayList;
 
 public class popUp_result_adapter extends RecyclerView.Adapter<popUp_result_adapter.ViewHolder>{
 
-    private ArrayList<popUp_result> mainModelArrayList;
+    private ArrayList<AndroidRuleModel> mainModelArrayList;
     private Context context;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
-    public popUp_result_adapter( Context context, ArrayList<popUp_result> mainModelArrayList) {
+    public popUp_result_adapter( Context context, ArrayList<AndroidRuleModel> mainModelArrayList) {
 
         this.context = context;
         this.mainModelArrayList = mainModelArrayList;
     }
+
     @Override
     public popUp_result_adapter.ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_popup_result, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_popup_android_rule_result, viewGroup, false);
         return new popUp_result_adapter.ViewHolder(view);
 
     }
     @Override
     public void onBindViewHolder( popUp_result_adapter.ViewHolder viewHolder, int position) {
 
-        final popUp_result offersListModel = mainModelArrayList.get(position);
+        final AndroidRuleModel offersListModel = mainModelArrayList.get(position);
 
 
         viewHolder.textView_problem_result.setText(offersListModel.getProblem());
@@ -64,8 +65,7 @@ public class popUp_result_adapter extends RecyclerView.Adapter<popUp_result_adap
 
             textView_problem_result = view.findViewById(R.id.textView_problem_result);
 
-            textView_OWAPS_num =   view.findViewById(R.id.textView_OWAPS_num);
-
+            textView_OWAPS_num =  view.findViewById(R.id.textView_OWAPS_num);
 
             //device_lin = view.findViewById(R.id.layout_pop_up_result);
 

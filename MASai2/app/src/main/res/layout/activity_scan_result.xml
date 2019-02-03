@@ -7,18 +7,18 @@
     android:layout_height="match_parent"
     tools:mContext=".ScanResultActivity"
     tools:layout_editor_absoluteY="81dp">
+
     <LinearLayout
         android:id="@+id/linearLayout_scan_result"
         android:layout_width="324dp"
-        android:layout_height="479dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -171,13 +171,13 @@
             android:layout_weight="0" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="@drawable/app_result_shape_top"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
-            android:text="Potential Security Flaw"
+            android:text="Find by Android Rules"
             android:textColor="@color/colorbgS"
             android:textStyle="bold" />
 
@@ -195,13 +195,13 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="9dp"
+                android:background="@drawable/background_with_shadow"
+                android:backgroundTint="#13CE66"
+                android:clickable="true"
                 android:shadowColor="@color/colorPrimaryDark"
                 android:shadowDx="3"
                 android:shadowDy="-3"
-                android:shadowRadius="1.5"
-                android:background="@drawable/background_with_shadow"
-                android:backgroundTint="#13CE66"
-                android:clickable="true">
+                android:shadowRadius="1.5">
 
                 <TextView
                     android:id="@+id/textView_warning"
@@ -214,8 +214,8 @@
                     android:layout_marginTop="34dp"
                     android:layout_marginEnd="33dp"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
                     android:text="WARNING"
                     android:textStyle="bold" />
@@ -230,11 +230,11 @@
                     android:layout_marginStart="53dp"
                     android:layout_marginTop="14dp"
                     android:layout_marginEnd="61dp"
-                    android:text="#"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
+                    android:text="#"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -256,14 +256,14 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="26dp"
+                    android:layout_marginStart="31dp"
                     android:layout_marginTop="36dp"
-                    android:layout_marginEnd="33dp"
-                    android:text="LOW RISK"
+                    android:layout_marginEnd="28dp"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
+                    android:text="LOW RISK"
                     android:textStyle="bold" />
 
                 <TextView
@@ -274,11 +274,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="54dp"
-                    android:text="#"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
+                    android:text="#"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -306,8 +306,8 @@
                     android:layout_marginTop="33dp"
                     android:layout_marginEnd="28dp"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
                     android:text="HIGH RISK"
                     android:textStyle="bold" />
@@ -323,8 +323,8 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="58dp"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
                     android:text="#"
                     android:textStyle="bold" />
@@ -354,8 +354,8 @@
                     android:layout_marginTop="31dp"
                     android:layout_marginEnd="17dp"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
                     android:text="MEDIUM RISK"
                     android:textStyle="bold" />
@@ -371,8 +371,8 @@
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="59dp"
                     android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
                     android:shadowRadius="1.5"
                     android:text="#"
                     android:textStyle="bold" />
@@ -396,40 +396,210 @@
             android:background="@drawable/app_result_shape_top"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
-            android:text="Mobile Application Behavior"
+            android:text="Permission"
             android:textColor="@color/colorbgS"
             android:textStyle="bold" />
 
         <RelativeLayout
+            android:id="@+id/rela_app_permissin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/app_result_shape">
 
-
-            <TextView
-                android:id="@+id/textView_App_fun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:id="@+id/permission_sig"
+                android:layout_width="125dp"
+                android:layout_height="65dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="14dp"
-                android:text="Mobile Application Functionallity:"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="54dp"
-                tools:layout_editor_absoluteY="392dp" />
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/background_with_shadow"
+                android:backgroundTint="@color/colorAccent"
+                android:clickable="true"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:shadowDx="3"
+                android:shadowDy="-3"
+                android:shadowRadius="1.5">
 
-            <TextView
-                android:id="@+id/textView_mobile_app_"
-                android:layout_width="301dp"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/textView_signature"
+                    android:layout_width="82dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="SIGNATURE"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_signature_result"
+                    android:layout_width="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="#"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/permission_sig_sys"
+                android:layout_width="125dp"
+                android:layout_height="65dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginBottom="27dp"
-                android:text="result"
-                android:textAlignment="viewStart" />
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="178dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_with_shadow"
+                android:backgroundTint="@color/colorAccent">
+
+                <TextView
+                    android:id="@+id/textView_sig_sys"
+                    android:layout_width="111dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="SIGNATURE or SYSTEM"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_sig_sys_result"
+                    android:layout_width="14dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="#"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/permission_high_risk"
+                android:layout_width="125dp"
+                android:layout_height="65dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="179dp"
+                android:layout_marginTop="82dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_with_shadow"
+                android:backgroundTint="#F95F62">
+
+                <TextView
+                    android:id="@+id/textView_high"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="HIGH"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_high_result"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="#"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/permission_normal_risk"
+                android:layout_width="125dp"
+                android:layout_height="65dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="83dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_with_shadow"
+                android:backgroundTint="#FFBA5C">
+
+                <TextView
+                    android:id="@+id/textView_normal"
+                    android:layout_width="88dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="NORMAL"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_normal_result"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="1"
+                    android:shadowDy="-1"
+                    android:shadowRadius="1.5"
+                    android:text="#"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
         </RelativeLayout>
 
