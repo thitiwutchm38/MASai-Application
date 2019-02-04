@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2.deviceassessmentscreen;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +68,40 @@ public class DeviceAssessmentRecyclerAdapter extends RecyclerView.Adapter<Device
         holder.mTextViewMinCvss.setText(Float.toString(minCvss));
         holder.mTextViewAverageCvss.setText(Float.toString(averageCvss));
 
+        switch(serviceModel.getPort()) {
+            case 23:
+                holder.mTextViewStatus.setText("( Dangerous )");
+                holder.mTextViewStatus.setTextColor(Color.RED);
+                break;
+            case 80:
+                holder.mTextViewStatus.setText("( Dangerous )");
+                holder.mTextViewStatus.setTextColor(Color.RED);
+                break;
+            case 20:
+                holder.mTextViewStatus.setText("( Dangerous )");
+                holder.mTextViewStatus.setTextColor(Color.RED);
+                break;
+
+            case 21:
+                holder.mTextViewStatus.setText("( Dangerous )");
+                holder.mTextViewStatus.setTextColor(Color.RED);
+                break;
+
+            case 389:
+                holder.mTextViewStatus.setText("( Dangerous )");
+                holder.mTextViewStatus.setTextColor(Color.RED);
+                break;
+
+            case 88:
+                holder.mTextViewStatus.setText("( Dangerous )");
+                holder.mTextViewStatus.setTextColor(Color.RED);
+                break;
+
+
+
+            default:
+        }
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                 LinearLayoutManager.VERTICAL, false);
         holder.mRecyclerViewCves.setLayoutManager(linearLayoutManager);
@@ -81,6 +116,7 @@ public class DeviceAssessmentRecyclerAdapter extends RecyclerView.Adapter<Device
 
     public class Holder extends RecyclerView.ViewHolder {
         private TextView mTextViewTitle;
+        private TextView mTextViewStatus;
         private TextView mTextViewMaxCvss;
         private TextView mTextViewMinCvss;
         private TextView mTextViewAverageCvss;
@@ -90,6 +126,7 @@ public class DeviceAssessmentRecyclerAdapter extends RecyclerView.Adapter<Device
         public Holder(@NonNull View itemView) {
             super(itemView);
             mTextViewTitle = itemView.findViewById(R.id.text_title);
+            mTextViewStatus = itemView.findViewById(R.id.text_status);
             mTextViewMaxCvss = itemView.findViewById(R.id.text_max_cvss);
             mTextViewMinCvss = itemView.findViewById(R.id.text_min_cvss);
             mTextViewAverageCvss = itemView.findViewById(R.id.text_average_cvss);

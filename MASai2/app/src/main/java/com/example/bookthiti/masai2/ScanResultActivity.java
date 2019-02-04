@@ -210,6 +210,44 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
 
 
+        RelativeLayoutSignature.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setGravity(Gravity.CENTER);
+                builder.setScaleRatio(0.2f);
+                builder.setBlurRadius(5);
+                builder.setTintColor(0x3000000);
+                BlurPopupWindow blurPopupWindow = builder.build();
+                blurPopupWindow.show();
+
+                RecyclerView recyclerView = blurPopupWindow.findViewById(R.id.recycle_popup_permission_list);
+
+                popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
+                popup.setBackgroundResource(R.drawable.shape_score);
+
+                TextView textViewNumResult = (TextView)blurPopupWindow.findViewById(R.id.textView_popup_show_found);
+
+                textViewNumResult.setText("SIGNATURE: "+ signatureResult +"  permissions found");
+
+                popup.setBackgroundColor(Color.parseColor("#D3E3F5"));
+
+                //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
+
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                        LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(linearLayoutManager);
+
+                PermissionModel mainModel = new PermissionModel();
+
+                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListSignature);
+
+                mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
+                recyclerView.setAdapter(mainRecyclerPAdapter);
+            }
+        });
+
 
         RelativeLayoutSignatureSys.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -310,7 +348,6 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
                 popup.setBackgroundColor(Color.parseColor("#D3E3F5"));
 
-                //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                         LinearLayoutManager.VERTICAL, false);

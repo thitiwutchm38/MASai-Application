@@ -8,10 +8,13 @@
     app:cardBackgroundColor="#1e000000"
     app:cardCornerRadius="4dp">
 
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fafafa">
+        android:background="#fafafa"
+        app:layout_constraintEnd_toStartOf="@+id/recycler_cves"
+        app:layout_constraintStart_toStartOf="@+id/recycler_cves">
 
         <TextView
             android:id="@+id/text_title"
@@ -21,6 +24,18 @@
             android:layout_marginTop="8dp"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="16dp"
+            android:text="( Normal )"
+            android:textColor="@android:color/holo_green_dark"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
