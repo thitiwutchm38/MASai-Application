@@ -3,6 +3,7 @@ package com.example.bookthiti.masai2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -18,17 +19,12 @@ public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME = 4000; //This is 4 seconds
 
     private ImageButton button_MobileApp_att;
-    //    imageButton_MobileApp_att
 
     private ImageButton button_iot_att;
-    //    imageButton_iot_att
 
     private ImageButton button_Tips;
-    //imageButton_Tips
 
     private ImageButton button__MASaibox_setting;
-
-    //imageButton_MASaibox
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.i("Log info", "Service is already started");
         }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity_Tips() {
 
-        Intent intent = new Intent(this,iot_suggestion.class);
+        Intent intent = new Intent(this, IotInformationActivity.class);
         startActivity(intent);
     }
 }

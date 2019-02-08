@@ -34,12 +34,11 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".iot_suggestion"
+            android:name=".IotInformationActivity"
             android:label="@string/title_activity_iot_suggestion"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".routercrackingscreen.CrackRouterActivity" />

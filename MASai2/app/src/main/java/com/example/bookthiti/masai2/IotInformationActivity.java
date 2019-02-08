@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-public class iot_suggestion extends AppCompatActivity {
+public class IotInformationActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
