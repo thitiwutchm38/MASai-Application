@@ -26,7 +26,8 @@ public class OwaspMobileActivity extends AppCompatActivity {
         mOwaspModel = (OwaspModel) intent.getParcelableExtra("owaspModel");
         mTextViewContent = findViewById(R.id.text_content);
         mTextViewTopic = findViewById(R.id.text_owasp_mobile_topic);
-        mTextViewTopic.setText(mOwaspModel.getTopicId() + " " + mOwaspModel.getTopic());
-        mTextViewContent.setText(mOwaspModel.getGeneralDetail());
+
+        //mTextViewTopic.setText(mOwaspModel.getTopicId() + " " + mOwaspModel.getTopic());
+        //mTextViewContent.setText(mOwaspModel.getGeneralDetail());
     }
 }

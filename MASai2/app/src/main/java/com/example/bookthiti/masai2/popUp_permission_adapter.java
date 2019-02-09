@@ -38,7 +38,7 @@ public class popUp_permission_adapter extends RecyclerView.Adapter<popUp_permiss
         String colorString = null;
 
         //viewHolder.textView_problem_result.setText(offersListModel.getProblem());
-        viewHolder.textView_OWAPS_num.setText(offersListModel.getOwasp_num()+" - "+offersListModel.getProblem());
+       // viewHolder.textView_OWAPS_num.setText(offersListModel.getOwasp_num()+" - "+offersListModel.getProblem());
 
         viewHolder.mtextViewInfo.setText(offersListModel.getInformation());
         viewHolder.mtextDescription.setText(offersListModel.getDescription());
@@ -82,7 +82,7 @@ public class popUp_permission_adapter extends RecyclerView.Adapter<popUp_permiss
             default:
         }
 
-        viewHolder.textView_OWAPS_num.setTextColor(Color.parseColor(colorString));
+ //       viewHolder.textView_OWAPS_num.setTextColor(Color.parseColor(colorString));
 //        viewHolder.mtextViewInfo.setTextColor(Color.parseColor(colorString));
 //        viewHolder.mtextDescription.setTextColor(Color.parseColor(colorString));
 
@@ -99,7 +99,7 @@ public class popUp_permission_adapter extends RecyclerView.Adapter<popUp_permiss
         //private TextView textView_problem_result;
 
 
-        private TextView textView_OWAPS_num;
+    //    private TextView textView_OWAPS_num;
         private TextView mtextViewInfo;
         private TextView mtextDescription;
 
@@ -113,7 +113,7 @@ public class popUp_permission_adapter extends RecyclerView.Adapter<popUp_permiss
 
             //textView_problem_result = view.findViewById(R.id.textView_problem_result);
 
-            textView_OWAPS_num = view.findViewById(R.id.textView_OWAPS_num);
+        //    textView_OWAPS_num = view.findViewById(R.id.textView_OWAPS_num);
 
             mtextViewInfo = view.findViewById(R.id.textView_info_detail);
 

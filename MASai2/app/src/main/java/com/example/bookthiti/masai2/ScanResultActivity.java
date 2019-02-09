@@ -11,12 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
 import org.json.JSONArray;
@@ -57,8 +59,6 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
     RelativeLayout RelativeLayoutMediumRisk;
     RelativeLayout RelativeLayoutHighRisk;
 
-
-
     //Show amount permission rule
 
     TextView textViewSignatureResult;
@@ -71,6 +71,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
     RelativeLayout RelativeLayoutNormal;
     RelativeLayout RelativeLayoutHighResult;
 
+    Button ButtonOwapsSummary;
 
     //Pop up result
     RelativeLayout relativeLayout_popup;
@@ -177,6 +178,9 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
          RelativeLayoutHighResult = (RelativeLayout) findViewById(R.id.permission_high_risk);
 
 
+        ButtonOwapsSummary = (Button) findViewById(R.id.btt_OWAPS_sum);
+
+
         popup = (LinearLayout) findViewById(R.id.relativeLayout_popup);
 
 
@@ -208,6 +212,15 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
         textViewNormalResult.setText(Integer.toString(normalResult));
         textViewHighResult.setText(Integer.toString(highPResult));
 
+
+        ButtonOwapsSummary.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ScanResultActivity.this, OwaspSummaryActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         RelativeLayoutSignature.setOnClickListener(new View.OnClickListener(){
