@@ -28,7 +28,7 @@ public class DeviceDiscoveryRecyclerAdapter extends RecyclerView.Adapter<DeviceD
 
     @Override
     public DeviceDiscoveryRecyclerAdapter.Holder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_owasp_item, viewGroup, false);
+//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_owasp, viewGroup, false);
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_device, viewGroup, false);
         return new DeviceDiscoveryRecyclerAdapter.Holder(view);
     }
