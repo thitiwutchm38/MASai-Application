@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_owasp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="88dp">
 
 
     <TextView
         android:id="@+id/tvOwaspIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_drawable"
         android:gravity="center"
         android:text="A"
@@ -22,41 +25,36 @@
         android:id="@+id/tvOwaspTopic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_toEndOf="@+id/tvOwaspIcon"
         android:layout_toRightOf="@+id/tvOwaspIcon"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:text="TextView"
         android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvEmailTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvOwaspTopic"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvOwaspIcon"
-        android:layout_toRightOf="@+id/tvOwaspIcon"
-        android:text="Detail:"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:firstBaselineToTopHeight="28dp" />
 
     <TextView
         android:id="@+id/tvOwaspDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEmailTitle"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvOwaspIcon"
+        android:layout_below="@+id/tvOwaspTopic"
+        android:layout_alignStart="@+id/tvOwaspTopic"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="16dp"
         android:layout_toRightOf="@+id/tvOwaspIcon"
         android:ellipsize="end"
-        android:maxLines="1"
-        android:text="This is a very long text and we need to show 3...(dots)" />
+        android:maxLines="2"
+        android:text="This is a very long text and we need to show 3...(dots)"
+        app:firstBaselineToTopHeight="20dp" />
 
 
 </RelativeLayout>

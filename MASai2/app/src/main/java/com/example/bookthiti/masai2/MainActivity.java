@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
+import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
 import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
 import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
