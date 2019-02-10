@@ -44,6 +44,8 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_WIFI_ATTACK = "ACTION WIFI ATTACK";
     public static final String ACTION_WIFI_CONNECT = "ACTION WIFI CONNECT";
     public static final String ACTION_DEVICE_SCAN = "ACTION DEVICE SCAN";
+    public static final String ACTION_DEVICE_ASSESS = "ACTION DEVICE ASSESS";
+    public static final String ACTION_PORT_ATTACK = "ACTION PORT ATTACK";
 
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> mPairedDevices;
@@ -329,6 +331,14 @@ public class BluetoothManagementService extends Service {
                                     break;
                                 case "nmapScan":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                                    break;
+                                case "portAssessment":
+                                    intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
+                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                                    break;
+                                case "portAttack":
+                                    intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
                                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                             }

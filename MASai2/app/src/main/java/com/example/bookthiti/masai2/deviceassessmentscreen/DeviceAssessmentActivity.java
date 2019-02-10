@@ -1,35 +1,116 @@
 package com.example.bookthiti.masai2.deviceassessmentscreen;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.List;
 
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+
 public class DeviceAssessmentActivity extends AppCompatActivity {
     private Context mContext;
+    private BluetoothManagementService mBluetoothManagementService;
+    private boolean mBound = false;
+    private boolean isRemoteDeviceConnected = false;
 
     private RecyclerView mRecyclerView;
     private DeviceAssessmentRecyclerAdapter mDeviceAssessmentRecyclerAdapter;
 
+    private ProgressBar mProgressBar;
+    private TextView mTextViewProgress;
+
     private List<ServiceModel> mServiceModelList;
+    private DeviceModel mDeviceModel;
+
+    private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothManagementService.ACTION_DEVICE_ASSESS.equals(action)) {
+                Bundle bundle = intent.getExtras();
+                String jsonString = bundle.getString("payload");
+                Log.i(TAG_INFO, "Receive ACTION_DEVICE_ASSESS: " + jsonString);
+                //TODO: load payload to the result
+                mProgressBar.setVisibility(View.GONE);
+                mTextViewProgress.setVisibility(View.GONE);
+                setRecyclerView(jsonString);
+            }
+        }
+    };
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BluetoothManagementService.LocalBinder binder = (BluetoothManagementService.LocalBinder) service;
+            mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
+            mBound = true;
+            isRemoteDeviceConnected = isRemoteDeviceConnected();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("command", "deviceAssess");
+            Gson gson = new Gson();
+            String payloadJsonString = gson.toJson(mDeviceModel, DeviceModel.class);
+            Log.i(TAG_INFO, payloadJsonString);
+            JsonParser jsonParser = new JsonParser();
+            JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
+            jsonObject.add("payload", payloadJsonElement);
+            String jsonString = jsonObject.toString();
+            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+            Log.i(TAG_INFO, "Service is unbounded");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_assessment);
         mContext = getApplicationContext();
-        setRecyclerView(loadJsonFromAsset());
+        mDeviceModel = getIntent().getParcelableExtra("deviceModel");
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progress);
+        mTextViewProgress = (TextView) findViewById(R.id.text_progress);
+
+        // FIXME: Uncomment for mockup
+//        setRecyclerView(loadJsonFromAsset());
+
+        // FIXME: Uncomment for real app
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     private void setRecyclerView(String jsonString) {
@@ -156,5 +237,12 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
                 "    ],\n" +
                 "    \"mac\": \"0C:80:63:C2:BB:B6\"\n" +
                 "}";
+    }
+
+    private boolean isRemoteDeviceConnected() {
+        if (mBluetoothManagementService != null && mBound) {
+            return mBluetoothManagementService.isRemoteDeviceConnected();
+        }
+        return false;
     }
 }
