@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.example.bookthiti.masai2.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
 public class OwaspFragment extends Fragment {
 
@@ -56,6 +59,7 @@ public class OwaspFragment extends Fragment {
         String[] details = new String[0];
         String[] examples = new String[0];
         String[] guidelines = new String[0];
+        Log.i(TAG_INFO, category);
         if ("IoT".equals(category)) {
             topicIds = res.getStringArray(R.array.i_topic_id);
             topics = res.getStringArray(R.array.i_topic);

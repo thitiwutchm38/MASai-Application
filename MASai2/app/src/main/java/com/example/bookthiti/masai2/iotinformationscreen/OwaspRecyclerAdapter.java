@@ -4,20 +4,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.bookthiti.masai2.OwaspMobileActivity;
 import com.example.bookthiti.masai2.R;
 
 import java.util.List;
-import java.util.Random;
-
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
 public class OwaspRecyclerAdapter extends RecyclerView.Adapter<OwaspRecyclerAdapter.Holder>{
     private List<OwaspModel> owaspModelList;

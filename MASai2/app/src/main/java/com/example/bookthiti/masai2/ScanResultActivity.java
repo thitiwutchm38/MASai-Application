@@ -2,6 +2,7 @@ package com.example.bookthiti.masai2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
@@ -18,7 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
+import com.example.bookthiti.masai2.iotinformationscreen.OwaspMobileActivity;
+import com.example.bookthiti.masai2.iotinformationscreen.OwaspModel;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
 import org.json.JSONArray;
@@ -30,6 +32,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ScanResultActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
 
@@ -1100,43 +1104,24 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                     Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                     //openActivityPortInfo(position);
                     Intent intent = new Intent(this, OwaspMobileActivity.class);
-                    //Bundle
-                    Bundle bundle = new Bundle();
+                    String owaspTopicId = mainModel.getOwasp_num();
+                    String owaspTopicIdPattern = "([MI])(\\d+)";
+                    Pattern pattern = Pattern.compile(owaspTopicIdPattern);
+                    Matcher matcher = pattern.matcher(owaspTopicId);
+                    Resources res = getResources();
+                    String[] topicIds = res.getStringArray(R.array.m_topic_id);
+                    String[] topics = res.getStringArray(R.array.m_topic);
+                    String[] details = res.getStringArray(R.array.m_detail);
+                    String[] examples = res.getStringArray(R.array.m_example);
+                    String[] guidelines = res.getStringArray(R.array.m_guideline);
 
-                    switch (mainModel.getOwasp_num()) {
-                        case "M1":
-                            bundle.putString("M", "M1");
-                            break;
-                        case "M2":
-                            bundle.putString("M", "M2");
-                            break;
-                        case "M3":
-                            bundle.putString("M", "M3");
-                            break;
-                        case "M4":
-                            bundle.putString("M", "M4");
-                            break;
-                        case "M5":
-                            bundle.putString("M", "M5");
-                            break;
-                        case "M6":
-                            bundle.putString("M", "M6");
-                            break;
-                        case "M7":
-                            bundle.putString("M", "M7");
-                            break;
-                        case "M8":
-                            bundle.putString("M", "M8");
-                            break;
-                        case "M9":
-                            bundle.putString("M", "M9");
-                            break;
-                        case "M10":
-                            bundle.putString("M", "M10");
-                            break;
-                        default:
+                    if (matcher.find()) {
+                        int id = Integer.parseInt(matcher.group(2)) - 1;
+                        // TODO: set image id according to id
+                        OwaspModel owaspModel = new OwaspModel(topicIds[id], topics[id], details[id], examples[id], guidelines[id], 0);
+                        intent.putExtra("owaspModel", owaspModel);
                     }
-                    intent.putExtras(bundle);
+
 
                     startActivity(intent);
                     break;
@@ -1152,45 +1137,24 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                     Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                     //openActivityPortInfo(position);
                     Intent intent_2 = new Intent(this,OwaspMobileActivity.class);
-                    //Bundle
-                    Bundle bundle_2 = new Bundle();
 
-                    switch(mainModel.getOwasp_num()) {
-                        case "M1" :
-                            bundle_2.putString("M", "M1");
-                            break;
-                        case "M2" :
-                            bundle_2.putString("M", "M2");
-                            break;
-                        case "M3" :
-                            bundle_2.putString("M", "M3");
-                            break;
-                        case "M4" :
-                            bundle_2.putString("M", "M4");
-                            break;
-                        case "M5" :
-                            bundle_2.putString("M", "M5");
-                            break;
-                        case "M6" :
-                            bundle_2.putString("M", "M6");
-                            break;
-                        case "M7" :
-                            bundle_2.putString("M", "M7");
-                            break;
-                        case "M8" :
-                            bundle_2.putString("M", "M8");
-                            break;
-                        case "M9" :
-                            bundle_2.putString("M", "M9");
-                            break;
-                        case "M10" :
-                            bundle_2.putString("M", "M10");
-                            break;
+                    String owaspTopicId = mainModel.getOwasp_num();
+                    String owaspTopicIdPattern = "([MI])(\\d+)";
+                    Pattern pattern = Pattern.compile(owaspTopicIdPattern);
+                    Matcher matcher = pattern.matcher(owaspTopicId);
+                    Resources res = getResources();
+                    String[] topicIds = res.getStringArray(R.array.m_topic_id);
+                    String[] topics = res.getStringArray(R.array.m_topic);
+                    String[] details = res.getStringArray(R.array.m_detail);
+                    String[] examples = res.getStringArray(R.array.m_example);
+                    String[] guidelines = res.getStringArray(R.array.m_guideline);
 
-                        default :
+                    if (matcher.find()) {
+                        int id = Integer.parseInt(matcher.group(2)) - 1;
+                        // TODO: set image id according to id
+                        OwaspModel owaspModel = new OwaspModel(topicIds[id], topics[id], details[id], examples[id], guidelines[id], 0);
+                        intent_2.putExtra("owaspModel", owaspModel);
                     }
-                    intent_2.putExtras(bundle_2);
-
                     startActivity(intent_2);
                     break;
 

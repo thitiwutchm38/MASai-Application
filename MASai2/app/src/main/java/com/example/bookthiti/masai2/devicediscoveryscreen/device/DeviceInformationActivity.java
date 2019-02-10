@@ -1,9 +1,11 @@
 package com.example.bookthiti.masai2.devicediscoveryscreen.device;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,8 @@ import com.example.bookthiti.masai2.Port_attackActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -128,8 +132,6 @@ public class DeviceInformationActivity extends AppCompatActivity implements OnRe
         mButtonPortAttack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 openActivity_port_att();
             }
         });
@@ -212,11 +214,47 @@ public class DeviceInformationActivity extends AppCompatActivity implements OnRe
     }
 
     public void openActivity_port_att() {
-
-        Intent intent = new Intent(this, Port_attackActivity.class);
-
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        final String[] attackableServices = getAttackableServices();
+        builder.setTitle("Select Service to Attack")
+                .setMessage("You can attack the following services")
+                .setItems(attackableServices, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(mContext, attackableServices[i], Toast.LENGTH_SHORT);
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
+    private String[] getAttackableServices() {
+        String[] strings = {"adam6500", "asterisk", "afp",
+                "cisco", "cisco-enable", "cvs",
+                "firebird", "ftp", "ftps",
+                "icq", "imap", "imaps", "irc", "ldap2", "ldap2s",
+                "mssql", "mysql", "ncp",
+                "nntp", "oracle-listener", "oracle-sid",
+                "pcanywhere", "pcnfs", "pop3", "pop3s",
+                "postgres", "rdp", "rexec",
+                "rlogin", "rsh", "s7-300",
+                "sip", "smb", "smtp", "smtps",
+                "smtp-enum", "snmp", "socks5",
+                "ssh", "sshkey", "svn",
+                "teamspeak", "telnet", "telnets", "vmauthd",
+                "vnc", "xmpp"};
+        ArrayList<String> temp = new ArrayList<String>();
+        List<String> defaultAttackableServices = Arrays.asList(strings);
+        if (mServiceModelList != null) {
+            for (ServiceModel serviceModel : mServiceModelList) {
+                for (String string : defaultAttackableServices) {
+                    if (serviceModel.getName().contains(string)) {
+                        temp.add(serviceModel.getName());
+                    }
+                }
 
+            }
+        }
+        return (String[]) temp.toArray();
+    }
 }
