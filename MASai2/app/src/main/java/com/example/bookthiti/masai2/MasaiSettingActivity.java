@@ -51,9 +51,6 @@ public class MasaiSettingActivity extends AppCompatActivity {
     private TextView mTextViewInstructionDescription;
     private ImageView mImageViewInstructionConnect;
 
-
-
-
     private ImageView mImageViewInstruction;
 
     private ImageView mImageViewMobile;
@@ -63,7 +60,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
 
     private Button mScanQrButton;
 
-    private  LoadingDots mLoadingDot;
+    private LoadingDots mLoadingDot;
     private Context mContext;
     private BluetoothManagementService mBluetoothManagementService;
     JSONObject boxInformation;
@@ -74,7 +71,10 @@ public class MasaiSettingActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 Log.i(TAG_INFO, "Discovering is stopped");
-                // TODO: update image view
+                mImageViewMobile.setVisibility(View.INVISIBLE);
+                mImageViewBox.setVisibility(View.INVISIBLE);
+                mLoadingDot.setVisibility(View.INVISIBLE);
+//                mImageViewInstructionConnect.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -85,11 +85,22 @@ public class MasaiSettingActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_BLUETOOTH_CONNECTED.equals(action)) {
                 Log.i(TAG_INFO, "Bluetooth is connected to remote device");
+                mImageViewMobile.setVisibility(View.INVISIBLE);
+                mImageViewBox.setVisibility(View.INVISIBLE);
+                mLoadingDot.setVisibility(View.INVISIBLE);
+                mImageViewInstructionConnect.setVisibility(View.VISIBLE);
                 mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
                 mScanQrButton.setText("Disconnect");
+
             } else if (BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND.equals(action)) {
             } else if (BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT.equals(action)) {
-                Toast.makeText(mContext, "Please Check The Box", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Please Check The Box", Toast.LENGTH_SHORT).show();
+                mImageViewMobile.setVisibility(View.INVISIBLE);
+                mImageViewBox.setVisibility(View.INVISIBLE);
+                mLoadingDot.setVisibility(View.INVISIBLE);
+                mImageViewInstruction.setVisibility(View.VISIBLE);
+                mTextViewInstructionDescription.setText("Cannot connect to MASai Box. Please check whether the box is turned on.");
+                mScanQrButton.setText("Reconnect");
             }
         }
     };
@@ -146,40 +157,38 @@ public class MasaiSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
-//                ActivityCompat.requestPermissions(activity,
-//                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-//                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-//                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-//                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-//                intentIntegrator.setPrompt("Scan QR Code at MASai Box");
-//                intentIntegrator.setCameraId(0);
-//                intentIntegrator.setBeepEnabled(false);
-//                intentIntegrator.setBarcodeImageEnabled(false);
-//                intentIntegrator.initiateScan();
+                int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                intentIntegrator.setPrompt("Scan QR Code at MASai Box");
+                intentIntegrator.setCameraId(0);
+                intentIntegrator.setBeepEnabled(false);
+                intentIntegrator.setBarcodeImageEnabled(false);
+                intentIntegrator.initiateScan();
 
-                mImageViewMobile.setVisibility(View.VISIBLE);
-                mImageViewBox.setVisibility(View.VISIBLE);
-                mLoadingDot.setVisibility(View.VISIBLE);
-                mImageViewInstruction.setVisibility(View.INVISIBLE);
+//                mImageViewMobile.setVisibility(View.VISIBLE);
+//                mImageViewBox.setVisibility(View.VISIBLE);
+//                mLoadingDot.setVisibility(View.VISIBLE);
+//                mImageViewInstruction.setVisibility(View.INVISIBLE);
 
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        mImageViewMobile.setVisibility(View.INVISIBLE);
-                        mImageViewBox.setVisibility(View.INVISIBLE);
-                        mLoadingDot.setVisibility(View.INVISIBLE);
-                        mImageViewInstructionConnect.setVisibility(View.VISIBLE);
-                        mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
-                        mScanQrButton.setText("Disconnect");
-
-
-                    }
-                }, 5000); // Millisecond 1000 = 1 sec
-
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//
+//                        mImageViewMobile.setVisibility(View.INVISIBLE);
+//                        mImageViewBox.setVisibility(View.INVISIBLE);
+//                        mLoadingDot.setVisibility(View.INVISIBLE);
+//                        mImageViewInstructionConnect.setVisibility(View.VISIBLE);
+//                        mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
+//                        mScanQrButton.setText("Disconnect");
+//
+//
+//                    }
+//                }, 5000); // Millisecond 1000 = 1 sec
 
             }
         });
@@ -232,8 +241,14 @@ public class MasaiSettingActivity extends AppCompatActivity {
                     if (result.getContents() == null) {
                         Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_SHORT).show();
                     } else {
+                        mImageViewMobile.setVisibility(View.VISIBLE);
+                        mImageViewBox.setVisibility(View.VISIBLE);
+                        mLoadingDot.setVisibility(View.VISIBLE);
+                        mImageViewInstruction.setVisibility(View.INVISIBLE);
+                        mTextViewInstructionDescription.setText("Connecting to MASai Box. Please wait for a moment.");
+                        mScanQrButton.setText("Connecting...");
                         String readQrCode = result.getContents();
-                        Toast.makeText(this, result.getContents(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, result.getContents(), Toast.LENGTH_SHORT).show();
                         try {
                             boxInformation = new JSONObject(readQrCode);
                             Log.i(TAG_INFO, "name: " + boxInformation.getString("name") + ", address: " + boxInformation.getString("address") + ", uuid: " + boxInformation.getString("uuid"));
