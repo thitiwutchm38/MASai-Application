@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
-import com.example.bookthiti.masai2.Port_attackActivity;
+import com.example.bookthiti.masai2.PortAttackActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 
@@ -214,16 +214,29 @@ public class DeviceInformationActivity extends AppCompatActivity implements OnRe
     }
 
     public void openActivity_port_att() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final String[] attackableServices = getAttackableServices();
+
         builder.setTitle("Select Service to Attack")
-                .setMessage("You can attack the following services")
-                .setItems(attackableServices, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(mContext, attackableServices[i], Toast.LENGTH_SHORT);
-                    }
-                });
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        if (attackableServices.length != 0) {
+            builder.setItems(attackableServices, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent startPortAttackActivityIntent = new Intent(mContext, PortAttackActivity.class);
+                    startPortAttackActivityIntent.putExtra("deviceModel", mDeviceModel);
+                    startPortAttackActivityIntent.putExtra("targetService", attackableServices[i]);
+                    startActivity(startPortAttackActivityIntent);
+                }
+            });
+        } else {
+            builder.setMessage("No attackable services.");
+        }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
@@ -248,13 +261,22 @@ public class DeviceInformationActivity extends AppCompatActivity implements OnRe
         if (mServiceModelList != null) {
             for (ServiceModel serviceModel : mServiceModelList) {
                 for (String string : defaultAttackableServices) {
-                    if (serviceModel.getName().contains(string)) {
+                    if (serviceModel.getName().equals(string)) {
                         temp.add(serviceModel.getName());
+                        break;
+                    }
+                    else if (serviceModel.getName().contains(string)) {
+                        temp.add(serviceModel.getName());
+                        break;
                     }
                 }
 
             }
         }
-        return (String[]) temp.toArray();
+        String[] attackableServices = new String[temp.size()];
+        attackableServices = temp.toArray(attackableServices);
+
+
+        return attackableServices;
     }
 }

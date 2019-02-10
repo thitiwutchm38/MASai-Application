@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".SummaryMobileOwaspActivity"></activity>
+        <activity android:name=".PortAttackActivity"></activity>
+        <activity android:name=".SummaryMobileOwaspActivity" />
         <activity android:name=".OwaspSummaryActivity" /> <!-- <activity android:name=".MainActivity" /> -->
         <activity android:name=".MasaiSettingActivity" />
         <activity
@@ -55,7 +56,6 @@
         <activity
             android:name=".deviceassessmentscreen.DeviceAssessmentActivity"
             android:label="Service Assessment" />
-        <activity android:name=".Port_attackActivity" />
         <activity android:name=".iotinformationscreen.OwaspMobileActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
