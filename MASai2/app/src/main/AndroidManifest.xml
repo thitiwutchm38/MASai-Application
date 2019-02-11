@@ -62,6 +62,7 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             tools:replace="android:screenOrientation" />
+        <activity android:name=".mobileapplicationscanningscreen.MobileApplicationScanningResultActivity" />
 
         <service android:name=".bluetoothservice.BluetoothManagementService" />
 

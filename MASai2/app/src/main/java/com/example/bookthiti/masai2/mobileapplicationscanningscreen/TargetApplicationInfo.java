@@ -4,33 +4,40 @@ import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 
 public class TargetApplicationInfo {
-    @SerializedName("docId")
+
     private String appId;
 
-    @SerializedName("title")
     private String appName;
 
-    @SerializedName("versionCode")
     private int appVersionCode;
 
-    @SerializedName("versionString")
     private String appVersionString;
 
-//    @SerializedName("icon")
-//    private AppIcon appIcon;
+    private String appCategory;
 
-    public TargetApplicationInfo(String appId, String appName, int appVersionCode, String appVersionString){//, AppIcon appIcon) {
+    private AppIcon appIcon;
+
+    private String appAuthor;
+
+    public TargetApplicationInfo() {
+
+    }
+
+    public TargetApplicationInfo(String appId, String appName, int appVersionCode, String appVersionString, String appCategory, AppIcon appIcon, String appAuthor) {
         this.appId = appId;
         this.appName = appName;
         this.appVersionCode = appVersionCode;
         this.appVersionString = appVersionString;
-//        this.appIcon = appIcon;
+        this.appCategory = appCategory;
+        this.appIcon = appIcon;
+        this.appAuthor = appAuthor;
     }
 
     public String getAppId() {
@@ -65,55 +72,28 @@ public class TargetApplicationInfo {
         this.appVersionString = appVersionString;
     }
 
-//    public AppIcon getAppIcon() {
-//        return appIcon;
-//    }
-//
-//    public void setAppIcon(AppIcon appIcon) {
-//        this.appIcon = appIcon;
-//    }
-}
-
-class AppIcon {
-    private int height;
-    private int width;
-    private String url;
-
-    public AppIcon(int height, int width, String url) {
-        this.height = height;
-        this.width = width;
-        this.url = url;
+    public AppIcon getAppIcon() {
+        return appIcon;
     }
 
-    public int getHeight() {
-        return height;
+    public void setAppIcon(AppIcon appIcon) {
+        this.appIcon = appIcon;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public static class TargetApplicationInfoDeserializer implements JsonDeserializer<TargetApplicationInfo> {
+        @Override
+        public TargetApplicationInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            String appId = jsonObject.get("docId").getAsString();
+            String appName = jsonObject.get("title").getAsString();
+            int appVersionCode = jsonObject.get("versionCode").getAsInt();
+            String appVersionString = jsonObject.get("versionString").getAsString();
+            String appCategory = jsonObject.get("appCategory").getAsString();
+            AppIcon appIcon = context.deserialize(jsonObject.get("icon"), AppIcon.class);
+            String appAuthor = jsonObject.get("author").getAsString();
+            return new TargetApplicationInfo(appId, appName, appVersionCode, appVersionString, appCategory, appIcon, appAuthor);
+        }
     }
 }
 
-class MyDeserializer<A> implements JsonDeserializer<AppIcon> {
-    @Override
-    public AppIcon deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonElement appIcon = json.getAsJsonObject().get("url");
-        return new Gson().fromJson(appIcon, AppIcon.class);
-    }
-}
+
