@@ -11,8 +11,11 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -43,6 +46,8 @@ public class PortAttackActivity extends AppCompatActivity {
     private TextView mTextViewPassword;
     private ProgressBar mProgressBar;
     private TextView mTextViewProgress;
+
+    private TextView textView_rec1;
 
     private DeviceModel mDeviceModel;
     private String mTargetService;
@@ -129,6 +134,17 @@ public class PortAttackActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress);
         mProgressBar.setVisibility(View.VISIBLE);
         mTextViewProgress = findViewById(R.id.text_progress);
+
+        //textView_rec1 = findViewById(R.id.textView_rec1);
+
+        String str ="<p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Has 12 Characters, Minimum</strong>: <span style=\"color: #339966;\">You need to choose a password that&rsquo;s long enough. There&rsquo;s no minimum password length everyone agrees on, but you should generally go for passwords that are a minimum of 12 to 14 characters in length. A longer password would be even better.</span></span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters</strong>: <span style=\"color: #339966;\">Use a mix of different types of characters to make the password harder to crack.</span></span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Isn&rsquo;t a Dictionary Word or Combination of Dictionary Words</strong>:<span style=\"color: #339966;\"> Stay away from obvious dictionary words and combinations of dictionary words. Any word on its own is bad. Any combination of a few words, especially if they&rsquo;re obvious, is also bad.</span></span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Doesn&rsquo;t Rely on Obvious Substitutions</strong>: <span style=\"color: #339966;\">Don&rsquo;t use common substitutions, either &mdash; for example, &ldquo;H0use&rdquo; isn&rsquo;t strong just because you&rsquo;ve replaced an o with a 0. That&rsquo;s just obvious.</span></span></p>";
+        //textView_rec1.setText(Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT));
+
+        //Spanned htmlAsSpanned = Html.fromHtml(str); // used by TextView
+
+
+        WebView webView = (WebView) findViewById(R.id.webview_test);
+        webView.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
 
         // FIXME: Uncomment for real application
 //        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
