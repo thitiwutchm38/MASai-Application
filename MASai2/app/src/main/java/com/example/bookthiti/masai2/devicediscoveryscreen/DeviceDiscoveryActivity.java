@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
@@ -439,6 +440,8 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
                 setRecyclerView(jsonString);
                 ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
                 progressBar.setVisibility(View.GONE);
+                TextView textView = (TextView) findViewById(R.id.text_progress);
+                textView.setVisibility(View.GONE);
             }
         }
     };
@@ -472,18 +475,18 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         mContext = getApplicationContext();
 
         // FIXME: uncomment for mockup
-        setRecyclerView(mockJson);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
-        progressBar.setVisibility(View.GONE);
+//        setRecyclerView(mockJson);
+//        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
+//        progressBar.setVisibility(View.GONE);
 
         // FIXME: uncomment for real code
-//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//        if (!mBound) {
-//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//        }
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
 
     }
 

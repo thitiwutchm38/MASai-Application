@@ -68,39 +68,44 @@ public class DeviceAssessmentRecyclerAdapter extends RecyclerView.Adapter<Device
         holder.mTextViewMinCvss.setText(Float.toString(minCvss));
         holder.mTextViewAverageCvss.setText(Float.toString(averageCvss));
 
-        switch(serviceModel.getPort()) {
-            case 23:
-                holder.mTextViewStatus.setText("( Dangerous )");
-                holder.mTextViewStatus.setTextColor(Color.RED);
-                break;
-            case 80:
-                holder.mTextViewStatus.setText("( Dangerous )");
-                holder.mTextViewStatus.setTextColor(Color.RED);
-                break;
-            case 20:
-                holder.mTextViewStatus.setText("( Dangerous )");
-                holder.mTextViewStatus.setTextColor(Color.RED);
-                break;
-
-            case 21:
-                holder.mTextViewStatus.setText("( Dangerous )");
-                holder.mTextViewStatus.setTextColor(Color.RED);
-                break;
-
-            case 389:
-                holder.mTextViewStatus.setText("( Dangerous )");
-                holder.mTextViewStatus.setTextColor(Color.RED);
-                break;
-
-            case 88:
-                holder.mTextViewStatus.setText("( Dangerous )");
-                holder.mTextViewStatus.setTextColor(Color.RED);
-                break;
-
-
-
-            default:
+        if (averageCvss > 0) {
+            holder.mTextViewStatus.setText("( Dangerous )");
+            holder.mTextViewStatus.setTextColor(Color.RED);
         }
+
+//        switch(serviceModel.getPort()) {
+//            case 23:
+//                holder.mTextViewStatus.setText("( Dangerous )");
+//                holder.mTextViewStatus.setTextColor(Color.RED);
+//                break;
+//            case 80:
+//                holder.mTextViewStatus.setText("( Dangerous )");
+//                holder.mTextViewStatus.setTextColor(Color.RED);
+//                break;
+//            case 20:
+//                holder.mTextViewStatus.setText("( Dangerous )");
+//                holder.mTextViewStatus.setTextColor(Color.RED);
+//                break;
+//
+//            case 21:
+//                holder.mTextViewStatus.setText("( Dangerous )");
+//                holder.mTextViewStatus.setTextColor(Color.RED);
+//                break;
+//
+//            case 389:
+//                holder.mTextViewStatus.setText("( Dangerous )");
+//                holder.mTextViewStatus.setTextColor(Color.RED);
+//                break;
+//
+//            case 88:
+//                holder.mTextViewStatus.setText("( Dangerous )");
+//                holder.mTextViewStatus.setTextColor(Color.RED);
+//                break;
+//
+//
+//
+//            default:
+//        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                 LinearLayoutManager.VERTICAL, false);

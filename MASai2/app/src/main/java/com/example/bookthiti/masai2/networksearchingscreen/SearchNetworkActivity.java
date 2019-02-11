@@ -83,6 +83,9 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
                 mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
                 mProgressBar.setVisibility(View.GONE);
                 mConStraintLayoutHeaderLine.setVisibility(View.VISIBLE);
+                if (mSwipeRefreshLayout != null) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             } else if (BluetoothManagementService.ACTION_WIFI_CONNECT.equals(action)) {
                 mConnectingRouterModel.setConnecting(false);
                 mRouterRecyclerAdapter.notifyItemChanged(mConnectingRouterPosition);
@@ -131,22 +134,34 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         setContentView(R.layout.activity_search_network);
         mContext = getApplicationContext();
         mConStraintLayoutHeaderLine = findViewById(R.id.layout_header_line);
-//        mConStraintLayoutHeaderLine.setVisibility(View.INVISIBLE);
+        mConStraintLayoutHeaderLine.setVisibility(View.INVISIBLE);
 
-        setRecyclerView(mockJson);
+        //FIXME: Uncomment for mockup
+//        setRecyclerView(mockJson);
 
 
         //FIXME: Uncomment for real application
-//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//        if (!mBound) {
-//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//        }
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
-//        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(isRemoteDeviceConnected) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("command", "wifiScan");
+                    jsonObject.add("payload", null);
+                    String jsonString = jsonObject.toString();
+                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                }
+            }
+        });
 
     }
 
@@ -226,15 +241,15 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         switch (intent.getStringExtra("MyValue")) {
             case "device_att":
                 //FIXME: Uncomment for real application
-//                promptForPassword(mRouterModelArrayList.get(position), true, position);
+                promptForPassword(mRouterModelArrayList.get(position), true, position);
 
                 //FIXME: Uncomment for mockup
-                startActivity(new Intent(mContext, DeviceDiscoveryActivity.class));
+//                startActivity(new Intent(mContext, DeviceDiscoveryActivity.class));
 
                 break;
 
             case "router_att":
-                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mRouterModelArrayList.get(position).getSsid(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mRouterModelArrayList.get(position).getSsid(), Toast.LENGTH_LONG).show();
                 //showAddItemDialog(this,loadRouterModelList().get(position).getmSsid() );
                 crackRouterIntent.putExtra("router_information", mRouterModelArrayList.get(position));
                 //pass_intent.putExtra("iis", );

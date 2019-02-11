@@ -1,4 +1,5 @@
 package com.example.bookthiti.masai2.routercrackingscreen;
+
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -25,6 +26,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
@@ -32,6 +34,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
@@ -46,7 +51,7 @@ public class CrackRouterActivity extends AppCompatActivity {
     private TextView mTextViewBssid;
     private TextView mTextViewSignal;
     private TextView mTextViewSecurity;
-//    private TextView mTextViewFrequency;
+    //    private TextView mTextViewFrequency;
     private TextView mTextViewChannel;
     private TextView mTextViewSsid;
     private TextView mTextViewCrackStatus;
@@ -58,11 +63,9 @@ public class CrackRouterActivity extends AppCompatActivity {
 
     private RouterModel mRouterModel;
 
+    private CrackResult mCrackResult;
 
-    // True can crqck
-    // False cannot crack
-    Boolean pass_status = false;
-
+    private boolean isCrackable = false;
 
     private ClipboardManager mClipboardManager;
     private ClipData mClipData;
@@ -76,6 +79,35 @@ public class CrackRouterActivity extends AppCompatActivity {
                 String jsonString = bundle.getString("payload");
                 Log.i(TAG_INFO, "Receive ACTION_WIFI_ATTACK: " + jsonString);
                 //TODO: load payload to crack result
+                mCrackResult = loadCrackResult(jsonString);
+                if ("success".equals(mCrackResult.getStatus())) {
+                    isCrackable = true;
+                } else {
+                    isCrackable = false;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setTitle("Crack Result");
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        mImageButtonClipboard.setVisibility(View.VISIBLE);
+                        mEditTextPassword.setVisibility(View.VISIBLE);
+                        mTextViewResultHeader.setVisibility(View.VISIBLE);
+                        if (isCrackable) {
+                            mEditTextPassword.setText(mCrackResult.getKeys().get(0));
+                        }
+
+                    }
+                });
+                if (isCrackable) {
+                    builder.setMessage("The target Wi-Fi router password was cracked!");
+                } else {
+                    builder.setMessage("The target Wi-Fi router password cannot be cracked!");
+                }
+                builder.create().show();
+                mProgressBar.setVisibility(View.INVISIBLE);
+                mTextViewCrackStatus.setVisibility(View.INVISIBLE);
+
             }
         }
     };
@@ -87,11 +119,6 @@ public class CrackRouterActivity extends AppCompatActivity {
             mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
             mBound = true;
             isRemoteDeviceConnected = isRemoteDeviceConnected();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("command", "wifiScan");
-            jsonObject.add("payload", null);
-            String jsonString = jsonObject.toString();
-            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
         }
 
         @Override
@@ -120,7 +147,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         mEditTextPassword = (EditText) findViewById(R.id.edit_crack_router_password);
         mTextViewResultHeader = (TextView) findViewById(R.id.text_crack_result_header);
 
-        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.INVISIBLE);
         mTextViewCrackStatus.setVisibility(View.INVISIBLE);
         mImageButtonClipboard.setVisibility(View.INVISIBLE);
         mEditTextPassword.setVisibility(View.INVISIBLE);
@@ -150,49 +177,52 @@ public class CrackRouterActivity extends AppCompatActivity {
         mStartCrackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (isRemoteDeviceConnected) {
-//                    JsonObject jsonObject = new JsonObject();
-//                    jsonObject.addProperty("command", "wifiCracking");
-//                    Gson gson = new Gson();
-//                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
-//                    Log.i(TAG_INFO, payloadJsonString);
-//                    JsonParser jsonParser = new JsonParser();
-//                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
-//                    jsonObject.add("payload", payloadJsonElement);
-//                    String jsonString = jsonObject.toString();
-//                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
-//                }
+                // FIXME: Uncomment for real application
+                if (isRemoteDeviceConnected) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("command", "wifiCracking");
+                    Gson gson = new Gson();
+                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
+                    Log.i(TAG_INFO, payloadJsonString);
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
+                    jsonObject.add("payload", payloadJsonElement);
+                    String jsonString = jsonObject.toString();
+                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                }
                 mProgressBar.setVisibility(View.VISIBLE);
                 mTextViewCrackStatus.setVisibility(View.VISIBLE);
                 mTextViewCrackStatus.setText("Cracking...");
                 mStartCrackingButton.setText("Stop Cracking");
                 mStartCrackingButton.setBackgroundColor(Color.parseColor("#FFFF0000"));
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something after 5s = 5000ms
-                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                        builder.setTitle("Crack Result");
-                        builder.setMessage("The target Wi-Fi router password cannot be cracked!");
-                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                mProgressBar.setVisibility(View.INVISIBLE);
-                                mTextViewCrackStatus.setVisibility(View.INVISIBLE);
-                                mImageButtonClipboard.setVisibility(View.VISIBLE);
-                                mEditTextPassword.setVisibility(View.VISIBLE);
-                                mTextViewResultHeader.setVisibility(View.VISIBLE);
-                                mEditTextPassword.setText("12345678");
-                            }
-                        });
-                        builder.show();
 
-//                        mStartCrackingButton.setBackgroundColor(itsColorId);
-                        mStartCrackingButton.setText("Start Cracking");
-                    }
-                }, 5000);
-                mProgressBar.setVisibility(View.INVISIBLE);
+                // FIXME: Uncomment for mock up
+//                final Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Do something after 5s = 5000ms
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+//                        builder.setTitle("Crack Result");
+//                        builder.setMessage("The target Wi-Fi router password cannot be cracked!");
+//                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                            @Override
+//                            public void onDismiss(DialogInterface dialogInterface) {
+//                                mProgressBar.setVisibility(View.INVISIBLE);
+//                                mTextViewCrackStatus.setVisibility(View.INVISIBLE);
+//                                mImageButtonClipboard.setVisibility(View.VISIBLE);
+//                                mEditTextPassword.setVisibility(View.VISIBLE);
+//                                mTextViewResultHeader.setVisibility(View.VISIBLE);
+//                                mEditTextPassword.setText("12345678");
+//                            }
+//                        });
+//                        builder.show();
+//
+////                        mStartCrackingButton.setBackgroundColor(itsColorId);
+//                        mStartCrackingButton.setText("Start Cracking");
+//                    }
+//                }, 5000);
+//                mProgressBar.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -246,5 +276,36 @@ public class CrackRouterActivity extends AppCompatActivity {
             return mBluetoothManagementService.isRemoteDeviceConnected();
         }
         return false;
+    }
+
+    private CrackResult loadCrackResult(String jsonString) {
+        CrackResult crackResult = new CrackResult();
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = jsonParser.parse(jsonString).getAsJsonObject();
+
+        String type = jsonObject.get("attackType").getAsString();
+
+        JsonObject crackResultObject = jsonObject.get("crackResult").getAsJsonObject();
+        String status = crackResultObject.get("status").getAsString();
+        String bssid = crackResultObject.get("bssid").getAsString();
+        String essid = crackResultObject.get("essid").getAsString();
+        List<String> keys = new ArrayList<String>();
+        if (crackResultObject.has("key")) {
+            keys.add(crackResultObject.get("key").getAsString());
+        }
+        if (crackResultObject.has("hexKey")) {
+            keys.add(crackResultObject.get("hexKey").getAsString());
+        }
+        if (crackResultObject.has("asciiKey")) {
+            keys.add(crackResultObject.get("asciiKey").getAsString());
+        }
+
+        crackResult.setType(type);
+        crackResult.setBssid(bssid);
+        crackResult.setEssid(essid);
+        crackResult.setStatus(status);
+        crackResult.setKeys(keys);
+
+        return crackResult;
     }
 }

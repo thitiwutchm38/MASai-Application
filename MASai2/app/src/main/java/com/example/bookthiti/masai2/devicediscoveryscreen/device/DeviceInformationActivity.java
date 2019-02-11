@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
-import com.example.bookthiti.masai2.PortAttackActivity;
+import com.example.bookthiti.masai2.portattackscreen.PortAttackActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 
@@ -210,6 +210,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements OnRe
     public void openActivity_CVSS_score() {
 
         Intent intent = new Intent(this, DeviceAssessmentActivity.class);
+        intent.putExtra("deviceModel", mDeviceModel);
         startActivity(intent);
     }
 
