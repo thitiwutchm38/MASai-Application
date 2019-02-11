@@ -130,14 +130,14 @@ public class PortAttackActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         mTextViewProgress = findViewById(R.id.text_progress);
 
-
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-        }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        // FIXME: Uncomment for real application
+//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+//        if (!mBound) {
+//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//        }
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     private boolean isRemoteDeviceConnected() {
