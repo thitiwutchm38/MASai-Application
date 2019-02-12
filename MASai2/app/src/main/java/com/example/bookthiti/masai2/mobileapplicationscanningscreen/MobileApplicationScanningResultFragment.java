@@ -5,15 +5,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,14 +25,6 @@ import retrofit2.Response;
 
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MobileApplicationScanningResultFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MobileApplicationScanningResultFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MobileApplicationScanningResultFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,11 +42,24 @@ public class MobileApplicationScanningResultFragment extends Fragment {
 
     private Call<TargetApplicationScanningResult> mTargetApplicationScanningResultCall;
 
-    private ProgressBar mProgressBar;
     private TextView mTextViewProgress;
     private Button mButtonRefresh;
 
     private ConstraintLayout mConstraintLayout;
+    private TextView mTextViewAndroidFindingHighRisk;
+    private TextView mTextViewAndroidFindingWarning;
+    private TextView mTextViewAndroidFindingLowRisk;
+    private TextView mTextViewAndroidFindingInfo;
+
+    private TextView mTextViewPermissionNormal;
+    private TextView mTextViewPermissionSignature;
+    private TextView mTextViewPermissionDangerous;
+    private TextView mTextViewPermissionSpecial;
+
+    private RecyclerView mRecyclerViewAppVulners;
+
+    private AppVulnerabilityOwaspRecyclerAdapter mAppVulnerabilityOwaspRecyclerAdapter;
+    private List<AppVulnerability> mAppVulnerabilityList;
 
     public MobileApplicationScanningResultFragment() {
         // Required empty public constructor
@@ -90,13 +99,11 @@ public class MobileApplicationScanningResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mobile_application_scanning_result, container, false);
-        mProgressBar = view.findViewById(R.id.progress_app_scan_result);
         mTextViewProgress = view.findViewById(R.id.text_progress);
         mButtonRefresh = view.findViewById(R.id.button_refresh);
         mButtonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProgressBar.setVisibility(View.VISIBLE);
                 mTextViewProgress.setVisibility(View.INVISIBLE);
                 mButtonRefresh.setVisibility(View.INVISIBLE);
                 refreshCall();
@@ -105,13 +112,33 @@ public class MobileApplicationScanningResultFragment extends Fragment {
         mTextViewProgress.setVisibility(View.INVISIBLE);
         mButtonRefresh.setVisibility(View.INVISIBLE);
 
+        mTextViewAndroidFindingHighRisk = view.findViewById(R.id.text_summary_high);
+        mTextViewAndroidFindingWarning = view.findViewById(R.id.text_summary_medium);
+        mTextViewAndroidFindingLowRisk = view.findViewById(R.id.text_summary_low);
+        mTextViewAndroidFindingInfo = view.findViewById(R.id.text_summary_warning);
+
+        mTextViewPermissionNormal = view.findViewById(R.id.text_permission_normal);
+        mTextViewPermissionSignature = view.findViewById(R.id.text_permission_signature);
+        mTextViewPermissionDangerous = view.findViewById(R.id.text_permission_dangerous);
+        mTextViewPermissionSpecial = view.findViewById(R.id.text_permission_special);
+
+        mConstraintLayout = view.findViewById(R.id.layout_container_app_result);
+
+        mRecyclerViewAppVulners = view.findViewById(R.id.rv_android_finding);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        mRecyclerViewAppVulners.setLayoutManager(linearLayoutManager);
+        mAppVulnerabilityList = new ArrayList<AppVulnerability>();
+        mAppVulnerabilityOwaspRecyclerAdapter = new AppVulnerabilityOwaspRecyclerAdapter(getContext(), mAppVulnerabilityList);
+        mRecyclerViewAppVulners.setAdapter(mAppVulnerabilityOwaspRecyclerAdapter);
+        refreshCall();
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        refreshCall();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -170,14 +197,41 @@ public class MobileApplicationScanningResultFragment extends Fragment {
             public void onResponse(Call<TargetApplicationScanningResult> call, Response<TargetApplicationScanningResult> response) {
                 mTargetApplicationScanningResult = response.body();
                 Log.i(TAG_INFO, mTargetApplicationScanningResult.getStatus());
-                mProgressBar.setVisibility(View.GONE);
-                mTextViewProgress.setVisibility(View.VISIBLE);
-                mButtonRefresh.setVisibility(View.VISIBLE);
+                if(mTargetApplicationScanningResult.getStatus().equals("finish")) {
+                    mTextViewProgress.setVisibility(View.GONE);
+                    mButtonRefresh.setVisibility(View.GONE);
+                    mConstraintLayout.setVisibility(View.VISIBLE);
+                    mRecyclerViewAppVulners.setVisibility(View.VISIBLE);
+
+                    int[] findingSummary = TargetApplicationScanningResult.getFindingSummary(mTargetApplicationScanningResult);
+                    int[] permissionSummary = TargetApplicationScanningResult.getPermissionSummary(mTargetApplicationScanningResult);
+                    mTextViewAndroidFindingHighRisk.setText(Integer.toString(findingSummary[0]));
+                    mTextViewAndroidFindingWarning.setText(Integer.toString(findingSummary[1]));
+                    mTextViewAndroidFindingLowRisk.setText(Integer.toString(findingSummary[2]));
+                    mTextViewAndroidFindingInfo.setText(Integer.toString(findingSummary[3]));
+
+                    mTextViewPermissionNormal.setText(Integer.toString(permissionSummary[0]));
+                    mTextViewPermissionSignature.setText(Integer.toString(permissionSummary[1]));
+                    mTextViewPermissionDangerous.setText(Integer.toString(permissionSummary[2]));
+                    mTextViewPermissionSpecial.setText(Integer.toString(permissionSummary[3]));
+
+                    mAppVulnerabilityList.clear();
+                    mAppVulnerabilityList.addAll(mTargetApplicationScanningResult.getAppVulnerabilityList());
+                    mAppVulnerabilityOwaspRecyclerAdapter.updateOwaspAppVulnerMap();
+                    mAppVulnerabilityOwaspRecyclerAdapter.notifyDataSetChanged();
+
+//                    mAppVulnerabilityOwaspRecyclerAdapter = new AppVulnerabilityOwaspRecyclerAdapter(getContext(), mTargetApplicationScanningResult.getAppVulnerabilityList());
+//                    mRecyclerViewAppVulners.setAdapter(mAppVulnerabilityOwaspRecyclerAdapter);
+
+
+                } else {
+                    mTextViewProgress.setVisibility(View.VISIBLE);
+                    mButtonRefresh.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailure(Call<TargetApplicationScanningResult> call, Throwable t) {
-                mProgressBar.setVisibility(View.GONE);
                 mTextViewProgress.setVisibility(View.VISIBLE);
                 mButtonRefresh.setVisibility(View.VISIBLE);
             }

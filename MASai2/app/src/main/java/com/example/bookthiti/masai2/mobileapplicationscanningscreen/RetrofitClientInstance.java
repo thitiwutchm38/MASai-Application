@@ -15,6 +15,9 @@ public class RetrofitClientInstance {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(AppIcon.class, new AppIcon.AppIconDeserializer())
                     .registerTypeAdapter(TargetApplicationInfo.class, new TargetApplicationInfo.TargetApplicationInfoDeserializer())
+                    .registerTypeAdapter(AppVulnerability.class, new AppVulnerability.AppVulnerabilityDeserializer())
+                    .registerTypeAdapter(Permission.class, new Permission.PermissionDeserializer())
+                    .registerTypeAdapter(TargetApplicationScanningResult.class, new TargetApplicationScanningResult.TargetApplicationScanningResultDeserializer())
                     .create();
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)

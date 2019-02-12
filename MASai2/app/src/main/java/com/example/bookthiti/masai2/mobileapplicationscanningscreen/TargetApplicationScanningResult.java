@@ -1,5 +1,7 @@
 package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
+import android.util.Log;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -10,6 +12,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
 public class TargetApplicationScanningResult {
 
@@ -91,5 +95,49 @@ public class TargetApplicationScanningResult {
 
             return new TargetApplicationScanningResult(appVulnerabilityList, permissionList, packageName, versionCode, status);
         }
+    }
+
+    public static int[] getFindingSummary(TargetApplicationScanningResult targetApplicationScanningResult) {
+        List<AppVulnerability> appVulnerabilityList = targetApplicationScanningResult.getAppVulnerabilityList();
+        int[] summary = {0, 0, 0, 0};
+        for (AppVulnerability appVulnerability: appVulnerabilityList) {
+            switch (appVulnerability.getLevel()) {
+                case "high":
+                    summary[0]++;
+                    break;
+                case "warning":
+                    summary[1]++;
+                    break;
+                case "good":
+                    summary[2]++;
+                    break;
+                case "info":
+                    summary[3]++;
+                    break;
+            }
+        }
+        return summary;
+    }
+
+    public static int[] getPermissionSummary(TargetApplicationScanningResult targetApplicationScanningResult) {
+        List<Permission> permissionList = targetApplicationScanningResult.getPermissionList();
+        int[] summary = {0, 0, 0, 0};
+        for (Permission permission: permissionList) {
+            switch (permission.getLevel()) {
+                case "normal":
+                    summary[0]++;
+                    break;
+                case "signature":
+                    summary[1]++;
+                    break;
+                case "dangerous":
+                    summary[2]++;
+                    break;
+                case "special":
+                    summary[3]++;
+                    break;
+            }
+        }
+        return summary;
     }
 }
