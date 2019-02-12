@@ -22,6 +22,11 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         this.bitmap = bitmap;
     }
 
+    public DownloadImageTask(ImageView bmImage, Bitmap bitmap) {
+        this.bmImage = bmImage;
+        this.bitmap = bitmap;
+    }
+
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
@@ -37,7 +42,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+        if (bmImage != null) bmImage.setImageBitmap(result);
     }
 
 }

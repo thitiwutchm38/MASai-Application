@@ -1,5 +1,8 @@
 package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -10,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 
-public class TargetApplicationInfo {
+public class TargetApplicationInfo implements Parcelable {
 
     private String appId;
 
@@ -39,6 +42,44 @@ public class TargetApplicationInfo {
         this.appIcon = appIcon;
         this.appAuthor = appAuthor;
     }
+
+    protected TargetApplicationInfo(Parcel in) {
+        appId = in.readString();
+        appName = in.readString();
+        appVersionCode = in.readInt();
+        appVersionString = in.readString();
+        appCategory = in.readString();
+        appIcon = in.readParcelable(AppIcon.class.getClassLoader());
+        appAuthor = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(appId);
+        dest.writeString(appName);
+        dest.writeInt(appVersionCode);
+        dest.writeString(appVersionString);
+        dest.writeString(appCategory);
+        dest.writeParcelable(appIcon, flags);
+        dest.writeString(appAuthor);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<TargetApplicationInfo> CREATOR = new Creator<TargetApplicationInfo>() {
+        @Override
+        public TargetApplicationInfo createFromParcel(Parcel in) {
+            return new TargetApplicationInfo(in);
+        }
+
+        @Override
+        public TargetApplicationInfo[] newArray(int size) {
+            return new TargetApplicationInfo[size];
+        }
+    };
 
     public String getAppId() {
         return appId;
@@ -78,6 +119,22 @@ public class TargetApplicationInfo {
 
     public void setAppIcon(AppIcon appIcon) {
         this.appIcon = appIcon;
+    }
+
+    public String getAppCategory() {
+        return appCategory;
+    }
+
+    public void setAppCategory(String appCategory) {
+        this.appCategory = appCategory;
+    }
+
+    public String getAppAuthor() {
+        return appAuthor;
+    }
+
+    public void setAppAuthor(String appAuthor) {
+        this.appAuthor = appAuthor;
     }
 
     public static class TargetApplicationInfoDeserializer implements JsonDeserializer<TargetApplicationInfo> {

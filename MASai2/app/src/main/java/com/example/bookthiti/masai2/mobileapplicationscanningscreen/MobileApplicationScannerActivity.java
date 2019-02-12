@@ -109,7 +109,8 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(selectedApplication != null) {
-                    Intent startScanResultActivityIntent = new Intent(mContext, ScanResultActivity.class);
+                    Intent startScanResultActivityIntent = new Intent(mContext, MobileApplicationScanningResultActivity.class);
+                    startScanResultActivityIntent.putExtra("selectedApplication", selectedApplication);
                     startActivity(startScanResultActivityIntent);
                 }
             }
