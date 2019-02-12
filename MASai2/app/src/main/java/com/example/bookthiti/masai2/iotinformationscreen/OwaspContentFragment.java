@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
@@ -26,6 +27,7 @@ public class OwaspContentFragment extends Fragment {
     private String mContentType;
     private String mContent;
     private TextView mTextViewContent;
+    private WebView  mWebViewContent;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,9 +58,13 @@ public class OwaspContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_owasp_content, container, false);
-        mTextViewContent = view.findViewById(R.id.text_owasp_content);
+
+        mWebViewContent = view.findViewById(R.id.webView_owasp_content);
+        //mTextViewContent = view.findViewById(R.id.text_owasp_content);
         Log.i(TAG_INFO, mContent);
-        mTextViewContent.setText(mContent);
+
+        mWebViewContent.loadDataWithBaseURL(null, mContent, "text/html", "utf-8", null);
+        //mTextViewContent.setText(mContent);
         return view;
     }
 

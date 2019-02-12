@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,8 @@ public class OwaspRecyclerAdapter extends RecyclerView.Adapter<OwaspRecyclerAdap
 
         Holder.mOwaspIcon.setText(owaspModel.getTopicId());
         Holder.mOwaspTopic.setText(owaspModel.getTopic());
-        Holder.mOwaspDetails.setText(owaspModel.getGeneralDetail());
+        Spanned htmlAsSpanned = Html.fromHtml(owaspModel.getGeneralDetail());
+        Holder.mOwaspDetails.setText(htmlAsSpanned);
 //        Random mRandom = new Random();
 //        final int color = Color.argb(255, mRandom.nextInt(256), mRandom.nextInt(256), mRandom.nextInt(256));
         String color = String.format("#ff%06X", (0xeeeeee & owaspModel.getTopicId().hashCode()));

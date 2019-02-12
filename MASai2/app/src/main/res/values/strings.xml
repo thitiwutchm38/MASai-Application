@@ -13,6 +13,12 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_iot_suggestion">iot_suggestion</string>
 
+
+    <string name="M1_Des">
+        <![CDATA[<p style="text-align: justify;"><b>M1</b> covers a platform feature misuse or failure to manage platform security controls usage. The platform in the mContext is related to the mobile operating system such as Android and iOS. Generally, each platform provides developers with the application-developing guidelines, but they usually fail to follow it. Therefore, the violation can raise risks to users unintentionally or intentionally. Moreover, the misuse of API calls is also considered to be this category. One example of this vulnerability is that the application requests a user several permissions, and some of the permissions are not related to the application usage. To prevent such this vulnerability, developers must follow the mobile application developing guidelines according to each platform properly.</p> ]]></string>
+
+
+
     <string-array name="m_topic_id">
         <item>M1</item>
         <item>M2</item>
@@ -40,69 +46,255 @@
     </string-array>
 
     <string-array name="m_detail">
-        <item>M1 covers a platform feature misuse or failure to manage platform security controls usage. The platform in the mContext is related to the mobile operating system such as Android and iOS. Generally, each platform provides developers the application-developing guidelines, but they usually fail to follow it. Therefore, the violation can raise risks to users unintentionally or intentionally. Moreover, misuse of API calls is also considered to be this category. One example of this vulnerability is that the application requests a user several permissions, and some of the permissions are not related to the application usage. To prevent such this vulnerability, developers must follow the mobile application developing guidelines according to each platform properly.</item>
-        <item>M2 covers insecure data storage and unintended data leakage. The vulnerabilities occur when data storages, such as SQLite database, log file, XML data store, cookies, cache, etc., are not well protected nor well implemented. It is caused by the carelessness of developers who usually think that users or attackers are unable to access the filesystem on their mobile devices. In fact, filesystems are easily accessible by several free software tools nowadays. A scenario which demonstrates the possibility of an attack is when a mobile device is lost or stolen, so an attacker can access to personally identifiable information (PII) or other sensitive information. Preventing these vulnerabilities can be implemented by understanding each type of data storage usage. It is also crucial to handle URL caching, keyboard press caching, copy/paste buffer caching, etc.</item>
-        <item>M3 covers several surfaces of attacks which occur in communication or network layer of mobile applications. Because of resource-constraint in a mobile device, mobile applications are usually designed to have a data exchange in a client-server scheme feature. Therefore, an attacker can intercept, or sniff data transferred in the network. Furthermore, mobile applications normally do not protect network traffic, nor consistently implement SSL/TLS which is a transport layer security during authentication. The inconsistency can raise a vulnerability of data exposing. Therefore, the best practice to secure communication is to always consider that the network is not secure, apply strong and industry standard cipher suites, implement SSL/TLS to transport channels, and avoid sending sensitive data over communication channels, e.g. SMS and notifications.</item>
-        <item>M4 covers vulnerabilities occurring at the end-user authentication processes and bad session management in a backend server. As authentication requirements for mobile applications are different from traditional web authentication scheme, i.e. the mobile applications do not require to be online every time during the session, an adversary can bypass authentication to the mobile application backend server if weak or missing authentication schemes are implemented. The result of the vulnerabilities can lead to severe impacts such as access control promotion, inability to identify the source of an attack, PII leakage, etc. To prevent these impacts, mobile applications must avoid weak patterns at the client-side, such as persistent authentication functionality, and developers should re-enforce authorisation and authentication controls on the server-side.</item>
-        <item>M5 covers cryptography schemes, which are insufficient in some usage, applying to sensitive information asset. The category does not consider SSL or TLS nor the failure of using cryptography to data storage at all when it could. The vulnerabilities in this category can be a usage of insecure and/or deprecated encryption algorithms such as MD5 and SHA1, poor key management processes, and creation of custom encryption protocols. The best practice to prevent insufficient cryptography is welly handling sensitive data. For instances, any sensitive data should not be stored on a mobile when possible, and developers should follow the National Institute of Standards and Technology (NIST) encryption guidelines.</item>
-        <item>This category captures the failure in authorisation e.g. authorisation decisions in the client side, forced browsing, etc. It is different from M4 - Insecure Authentication issues where an adversary login to the application legitimately, but they can bypass the authorisation processes to execute privileged functionalities. The vulnerabilities can occur when there is a presence of insecure direct object reference vulnerabilities (IDOR) in code, or when a mobile application includes the user’s roles or permissions in a request part to a backend system. The impact of weak authorisation is similar to M4 - Insecure Authentication. To avoid insecure authorisation checks, the authorisation process should verify the user’s permissions using only information in backend systems.</item>
-        <item>M7 refers to code-level implementation problems in the client-side  of mobile applications. In this category, it captures some vulnerabilities such as buffer overflows, format string vulnerabilities which could occur from unintentional mistakes. Therefore, the exploitability level is difficult since most modern computer languages provide the ability to protect memory leakage like in Java. Moreover, maintaining consistency in coding can prevent such a risk caused by this type of attack. There are also several third-party static analysis tools which are able to identify buffer overflows and memory leaks, but one should ensure that the tools are safe.</item>
-        <item>Code Tampering This category covers various techniques of code tampering such as binary patching, local resource modification, dynamic memory modification, etc. Typically, victims from this type of attacks are attacked by phishing attacks to download the malicious application stored on third-party app stores. This type of attack can lead to identity theft or fraud. </item>
-        <item>M9 refers to the technique which decompiles an application to the original-like source code and analyses vulnerabilities in the source code. Reverse engineering can also cause code tampering attacks or other attacks as all mobile code is susceptible to reverse engineering due to the inherent nature of the code. Attackers are required skills to perform an analysis of the final core binary to extract useful information embedded within the targeted mobile application. A program written in languages which allow for dynamic introspection at runtime such as Java and Objective C are more susceptible to reverse engineering. An obfuscation tool can be used to prevent reverse engineering. </item>
-        <item>M10 refers to hidden backdoor functionality in a mobile application which is attached unintentionally into a production environment by developers. The developers may install the extraneous functions for fixing issues in backdoor feature which can raise the risk of attacks. For example, a developer might declare a variable containing a password for testing, but he/she forgets to exclude it when officially upload the application to the production build. Attackers can exploit extraneous functionality directly from their own systems via reverse engineering. The impact of the risk is severe since it can give the attack the ability to execute unauthorised high-privileged actions. The best practice to prevent such these vulnerabilities is to carefully review and verify code.</item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><b>M1</b> covers a platform feature misuse or failure to manage platform security controls usage. The platform in the mContext is related to the mobile operating system such as Android and iOS. Generally, each platform provides developers with the application-developing guidelines, but they usually fail to follow it. Therefore, the violation can raise risks to users unintentionally or intentionally. Moreover, the misuse of API calls is also considered to be this category. One example of this vulnerability is that the application requests a user several permissions, and some of the permissions are not related to the application usage. To prevent such this vulnerability, developers must follow the mobile application developing guidelines according to each platform properly.</p> ]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M2</strong> covers insecure data storage and unintended data leakage. The vulnerabilities occur when data storages, such as SQLite database, log file, XML data store, cookies, cache, etc., are not well protected nor well implemented. It is caused by the carelessness of developers who usually think that users or attackers are unable to access the filesystem on their mobile devices. In fact, filesystems are easily accessible by several free software tools nowadays. A scenario which demonstrates the possibility of an attack is when a mobile device is lost or stolen, so an attacker can access to personally identifiable information (PII) or other sensitive information. Preventing these vulnerabilities can be implemented by understanding each type of data storage usage. It is also crucial to handle URL caching, keyboard press caching, copy/paste buffer caching, etc.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><strong>M3</strong> covers several surfaces of attacks which occur in communication or network layer of mobile applications. Because of resource-constraint in a mobile device, mobile applications are usually designed to have a data exchange in a client-server scheme feature. Therefore, an attacker can intercept, or sniff data transferred in the network. Furthermore, mobile applications normally do not protect network traffic, nor consistently implement SSL/TLS which is a transport layer security during authentication. The inconsistency can raise the vulnerability of data exposing. Therefore, the best practice to secure communication is to always consider that the network is not secure, apply strong and industry standard cipher suites, implement SSL/TLS to transport channels, and avoid sending sensitive data over communication channels, e.g. SMS and notifications.</p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M4</strong> covers vulnerabilities occurring at the end-user authentication processes and bad session management in a backend server. As authentication requirements for mobile applications are different from traditional web authentication scheme, i.e. the mobile applications do not require to be online every time during the session, an adversary can bypass authentication to the mobile application backend server if weak or missing authentication schemes are implemented. The result of the vulnerabilities can lead to severe impacts such as access control promotion, inability to identify the source of an attack, PII leakage, etc. To prevent these impacts, mobile applications must avoid weak patterns at the client-side, such as persistent authentication functionality, and developers should re-enforce authorization and authentication controls on the server-side.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M5</strong> covers cryptography schemes, which are insufficient in some usage, applying to sensitive information asset. The category does not consider SSL or TLS nor the failure of using cryptography to data storage at all when it could. The vulnerabilities in this category can be the usage of insecure and/or deprecated encryption algorithms such as MD5 and SHA1, poor key management processes, and the creation of custom encryption protocols. The best practice to prevent insufficient cryptography is welly handling sensitive data. For instances, any sensitive data should not be stored on mobile when possible, and developers should follow the National Institute of Standards and Technology (NIST) encryption guidelines.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">This category captures the failure in authorisation e.g. authorisation decisions in the client side, forced browsing, etc. It is different from M4 - Insecure Authentication issues where an adversary login to the application legitimately, but they can bypass the authorisation processes to execute privileged functionalities. The vulnerabilities can occur when there is a presence of insecure direct object reference vulnerabilities (IDOR) in code, or when a mobile application includes the user&rsquo;s roles or permissions in a request part to a backend system. The impact of weak authorisation is similar to M4 - Insecure Authentication. To avoid insecure authorisation checks, the authorisation process should verify the user&rsquo;s permissions using only information in backend systems.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M7</strong> refers to code-level implementation problems in the client-side of mobile applications. In this category, it captures some vulnerabilities such as buffer overflows, format string vulnerabilities which could occur from unintentional mistakes. Therefore, the exploitability level is difficult since most modern computer languages provide the ability to protect memory leakage like in Java. Moreover, maintaining consistency in coding can prevent such a risk caused by this type of attack. There are also several third-party static analysis tools which are able to identify buffer overflows and memory leaks, but one should ensure that the tools are safe.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Code Tampering This category covers various techniques of code tampering such as binary patching, local resource modification, dynamic memory modification, etc. Typically, victims from this type of attacks are attacked by phishing attacks to download the malicious application stored on third-party app stores. This type of attack can lead to identity theft or fraud.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M9</strong> refers to the technique which decompiles an application to the original-like source code and analyses vulnerabilities in the source code. Reverse engineering can also cause code tampering attacks or other attacks as all mobile code is susceptible to reverse engineering due to the inherent nature of the code. Attackers are the required skills to perform an analysis of the final core binary to extract useful information embedded within the targeted mobile application. A program written in languages which allow for dynamic introspection at runtimes such as Java and Objective C is more susceptible to reverse engineering. An obfuscation tool can be used to prevent reverse engineering.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M10</strong> refers to hidden backdoor functionality in a mobile application which is attached unintentionally into a production environment by developers. The developers may install the extraneous functions for fixing issues in backdoor feature which can raise the risk of attacks. For example, a developer might declare a variable containing a password for testing, but he/she forgets to exclude it when officially upload the application to the production build. Attackers can exploit extraneous functionality directly from their own systems via reverse engineering. The impact of the risk is severe since it can give the attack the ability to execute unauthorised high-privileged actions. The best practice to prevent such these vulnerabilities is to carefully review and verify code.</span></p>]]></item>
+
+
+
+
     </string-array>
 
     <string-array name="m_example">
-        <item>Improper Platform Usage</item>
-        <item>Insecure Data Storage</item>
-        <item>Insecure Communication</item>
-        <item>Insecure Authentication</item>
-        <item>Insufficient Cryptography</item>
-        <item>Insecure Authorization</item>
-        <item>Client Code Quality</item>
-        <item>Code Tampering</item>
-        <item>Reverse Engineering</item>
-        <item>Extraneous Functionality</item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">The defining characteristic of risks in this category is that the platform (iOS, Android, Windows Phone, etc.) provides a feature or a capability that is documented and well understood. The app fails to use that capability or uses it incorrectly. This differs from other mobile top ten risks because the design and implementation is not strictly the app developer's issue.</span></p>
+        <p style="text-align: justify;"><em>There are several ways that mobile apps can experience this risk.</em></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1.Violation of published guidelines: Each platform (Android, iOS) is expected to adhere to development guidelines stated for their security. If an application fails to follow these guidelines, it is exposed to this risk. For example, the iOS Keychain feature comes with a set of guidelines on how to be used. Apps not following these guidelines would experience this vulnerability.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2.Violation of common practice: The manufacturer guidance does not codify all best practices. Sometimes, there are best practices that are common in mobile applications.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3.Unintentional misuse: As part of a system or human error, some apps unintentionally get some part of their implementation wrong. This varies from a bug to setting the wrong flag on an API call, or even a slight misunderstanding of the working behind the protections.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In reality, there are several platforms with hundreds or thousands of APIs, this example is only scratch the surface of many possible problems that might occur.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">App Local Storage Instead of Keychain The iOS Keychain is a secure storage facility for both app and system data. On iOS, apps should use it to store any small data that has security significance (session keys, passwords, device enrolment data, etc.). A common mistake is to store such items in-app local storage. Data stored in app local storage is available in unencrypted iTunes backups (e.g., on the user's computer). For some apps, that exposure is inappropriate.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">There are the mistakes that developers often make on API itself.</span></p>
+        <p><span style="font-weight: 400;">1.Simply not encrypting critical data.</span></p>
+        <p><span style="font-weight: 400;">2. Insecurely storing keys, certificates, and passwords.</span></p>
+        <p><span style="font-weight: 400;">3. Weak choices of algorithm.</span></p>
+        <p><span style="font-weight: 400;">4. The attempt to create one&rsquo;s own encryption algorithm.</span></p>
+        <p><span style="font-weight: 400;"> Not including the proper support for encryption key changes and other necessary maintenance precautions.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">One of the real example is iGoat. iGoat is a purposefully vulnerable mobile app for the security community to explore these types of vulnerabilities first hand. To test this application, we enter our credentials and login to the fake bank app. Then, we navigate to the file system. Within the applications directory, we can see a database called &ldquo;credentials.sqlite&rdquo;. Exploring this database reveals that the application is storing our username and credentials (Jason:pleasedontstoremebro!) in plain text.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">If a hacker attempts to tap into your sensitive data, they will undoubtedly discover any weakness in the encryption immediately. They will then be able to attain the mobile device by directly connecting it to a computer with freely available software. This way they are able to view all third-party application directories where personal information is often stored. They can then easily steal this information through the use of malware or by modifying a legitimate application. Once the theft occurs, a business is susceptible to:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Identity theft</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reputation damage</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- External policy violation</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Material loss</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">There are a few common scenarios that penetration testers frequently discover when inspecting communication security of the mobile app.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Lack of certificate inspection The mobile app and an endpoint successfully connect and perform a TLS handshake to establish a secure channel. However, the mobile app fails to inspect the certificate offered by the server and the mobile app unconditionally accepts any certificate offered to it by the server. This destroys any mutual authentication capability between the mobile app and the endpoint. The mobile app is susceptible to man-in-the-middle attacks through a TLS proxy.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Weak handshake negotiation The mobile app and an endpoint successfully connect and negotiate a cipher suite as part of the connection handshake. The client successfully negotiates with the server to use a weak cipher suite that results in weak encryption that can be easily decrypted by the adversary. This jeopardizes the confidentiality of the channel between the mobile app and the endpoint.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Privacy information leakage The mobile app transmits personally identifiable information to an endpoint via non-secure channels instead of over SSL. This jeopardizes the confidentiality of any privacy-related data between the mobile app and the endpoint.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">A mobile app may suffer from insecure authentication in numerous ways.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. If a mobile application is able to anonymously execute a backend API service request without providing an access token, this application is highly vulnerable to insecure authentication.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. If the mobile application ends up storing passwords or shared secrets locally on the device, it indicates vulnerability to insecure authentication.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3. If the mobile application encourages a weak password policy to simplify the password being entered, it is vulnerable to insecure authentication.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">4. If the mobile application uses a feature like TouchID, it suffers from insecure authentication.</span></p>
+        <p style="text-align: justify;">&nbsp;</p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Here is several scenarios showcase of the weak authentication or authorization controls in mobile apps:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #1: Hidden Service Requests: Developers assume that only authenticated users will be able to generate a service request that the mobile app submits to its backend for processing. During the processing of the request, the server code does not verify that the incoming request is associated with a known user. Hence, adversaries submit service requests to the back-end service and anonymously execute functionality that affects legitimate users of the solution.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #2: Interface Reliance: Developers assume that only authorized users will be able to see the existence of a particular function on their mobile app. Hence, they expect that only legitimately authorized users will be able to issue the request for the service from their mobile device. Back-end code that processes the request does not bother to verify that the identity associated with the request is entitled to execute the service. Hence, adversaries are able to perform remote administrative functionality using fairly low-privilege user accounts.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #3: Usability Requirements: Due to usability requirements, mobile apps allow for passwords that are 4 digits long. Server code correctly stores a hashed version of the password. However, due to the severely short length of the password, an adversary will be able to quickly deduce the original passwords using rainbow hash tables. If the password file (or data store) on the server is compromised, an adversary will be able to quickly deduce users' passwords.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">There are two ways in which broken cryptography can be exposed to mobile apps.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. The encryption/decryption process used by the mobile app is fundamentally flawed and can be exploited by the adversary to decrypt sensitive data.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. The encryption/decryption algorithm employed by the mobile app is weakly built and can be directly decrypted by the adversary.</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">The following scenarios of encryption misuse can result in such attacks:</span></span></p>
+        <p><span style="font-weight: 400;">1.Reliance Upon Built-In Code Encryption Processes </span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Heavy reliance on the built-in encryption code can result in bypassing of the built-in code encryption algorithms by an adversary. In iOS applications, the app loader decrypts the app in memory and proceed to execute the code after its signature has been verified by iOS. This feature, in theory, prevents an attacker from conducting binary attacks against an iOS mobile app. In case of non-iOS devices, where the above addendum is not prevalent, an adversary will download the encrypted app onto their jailbroken device using freely available tools like ClutchMod or GBD, and take a snapshot of the decrypted app once the app loader loads it into memory and decrypts it. The adversary can then use tools like IDA Pro or Hopper to easily perform static/dynamic analysis of the app and conduct further binary attacks.</span></p>
+        <p><span style="font-weight: 400;">2.Poor Key Management Processes </span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">The best algorithms don&rsquo;t matter if you mishandle your keys. Many mistakes implementing their own protocol for employing the correct encryption algorithm. Some examples of the problems here include:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Including the keys in the same attacker-readable directory as the encrypted content.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Making the keys otherwise available to the attacker.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Avoid the use of hardcoded keys within your binary.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Keys may be intercepted via binary attacks.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Cryptographic algorithms and protocols like RC2, MD4, MD5, and SHA1 are insufficient for modern security requirements.</span></p>
+        <p><span style="font-weight: 400;">3.Creation and Use of Custom Encryption Protocols</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Mishandling encryption becomes easier when a device uses its own encryption algorithms or protocols. Thus, it is highly imperative that a developer uses modern algorithms that are accepted as strong by the security community, and whenever possible leverage the state of the art encryption APIs within the mobile platform.</span></p>
+        <p><span style="font-weight: 400;">4.Use of Insecure and/or Deprecated Algorithms </span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Cryptographic algorithms and protocols like RC2, MD4, MD5, and SHA1, which are shown to have significant weaknesses or are otherwise insufficient for modern security requirements must not be employed.</span></p>]]></item>
+
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">There are a few easy rules to follow when trying to determine if a mobile endpoint is suffering from insecure authorization.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Presence of Insecure Direct Object Reference (IDOR) vulnerabilities - If you are seeing an Insecure Direct Object Reference Vulnerability (IDOR), the code is most likely not performing a valid authorization check.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Hidden Endpoints - Typically, developers do not perform authorization checks on backend hidden functionality as they assume the hidden functionality will only be seen by someone in the right role.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- User Role or Permission Transmissions - If the mobile app is transmitting the user's roles or permissions to a backend system as part of a request, it is suffering from insecure authorization.</span></p>
+        <p style="text-align: justify;">&nbsp;</p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are examples of the attack scenario.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #1: Insecure Direct Object Reference:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">A user makes an API endpoint request to a backend REST API that includes an actor ID and an oAuth bearer token. The user includes their actor ID as part of the incoming URL and includes the access token as a standard header in the request. The backend verifies the presence of the bearer token but fails to validate the actor ID associated with the bearer token. As a result, the user can tweak the actor ID and attain account information of other users as part of the REST API request.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #2: Transmission of LDAP roles:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">A user makes an API endpoint request to a backend REST API that includes a standard oAuth bearer token along with a header that includes a list of LDAP groups that the user belongs to. The backend request validates the bearer token and then inspects the incoming LDAP groups for the right group membership before continuing on to the sensitive functionality. However, the backend system does not perform an independent validation of LDAP group membership and instead relies upon the incoming LDAP information coming from the user. The user can tweak the incoming header and report to be a member of any LDAP group arbitrarily and perform administrative functions.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">This is the catch-all for code-level implementation problems in the mobile client. That's distinct from server-side coding mistakes. This captures the risks that come from vulnerabilities as buffer overflows, format string vulnerabilities, and various other code-level mistakes where the solution is to rewrite some code that's running on the mobile device.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">The key characteristic of this risk is that it's code executing on the mobile device and the code needs to be changed in a fairly localized way. Fixing most risks requires code changes, but in the code quality case, the risk comes from using the wrong API, using an API insecurely, using insecure language constructs, or some other code-level issue. </span></p>
+        <p><span style="text-decoration: underline;"><span style="font-weight: 400;">For example, from the following coding.</span></span></p>
+        <p><span style="font-weight: 400;"> #include &lt;stdio.h&gt;</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;int main(int argc, char **argv)</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;{</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;char buf[8]; // buffer for eight characters</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;gets(buf); // read from stdio (sensitive function!)</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;printf("%s\n", buf); // print out data stored in buf</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;return 0; // 0 as return value</span></p>
+        <p><span style="font-weight: 400;"> &nbsp;}</span></p>
+        <p><span style="font-weight: 400;">we should avoid the use of the gets function to avoid a buffer overflow. This is an example of what most static analysis tools will report as a code quality issue.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Technically, all mobile code is vulnerable to code tampering. The mobile code runs within an environment that is not under the control of the organization producing the code. At the same time, there are plenty of different ways of altering the environment in which that code runs. These changes allow an adversary to tinker with the code and modify it at will.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">There are a number of counterfeit applications that are available across the app stores. Some of these contain malware payloads. Many of the modified apps contain modified forms of the original core binary and associated resources. The attacker re-packages these as a new application and released them into third-party stores.</span></p>
+        <p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are examples of the attack scenario.</span></span></p>
+        <p><span style="font-weight: 400;">Scenario #1:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Games are a particularly popular target to attack using this method. The attacker will attract people that are not interested in paying for any freemium features of the game. Within the code, the attacker short-circuits conditional jumps that detect whether an in-application purchase is successful. This bypass allows the victim to attain game artifacts or new abilities without paying for them. The attacker has also inserted spyware that will steal the identity of the user.</span></p>
+        <p><span style="font-weight: 400;">Scenario #2:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Banking apps are another popular target to attack. These apps typically process sensitive information that will be useful to an attacker. An attacker could create a counterfeit version of the app that transmits the user's personally identifiable information (PII) along with username/password to a third-party site. This is reminiscent of the desktop equivalent of Zeus malware. This typically results in fraud against the bank.</span></p>]]></item>
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are examples of the attack scenario.</span></span></p>
+        <p><span style="font-weight: 400;">Scenario #1: String Table Analysis:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">The attacker runs 'strings' against the unencrypted app. As a result of the string table analysis, the attacker discovers a hardcoded connectivity string that contains authentication credentials to a backend database. The attacker uses those credentials to gain access to the database. The attacker steals a vast array of PII data about the app's users.</span></p>
+        <p><span style="font-weight: 400;">Scenario #2: Cross-Functional Analysis:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">The attacker uses IDA Pro against an unencrypted app. As a result of the string table analysis combined with functional cross-referencing, the attacker discovers a Jailbreak detection code. The attacker uses this knowledge in a subsequent code-modification attack to disable jailbreak detection within the mobile app. The attacker then deploys a version of the app that exploits method swizzling to steal customer information.</span></p>
+        <p><span style="font-weight: 400;">Scenario #3: Source Code Analysis:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Consider a banking Android application. The APK file can be easily extracted using 7zip/Winrar/WinZip/Gunzip. Once extracted, the attacker has a manifest file, assets, resources, and most important classes.dex file.&nbsp;</span>Then using Dex to Jar converter, an attacker can easily convert it to the jar file. In the next step, Java Decompiler (like JDgui) will provide you with the code.</p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Often, developers include hidden backdoor functionality or other internal development security controls that are not intended to be released into a production environment. For example, a developer may accidentally include a password as a comment in a hybrid app. Another example includes disabling of 2-factor authentication during testing&nbsp;</span><span style="font-weight: 400;">The defining characteristic of this risk is leaving functionality enabled in the app that was not intended to be released.</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are examples of the attack scenario.</span></span></p>
+        <p style="text-align: justify;"><strong>Scenario #1: Administrative Endpoint Exposed:</strong></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">As part of mobile endpoint testing, developers included a hidden interface within the mobile app that would display an administrative dashboard. This dashboard accessed admin information via the back-end API server. In the production version of the code, the developers did not include code that displayed the dashboard at any time. However, they did include the underlying code that could access the back-end admin API. An attacker performed a string table analysis of the binary and discovered the hardcoded URL to an administrative REST endpoint. The attacker subsequently used 'curl' to execute back-end administrative functionality.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">The developers should have removed all extraneous code, including code that is not directly reachable by the native interface.</span></p>
+        <p style="text-align: justify;"><strong>Scenario #2: Debug Flag in Configuration File:</strong></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">An attacker tries manually added "debug=true" to a .properties file in a local app. Upon startup, the application is outputting log files that are overly descriptive and helpful to the attacker in understanding the backend systems. The attacker subsequently discovers vulnerabilities within the backend system as a result of the log.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">The developers should have prevented the activation of 'debug mode' within a production build of the mobile app.</span></p>]]></item>
+
+
     </string-array>
 
     <string-array name="m_guideline">
-        <item>Improper Platform Usage</item>
-        <item>Insecure Data Storage</item>
-        <item>Insecure Communication</item>
-        <item>Insecure Authentication</item>
-        <item>Insufficient Cryptography</item>
-        <item>Insecure Authorization</item>
-        <item>Client Code Quality</item>
-        <item>Code Tampering</item>
-        <item>Reverse Engineering</item>
-        <item>Extraneous Functionality</item>
-    </string-array>
 
-    <string-array name="i_topic_id">
-        <item>I1</item>
-        <item>I2</item>
-        <item>I3</item>
-        <item>I4</item>
-        <item>I5</item>
-        <item>I6</item>
-        <item>I7</item>
-        <item>I8</item>
-        <item>I9</item>
-        <item>I10</item>
-    </string-array>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">The commonly exploited attack vector here is an exposed API. Prevention of the risks associated with improper platform usage requires secure coding and configuration practices on the server-side of the mobile application. The key is to follow the recommended best practices when a developer is developing their API.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">The best and most basic rule for preventing insecure data storage with mobile apps is to not store the data unless it is absolutely necessary. Developers need to acknowledge that they are making this data vulnerable the second they put it onto a mobile device, even if it is encrypted.</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;"> If the sensitive data must indeed be stored, some general rules of thumb are:</span></span></p>
+        <p><span style="font-weight: 400;">1. Do not store credentials on the phone file system. Make it so the user must identify themselves with a standard login each time the application is opened and that the appropriate session timeouts are put into place.</span></p>
+        <p><span style="font-weight: 400;">2. Be particular about the cryptography that is being implemented and use solutions that avoid the leakage of binary signature that is often used in encryption libraries.</span></p>
+        <p><span style="font-weight: 400;">3. Avoid using hardcoded encryption or decryption keys.</span></p>
+        <p><span style="font-weight: 400;">4. Add another layer of encryption beyond the default encryption methods provided by the operating system.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">It is important to threat model your mobile app, OS, platforms, and frameworks to understand the information assets the app processes and how the APIs handle those assets. It is crucial to see how they handle the following types of features :</span></p>
+        <p><span style="font-weight: 400;">1. URL caching (both request and response).</span></p>
+        <p><span style="font-weight: 400;">2. Keyboard press caching.</span></p>
+        <p><span style="font-weight: 400;">3. Copy/Paste buffer caching.</span></p>
+        <p><span style="font-weight: 400;">4. Application backgrounding.</span></p>
+        <p><span style="font-weight: 400;">5. Intermediate data.</span></p>
+        <p><span style="font-weight: 400;">6. Logging.</span></p>
+        <p><span style="font-weight: 400;">7. HTML5 data storage.</span></p>
+        <p><span style="font-weight: 400;">8. Browser cookie objects.</span></p>
+        <p><span style="font-weight: 400;">9. Analytics data sent to 3rd parties.</span></p>]]></item>
 
-    <string-array name="i_topic">
-        <item>Insecure Web Interface</item>
-        <item>Insufficient Authentication/Authorization</item>
-        <item>Insecure Network Services</item>
-        <item>Lack of Transport Encryption</item>
-        <item>Privacy Concerns</item>
-        <item>Insecure Cloud Interface</item>
-        <item>Insecure Mobile Interface</item>
-        <item>Insufficient Security Configurability</item>
-        <item>Insecure Software/Firmware</item>
-        <item>Poor Physical Security</item>
-    </string-array>
+        <item><![CDATA[<p>Here is a list of a few best practices to be used for Android phones which may bring down risks related to insecure communication.</p>
+        <p>1. Understand that the network layer is highly susceptible to eavesdropping, thus making it insecure.</p>
+        <p>2. It is imperative to apply SSL/TLS to transport channels used by the mobile app to transmit sensitive information, session tokens, or other sensitive data to a backend API or web service.</p>
+        <p>3. Account for outside entities like third-party analytics companies, social networks, etc. by using their SSL versions when an application runs a routine via the browser/WebKit. Avoid mixed SSL sessions as they may expose the user&rsquo;s session ID.</p>
+        <p>4. Ensure usage of strong, industry standard cipher suites with appropriate key lengths.</p>
+        <p>5. Use certificates signed by a trusted CA provider.</p>
+        <p>6. Never allow self-signed certificates, and consider certificate pinning for security conscious applications.</p>
+        <p>7. Always require SSL chain verification.</p>
+        <p>8. Only establish a secure connection after verifying the identity of the endpoint server using trusted certificates in the keychain.</p>
+        <p>9. In case the mobile app detects an invalid certificate, alert users through the UI.</p>
+        <p>10. Avoid sending sensitive data over alternate channels (e.g, SMS, MMS, or notifications).</p>
+        <p>11. Apply a separate layer of encryption to any sensitive data before it is given to the SSL channel. In the event that future vulnerabilities are discovered in the SSL implementation, the encrypted data will provide a secondary defense against confidentiality violation.</p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">There are 2 main methods to prevent Insecure Authentication in developing process.</span></span></p>
+        <p><strong>1.Avoid weak mobile application authentication design patterns</strong></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Ensure that the authentication requirements of mobile applications should match that of the web application component if you are porting a web application to its mobile equivalent.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Local authentication of a user can lead to client-side bypass vulnerabilities. If the application stores data locally, using run-time manipulation or modification of the binary, the authentication routine can be bypassed on jailbroken devices.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Ensure that all authentication requests are performed on server-side. The application data will be loaded onto the mobile device, upon successful authentication. This will ensure that application data will only be available after successful authentication.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- For client-side storage of data, the data should be encrypted using an encryption key which is securely derived from the user&rsquo;s login credentials. This will ensure that the stored application data will only be accessible upon successfully entering the correct credentials.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Persistent authentication i.e the Remember Me functionality implemented within mobile applications should never store a user&rsquo;s password on the device.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Ideally, mobile applications should utilize a device-specific authentication token that can be revoked within the mobile application by the user. This will ensure that the app can mitigate unauthorized access from a stolen/lost device.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Do not use any spoof-able values for authenticating a user. This includes device identifiers or geo-location.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Persistent authentication within mobile applications should be implemented as opt-in and not be enabled by default.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- If possible, do not allow users to provide 4-digit PIN numbers for authentication passwords.</span></p>
+        <p style="text-align: justify;"><strong>2.Reinforce Authentication</strong></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Developers should remember that malicious users can bypass all client-side authorization and authentication controls. Thus, whenever possible, authorization and authentication controls must be re-enforced on the server-side.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Due to offline usage requirements, mobile apps may be required to perform local authentication or authorization checks within the mobile app&rsquo;s code. If this is the case, developers should instrument local integrity checks within their code to detect any unauthorized code changes.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;">While the mentioned attack scenarios educate developers on the dos and don&rsquo;ts to follow while creating encryption and decryption algorithms, following best practices must be followed when handling sensitive data.</p>
+        <p style="text-align: justify;">1. Avoid the storage of any sensitive data on a mobile device.</p>
+        <p style="text-align: justify;">2. Apply cryptographic standards that will withstand the test of time for at least 10 years into the future.</p>
+        <p style="text-align: justify;">3. Follow the NIST guidelines on recommended algorithms.</p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">In order to avoid insecure authorization checks, do the following methods.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Verify the roles and permissions of the authenticated user using only information contained in backend systems. Avoid relying on any roles or permission information that comes from the mobile device itself.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Backend code should independently verify that any incoming identifiers associated with a request (operands of a requested operation) that come along with the identify match up and belong to the incoming identity.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">In general, code quality issues can be avoided by doing the following methods.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Maintain consistent coding patterns that everyone in the organization agrees upon.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Write code that is easy to read and well-documented.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- When using buffers, always validate that the the lengths of any incoming buffer data will not exceed the length of the target buffer.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Via automation, identify buffer overflows and memory leaks through the use of third-party static analysis tools.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Prioritize solving buffer overflows and memory leaks over other 'code quality' issues.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">The mobile app must be able to detect at runtime that code has been added or changed from what it knows about its integrity at compile time. The app must be able to react appropriately at runtime to a code integrity violation.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Typically, an app that has been modified will execute within a Jailbroken or rooted environment. As such, it is reasonable to try and detect these types of compromised environments at runtime and react accordingly (report to the server or shutdown).</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">So that we can use various methods to detect a rooted android device or jailbroken ios device.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">In order to prevent effective reverse engineering, you must use an obfuscation tool. There are many free and commercial grade obfuscators on the market. Conversely, there are many different deobfuscators on the market. To measure the effectiveness of whatever obfuscation tool you choose, try deobfuscating the code using tools like IDA Pro and Hopper.</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">A good obfuscator will have the following abilities:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. Narrow down what methods / code segments to obfuscate.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. Tune the degree of obfuscation to balance performance impact.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3. Withstand de-obfuscation from tools like IDA Pro and Hopper.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">4. Obfuscate string tables as well as methods.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">The best way to prevent this vulnerability is to perform a manual secure code review using security champs or subject matter experts most knowledgeable with this code. They should do the following methods.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Examine the app's configuration settings to discover any hidden switches.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Verify that all test code is not included in the final production build of the app.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Examine all API endpoints accessed by the mobile app to verify that these endpoints are well documented and publicly available.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Examine all log statements to ensure nothing overly descriptive about the backend is being written to the logs.</span></p>]]></item>
+
+        </string-array>
+
+        <string-array name="i_topic_id">
+            <item>I1</item>
+            <item>I2</item>
+            <item>I3</item>
+            <item>I4</item>
+            <item>I5</item>
+            <item>I6</item>
+            <item>I7</item>
+            <item>I8</item>
+            <item>I9</item>
+            <item>I10</item>
+        </string-array>
+
+        <string-array name="i_topic">
+            <item>Insecure Web Interface</item>
+            <item>Insufficient Authentication/Authorization</item>
+            <item>Insecure Network Services</item>
+            <item>Lack of Transport Encryption</item>
+            <item>Privacy Concerns</item>
+            <item>Insecure Cloud Interface</item>
+            <item>Insecure Mobile Interface</item>
+            <item>Insufficient Security Configurability</item>
+            <item>Insecure Software/Firmware</item>
+            <item>Poor Physical Security</item>
+        </string-array>
 
     <string-array name="i_detail">
     <item>Insecure web interface is a vulnerability that is easy to exploit. It can cause from
@@ -196,7 +388,6 @@
         <item>Reverse Engineering</item>
         <item>Extraneous Functionality</item>
     </string-array>
-
     <string-array name="i_guideline">
         <item>Improper Platform Usage</item>
         <item>Insecure Data Storage</item>
@@ -209,6 +400,5 @@
         <item>Reverse Engineering</item>
         <item>Extraneous Functionality</item>
     </string-array>
-
 
 </resources>
