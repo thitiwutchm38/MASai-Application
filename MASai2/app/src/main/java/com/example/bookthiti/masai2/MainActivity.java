@@ -14,6 +14,7 @@ import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
 import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScanningResultActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void openActivity_MobileApp_att() {
 
         Intent intent = new Intent(this,MobileApplicationScannerActivity.class);
+//        Intent intent = new Intent(this, MobileApplicationScanningResultActivity.class);
         startActivity(intent);
     }
     public void openActivity_iot_att() {
