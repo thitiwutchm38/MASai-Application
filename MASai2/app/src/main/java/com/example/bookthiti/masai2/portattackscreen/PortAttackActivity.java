@@ -147,13 +147,13 @@ public class PortAttackActivity extends AppCompatActivity {
         webView.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
 
         // FIXME: Uncomment for real application
-//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//        if (!mBound) {
-//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//        }
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     private boolean isRemoteDeviceConnected() {

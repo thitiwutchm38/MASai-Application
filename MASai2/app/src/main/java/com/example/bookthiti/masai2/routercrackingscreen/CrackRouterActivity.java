@@ -178,18 +178,18 @@ public class CrackRouterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // FIXME: Uncomment for real application
-//                if (isRemoteDeviceConnected) {
-//                    JsonObject jsonObject = new JsonObject();
-//                    jsonObject.addProperty("command", "wifiCracking");
-//                    Gson gson = new Gson();
-//                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
-//                    Log.i(TAG_INFO, payloadJsonString);
-//                    JsonParser jsonParser = new JsonParser();
-//                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
-//                    jsonObject.add("payload", payloadJsonElement);
-//                    String jsonString = jsonObject.toString();
-//                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
-//                }
+                if (isRemoteDeviceConnected) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("command", "wifiCracking");
+                    Gson gson = new Gson();
+                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
+                    Log.i(TAG_INFO, payloadJsonString);
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
+                    jsonObject.add("payload", payloadJsonElement);
+                    String jsonString = jsonObject.toString();
+                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                }
 
 
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -199,32 +199,32 @@ public class CrackRouterActivity extends AppCompatActivity {
                 mStartCrackingButton.setBackgroundColor(Color.parseColor("#FFFF0000"));
 
                 // FIXME: Uncomment for mock up
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something after 5s = 5000ms
-                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                        builder.setTitle("Crack Result");
-                        builder.setMessage("The target Wi-Fi router password cannot be cracked!");
-                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                mProgressBar.setVisibility(View.INVISIBLE);
-                                mTextViewCrackStatus.setVisibility(View.INVISIBLE);
-                                mImageButtonClipboard.setVisibility(View.VISIBLE);
-                                mEditTextPassword.setVisibility(View.VISIBLE);
-                                mTextViewResultHeader.setVisibility(View.VISIBLE);
-                                mEditTextPassword.setText("12345678");
-                            }
-                        });
-                        builder.show();
-
-//                        mStartCrackingButton.setBackgroundColor(itsColorId);
-                        mStartCrackingButton.setText("Start Cracking");
-                    }
-                }, 5000);
-                mProgressBar.setVisibility(View.INVISIBLE);
+//                final Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Do something after 5s = 5000ms
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+//                        builder.setTitle("Crack Result");
+//                        builder.setMessage("The target Wi-Fi router password cannot be cracked!");
+//                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                            @Override
+//                            public void onDismiss(DialogInterface dialogInterface) {
+//                                mProgressBar.setVisibility(View.INVISIBLE);
+//                                mTextViewCrackStatus.setVisibility(View.INVISIBLE);
+//                                mImageButtonClipboard.setVisibility(View.VISIBLE);
+//                                mEditTextPassword.setVisibility(View.VISIBLE);
+//                                mTextViewResultHeader.setVisibility(View.VISIBLE);
+//                                mEditTextPassword.setText("12345678");
+//                            }
+//                        });
+//                        builder.show();
+//
+////                        mStartCrackingButton.setBackgroundColor(itsColorId);
+//                        mStartCrackingButton.setText("Start Cracking");
+//                    }
+//                }, 5000);
+//                mProgressBar.setVisibility(View.INVISIBLE);
 
             }
         });

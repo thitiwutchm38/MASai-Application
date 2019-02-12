@@ -297,108 +297,256 @@
         </string-array>
 
     <string-array name="i_detail">
-    <item>Insecure web interface is a vulnerability that is easy to exploit. It can cause from
-        having weak credentials, lack of account lockout or account enumeration. An attacker could
-        be both external or internal users that access the web interface. Furthermore, the impact of
-        insecure web interface can be severe, since it can result in data corruption or loss, losing
-        control of the device and lack of accountability.
-    </item>
-        <item>Insufficient authentication occurs when passwords are weak or easy to guess, insufficient
-        protection over authentication or no Two-factor authentication system. An attacker could be
-        both external or internal users that access the web interface, mobile interface or cloud
-        interface. Furthermore, the impact of insufficient authentication/authorisation can be
-        severe since it can result in data corruption or loss, complete compromise of the device and
-        user account, denial of access and lack of accountability
-    </item>
-        <item>Insecure network services will be weak against buffer overflow attack or attack such as
-        Denial of Service attack that makes the user unable to access the device. Nmap, Arping, Port
-        Scanner, etc. are automated testing tools that can use to detect the problem. An attacker
-        could be both external and internal users that access the device by a network connection.
-        The result of these attacks can be data corruption or loss, unable to access or perform the
-        target device and other related devices.
-    </item>
-        <item>Lack of transport encryption and Integrity verification allows transmitted data over the
-        network to be sniffed or viewed by an attacker (mostly with a man in the middle attack) and
-        extract data in the packet to view information inside the packet. Networks that are easy to
-        discover and transmit poorly encryption packet could become a target for attackers. An
-        attacker could be both external and internal users that access to the device’s network.
-        Moreover, the impact can be severe, since it is depending on extracted data inside the
-        packet and it can lead to exposure of information from the compromise of user accounts or
-        devices.
-    </item>
-        <item>Collection of personal data and sensitive data with improper protection can be a great
-        problem to the victim when the data is exposed. An attacker could be both external and
-        internal users that access to the device, the device’s network, the cloud connection, and
-        the mobile application. An attacker exploits the system using multiple vulnerabilities
-        available such as insufficient authentication, insecure network services or lack of
-        transport encryption to view personal data inside the packet. Impact of this problem is
-        severe since the mistake can lead to exposure of sensitive information such as personal
-        data, health information, financial information and could lead to identity theft or
-        compromise of user accounts.
-    </item>
-        <item>This attack occurs when credentials are used from many methods such as guessing password,
-        account enumeration or sniffing account information. An attacker could be anyone who
-        accessesto the internet. The attacker also exploitsthe system using multiple vulnerabilities
-        available such as insufficient authentication, account enumeration to access data, lack of
-        transport encryption or control by using a cloud website. The impact can be severe that lead
-        to data corruption, data loss or compromise over user data and device.
-    </item>
-        <item>Insecure mobile interface occurs when poorly secured credentials are used or using account
-        enumeration to get access. The attack could be anyone who accesses to the mobile
-        application. The attacker also exploits the system using multiple vulnerabilities available
-        such as insufficient authentication, account enumeration to access data or lack of transport
-        encryption to access or control data with the mobile interface. The impact can be severe
-        that lead to data corruption, data loss or compromise over user data and device
-    </item>
-        <item>Insufficient security configurability occurs when the device has poorly configured
-        security or no configured security due to the ability of the user to strengthening the
-        security. An attacker could be anyone who accesses the device. The attacker can exploit the
-        system using the lack of granular permission that controls accessibility to access data and
-        device controller, lack of password options or encryption to compromise the device and data.
-        Impact of this vulnerability is that it could lead to data loss and compromise of the
-        device.
-    </item>
-        <item>Insecure software/firmware occurs when the devices are not updated when there are
-        vulnerabilities in the system or when the network connection is not protected when the
-        device is updating. An attacker could be anyone who has access to the device, network and
-        access to update network server. Sometimes second-hand devices also installed with insecure
-        software and firmware. The attacker can exploit the system by using multiple vulnerabilities
-        such as using DNS hijacking to update malicious software, using an unencrypted connection to
-        update files or getting originally unencrypted update file. The impact can be severe because
-        it could affect, or attack others related device and lead to compromise of user data.
-    </item>
-        <item>Poor physical security occurs when the physical device is in attacker’s reach, an attacker
-        can use an external port such as USB ports, SD cards or other data storage to access,
-        configuring and tampering with the device or access the medium by disassembling the device.
-        The attacker could be anyone who has physical access to the device. Impact of poor physical
-        security can be severe because it could lead to a compromise over the device and device’s
-        data storage.
-    </item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">A web interface is defined as a control panel to interact between a user and software running on a web server. Web interfaces are popular as they are easily accessible from any computer running any operating system and are simple to build/modify. Most household devices we use today to communicate with the internet have some kind of web interface. For example, your home internet router web interface is accessible using a default IP defined by the vendor. You will need a username and password to access and control the settings.&nbsp;</span><span style="font-weight: 400;">However, there may be flaws in the code that allow the device to be attacked. As these are connected devices weaknesses can be exploited remotely.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">This area deals with ineffective mechanisms being in place to authenticate to the IoT user interface and/or poor authorisation mechanisms whereby a user can gain higher levels of access then allowed.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">This point relates to vulnerabilities in the network services that are used to access the IoT device that might allow an intruder to gain unauthorised access to the device or associated data.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">This deals with data being exchanged with the IoT device in an unencrypted format. &nbsp;This could easily lead to an intruder sniffing the data and either capturing this data for later use or compromising the device itself.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Privacy concerns are generated by the collection of personal data in addition to the lack of proper protection of that data. Privacy concerns are easy to discover by simply reviewing the data that is being collected as the user sets up and activates the device. Automated tools can also look for specific patterns of data that may indicate the collection of personal data or other sensitive data.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">This point concerns security issues related to the cloud interface used to interact with the IoT device. &nbsp;Typically this would imply poor authentication controls or data traveling in an unencrypted format allowing an attacker access to the device or the underlying data.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Similar to Insecure Cloud Interface, weak authentication or unencrypted data channels can allow an attacker access to the device or underlying data of an IoT device that uses a vulnerable mobile interface for user interaction.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Insufficient security configurability is present when users of the device have limited or no ability to alter its security controls. Insufficient security configurability is apparent when the web interface of the device has no options for creating granular user permissions or for example, forcing the use of strong passwords. &nbsp;The risk with this is that the IoT device could be easier to attack allowing unauthorised access to the device or the data.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;">The lack of ability for a device to be updated presents a security weakness on its own. Devices should have the ability to be updated when vulnerabilities are discovered and software/firmware updates can be insecure when the updated files themselves and the network connection they are delivered on are not protected. Software/Firmware can also be insecure if they contain hardcoded sensitive data such as credentials. The inability of software/firmware being updated means that the devices remain vulnerable indefinitely to the security issue that the update is meant to address. Further, if the devices have hardcoded sensitive credentials, if these credentials get exposed, then they remain so for an indefinite period of time.</p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;">Physical security weaknesses are present when an attacker can disassemble a device to easily access the storage medium and any data stored on that medium. Weaknesses are also present when USB ports or other external ports can be used to access the device using features intended for configuration or maintenance. &nbsp;This could lead to easy unauthorised access to the device or the data.</span></p>]]></item>
+
     </string-array>
 
     <string-array name="i_example">
-        <item>Improper Platform Usage</item>
-        <item>Insecure Data Storage</item>
-        <item>Insecure Communication</item>
-        <item>Insecure Authentication</item>
-        <item>Insufficient Cryptography</item>
-        <item>Insecure Authorization</item>
-        <item>Client Code Quality</item>
-        <item>Code Tampering</item>
-        <item>Reverse Engineering</item>
-        <item>Extraneous Functionality</item>
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">Specific security vulnerabilities could lead these issues:</span></span></p>
+        <p><span style="font-weight: 400;">- Account Enumeration.</span></p>
+        <p><span style="font-weight: 400;">- Weak Default Credentials.</span></p>
+        <p><span style="font-weight: 400;">- Credentials Exposed in Network Traffic.</span></p>
+        <p><span style="font-weight: 400;">- Cross-site Scripting (XSS).</span></p>
+        <p><span style="font-weight: 400;">- SQL-Injection.</span></p>
+        <p><span style="font-weight: 400;">- Session Management.</span></p>
+        <p><span style="font-weight: 400;">- Weak Account Lockout Settings.</span></p>
+        <p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p><span style="font-weight: 400;"><strong>Scenario #1:</strong> The web interface presents "Forgot Password" functionality which upon entering an invalid account informs the attacker that the account does not exist. Once valid accounts are identified, password guessing can begin for an indefinite amount of time if no account lockout controls exist.</span></p>
+        <p><span style="font-weight: 400;"><strong>Scenario #2:</strong> Web interface is susceptible to cross-site scripting.</span></p>
+        <p><span style="font-weight: 400;">{http://xyz.com/index.php?user=&lt;script&gt;alert(123)&lt;/script&gt; Response from the browser is an alert popup.}</span></p>
+        <p><span style="font-weight: 400;">In the cases above, the attacker is able to easily determine if an account is valid or not and is also able to determine that the site is susceptible to cross-site scripting (XSS).</span></p>]]></item>
+
+    <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;">Checking for Insufficient Authentication includes:</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Attempting to use simple passwords such as "1234" is a fast and easy way to determine if the password policy is sufficient across all interfaces</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing network traffic to determine if credentials are being transmitted in clear text</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing requirements around password controls such as password complexity, password history check, password expiration and forced password reset for new users</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing whether re-authentication is required for sensitive features</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for Insufficient Authorization includes:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the various interfaces to determine whether the interfaces allow for separation of roles. For example, all features will be accessible to administrators, but users will have a more limited set of features available.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing access controls and testing for privilege escalation</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #1: The interface only requires simple passwords.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Username = Bob; Password = 1234}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">Scenario #2: Username and password are poorly protected when transmitted over the network.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Authorization: Basic YWRtaW46MTIzNA==}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In the cases above, the attacker is able to either easily guess the password or is able to capture the credentials as they cross the network and decode it since the credentials are only protected using Base64 Encoding.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for Insecure Network Services includes:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if insecure network services exist by reviewing your device for open ports using a port scanner</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- As open ports are identified, each can be tested using any number of automated tools that look for DoS vulnerabilities, vulnerabilities related to UDP services and vulnerabilities related to buffer overflow and fuzzing attacks</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing network ports to ensure they are absolutely necessary and if there are any ports being exposed to the internet using UPnP.</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #1:</strong> Fuzzing attack causes network service and device to crash.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{GET %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s HTTP/1.0}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #2:</strong> Ports open to the internet possibly without the user's knowledge via UPnP.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Port 80 and 443 exposed to the internet via a home router.}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In the cases above, the attacker is able to disable the device completely with an HTTP GET or access the device via the internet over port 80 and/or port 443.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for Lack of Transport Encryption includes:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing network traffic of the device, its mobile application, and any cloud connections to determine if any information is passed in clear text.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the use of SSL or TLS to ensure it is up to date and properly implemented.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the use of any encryption protocols to ensure they are recommended and accepted.</span></p>
+        <p style="text-align: justify;">&nbsp;</p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #1:</strong> The cloud interface uses the only HTTP.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{http://www.xyzcloudsite.com}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #2:</strong> Username and password are transmitted in the clear over the network.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{http://www.xyzcloud.com/login.php?userid=3&amp;password=1234}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In the cases above, the attacker has the ability to view sensitive data in the clear due to lack of transport encryption.</span></p>]]></item>
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for Privacy Concerns includes:</span></span></p>
+        <p><span style="font-weight: 400;">- Identifying all data types that are being collected by the device, its mobile application and any cloud interfaces.</span></p>
+        <p><span style="font-weight: 400;">- The device and its various components should only collect what is necessary to perform its function.</span></p>
+        <p><span style="font-weight: 400;">- Personally, identifiable information can be exposed when not properly encrypted while at rest on storage mediums and during transit over networks.</span></p>
+        <p><span style="font-weight: 400;">- Reviewing who has access to personal information that is collected.</span></p>
+        <p><span style="font-weight: 400;">- Determining if the data collected can be de-identified or anonymized.</span></p>
+        <p><span style="font-weight: 400;">- Determining if data collected is beyond what is needed for proper operation of the device. (Does the end-user have a choice for this data collection?)</span></p>
+        <p><span style="font-weight: 400;">- Determining if a data retention policy is in place.</span></p>
+        <p>&nbsp;</p>
+        <p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p><span style="font-weight: 400;"><strong>Scenario #1:</strong> Collection of personal data.</span></p>
+        <p><span style="font-weight: 400;">{Date of birth, home address, phone number, etc.}</span></p>
+        <p><span style="font-weight: 400;"><strong>Scenario #2:</strong> Collection of financial and/or health information.</span></p>
+        <p><span style="font-weight: 400;">{Credit card data and bank account information.}</span></p>
+        <p><span style="font-weight: 400;">In the cases above, exposure of any of the data examples could lead to identity theft or compromise of accounts.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for an Insecure Cloud Interface includes:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if the default username and password can be changed during the initial product setup.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if a specific user account is locked out after 3 - 5 failed login attempts.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if valid accounts can be identified using password recovery mechanisms or new user pages.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the interface for issues such as cross-site scripting, cross-site request forgery and sql injection.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing all cloud interfaces for vulnerabilities (API interfaces and cloud-based web interfaces).</span></p>
+        <p style="text-align: justify;">&nbsp;</p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #1:</strong> Password reset indicates whether the account is valid.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Password Reset "That account does not exist."}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #2:</strong> Username and password are poorly protected when transmitted over the network.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Authorization: Basic S2ZjSDFzYkF4ZzoxMjM0NTY3}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In the cases above, the attacker is able to either determine a valid user account or is able to capture the credentials as they cross the network and decode them since the credentials are only protected using Base64 Encoding.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for an Insecure Mobile Interface includes:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if the default username and password can be changed during the initial product setup.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if a specific user account is locked out after 3 - 5 failed login attempts.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Determining if valid accounts can be identified using password recovery mechanisms or new user pages.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing whether credentials are exposed while connected to wireless networks.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing whether two-factor authentication options are available.</span></p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #1:</strong> Password reset indicates whether the account exists or not.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Password Reset "That account does not exist."}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #2:</strong> Username and password are poorly protected when transmitted over the network.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Authorization: Basic S2ZjSDFzYkF4ZzoxMjM0NTY3}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In the cases above, the attacker is able to either determine a valid user account or is able to capture the credentials as they cross the network and decode them since the credentials are only protected using Base64 Encoding.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #1:</strong> No ability to enforce strong password policies.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Admins and users are allowed to create passwords for their accounts.}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #2:</strong> No ability to enable encryption of data at rest.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Password or other sensitive data stored on the device may not be encrypted.}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In the cases above, the attacker is able to use the lack of these controls to get access to user accounts with weak passwords or access data at rest which has protection.</span></p>]]></item>
+
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for insecure software/firmware updates include:</span></span></p>
+        <p><span style="font-weight: 400;">- Reviewing the update file itself for exposure of sensitive information in a human-readable format by someone using a hex edit tool.</span></p>
+        <p><span style="font-weight: 400;">- Reviewing the production file update for proper encryption using accepted algorithms.</span></p>
+        <p><span style="font-weight: 400;">- Reviewing the production file update to ensure it is properly signed.</span></p>
+        <p><span style="font-weight: 400;">- Reviewing the communication method used to transmit the update.</span></p>
+        <p><span style="font-weight: 400;">- Reviewing the cloud update server to ensure transport encryption methods are up to date and properly configured and that the server itself is not vulnerable.</span></p>
+        <p><span style="font-weight: 400;">- Reviewing the device for proper validation of signed update files.</span></p>
+        <p style="text-align: justify;">&nbsp;</p>
+        <p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p><span style="font-weight: 400;"><strong>Scenario #1:</strong> Update file is transmitted via HTTP.</span></p>
+        <p><span style="font-weight: 400;">{http://www.xyz.com/update.bin}</span></p>
+        <p><span style="font-weight: 400;"><strong>Scenario #2:</strong> Update file is unencrypted and human-readable data can be viewed.</span></p>
+        <p><span style="font-weight: 400;">In this case, the attacker is able to either capture the update file or capture the file and view its contents.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">Checking for Poor Physical Security includes:</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing how easily a device can be disassembled and data storage mediums accessed or removed.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the use of external ports such as USB to determine if data can be accessed on the device without disassembling the device.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the number of physical external ports to determine if all are required for proper device function.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the administrative interface to determine if external ports such as USB can be deactivated.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing the administrative interface to determine if administrative capabilities can be limited to local access only.</span></p>
+        <p style="text-align: justify;">&nbsp;</p>
+        <p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are example scenarios of flaws in the web interface.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #1:</strong> The device can be easily disassembled and the storage medium is an unencrypted SD card.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{SD card can be removed and inserted into a card reader to be modified or copied.}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"><strong>Scenario #2:</strong> USB ports are present on the device.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">{Custom software could be written to take advantage of features such as updating via the USB port to modify the original device software.}</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">In both cases, an attacker is able to access the original device software and make modifications or simply copy specific target data.</span></p>
+        <p>&nbsp;</p>]]></item>
+
     </string-array>
     <string-array name="i_guideline">
-        <item>Improper Platform Usage</item>
-        <item>Insecure Data Storage</item>
-        <item>Insecure Communication</item>
-        <item>Insecure Authentication</item>
-        <item>Insufficient Cryptography</item>
-        <item>Insecure Authorization</item>
-        <item>Client Code Quality</item>
-        <item>Code Tampering</item>
-        <item>Reverse Engineering</item>
-        <item>Extraneous Functionality</item>
+
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p><span style="font-weight: 400;">1. Default passwords and ideally default usernames to be changed during the initial setup.</span></p>
+        <p><span style="font-weight: 400;">2. Ensuring password recovery mechanisms are robust and do not supply an attacker with information indicating a valid account.</span></p>
+        <p><span style="font-weight: 400;">3. Ensuring web interface is not susceptible to XSS, SQLi or CSRF.</span></p>
+        <p><span style="font-weight: 400;">4. Ensuring credentials are not exposed to internal or external network traffic.</span></p>
+        <p><span style="font-weight: 400;">5. Ensuring weak passwords are not allowed.</span></p>
+        <p><span style="font-weight: 400;">6. Ensuring account lockout after 3 -5 failed login attempts.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p><span style="font-weight: 400;">1. Ensuring that strong passwords are required.&nbsp;</span></p>
+        <p><span style="font-weight: 400;">2. Ensuring granular access control is in place when necessary.</span></p>
+        <p><span style="font-weight: 400;"> 3. Ensuring credentials are properly protected.</span></p>
+        <p><span style="font-weight: 400;">4. Implement two-factor authentication where possible.</span></p>
+        <p><span style="font-weight: 400;">5. Ensuring that password recovery mechanisms are secure.</span></p>
+        <p><span style="font-weight: 400;">6. Ensuring re-authentication is required for sensitive features.</span></p>
+        <p><span style="font-weight: 400;">7. Ensuring options are available for configuring password controls.</span></p>
+        <p><span style="font-weight: 400;">8. Ensuring credential can be revoked.</span></p>
+        <p><span style="font-weight: 400;">9. App authentication is required.</span></p>
+        <p><span style="font-weight: 400;">10. The device authentication is required.</span></p>
+        <p><span style="font-weight: 400;">11. The server authentication is required.</span></p>
+        <p><span style="font-weight: 400;">12. Manage authenticated user id(credential info.) and the user's device id, the user's app id mapping table in the authentication server.</span></p>
+        <p><span style="font-weight: 400;">13. Ensuring that the authentication token/session key issuing to the client is always different.</span></p>
+        <p><span style="font-weight: 400;">14. Ensuring that the user id, app id, device id is universally unique.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p><span style="font-weight: 400;">1. Ensuring only the necessary ports are exposed and available.</span></p>
+        <p><span style="font-weight: 400;">2. Ensuring services are not vulnerable to buffer overflow and fuzzing attacks.</span></p>
+        <p><span style="font-weight: 400;">3. Ensuring services are not vulnerable to DoS attacks which can affect the device itself or other devices and/or users on the local network or other networks.</span></p>
+        <p><span style="font-weight: 400;">4. Ensuring network ports or services are not exposed to the internet via UPnP for example.</span></p>
+        <p><span style="font-weight: 400;">5. The abnormal service request traffic should be detected and blocked on the service gateway layer.</span></p>]]></item>
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. Ensuring data is encrypted using protocols such as SSL and TLS while transiting networks.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. Ensuring other industry standard encryption techniques are utilized to protect data during transport if SSL or TLS is not available.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3. Ensuring only accepted encryption standards are used and avoid using proprietary encryption protocols.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">4. Ensuring the message payload encryption.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">5. Ensuring the secure encryption key handshaking.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">6. Ensuring received data integrity verification.</span></p>]]></item>
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p><span style="font-weight: 400;">1. Ensuring only data critical to the functionality of the device is collected.</span></p>
+        <p><span style="font-weight: 400;">2. Ensuring that any data collected is of a less sensitive nature. (i.e., try not to collect sensitive data)</span></p>
+        <p><span style="font-weight: 400;">3. Ensuring that any data collected is de-identified or anonymized.</span></p>
+        <p><span style="font-weight: 400;">4. Ensuring any data collected is properly protected with encryption.</span></p>
+        <p><span style="font-weight: 400;">5. Ensuring the device and all of its components properly protect personal information.</span></p>
+        <p><span style="font-weight: 400;">6. Ensuring only authorized individuals to have access to collected personal information.</span></p>
+        <p><span style="font-weight: 400;">7. Ensuring that retention limits are set for collected data.</span></p>
+        <p><span style="font-weight: 400;">8. Ensuring that end-users are provided with "Notice and Choice" if data collected is more than what would be expected from the product.</span></p>
+        <p><span style="font-weight: 400;">9. Ensuring the role-based access control/authorization to the collected data/analyzed data is applied.</span></p>
+        <p><span style="font-weight: 400;">10. Ensuring that the analyzed data is de-identified.</span></p>]]></item>
+
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. Default passwords and ideally default usernames to be changed during the initial setup.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. Ensuring user accounts cannot be enumerated using functionality such as password reset mechanisms.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3. Ensuring account lockout after 3- 5 failed login attempts.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">4. Ensuring the cloud-based web interface is not susceptible to XSS, SQLi or CSRF.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">5. Ensuring credentials are not exposed to the internet.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">6. Implement two-factor authentication if possible.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">7. Detector block abnormal requests/attempts.</span></p>]]></item>
+
+        <item><![CDATA[<p><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p><span style="font-weight: 400;">1. Default passwords and ideally default usernames to be changed during the initial setup.</span></p>
+        <p><span style="font-weight: 400;">2. Ensuring user accounts cannot be enumerated using functionality such as password reset mechanisms.</span></p>
+        <p><span style="font-weight: 400;">3. Ensuring account lockout after a 3 - 5 failed login attempts.</span></p>
+        <p><span style="font-weight: 400;">4. Ensuring credentials are not exposed while connected to wireless networks.</span></p>
+        <p><span style="font-weight: 400;">5. Implementing two-factor authentication if possible.</span></p>
+        <p><span style="font-weight: 400;">6. Apply mobile app obfuscation technique.</span></p>
+        <p><span style="font-weight: 400;">7. Implement mobile app anti-tempering mechanism.</span></p>
+        <p><span style="font-weight: 400;">8. Ensuring the mobile app's memory hacking is possible.</span></p>
+        <p><span style="font-weight: 400;">9. Restrict the mobile app's execution on tempered OS environment.</span></p>]]></item>
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. Ensuring the ability to separate normal users from administrative users.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. Ensuring the ability to encrypt data at rest or in transit.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3. Ensuring the ability to force strong password policies.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">4. Ensuring the ability to enable logging of security events.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">5. Ensuring the ability to notify end users of security events.</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p><span style="font-weight: 400;">1. Ensuring the device has the ability to update. (very important, need secure update mechanism)</span></p>
+        <p><span style="font-weight: 400;">2. Ensuring the update file is encrypted using accepted encryption methods.</span></p>
+        <p><span style="font-weight: 400;">3. Ensuring the update file is transmitted via an encrypted connection.</span></p>
+        <p><span style="font-weight: 400;">4. Ensuring the update file does not expose sensitive data.</span></p>
+        <p><span style="font-weight: 400;">5. Ensuring the update is signed and verified before allowing the update to be uploaded and applied.</span></p>
+        <p><span style="font-weight: 400;">6. Ensuring the update server is secure.</span></p>
+        <p><span style="font-weight: 400;">7. Implement the secure boot if possible. (chain of trust)</span></p>]]></item>
+
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">These are some countermeasures to protect against the threats mentioned above.</span></span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">1. Ensuring data storage medium cannot be easily removed.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">2. Ensuring stored data is encrypted at rest.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">3. Ensuring USB ports or other external ports cannot be used to maliciously access the device.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">4. Ensuring the device cannot be easily disassembled.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;">5. Ensuring only required external ports such as USB are required for the product to function.</span></p>
+        <p style="text-align: justify;"><span style="font-weight: 400;"> Ensuring the product has the ability to limit administrative capabilities.</span></p>
+        <p>&nbsp;</p>]]></item>
+
+
     </string-array>
 
 </resources>

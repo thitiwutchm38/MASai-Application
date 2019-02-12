@@ -101,16 +101,16 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
         mTextViewProgress = (TextView) findViewById(R.id.text_progress);
 
         // FIXME: Uncomment for mockup
-        setRecyclerView(loadJsonFromAsset());
+ //       setRecyclerView(loadJsonFromAsset());
 
         // FIXME: Uncomment for real app
-//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//        if (!mBound) {
-//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//        }
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     private void setRecyclerView(String jsonString) {
