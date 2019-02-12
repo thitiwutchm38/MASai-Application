@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.example.bookthiti.masai2.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,14 +56,6 @@ public class MobileApplicationScanningResultFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MobileApplicationScanningResultFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static MobileApplicationScanningResultFragment newInstance(TargetApplicationInfo targetApplicationInfo) {
         MobileApplicationScanningResultFragment fragment = new MobileApplicationScanningResultFragment();
@@ -85,6 +80,7 @@ public class MobileApplicationScanningResultFragment extends Fragment {
             int versionCode = mTargetApplicationInfo.getAppVersionCode();
             MasaiServerAPI masaiServerAPI = RetrofitClientInstance.getRetrofitInstance().create(MasaiServerAPI.class);
             mTargetApplicationScanningResultCall = masaiServerAPI.getAppScanningResult(packageName, versionCode);
+            Log.i(TAG_INFO, packageName);
         }
 
     }
@@ -101,15 +97,21 @@ public class MobileApplicationScanningResultFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mProgressBar.setVisibility(View.VISIBLE);
+                mTextViewProgress.setVisibility(View.INVISIBLE);
+                mButtonRefresh.setVisibility(View.INVISIBLE);
                 refreshCall();
             }
         });
         mTextViewProgress.setVisibility(View.INVISIBLE);
         mButtonRefresh.setVisibility(View.INVISIBLE);
 
-        refreshCall();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshCall();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -152,16 +154,32 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     }
 
     private void refreshCall() {
+        if (mTargetApplicationScanningResultCall != null) {
+            if (!mTargetApplicationScanningResultCall.isExecuted()) {
+                sendRequest();
+            } else {
+                mTargetApplicationScanningResultCall = mTargetApplicationScanningResultCall.clone();
+                sendRequest();
+            }
+        }
+    }
+
+    private void sendRequest() {
         mTargetApplicationScanningResultCall.enqueue(new Callback<TargetApplicationScanningResult>() {
             @Override
             public void onResponse(Call<TargetApplicationScanningResult> call, Response<TargetApplicationScanningResult> response) {
                 mTargetApplicationScanningResult = response.body();
-
+                Log.i(TAG_INFO, mTargetApplicationScanningResult.getStatus());
+                mProgressBar.setVisibility(View.GONE);
+                mTextViewProgress.setVisibility(View.VISIBLE);
+                mButtonRefresh.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFailure(Call<TargetApplicationScanningResult> call, Throwable t) {
-
+                mProgressBar.setVisibility(View.GONE);
+                mTextViewProgress.setVisibility(View.VISIBLE);
+                mButtonRefresh.setVisibility(View.VISIBLE);
             }
         });
     }

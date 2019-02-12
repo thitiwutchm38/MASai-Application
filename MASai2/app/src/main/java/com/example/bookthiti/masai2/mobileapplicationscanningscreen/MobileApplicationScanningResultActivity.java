@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class MobileApplicationScanningResultActivity extends AppCompatActivity i
     private TextView mTextViewAppVersion;
     private TextView mTextViewAppId;
     private TextView mTextViewAppCategory;
+
+    private MobileApplicationScanningResultFragment mMobileApplicationScanningResultFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +49,11 @@ public class MobileApplicationScanningResultActivity extends AppCompatActivity i
         mTextViewAppId.setText(targetApplicationInfo.getAppId());
         mTextViewAppCategory.setText(targetApplicationInfo.getAppCategory());
 
+        mMobileApplicationScanningResultFragment = MobileApplicationScanningResultFragment.newInstance(targetApplicationInfo);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_app_scan_result, mMobileApplicationScanningResultFragment);
+        fragmentTransaction.commit();
 
     }
 
