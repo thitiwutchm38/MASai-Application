@@ -30,9 +30,8 @@
         android:layout_marginEnd="16dp"
         android:layout_toEndOf="@+id/tvOwaspIcon"
         android:layout_toRightOf="@+id/tvOwaspIcon"
-        android:ellipsize="marquee"
+        android:ellipsize="end"
         android:fadingEdge="horizontal"
-        android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:text="TextView"
@@ -55,6 +54,18 @@
         android:maxLines="2"
         android:text="This is a very long text and we need to show 3...(dots)"
         app:firstBaselineToTopHeight="20dp" />
+
+    <ImageView
+        android:id="@+id/ic_is_supported"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOwaspIcon"
+        android:layout_alignStart="@+id/tvOwaspIcon"
+        android:layout_alignEnd="@+id/tvOwaspIcon"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        app:srcCompat="@drawable/ic_star_yellow_a700_18dp" />
 
 
 </RelativeLayout>
