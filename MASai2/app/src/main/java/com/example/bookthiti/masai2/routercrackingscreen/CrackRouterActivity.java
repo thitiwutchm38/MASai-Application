@@ -225,7 +225,7 @@ public class CrackRouterActivity extends AppCompatActivity {
 //                    }
 //                }, 5000);
 //                mProgressBar.setVisibility(View.INVISIBLE);
-
+//
             }
         });
 

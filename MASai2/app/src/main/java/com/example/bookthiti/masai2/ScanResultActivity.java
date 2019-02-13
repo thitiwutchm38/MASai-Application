@@ -40,6 +40,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
     LinearLayout line_layout;
     NotificationCompat.Builder mBuilder;
 
+
     //Show app detail
     TextView app_data_name;
     TextView app_data_id;
@@ -231,7 +232,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setContentView(R.layout.pop_up_password_suggestion);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(5);
@@ -270,7 +271,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setContentView(R.layout.pop_up_password_suggestion);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(5);
@@ -308,7 +309,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setContentView(R.layout.pop_up_password_suggestion);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(5);
@@ -346,7 +347,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
-                builder.setContentView(R.layout.pop_up_permission_result);
+                builder.setContentView(R.layout.pop_up_password_suggestion);
                 builder.setGravity(Gravity.CENTER);
                 builder.setScaleRatio(0.2f);
                 builder.setBlurRadius(5);

@@ -4,18 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
@@ -48,6 +47,10 @@ public class PortAttackActivity extends AppCompatActivity {
     private TextView mTextViewProgress;
 
     private TextView textView_rec1;
+
+    private TextView mTextPasswordSuggestion;
+
+    private LinearLayout popup;
 
     private DeviceModel mDeviceModel;
     private String mTargetService;
@@ -134,26 +137,48 @@ public class PortAttackActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress);
         mProgressBar.setVisibility(View.VISIBLE);
         mTextViewProgress = findViewById(R.id.text_progress);
+        mTextPasswordSuggestion = findViewById(R.id.textView_password_suggestion);
 
         //textView_rec1 = findViewById(R.id.textView_rec1);
 
-        String str ="<p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Has 12 Characters, Minimum</strong>: <span style=\"color: #339966;\">You need to choose a password that&rsquo;s long enough. There&rsquo;s no minimum password length everyone agrees on, but you should generally go for passwords that are a minimum of 12 to 14 characters in length. A longer password would be even better.</span></span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters</strong>: <span style=\"color: #339966;\">Use a mix of different types of characters to make the password harder to crack.</span></span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Isn&rsquo;t a Dictionary Word or Combination of Dictionary Words</strong>:<span style=\"color: #339966;\"> Stay away from obvious dictionary words and combinations of dictionary words. Any word on its own is bad. Any combination of a few words, especially if they&rsquo;re obvious, is also bad.</span></span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>Doesn&rsquo;t Rely on Obvious Substitutions</strong>: <span style=\"color: #339966;\">Don&rsquo;t use common substitutions, either &mdash; for example, &ldquo;H0use&rdquo; isn&rsquo;t strong just because you&rsquo;ve replaced an o with a 0. That&rsquo;s just obvious.</span></span></p>";
         //textView_rec1.setText(Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT));
 
         //Spanned htmlAsSpanned = Html.fromHtml(str); // used by TextView
 
+        mTextPasswordSuggestion.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
 
-        WebView webView = (WebView) findViewById(R.id.webview_test);
-        webView.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
+                BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
+                builder.setContentView(R.layout.pop_up_password_suggestion);
+                builder.setGravity(Gravity.CENTER);
+                builder.setScaleRatio(0.2f);
+                builder.setBlurRadius(5);
+                builder.setTintColor(0x3000000);
+                BlurPopupWindow blurPopupWindow = builder.build();
+                blurPopupWindow.show();
+
+                popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup_pass_suggest);
+
+                WebView webView = (WebView) blurPopupWindow.findViewById(R.id.webview_test);
+                String str ="<p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Has 12 Characters, Minimum</strong>:&nbsp;</span><span style=\"color: #339966;\">You need to choose a password that&rsquo;s long enough. There&rsquo;s no minimum password length everyone agrees on, but you should generally go for passwords that are a minimum of 12 to 14 characters in length. A longer password would be even better.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters</strong>:&nbsp;</span><span style=\"color: #339966;\">Use a mix of different types of characters to make the password harder to crack.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Isn&rsquo;t a Dictionary Word or Combination of Dictionary Words:&nbsp;</strong></span><span style=\"color: #339966;\">Stay away from obvious dictionary words and combinations of dictionary words. Any word on its own is bad. Any combination of a few words, especially if they&rsquo;re obvious, is also bad.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Doesn&rsquo;t Rely on Obvious Substitutions</strong>:&nbsp;</span><span style=\"color: #339966;\">Don&rsquo;t use common substitutions, either &mdash; for example, &ldquo;H0use&rdquo; isn&rsquo;t strong just because you&rsquo;ve replaced an o with a 0. That&rsquo;s just obvious.</span></p>";
+                webView.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
+
+                popup.setBackgroundResource(R.drawable.shape_score);
+                popup.setBackgroundColor(Color.parseColor("#9FC5E8"));
+
+
+            }
+        });
+
 
         // FIXME: Uncomment for real application
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-        }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+//        if (!mBound) {
+//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//        }
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     private boolean isRemoteDeviceConnected() {
