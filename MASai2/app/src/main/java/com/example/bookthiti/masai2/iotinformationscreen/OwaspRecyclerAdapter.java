@@ -47,7 +47,7 @@ public class OwaspRecyclerAdapter extends RecyclerView.Adapter<OwaspRecyclerAdap
         Holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, OwaspMobileActivity.class);
+                Intent intent = new Intent(context, OwaspContentActivity.class);
                 intent.putExtra("owaspModel", owaspModelList.get(position));
                 context.startActivity(intent);
             }

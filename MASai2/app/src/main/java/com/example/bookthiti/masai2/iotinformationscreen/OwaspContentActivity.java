@@ -11,14 +11,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
-import com.example.bookthiti.masai2.iotinformationscreen.OwaspModel;
 
 import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
-public class OwaspMobileActivity extends AppCompatActivity implements OwaspContentFragment.OnFragmentInteractionListener{
+public class OwaspContentActivity extends AppCompatActivity implements OwaspContentFragment.OnFragmentInteractionListener{
     private Context mContext;
 
     private TextView mTextViewTopic;
@@ -31,8 +31,10 @@ public class OwaspMobileActivity extends AppCompatActivity implements OwaspConte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owasp_mobile2);
-        setTitle("OWASP Mobile Top 10");
+//        setContentView(R.layout.activity_owasp_mobile2);
+        this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_owasp_content);
+
         mContext = getApplicationContext();
         Intent intent = getIntent();
         mOwaspModel = (OwaspModel) intent.getParcelableExtra("owaspModel");

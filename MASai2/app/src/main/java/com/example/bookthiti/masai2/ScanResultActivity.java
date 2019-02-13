@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bookthiti.masai2.iotinformationscreen.OwaspMobileActivity;
+import com.example.bookthiti.masai2.iotinformationscreen.OwaspContentActivity;
 import com.example.bookthiti.masai2.iotinformationscreen.OwaspModel;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
@@ -1103,7 +1103,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 case R.id.layout_pop_up_permission_result:
                     Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                     //openActivityPortInfo(position);
-                    Intent intent = new Intent(this, OwaspMobileActivity.class);
+                    Intent intent = new Intent(this, OwaspContentActivity.class);
                     String owaspTopicId = mainModel.getOwasp_num();
                     String owaspTopicIdPattern = "([MI])(\\d+)";
                     Pattern pattern = Pattern.compile(owaspTopicIdPattern);
@@ -1136,7 +1136,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 case R.id.layout_pop_up_result:
                     Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                     //openActivityPortInfo(position);
-                    Intent intent_2 = new Intent(this,OwaspMobileActivity.class);
+                    Intent intent_2 = new Intent(this, OwaspContentActivity.class);
 
                     String owaspTopicId = mainModel.getOwasp_num();
                     String owaspTopicIdPattern = "([MI])(\\d+)";
