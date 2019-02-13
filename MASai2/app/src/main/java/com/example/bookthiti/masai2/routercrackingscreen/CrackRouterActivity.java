@@ -178,18 +178,18 @@ public class CrackRouterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // FIXME: Uncomment for real application
-//                if (isRemoteDeviceConnected) {
-//                    JsonObject jsonObject = new JsonObject();
-//                    jsonObject.addProperty("command", "wifiCracking");
-//                    Gson gson = new Gson();
-//                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
-//                    Log.i(TAG_INFO, payloadJsonString);
-//                    JsonParser jsonParser = new JsonParser();
-//                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
-//                    jsonObject.add("payload", payloadJsonElement);
-//                    String jsonString = jsonObject.toString();
-//                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
-//                }
+                if (isRemoteDeviceConnected) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("command", "wifiCracking");
+                    Gson gson = new Gson();
+                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
+                    Log.i(TAG_INFO, payloadJsonString);
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
+                    jsonObject.add("payload", payloadJsonElement);
+                    String jsonString = jsonObject.toString();
+                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                }
 
                 ////////////////////
 

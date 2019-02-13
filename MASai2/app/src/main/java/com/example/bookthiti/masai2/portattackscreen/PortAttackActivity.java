@@ -4,15 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,9 +49,8 @@ public class PortAttackActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private TextView mTextViewProgress;
 
-    private TextView textView_rec1;
-
     private TextView mTextPasswordSuggestion;
+    private ImageView mImageView;
 
     private LinearLayout popup;
 
@@ -86,6 +88,8 @@ public class PortAttackActivity extends AppCompatActivity {
                         mTextViewPassword.setText("-");
                     }
                 }
+                mTextPasswordSuggestion.setVisibility(View.VISIBLE);
+                mImageView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mTextViewProgress.setVisibility(View.GONE);
             }
@@ -138,12 +142,17 @@ public class PortAttackActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         mTextViewProgress = findViewById(R.id.text_progress);
         mTextPasswordSuggestion = findViewById(R.id.textView_password_suggestion);
+        mImageView = findViewById(R.id.imageView);
+
+        mTextPasswordSuggestion.setVisibility(View.INVISIBLE);
+        mImageView.setVisibility(View.INVISIBLE);
 
         //textView_rec1 = findViewById(R.id.textView_rec1);
 
         //textView_rec1.setText(Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT));
 
         //Spanned htmlAsSpanned = Html.fromHtml(str); // used by TextView
+
 
         mTextPasswordSuggestion.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -172,13 +181,13 @@ public class PortAttackActivity extends AppCompatActivity {
 
 
         // FIXME: Uncomment for real application
-//        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//        if (!mBound) {
-//            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//        }
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+        if (!mBound) {
+            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
     }
 
     private boolean isRemoteDeviceConnected() {
