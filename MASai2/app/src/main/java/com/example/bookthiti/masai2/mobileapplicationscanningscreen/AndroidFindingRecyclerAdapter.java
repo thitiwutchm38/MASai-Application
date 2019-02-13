@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,44 +9,49 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bookthiti.masai2.AndroidRuleModel;
+import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.R;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class popUp_result_adapter extends RecyclerView.Adapter<popUp_result_adapter.ViewHolder>{
+public class AndroidFindingRecyclerAdapter extends RecyclerView.Adapter<AndroidFindingRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<AndroidRuleModel> mainModelArrayList;
+    private List<AppVulnerability> appVulnerabilityList;
     private Context context;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
-    public popUp_result_adapter( Context context, ArrayList<AndroidRuleModel> mainModelArrayList) {
-
+    public AndroidFindingRecyclerAdapter(Context context, List<AppVulnerability> appVulnerabilityList) {
         this.context = context;
-        this.mainModelArrayList = mainModelArrayList;
+        this.appVulnerabilityList = appVulnerabilityList;
     }
 
     @Override
-    public popUp_result_adapter.ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
+    public AndroidFindingRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_popup_android_rule_result, viewGroup, false);
-        return new popUp_result_adapter.ViewHolder(view);
+        return new AndroidFindingRecyclerAdapter.ViewHolder(view);
 
     }
     @Override
-    public void onBindViewHolder( popUp_result_adapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(AndroidFindingRecyclerAdapter.ViewHolder viewHolder, int position) {
 
-        final AndroidRuleModel offersListModel = mainModelArrayList.get(position);
-
-
-        viewHolder.textView_problem_result.setText(offersListModel.getProblem());
-        viewHolder.textView_OWAPS_num.setText(offersListModel.getOwasp_num());
-
-        viewHolder.rowMainParentLinearLayout.setTag(offersListModel);
-
-
+        AppVulnerability appVulnerability = appVulnerabilityList.get(position);
+        viewHolder.textView_problem_result.setText(appVulnerability.getTitle());
+        Pattern pattern = Pattern.compile("\\[([MI]\\d+).+\\]");
+        Matcher matcher = pattern.matcher(appVulnerability.getOwaspId());
+        if (matcher.matches()) {
+            viewHolder.textView_OWAPS_num.setText(matcher.group(1));
+        }
 
     }
+
     @Override
     public int getItemCount() {
-        return mainModelArrayList.size();
+        return appVulnerabilityList.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -64,13 +69,8 @@ public class popUp_result_adapter extends RecyclerView.Adapter<popUp_result_adap
             super(view);
 
             textView_problem_result = view.findViewById(R.id.textView_problem_result);
-
             textView_OWAPS_num =  view.findViewById(R.id.textView_OWAPS_num);
-
-            //device_lin = view.findViewById(R.id.layout_pop_up_result);
-
             rowMainParentLinearLayout =  view.findViewById(R.id.layout_pop_up_result);
-
 
             rowMainParentLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,8 +80,6 @@ public class popUp_result_adapter extends RecyclerView.Adapter<popUp_result_adap
                     }
                 }
             });
-
-
 
         }
     }

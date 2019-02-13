@@ -1,8 +1,7 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,44 +9,53 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.PermissionModel;
+import com.example.bookthiti.masai2.R;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class popUp_permission_adapter extends RecyclerView.Adapter<popUp_permission_adapter.ViewHolder>{
+public class AndroidPermissionRecyclerAdapter extends RecyclerView.Adapter<AndroidPermissionRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<PermissionModel> mainModelArrayList;
+    private List<Permission> permissionList;
     private Context context;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
-    public popUp_permission_adapter( Context context, ArrayList<PermissionModel> mainModelArrayList) {
-
+    public AndroidPermissionRecyclerAdapter(Context context, List<Permission> permissionList) {
         this.context = context;
-        this.mainModelArrayList = mainModelArrayList;
+        this.permissionList = permissionList;
     }
 
     @Override
-    public popUp_permission_adapter.ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
-
+    public AndroidPermissionRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_popup_permission_result, viewGroup, false);
-        return new popUp_permission_adapter.ViewHolder(view);
-
+        return new AndroidPermissionRecyclerAdapter.ViewHolder(view);
     }
-    @Override
-    public void onBindViewHolder( popUp_permission_adapter.ViewHolder viewHolder, int position) {
 
-        final PermissionModel offersListModel = mainModelArrayList.get(position);
+    @Override
+    public void onBindViewHolder(AndroidPermissionRecyclerAdapter.ViewHolder viewHolder, int position) {
+
+        Permission permission = permissionList.get(position);
         String colorString = null;
 
         //viewHolder.textView_problem_result.setText(offersListModel.getProblem());
        // viewHolder.textView_OWAPS_num.setText(offersListModel.getOwasp_num()+" - "+offersListModel.getProblem());
 
-        viewHolder.mtextViewInfo.setText(offersListModel.getInformation());
-        viewHolder.mtextDescription.setText(offersListModel.getDescription());
+        viewHolder.mtextViewInfo.setText(permission.getInfo());
+        viewHolder.mtextDescription.setText(permission.getDescription());
 
-        viewHolder.rowMainParentLinearLayout.setTag(offersListModel);
+        viewHolder.rowMainParentLinearLayout.setTag(permission);
 
-
-
-        switch(offersListModel.getOwasp_num()) {
+        String owaspId = "";
+        Pattern pattern = Pattern.compile("\\[([MI]\\d+).+\\]");
+        Matcher matcher = pattern.matcher(permission.getOwaspId() != null ? permission.getOwaspId() : "");
+        if (matcher.matches()) {
+            owaspId = matcher.group(1);
+        }
+        switch(owaspId) {
             case "M1":
                 colorString = "#0066ff";
                 break;
@@ -82,14 +90,11 @@ public class popUp_permission_adapter extends RecyclerView.Adapter<popUp_permiss
             default:
         }
 
- //       viewHolder.textView_OWAPS_num.setTextColor(Color.parseColor(colorString));
-//        viewHolder.mtextViewInfo.setTextColor(Color.parseColor(colorString));
-//        viewHolder.mtextDescription.setTextColor(Color.parseColor(colorString));
 
     }
     @Override
     public int getItemCount() {
-        return mainModelArrayList.size();
+        return permissionList.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
 

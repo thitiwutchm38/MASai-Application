@@ -35,6 +35,7 @@ public class MobileApplicationScanningResultFragment extends Fragment {
 //    private String mParam1;
 //    private String mParam2;
 
+    private Context mContext;
     private TargetApplicationInfo mTargetApplicationInfo;
     private TargetApplicationScanningResult mTargetApplicationScanningResult;
 
@@ -55,6 +56,16 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     private TextView mTextViewPermissionSignature;
     private TextView mTextViewPermissionDangerous;
     private TextView mTextViewPermissionSpecial;
+
+    private ConstraintLayout mContainerAndroidFindingHighRisk;
+    private ConstraintLayout mContainerAndroidFindingWarning;
+    private ConstraintLayout mContainerAndroidFindingLowRisk;
+    private ConstraintLayout mContainerAndroidFindingInfo;
+
+    private ConstraintLayout mContainerPermissionNormal;
+    private ConstraintLayout mContainerPermissionSignature;
+    private ConstraintLayout mContainerPermissionDangerous;
+    private ConstraintLayout mContainerPermissionSpecial;
 
     private RecyclerView mRecyclerViewAppVulners;
 
@@ -90,6 +101,7 @@ public class MobileApplicationScanningResultFragment extends Fragment {
             MasaiServerAPI masaiServerAPI = RetrofitClientInstance.getRetrofitInstance().create(MasaiServerAPI.class);
             mTargetApplicationScanningResultCall = masaiServerAPI.getAppScanningResult(packageName, versionCode);
             Log.i(TAG_INFO, packageName);
+            mContext = getActivity();
         }
 
     }
@@ -121,6 +133,16 @@ public class MobileApplicationScanningResultFragment extends Fragment {
         mTextViewPermissionSignature = view.findViewById(R.id.text_permission_signature);
         mTextViewPermissionDangerous = view.findViewById(R.id.text_permission_dangerous);
         mTextViewPermissionSpecial = view.findViewById(R.id.text_permission_special);
+
+        mContainerAndroidFindingHighRisk = view.findViewById(R.id.layout_container_android_finding_high);
+        mContainerAndroidFindingWarning = view.findViewById(R.id.layout_container_android_finding_warning);
+        mContainerAndroidFindingLowRisk = view.findViewById(R.id.layout_container_android_finding_low);
+        mContainerAndroidFindingInfo = view.findViewById(R.id.layout_container_android_finding_info);
+
+        mContainerPermissionNormal = view.findViewById(R.id.layout_container_android_permission_normal);
+        mContainerPermissionSignature = view.findViewById(R.id.layout_container_android_permission_signature);
+        mContainerPermissionDangerous = view.findViewById(R.id.layout_container_android_permission_dangerous);
+        mContainerPermissionSpecial = view.findViewById(R.id.layout_container_android_permission_special);
 
         mConstraintLayout = view.findViewById(R.id.layout_container_app_result);
 
@@ -219,6 +241,16 @@ public class MobileApplicationScanningResultFragment extends Fragment {
                     mAppVulnerabilityList.addAll(mTargetApplicationScanningResult.getAppVulnerabilityList());
                     mAppVulnerabilityOwaspRecyclerAdapter.updateOwaspAppVulnerMap();
                     mAppVulnerabilityOwaspRecyclerAdapter.notifyDataSetChanged();
+
+                    mContainerAndroidFindingHighRisk.setOnClickListener(new ContainerAndroidFindingOnClickListener(mContext, mAppVulnerabilityList, "high"));
+                    mContainerAndroidFindingWarning.setOnClickListener(new ContainerAndroidFindingOnClickListener(mContext, mAppVulnerabilityList, "warning"));
+                    mContainerAndroidFindingLowRisk.setOnClickListener(new ContainerAndroidFindingOnClickListener(mContext, mAppVulnerabilityList, "good"));
+                    mContainerAndroidFindingInfo.setOnClickListener(new ContainerAndroidFindingOnClickListener(mContext, mAppVulnerabilityList, "info"));
+
+                    mContainerPermissionNormal.setOnClickListener(new ContainerAndroidPermissionOnClickListener(mContext, mTargetApplicationScanningResult.getPermissionList(), "normal"));
+                    mContainerPermissionSignature.setOnClickListener(new ContainerAndroidPermissionOnClickListener(mContext, mTargetApplicationScanningResult.getPermissionList(), "signature"));
+                    mContainerPermissionDangerous.setOnClickListener(new ContainerAndroidPermissionOnClickListener(mContext, mTargetApplicationScanningResult.getPermissionList(), "dangerous"));
+                    mContainerPermissionSpecial.setOnClickListener(new ContainerAndroidPermissionOnClickListener(mContext, mTargetApplicationScanningResult.getPermissionList(), "special"));
 
 //                    mAppVulnerabilityOwaspRecyclerAdapter = new AppVulnerabilityOwaspRecyclerAdapter(getContext(), mTargetApplicationScanningResult.getAppVulnerabilityList());
 //                    mRecyclerViewAppVulners.setAdapter(mAppVulnerabilityOwaspRecyclerAdapter);
