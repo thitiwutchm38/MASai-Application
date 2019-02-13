@@ -3,18 +3,24 @@ package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
@@ -23,6 +29,10 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.ScanResultActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +40,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+
 public class MobileApplicationScannerActivity extends AppCompatActivity {
-    private final static String TAG_INFO = "Log info";
-    private final static String TAG_DEBUG = "Log debug";
-    private final static String TAG_ERROR = "Log error";
     private static final long STOP_TYPING_TIMEOUT = 1000; // 1 second
 
     private Context mContext;
@@ -99,10 +108,11 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
         mStartAppScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        //        if(selectedApplication != null) {
-                    Intent startScanResultActivityIntent = new Intent(mContext, ScanResultActivity.class);
+                if(selectedApplication != null) {
+                    Intent startScanResultActivityIntent = new Intent(mContext, MobileApplicationScanningResultActivity.class);
+                    startScanResultActivityIntent.putExtra("selectedApplication", selectedApplication);
                     startActivity(startScanResultActivityIntent);
-        //        }
+                }
             }
         });
     }
@@ -125,10 +135,23 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
         final CursorAdapter suggestionAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_app_search_suggestion,
                 null,
-                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1},
-                new int[]{android.R.id.text1},
+                new String[]{SearchManager.SUGGEST_COLUMN_ICON_1, SearchManager.SUGGEST_COLUMN_TEXT_1},
+                new int[]{R.id.ic_suggest_app, R.id.text_suggest_app_name},
                 0);
-
+        ((SimpleCursorAdapter) suggestionAdapter).setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int i) {
+                switch (view.getId()) {
+                    case R.id.ic_suggest_app:
+                        Log.i(TAG_INFO, cursor.getString(i));
+//                        new DownloadImageTask((ImageView) view).execute(cursor.getString(i));
+                        Bitmap bitmap = MobileApplicationScannerActivity.StringToBitMap(cursor.getString(i));
+                        ((ImageView) view).setImageBitmap(bitmap);
+                        return true;
+                }
+                return false;
+            }
+        });
         final List<TargetApplicationInfo> suggestions = new ArrayList<>();
 
         mCursorAdapter = suggestionAdapter;
@@ -208,6 +231,9 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 mSearchView.setQuery(selectedApplication.getAppName(), false);
                 Log.i(TAG_INFO, "" + mSuggestions.size());
                 mSelectFromGooglePlayButton.setText(selectedApplication.getAppName());
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(selectedApplication.getAppIcon().getBitmap(), 80, 80, false);
+                BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), resizedBitmap);
+                mSelectFromGooglePlayButton.setCompoundDrawablesWithIntrinsicBounds(bitmapDrawable, null, null, null);
                 mSearchView.clearFocus();
                 return true;
             }
@@ -229,6 +255,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 Log.i(TAG_INFO, "" + mSuggestions.size());
                 String[] columns = {
                         BaseColumns._ID,
+                        SearchManager.SUGGEST_COLUMN_ICON_1,
                         SearchManager.SUGGEST_COLUMN_TEXT_1,
                         SearchManager.SUGGEST_COLUMN_INTENT_DATA
                 };
@@ -238,7 +265,9 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 for (TargetApplicationInfo targetApplicationInfo : targetApplicationInfos) {
                     Log.i(TAG_INFO, "appId: " + targetApplicationInfo.getAppId() + ", appName: " + targetApplicationInfo.getAppName());
 //                    Log.i(TAG_INFO, "iconUrl: " + targetApplicationInfo.getAppIcon().getUrl());
-                    String[] tmp = {Integer.toString(i), targetApplicationInfo.getAppName(), targetApplicationInfo.getAppName()};
+                    String[] tmp = {Integer.toString(i),
+                            MobileApplicationScannerActivity.BitMapToString(targetApplicationInfo.getAppIcon().getBitmap())
+                            , targetApplicationInfo.getAppName(), targetApplicationInfo.getAppName()};
                     cursor.addRow(tmp);
                     i++;
                 }
@@ -265,4 +294,24 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
         stopTypingHandler.removeCallbacks(stopTypingCallback);
         stopTypingHandler.postDelayed(stopTypingCallback, timeout);
     }
+
+    public static String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    public static Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 }

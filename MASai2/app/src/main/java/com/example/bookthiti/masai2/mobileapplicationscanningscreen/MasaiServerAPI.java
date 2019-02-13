@@ -10,4 +10,7 @@ public interface MasaiServerAPI {
 
     @GET("/api/search")
     Call<List<TargetApplicationInfo>> getAllTargetApplicationInfo(@Query("keyword") String keyword);
+
+    @GET("/api/info")
+    Call<TargetApplicationScanningResult> getAppScanningResult(@Query("package_name") String packageName, @Query("version_code") int versionCode);
 }
