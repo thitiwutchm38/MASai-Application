@@ -19,8 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bookthiti.masai2.iotinformationscreen.OwaspMobileActivity;
+import com.example.bookthiti.masai2.iotinformationscreen.OwaspContentActivity;
 import com.example.bookthiti.masai2.iotinformationscreen.OwaspModel;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.AndroidFindingRecyclerAdapter;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.AndroidPermissionRecyclerAdapter;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
 import org.json.JSONArray;
@@ -103,10 +105,10 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
     private Context mContext;
 
-    popUp_result_adapter mainRecyclerAdapter;
+    AndroidFindingRecyclerAdapter mainRecyclerAdapter;
 
 
-    popUp_permission_adapter mainRecyclerPAdapter;
+    AndroidPermissionRecyclerAdapter mainRecyclerPAdapter;
 
     private JSONArray valuesWarning = null;
     private JSONArray valuesLow = null;
@@ -259,7 +261,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
                 PermissionModel mainModel = new PermissionModel();
 
-                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListSignature);
+                mainRecyclerPAdapter = new AndroidPermissionRecyclerAdapter(mContext,null);
 
                 mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerPAdapter);
@@ -298,7 +300,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
                 PermissionModel mainModel = new PermissionModel();
 
-                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListSys);
+                mainRecyclerPAdapter = new AndroidPermissionRecyclerAdapter(mContext,null);
 
                 mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerPAdapter);
@@ -336,7 +338,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
                 PermissionModel mainModel = new PermissionModel();
 
-                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListNormal);
+                mainRecyclerPAdapter = new AndroidPermissionRecyclerAdapter(mContext,null);
 
                 mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerPAdapter);
@@ -373,7 +375,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
 
                 PermissionModel mainModel = new PermissionModel();
 
-                mainRecyclerPAdapter = new popUp_permission_adapter(mContext,mainModelArrayListHighP);
+                mainRecyclerPAdapter = new AndroidPermissionRecyclerAdapter(mContext,null);
 
                 mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerPAdapter);
@@ -419,7 +421,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 
 
 
-                mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListWarning);
+                mainRecyclerAdapter = new AndroidFindingRecyclerAdapter(mContext,null);
 
                 mainRecyclerAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerAdapter);
@@ -456,7 +458,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                         LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(linearLayoutManager);
 
-                mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListLow);
+                mainRecyclerAdapter = new AndroidFindingRecyclerAdapter(mContext,null);
 
                 mainRecyclerAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerAdapter);
@@ -493,7 +495,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 recyclerView.setLayoutManager(linearLayoutManager);
                 AndroidRuleModel mainModel = new AndroidRuleModel();
 
-                mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListMedium);
+                mainRecyclerAdapter = new AndroidFindingRecyclerAdapter(mContext,null);
 
                 mainRecyclerAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerAdapter);
@@ -528,7 +530,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 recyclerView.setLayoutManager(linearLayoutManager);
                 AndroidRuleModel mainModel = new AndroidRuleModel();
 
-                mainRecyclerAdapter = new popUp_result_adapter(mContext,mainModelArrayListHigh);
+                mainRecyclerAdapter = new AndroidFindingRecyclerAdapter(mContext,null);
 
                 mainRecyclerAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
                 recyclerView.setAdapter(mainRecyclerAdapter);
@@ -1104,7 +1106,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 case R.id.layout_pop_up_permission_result:
                     Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                     //openActivityPortInfo(position);
-                    Intent intent = new Intent(this, OwaspMobileActivity.class);
+                    Intent intent = new Intent(this, OwaspContentActivity.class);
                     String owaspTopicId = mainModel.getOwasp_num();
                     String owaspTopicIdPattern = "([MI])(\\d+)";
                     Pattern pattern = Pattern.compile(owaspTopicIdPattern);
@@ -1137,7 +1139,7 @@ public class ScanResultActivity extends AppCompatActivity implements OnRecyclerV
                 case R.id.layout_pop_up_result:
                     Toast.makeText(this, "Position clicked: " + String.valueOf(position) + ", " + mainModel.getProblem(), Toast.LENGTH_LONG).show();
                     //openActivityPortInfo(position);
-                    Intent intent_2 = new Intent(this,OwaspMobileActivity.class);
+                    Intent intent_2 = new Intent(this, OwaspContentActivity.class);
 
                     String owaspTopicId = mainModel.getOwasp_num();
                     String owaspTopicIdPattern = "([MI])(\\d+)";
