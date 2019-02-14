@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
@@ -23,6 +24,8 @@ public class OwaspContentActivity extends AppCompatActivity implements OwaspCont
 
     private TextView mTextViewTopic;
 //    private TextView mTextViewContent;
+
+    private ImageView mImageView;
 
     private OwaspModel mOwaspModel;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -40,6 +43,10 @@ public class OwaspContentActivity extends AppCompatActivity implements OwaspCont
         mOwaspModel = (OwaspModel) intent.getParcelableExtra("owaspModel");
         mTextViewTopic = findViewById(R.id.text_owasp_mobile_topic);
         mTextViewTopic.setText(mOwaspModel.getTopicId() + " " + mOwaspModel.getTopic());
+
+        mImageView = (ImageView) findViewById(R.id.image_owasp);
+        String owaspId = mOwaspModel.getTopicId().toLowerCase();
+        mImageView.setImageResource(getResources().getIdentifier("drawable/" + owaspId, null, getPackageName()));
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager_content);
