@@ -13,6 +13,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -319,29 +320,24 @@ public class BluetoothManagementService extends Service {
                                 // TODO: Add cases
                                 case "wifiScan":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
-                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                                 case "wifiCracking":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
-                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                                 case "wifiConnect":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
-                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                                 case "nmapScan":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                                 case "portAssessment":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                                 case "portAttack":
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-                                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                                     break;
                             }
+                            LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                         }
                         sb = new StringBuilder();
                     }
@@ -376,5 +372,9 @@ public class BluetoothManagementService extends Service {
         public BluetoothManagementService getBluetoothManagementServiceInstance() {
             return BluetoothManagementService.this;
         }
+    }
+
+    private void sendNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
     }
 }
