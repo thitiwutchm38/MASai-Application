@@ -21,7 +21,7 @@ import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplic
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "";
+    public static final String CHANNEL_ID = "CHANNEL_MASAI_NOTIFICATION";
     private static int SPLASH_TIME = 4000; //This is 4 seconds
 
     private ImageButton button_MobileApp_att;
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID, name, importance);
+            NotificationChannel channel = new NotificationChannel(MainActivity.CHANNEL_ID, name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this

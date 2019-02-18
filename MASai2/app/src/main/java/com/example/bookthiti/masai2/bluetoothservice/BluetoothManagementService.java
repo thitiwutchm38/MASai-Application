@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2.bluetoothservice;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -14,10 +15,13 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.MainActivity;
+import com.example.bookthiti.masai2.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -337,6 +341,7 @@ public class BluetoothManagementService extends Service {
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
                                     break;
                             }
+                            sendNotification("Notification", "This is notification");
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                         }
                         sb = new StringBuilder();
@@ -374,7 +379,15 @@ public class BluetoothManagementService extends Service {
         }
     }
 
-    private void sendNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    private void sendNotification(String title, String description) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID);
+        builder.setSmallIcon(R.drawable.ic_notifications_active_light_blue_a700_24dp)
+                .setContentTitle(title)
+                .setContentText(description)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(INotificationId.NOTIFICATION_ID_WIFI_SCAN, builder.build());
     }
 }
