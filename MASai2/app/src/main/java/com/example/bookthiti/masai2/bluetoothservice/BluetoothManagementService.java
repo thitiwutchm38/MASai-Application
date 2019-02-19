@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.bookthiti.masai2.MainActivity;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceDiscoveryActivity;
 import com.example.bookthiti.masai2.networksearchingscreen.SearchNetworkActivity;
 import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 import com.google.gson.Gson;
@@ -333,22 +334,22 @@ public class BluetoothManagementService extends Service {
                                     break;
                                 case "wifiCracking":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
-                                    sendNotification("WiFi cracking is done", "", intent, CrackRouterActivity.class);
+                                    sendNotification("WiFi cracking is done", intent, CrackRouterActivity.class);
                                     break;
                                 case "wifiConnect":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
                                     break;
                                 case "nmapScan":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-                                    sendNotification("Notification", "This is notification", intent, null);
+                                    sendNotification("Device scanning is done", intent, DeviceDiscoveryActivity.class);
                                     break;
                                 case "portAssessment":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-                                    sendNotification("Notification", "This is notification", intent, null);
+                                    sendNotification("Notification", intent, null);
                                     break;
                                 case "portAttack":
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-                                    sendNotification("Notification", "This is notification", intent, null);
+                                    sendNotification("Notification", intent, null);
                                     break;
                             }
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
@@ -388,7 +389,7 @@ public class BluetoothManagementService extends Service {
         }
     }
 
-    private void sendNotification(String title, String description, Intent intent1, Class<?> cls) {
+    private void sendNotification(String title, Intent intent1, Class<?> cls) {
         Intent intent = (Intent )intent1.clone();
         intent.setClass(this, cls);
         intent.setAction(Intent.ACTION_MAIN);
@@ -400,7 +401,6 @@ public class BluetoothManagementService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_notifications_active_light_blue_a700_24dp)
                 .setContentTitle(title)
-                .setContentText(description)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceInformationActivity;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
@@ -429,22 +430,28 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
             "  ]\n" +
             "}";
 
+    private boolean isFromNotification = false;
+
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_DEVICE_SCAN.equals(action)) {
-                Bundle bundle = intent.getExtras();
-                String jsonString = bundle.getString("payload");
-                Log.i(TAG_INFO, jsonString);
-                setRecyclerView(jsonString);
-                ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
-                progressBar.setVisibility(View.GONE);
-                TextView textView = (TextView) findViewById(R.id.text_progress);
-                textView.setVisibility(View.GONE);
+                setResultFromIntent(intent);
             }
         }
     };
+
+    private void setResultFromIntent(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        String jsonString = bundle.getString("payload");
+        Log.i(TAG_INFO, jsonString);
+        setRecyclerView(jsonString);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
+        progressBar.setVisibility(View.GONE);
+        TextView textView = (TextView) findViewById(R.id.text_progress);
+        textView.setVisibility(View.GONE);
+    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -480,13 +487,19 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
 //        progressBar.setVisibility(View.GONE);
 
         // FIXME: uncomment for real code
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+            isFromNotification = true;
+            setResultFromIntent(getIntent());
+        } else {
+            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+            if (!mBound) {
+                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+            }
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+
 
     }
 
