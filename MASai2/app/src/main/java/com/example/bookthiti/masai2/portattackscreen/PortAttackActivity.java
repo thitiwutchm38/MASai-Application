@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
@@ -64,34 +65,7 @@ public class PortAttackActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_PORT_ATTACK.equals(action)) {
-                Bundle bundle = intent.getExtras();
-                String jsonString = bundle.getString("payload");
-                Log.i(TAG_INFO, "Receive ACTION_PORT_ATTACK: " + jsonString);
-                //TODO: load payload to the result
-                mPortAttackResult = loadPortAttackResult(jsonString);
-                if (mPortAttackResult != null) {
-                    mTextViewResult.setText(mPortAttackResult.getResult());
-                    if (mPortAttackResult.getResult().equals("success")) {
-                        mTextViewResult.setTextColor(Color.GREEN);
-                    } else {
-                        mTextViewResult.setTextColor(Color.RED);
-                    }
-                    mTextViewName.setText(mPortAttackResult.getServiceModel().getName());
-                    if (mPortAttackResult.getUsername() != null) {
-                        mTextViewUsername.setText(mPortAttackResult.getUsername());
-                    } else {
-                        mTextViewUsername.setText("-");
-                    }
-                    if (mPortAttackResult.getPassword() != null) {
-                        mTextViewPassword.setText(mPortAttackResult.getPassword());
-                    } else {
-                        mTextViewPassword.setText("-");
-                    }
-                }
-                mTextPasswordSuggestion.setVisibility(View.VISIBLE);
-                mImageView.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-                mTextViewProgress.setVisibility(View.GONE);
+                setResultFromIntent(intent);
             }
         }
     };
@@ -181,13 +155,18 @@ public class PortAttackActivity extends AppCompatActivity {
 
 
         // FIXME: Uncomment for real application
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+            setResultFromIntent(getIntent());
+        } else {
+            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+            if (!mBound) {
+                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+            }
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+
     }
 
     private boolean isRemoteDeviceConnected() {
@@ -204,5 +183,36 @@ public class PortAttackActivity extends AppCompatActivity {
         gsonBuilder.registerTypeAdapter(PortAttackResult.class, new PortAttackResult.PortAttackResultDeserializer());
         PortAttackResult portAttackResult = gsonBuilder.create().fromJson(jsonString, PortAttackResult.class);
         return portAttackResult;
+    }
+
+    private void setResultFromIntent(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        String jsonString = bundle.getString("payload");
+        Log.i(TAG_INFO, "Receive ACTION_PORT_ATTACK: " + jsonString);
+        //TODO: load payload to the result
+        mPortAttackResult = loadPortAttackResult(jsonString);
+        if (mPortAttackResult != null) {
+            mTextViewResult.setText(mPortAttackResult.getResult());
+            if (mPortAttackResult.getResult().equals("success")) {
+                mTextViewResult.setTextColor(Color.GREEN);
+            } else {
+                mTextViewResult.setTextColor(Color.RED);
+            }
+            mTextViewName.setText(mPortAttackResult.getServiceModel().getName());
+            if (mPortAttackResult.getUsername() != null) {
+                mTextViewUsername.setText(mPortAttackResult.getUsername());
+            } else {
+                mTextViewUsername.setText("-");
+            }
+            if (mPortAttackResult.getPassword() != null) {
+                mTextViewPassword.setText(mPortAttackResult.getPassword());
+            } else {
+                mTextViewPassword.setText("-");
+            }
+        }
+        mTextPasswordSuggestion.setVisibility(View.VISIBLE);
+        mImageView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+        mTextViewProgress.setVisibility(View.GONE);
     }
 }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
@@ -53,13 +54,7 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_DEVICE_ASSESS.equals(action)) {
-                Bundle bundle = intent.getExtras();
-                String jsonString = bundle.getString("payload");
-                Log.i(TAG_INFO, "Receive ACTION_DEVICE_ASSESS: " + jsonString);
-                //TODO: load payload to the result
-                mProgressBar.setVisibility(View.GONE);
-                mTextViewProgress.setVisibility(View.GONE);
-                setRecyclerView(jsonString);
+                setResultFromIntent(intent);
             }
         }
     };
@@ -104,13 +99,18 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
 //        setRecyclerView(loadJsonFromAsset());
 
         // FIXME: Uncomment for real app
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+            setResultFromIntent(getIntent());
+        } else {
+            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+            if (!mBound) {
+                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+            }
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+
     }
 
     private void setRecyclerView(String jsonString) {
@@ -244,5 +244,15 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
             return mBluetoothManagementService.isRemoteDeviceConnected();
         }
         return false;
+    }
+
+    private void setResultFromIntent(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        String jsonString = bundle.getString("payload");
+        Log.i(TAG_INFO, "Receive ACTION_DEVICE_ASSESS: " + jsonString);
+        //TODO: load payload to the result
+        mProgressBar.setVisibility(View.GONE);
+        mTextViewProgress.setVisibility(View.GONE);
+        setRecyclerView(jsonString);
     }
 }

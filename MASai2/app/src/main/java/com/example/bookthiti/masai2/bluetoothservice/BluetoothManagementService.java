@@ -25,8 +25,11 @@ import android.widget.Toast;
 
 import com.example.bookthiti.masai2.MainActivity;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
 import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceDiscoveryActivity;
 import com.example.bookthiti.masai2.networksearchingscreen.SearchNetworkActivity;
+import com.example.bookthiti.masai2.portattackscreen.PortAttackActivity;
+import com.example.bookthiti.masai2.portattackscreen.PortAttackResult;
 import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -345,11 +348,11 @@ public class BluetoothManagementService extends Service {
                                     break;
                                 case "portAssessment":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-                                    sendNotification("Notification", intent, null);
+                                    sendNotification("Device assessment is done", intent, DeviceAssessmentActivity.class);
                                     break;
                                 case "portAttack":
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-                                    sendNotification("Notification", intent, null);
+                                    sendNotification("Service attacking is done", intent, PortAttackActivity.class);
                                     break;
                             }
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
