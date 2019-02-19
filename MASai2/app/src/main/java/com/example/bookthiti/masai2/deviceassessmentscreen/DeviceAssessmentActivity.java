@@ -96,20 +96,20 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
         mTextViewProgress = (TextView) findViewById(R.id.text_progress);
 
         // FIXME: Uncomment for mockup
-//        setRecyclerView(loadJsonFromAsset());
+        setRecyclerView(loadJsonFromAsset());
 
         // FIXME: Uncomment for real app
-        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-            setResultFromIntent(getIntent());
-        } else {
-            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-            if (!mBound) {
-                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-            }
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-        }
+//        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+//            setResultFromIntent(getIntent());
+//        } else {
+//            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+//            if (!mBound) {
+//                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//            }
+//            IntentFilter intentFilter = new IntentFilter();
+//            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
+//            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+//        }
 
     }
 

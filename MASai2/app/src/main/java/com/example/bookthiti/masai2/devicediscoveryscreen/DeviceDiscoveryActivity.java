@@ -482,23 +482,25 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         mContext = getApplicationContext();
 
         // FIXME: uncomment for mockup
-//        setRecyclerView(mockJson);
-//        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
-//        progressBar.setVisibility(View.GONE);
-
+        setRecyclerView(mockJson);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
+        progressBar.setVisibility(View.GONE);
+        TextView textView = (TextView) findViewById(R.id.text_progress);
+        textView.setVisibility(View.GONE);
+        
         // FIXME: uncomment for real code
-        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-            isFromNotification = true;
-            setResultFromIntent(getIntent());
-        } else {
-            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-            if (!mBound) {
-                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-            }
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-        }
+//        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+//            isFromNotification = true;
+//            setResultFromIntent(getIntent());
+//        } else {
+//            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+//            if (!mBound) {
+//                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//            }
+//            IntentFilter intentFilter = new IntentFilter();
+//            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+//            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+//        }
 
 
     }

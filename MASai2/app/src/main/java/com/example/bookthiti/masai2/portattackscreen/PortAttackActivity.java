@@ -155,17 +155,17 @@ public class PortAttackActivity extends AppCompatActivity {
 
 
         // FIXME: Uncomment for real application
-        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-            setResultFromIntent(getIntent());
-        } else {
-            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-            if (!mBound) {
-                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-            }
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-        }
+//        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+//            setResultFromIntent(getIntent());
+//        } else {
+//            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+//            if (!mBound) {
+//                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//            }
+//            IntentFilter intentFilter = new IntentFilter();
+//            intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+//            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+//        }
 
     }
 
