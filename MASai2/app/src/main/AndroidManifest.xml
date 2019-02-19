@@ -29,7 +29,8 @@
         <activity android:name=".mobileapplicationscanningscreen.MobileApplicationScannerActivity" />
         <activity
             android:name=".networksearchingscreen.SearchNetworkActivity"
-            android:label="Select Network" />
+            android:label="Select Network"
+            android:parentActivityName=".iotpentestmainscreen.IoTMainPentestActivity"/>
         <activity
             android:name=".DetailActivity"
             android:label="DetailActivity" />

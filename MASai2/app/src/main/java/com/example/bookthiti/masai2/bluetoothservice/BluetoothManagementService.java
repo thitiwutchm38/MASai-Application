@@ -1,7 +1,9 @@
 package com.example.bookthiti.masai2.bluetoothservice;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -16,12 +18,15 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.MainActivity;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.networksearchingscreen.SearchNetworkActivity;
+import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -324,24 +329,28 @@ public class BluetoothManagementService extends Service {
                                 // TODO: Add cases
                                 case "wifiScan":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+//                                    sendNotification("WiFi cracking is done", "", intent, SearchNetworkActivity.class);
                                     break;
                                 case "wifiCracking":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
+                                    sendNotification("WiFi cracking is done", "", intent, CrackRouterActivity.class);
                                     break;
                                 case "wifiConnect":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
                                     break;
                                 case "nmapScan":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+                                    sendNotification("Notification", "This is notification", intent, null);
                                     break;
                                 case "portAssessment":
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
+                                    sendNotification("Notification", "This is notification", intent, null);
                                     break;
                                 case "portAttack":
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+                                    sendNotification("Notification", "This is notification", intent, null);
                                     break;
                             }
-                            sendNotification("Notification", "This is notification");
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                         }
                         sb = new StringBuilder();
@@ -379,13 +388,22 @@ public class BluetoothManagementService extends Service {
         }
     }
 
-    private void sendNotification(String title, String description) {
+    private void sendNotification(String title, String description, Intent intent1, Class<?> cls) {
+        Intent intent = (Intent )intent1.clone();
+        intent.setClass(this, cls);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, true);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_notifications_active_light_blue_a700_24dp)
                 .setContentTitle(title)
                 .setContentText(description)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
         notificationManagerCompat.notify(INotificationId.NOTIFICATION_ID_WIFI_SCAN, builder.build());

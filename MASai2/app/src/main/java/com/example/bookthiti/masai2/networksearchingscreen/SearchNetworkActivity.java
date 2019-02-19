@@ -31,6 +31,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
 import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceDiscoveryActivity;
 import com.example.bookthiti.masai2.R;
@@ -76,16 +77,7 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_WIFI_SCAN.equals(action)) {
-                Bundle bundle = intent.getExtras();
-                String jsonString = bundle.getString("payload");
-                Log.i(TAG_INFO, jsonString);
-                setRecyclerView(jsonString);
-                mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-                mProgressBar.setVisibility(View.GONE);
-                mConStraintLayoutHeaderLine.setVisibility(View.VISIBLE);
-                if (mSwipeRefreshLayout != null) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
+                setResultFromIntent(intent);
             } else if (BluetoothManagementService.ACTION_WIFI_CONNECT.equals(action)) {
                 mConnectingRouterModel.setConnecting(false);
                 mRouterRecyclerAdapter.notifyItemChanged(mConnectingRouterPosition);
@@ -141,27 +133,32 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
 
 
         //FIXME: Uncomment for real application
-        Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-        if (!mBound) {
-            bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-        }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
-        intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if(isRemoteDeviceConnected) {
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("command", "wifiScan");
-                    jsonObject.add("payload", null);
-                    String jsonString = jsonObject.toString();
-                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
-                }
+        if (!getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+            if (!mBound) {
+                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
             }
-        });
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+            intentFilter.addAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+            mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if(isRemoteDeviceConnected) {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("command", "wifiScan");
+                        jsonObject.add("payload", null);
+                        String jsonString = jsonObject.toString();
+                        mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                    }
+                }
+            });
+        } else {
+            setResultFromIntent(getIntent());
+        }
+
 
     }
 
@@ -362,4 +359,16 @@ public class SearchNetworkActivity extends AppCompatActivity implements OnRecycl
         return false;
     }
 
+    private void setResultFromIntent(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        String jsonString = bundle.getString("payload");
+        Log.i(TAG_INFO, jsonString);
+        setRecyclerView(jsonString);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.GONE);
+        mConStraintLayoutHeaderLine.setVisibility(View.VISIBLE);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
 }
