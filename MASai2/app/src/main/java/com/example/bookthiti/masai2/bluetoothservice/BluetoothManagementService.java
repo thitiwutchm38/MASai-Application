@@ -209,6 +209,15 @@ public class BluetoothManagementService extends Service {
         }
     }
 
+    public void disconnectFromRemoteDevice() {
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+            if (mConnectingThread != null) {
+                mConnectingThread.cancel();
+            }
+        }
+    }
+
     private boolean isBluetoothAdapterSupported(BluetoothAdapter bluetoothAdapter) {
         if (mBluetoothAdapter == null) {
             Log.i(TAG_INFO, "This device does not support bluetooth");
