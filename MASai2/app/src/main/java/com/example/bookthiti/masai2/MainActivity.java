@@ -4,6 +4,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
+import com.example.bookthiti.masai2.homescreen.HomeIconFragment;
 import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
 import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
 import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
@@ -19,10 +25,17 @@ import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
 import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScanningResultActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String CHANNEL_ID = "CHANNEL_MASAI_NOTIFICATION";
     private static int SPLASH_TIME = 4000; //This is 4 seconds
+
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private PagerAdapter mPagerAdapter;
 
     private ImageButton button_MobileApp_att;
 
@@ -47,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
+        mTabLayout = (TabLayout) findViewById(R.id.tab_dots);
+        mTabLayout.setupWithViewPager(mViewPager, true);
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
+        mViewPager.setAdapter(mPagerAdapter);
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
@@ -121,6 +140,28 @@ public class MainActivity extends AppCompatActivity {
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private class PagerAdapter extends FragmentStatePagerAdapter {
+        private List<Fragment> fragmentList = new ArrayList<Fragment>();
+
+        public PagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragmentList.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String tabTitle) {
+            fragmentList.add(fragment);
         }
     }
 }
