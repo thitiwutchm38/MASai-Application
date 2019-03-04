@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/masai_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
         <activity android:name=".portattackscreen.PortAttackActivity"></activity>
