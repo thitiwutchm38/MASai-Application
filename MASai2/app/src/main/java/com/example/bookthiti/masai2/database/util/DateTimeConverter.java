@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2.database.util;
 
 import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,6 +29,7 @@ public class DateTimeConverter {
         }
     }
 
+    @TypeConverter
     public static String dateToTimestamp(Date value) {
         TimeZone timeZone = TimeZone.getTimeZone("VST");
         dateFormat.setTimeZone(timeZone);

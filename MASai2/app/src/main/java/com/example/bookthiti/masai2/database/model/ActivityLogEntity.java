@@ -29,11 +29,9 @@ public class ActivityLogEntity {
     private int testingId;
 
     @ColumnInfo(name = "start_time")
-    @TypeConverters({DateTimeConverter.class})
     private Date startTime;
 
     @ColumnInfo(name = "finish_time")
-    @TypeConverters({DateTimeConverter.class})
     private Date finishTime;
 
     private String name;

@@ -15,7 +15,7 @@ import java.util.List;
 public interface TestingDao {
 
     @Insert
-    String insertTesting(TestingEntity testingEntity);
+    void insertTesting(TestingEntity... testingEntities);
 
     @Query("SELECT * FROM testing ORDER BY created_at asc")
     LiveData<List<TestingEntity>> fetchAllTestings();
@@ -24,8 +24,8 @@ public interface TestingDao {
     LiveData<TestingEntity> getTestingById(int id);
 
     @Update
-    String updateTestingName(TestingEntity testingEntity);
+    void updateTesting(TestingEntity... testingEntities);
 
     @Delete
-    void deleteTesting(TestingEntity testingEntity);
+    void deleteTesting(TestingEntity... testingEntities);
 }

@@ -20,8 +20,10 @@ public class TestingEntity {
     private String title;
 
     @ColumnInfo(name = "created_at")
-    @TypeConverters({DateTimeConverter.class})
     private Date createdAt;
+
+    @ColumnInfo(name = "modified_at")
+    private Date modifiedAt;
 
     public TestingEntity() {
     }
@@ -48,5 +50,13 @@ public class TestingEntity {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 }
