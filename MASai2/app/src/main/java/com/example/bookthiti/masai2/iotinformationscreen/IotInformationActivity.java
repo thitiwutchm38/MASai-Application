@@ -1,26 +1,19 @@
 package com.example.bookthiti.masai2.iotinformationscreen;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import android.view.Window;
-import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
-import com.example.bookthiti.masai2.news_tab;
 
 public class IotInformationActivity extends AppCompatActivity {
 
@@ -127,7 +120,6 @@ public class IotInformationActivity extends AppCompatActivity {
             OwaspFragment owaspFragment;
             switch (position){
                 case 0:
-//                    news_tab news_tab = new news_tab();
                     owaspFragment = new OwaspFragment();
                     owaspFragment.setCategory("IoT");
                     return owaspFragment;

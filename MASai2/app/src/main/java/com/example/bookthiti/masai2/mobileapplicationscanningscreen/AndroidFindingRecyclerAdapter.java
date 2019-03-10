@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.bookthiti.masai2.AndroidRuleModel;
-import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 
 import java.util.List;
 import java.util.regex.Matcher;

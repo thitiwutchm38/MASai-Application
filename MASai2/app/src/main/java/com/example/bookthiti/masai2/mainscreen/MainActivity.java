@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -30,6 +33,7 @@ import android.widget.ImageButton;
 
 import com.example.bookthiti.masai2.MasaiSettingActivity;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.database.model.TestingEntity;
 import com.example.bookthiti.masai2.homescreen.HomeIconFragment;
 import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
 import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
@@ -39,6 +43,8 @@ import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,9 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton button__MASaibox_setting;
 
-    private List<String> testingNameList = new ArrayList<String>();
+    private List<TestingEntity> testingEntityList = new ArrayList<>();
 
+    private MainAcitivtyViewModel mainAcitivtyViewModel;
 
+    private TestingEntity currentTestingEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +104,15 @@ public class MainActivity extends AppCompatActivity {
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         // TODO: add list of test to the menu
-        testingNameList.add("Default Testing");
-        testingNameList.add("Default Testing2");
-        setMenu();
+        mainAcitivtyViewModel = ViewModelProviders.of(this).get(MainAcitivtyViewModel.class);
+        mainAcitivtyViewModel.getAllTestingEntities().observe(this, new Observer<List<TestingEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<TestingEntity> testingEntities) {
+                testingEntityList.clear();
+                testingEntityList.addAll(testingEntities);
+                setMenu();
+            }
+        });
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
@@ -145,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_generate_report:
                 return true;
             case R.id.menu_delete_testing:
+                if (mainAcitivtyViewModel != null && currentTestingEntity != null) {
+                    mainAcitivtyViewModel.deleteTestingEntity(currentTestingEntity);
+                    currentTestingEntity = null;
+                    Log.i(TAG_INFO, "Testing should be deleted");
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -196,31 +215,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addMenu(String title) {
-        testingNameList.add(title);
-        setMenu();
-    }
-
     private void setMenu() {
         final Menu menu = mNavigationView.getMenu();
         menu.clear();
-        for (int i = 0; i < testingNameList.size(); i++) {
-            menu.add(Menu.NONE, 0, Menu.NONE, testingNameList.get(i));
+        for (int i = 0; i < testingEntityList.size(); i++) {
+            final int index = i;
+            menu.add(Menu.NONE, 0, Menu.NONE,  testingEntityList.get(i).getTitle());
             MenuItem menuItem = menu.getItem(i);
             menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    for (int j = 0; j < testingNameList.size(); j++) {
+                    for (int j = 0; j < testingEntityList.size(); j++) {
                         menu.getItem(j).setChecked(false);
                     }
                     menuItem.setChecked(true);
+                    currentTestingEntity = testingEntityList.get(index);
+                    Log.i(TAG_INFO, "current testing: " + currentTestingEntity.getTitle());
                     mDrawerLayout.closeDrawers();
                     return true;
                 }
             });
         }
         menu.add("New Testing");
-        menu.getItem(testingNameList.size()).setIcon(R.drawable.ic_add_indigo_a700_24dp)
+        menu.getItem(testingEntityList.size()).setIcon(R.drawable.ic_add_indigo_a700_24dp)
                 .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -232,7 +249,8 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        addMenu(input.getText().toString());
+                        // TODO: Create new Testing Entity and add to database
+                        mainAcitivtyViewModel.insertTestingEntity(input.getText().toString());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

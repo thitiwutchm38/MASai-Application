@@ -64,7 +64,7 @@ public class LocalTestingRepository {
         new UpdateTestingAsyncTask(testingDao).execute(testingEntity);
     }
 
-    public void deleteTesting(final TestingEntity testingEntity) {
+    public void deleteTesting(TestingEntity... testingEntity) {
         new DeleteTestingAsyncTask(testingDao).execute(testingEntity);
     }
 
