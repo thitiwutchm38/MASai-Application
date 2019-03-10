@@ -8,11 +8,11 @@ import android.database.MatrixCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -27,12 +27,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.R;
-import com.example.bookthiti.masai2.ScanResultActivity;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class MobileApplicationScannerActivity extends AppCompatActivity {
     private static final long STOP_TYPING_TIMEOUT = 1000; // 1 second

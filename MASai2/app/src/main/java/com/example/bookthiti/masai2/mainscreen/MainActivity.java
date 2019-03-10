@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.mainscreen;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,6 +28,8 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.bookthiti.masai2.MasaiSettingActivity;
+import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.homescreen.HomeIconFragment;
 import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
 import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton button__MASaibox_setting;
 
     private List<String> testingNameList = new ArrayList<String>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openActivity_MASaibox_setting() {
 
-        Intent intent = new Intent(this,MasaiSettingActivity.class);
+        Intent intent = new Intent(this, MasaiSettingActivity.class);
         startActivity(intent);
     }
 

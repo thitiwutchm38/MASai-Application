@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2;
+package com.example.bookthiti.masai2.utils;
 
 public interface LogConstants {
     public static final String TAG_INFO = "Log info";
