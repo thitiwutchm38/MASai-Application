@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
-import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 
 import java.util.List;
 

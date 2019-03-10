@@ -6,9 +6,6 @@ import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
-import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +38,7 @@ import com.google.gson.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class CrackRouterActivity extends AppCompatActivity {
     private Context mContext;

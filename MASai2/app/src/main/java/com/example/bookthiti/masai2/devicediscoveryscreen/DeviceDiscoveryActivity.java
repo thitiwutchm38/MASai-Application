@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.res.AssetManager;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
@@ -30,13 +28,9 @@ import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener {
     private Context mContext;

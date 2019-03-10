@@ -10,23 +10,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Color;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -39,10 +33,8 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collections;
-
-import static com.example.bookthiti.masai2.LogConstants.TAG_ERROR;
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_ERROR;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class MasaiSettingActivity extends AppCompatActivity {
     private final static int REQUEST_ENABLE_BLUETOOTH = 0;

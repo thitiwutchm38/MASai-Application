@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
 import com.example.bookthiti.masai2.portattackscreen.PortAttackActivity;
 import com.example.bookthiti.masai2.R;
-import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;

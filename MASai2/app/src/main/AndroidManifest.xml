@@ -35,7 +35,7 @@
         <activity
             android:name=".DetailActivity"
             android:label="DetailActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".mainscreen.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

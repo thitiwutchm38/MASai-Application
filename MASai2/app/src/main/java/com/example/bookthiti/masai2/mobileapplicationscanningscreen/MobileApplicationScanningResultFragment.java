@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class MobileApplicationScanningResultFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

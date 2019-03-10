@@ -33,7 +33,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class PortAttackActivity extends AppCompatActivity {
 

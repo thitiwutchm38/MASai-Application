@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
@@ -32,7 +31,7 @@ import com.google.gson.JsonParser;
 
 import java.util.List;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class DeviceAssessmentActivity extends AppCompatActivity {
     private Context mContext;
