@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".portattackscreen.PortAttackActivity"></activity>
+        <activity android:name=".portattackscreen.PortAttackActivity" />
         <activity android:name=".SummaryMobileOwaspActivity" />
         <activity android:name=".OwaspSummaryActivity" /> <!-- <activity android:name=".MainActivity" /> -->
         <activity android:name=".MasaiSettingActivity" />
