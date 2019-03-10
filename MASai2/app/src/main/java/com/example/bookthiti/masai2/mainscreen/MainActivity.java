@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TestingEntity currentTestingEntity;
 
+    private int testingPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager, true);
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
-        mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
-        mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
+        // TODO: add list of activity log
+        mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
         mViewPager.setAdapter(mPagerAdapter);
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -230,11 +232,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                     menuItem.setChecked(true);
                     currentTestingEntity = testingEntityList.get(index);
+                    testingPosition = index;
                     Log.i(TAG_INFO, "current testing: " + currentTestingEntity.getTitle());
                     mDrawerLayout.closeDrawers();
                     return true;
                 }
             });
+        }
+        if (currentTestingEntity == null && testingEntityList.size() != 0) {
+            currentTestingEntity = testingEntityList.get(0);
+            testingPosition = 0;
+            menu.getItem(0).setChecked(true);
+        } else if (currentTestingEntity == null && testingEntityList.size() == 0) {
+            mainAcitivtyViewModel.insertTestingEntity("Default Testing");
+        } else {
+            menu.getItem(testingPosition).setChecked(true);
         }
         menu.add("New Testing");
         menu.getItem(testingEntityList.size()).setIcon(R.drawable.ic_add_indigo_a700_24dp)
