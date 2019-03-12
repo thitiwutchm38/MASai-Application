@@ -49,7 +49,7 @@ public class MasaiViewModel extends AndroidViewModel {
         return localTestingRepository.getAllActivityLogEntities();
     }
 
-    public LiveData<List<ActivityLogEntity>> getActivityLogEntitiesByTestingId(int testingId) {
+    public LiveData<List<ActivityLogEntity>> getActivityLogEntitiesByTestingId(long testingId) {
         return localTestingRepository.getActivityLogEntitiesByTestingId(testingId);
     }
 

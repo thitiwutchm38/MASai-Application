@@ -8,7 +8,14 @@ import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
 import com.example.bookthiti.masai2.database.util.DateTimeConverter;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
+import java.lang.reflect.Type;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
@@ -97,5 +104,20 @@ public class ActivityLogEntity {
 
     public void setJsonOutput(String jsonOutput) {
         this.jsonOutput = jsonOutput;
+    }
+
+    public static class ActivityLogEntitySerializer implements JsonSerializer<ActivityLogEntity> {
+        @Override
+        public JsonElement serialize(ActivityLogEntity src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("id", new JsonPrimitive(src.id));
+            jsonObject.add("testingId", new JsonPrimitive(src.testingId));
+            jsonObject.addProperty("startTime", src.startTime.toString());
+            jsonObject.addProperty("finishTime", src.finishTime.toString());
+            jsonObject.addProperty("name", src.name);
+            jsonObject.addProperty("status", src.status);
+            jsonObject.addProperty("jsonOutput", src.jsonOutput);
+            return jsonObject;
+        }
     }
 }

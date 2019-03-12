@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -35,16 +37,25 @@ import android.widget.ImageButton;
 import com.example.bookthiti.masai2.MasaiSettingActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.database.MasaiViewModel;
+import com.example.bookthiti.masai2.database.model.ActivityLogEntity;
 import com.example.bookthiti.masai2.database.model.TestingEntity;
-import com.example.bookthiti.masai2.homescreen.HomeIconFragment;
 import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
 import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
+import com.example.bookthiti.masai2.mainscreen.model.PostRequestBody;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MasaiServerAPI;
 import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.RetrofitClientInstance;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
@@ -179,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.menu_generate_report:
+                createPostRequestBody();
                 return true;
             case R.id.menu_delete_testing:
                 if (masaiViewModel != null && currentTestingEntity != null) {
@@ -190,6 +202,75 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createPostRequestBody() {
+        if (masaiViewModel != null && sharedPreferences != null) {
+            final PostRequestBody postRequestBody = new PostRequestBody();
+            final LiveData<List<ActivityLogEntity>> activityLogEntitiesByTestingId = masaiViewModel.getActivityLogEntitiesByTestingId(sharedPreferences.getLong("testing_id", 0));
+            activityLogEntitiesByTestingId.observe(this, new Observer<List<ActivityLogEntity>>() {
+                @Override
+                public void onChanged(@Nullable List<ActivityLogEntity> activityLogEntities) {
+                    List<ActivityLogEntity> crackingRouter = new ArrayList<ActivityLogEntity>();
+                    List<ActivityLogEntity> deviceDiscovery = new ArrayList<ActivityLogEntity>();
+                    List<ActivityLogEntity> deviceAssessment = new ArrayList<ActivityLogEntity>();
+                    List<ActivityLogEntity> portAttack = new ArrayList<ActivityLogEntity>();
+                    for (ActivityLogEntity activityLogEntity: activityLogEntities) {
+                        String name = activityLogEntity.getName();
+
+                        switch (name) {
+                            case "Router Cracking Testing":
+                                crackingRouter.add(activityLogEntity);
+                                break;
+                            case "Device Discovery":
+                                deviceDiscovery.add(activityLogEntity);
+                                break;
+                            case "Device Assessment":
+                                deviceAssessment.add(activityLogEntity);
+                                break;
+                            case "Service Attacking Testing":
+                                portAttack.add(activityLogEntity);
+                                break;
+                        }
+                    }
+                    postRequestBody.setTestingId(currentTestingEntity.getId());
+                    postRequestBody.setCreatedAt(currentTestingEntity.getCreatedAt());
+                    postRequestBody.setTestingName(currentTestingEntity.getTitle());
+                    postRequestBody.setRouterCracking(crackingRouter);
+                    postRequestBody.setDeviceDiscovery(deviceDiscovery);
+                    postRequestBody.setDeviceAssessment(deviceAssessment);
+                    postRequestBody.setPortAttack(portAttack);
+                    sendRequest(postRequestBody);
+                    Log.i(TAG_INFO, "Created post request");
+                    activityLogEntitiesByTestingId.removeObserver(this);
+                }
+            });
+        }
+    }
+
+    private void sendRequest(PostRequestBody postRequestBody) {
+        MasaiServerAPI masaiServerAPI = RetrofitClientInstance.getRetrofitInstance().create(MasaiServerAPI.class);
+        Call<okhttp3.ResponseBody> voidCall = masaiServerAPI.postGenerateReport(postRequestBody);
+        voidCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                Log.i(TAG_INFO, "GET Response");
+                try {
+                    String path = response.body().string();
+                    Log.i(TAG_INFO, path);
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(RetrofitClientInstance.BASE_URL + "api/testreport/" + path));
+                    startActivity(browserIntent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                Log.i(TAG_INFO, call.request().toString());
+                Log.i(TAG_INFO, "On Failure");
+            }
+        });
     }
 
     @Override

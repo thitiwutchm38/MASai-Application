@@ -346,6 +346,9 @@ public class BluetoothManagementService extends Service {
                                 // TODO: Add cases
                                 case "wifiScan":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
+                                    SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+                                    MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+                                    masaiViewModel.insertActivityLogEntity("Wifi Scanning", "finish", fullResponse, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
 //                                    sendNotification("WiFi cracking is done", "", intent, SearchNetworkActivity.class);
                                     break;
                                 case "wifiConnect":
