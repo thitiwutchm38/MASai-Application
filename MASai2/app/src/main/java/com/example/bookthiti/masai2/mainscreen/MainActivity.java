@@ -80,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+    private static MasaiViewModel viewModel;
+
+    public static MasaiViewModel getViewModel() {
+        return viewModel;
+    }
+
+    public static void setViewModel(MasaiViewModel viewModel) {
+        MainActivity.viewModel = viewModel;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 setMenu();
             }
         });
+        setViewModel(masaiViewModel);
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);

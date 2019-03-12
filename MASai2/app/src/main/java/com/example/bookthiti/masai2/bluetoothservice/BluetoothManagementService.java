@@ -3,6 +3,7 @@ package com.example.bookthiti.masai2.bluetoothservice;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.arch.lifecycle.ViewModelProviders;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -10,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,6 +22,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.mainscreen.MainActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
@@ -37,8 +40,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Set;
 import java.util.UUID;
+
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class BluetoothManagementService extends Service {
     private final static String TAG_INFO = "Log info";
@@ -333,35 +339,46 @@ public class BluetoothManagementService extends Service {
                             String fullResponse = gson.toJson(jsonObject);
                             String jsonString = gson.toJson(jsonObject.get("payload"));
                             bundle.putString("payload", jsonString);
-                            bundle.putString("fullResponse", fullResponse);
+//                            bundle.putString("fullResponse", fullResponse);
                             intent.putExtras(bundle);
+                            boolean isAttacking = false;
                             switch (resultType) {
                                 // TODO: Add cases
                                 case "wifiScan":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_SCAN);
 //                                    sendNotification("WiFi cracking is done", "", intent, SearchNetworkActivity.class);
                                     break;
-                                case "wifiCracking":
-                                    intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
-                                    sendNotification("WiFi cracking is done", intent, CrackRouterActivity.class);
-                                    break;
                                 case "wifiConnect":
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_CONNECT);
                                     break;
+                                case "wifiCracking":
+                                    isAttacking = true;
+                                    intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
+                                    sendNotification("WiFi cracking is done", intent, CrackRouterActivity.class);
+                                    break;
                                 case "nmapScan":
+                                    isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
                                     sendNotification("Device scanning is done", intent, DeviceDiscoveryActivity.class);
                                     break;
                                 case "portAssessment":
+                                    isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
                                     sendNotification("Device assessment is done", intent, DeviceAssessmentActivity.class);
                                     break;
                                 case "portAttack":
+                                    isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
                                     sendNotification("Service attacking is done", intent, PortAttackActivity.class);
                                     break;
                             }
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                            if (isAttacking) {
+                                SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+                                MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+                                masaiViewModel.updateActivityLogEntity(sharedPreferences.getLong("running_activity_id", 0), "finish", fullResponse, Calendar.getInstance().getTime());
+                                Log.i(TAG_INFO, "Running activity should be updated to finish from Service");
+                            }
                         }
                         sb = new StringBuilder();
                     }
@@ -408,7 +425,7 @@ public class BluetoothManagementService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.ic_notifications_active_light_blue_a700_24dp)
+        builder.setSmallIcon(R.drawable.logo_masai)
                 .setContentTitle(title)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)

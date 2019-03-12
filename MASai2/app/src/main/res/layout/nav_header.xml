@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="My header title"
+        android:text="Testing List"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:textColor="@color/zxing_status_text"
         app:layout_constraintBottom_toBottomOf="parent"

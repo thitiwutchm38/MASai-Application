@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -23,15 +24,19 @@ import android.widget.TextView;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
+import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
+import com.example.bookthiti.masai2.mainscreen.MainActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
+
+import java.util.Calendar;
 
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
@@ -90,6 +95,13 @@ public class PortAttackActivity extends AppCompatActivity {
             jsonObject.add("payload", payloadObject);
             String jsonString = jsonObject.toString();
             mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+
+            MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+            SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+            long id = masaiViewModel.insertActivityLogEntity("Service Attacking Testing", "running", null, sharedPreferences.getLong("testing_id", 0));
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putLong("running_activity_id", id);
+            editor.commit();
         }
 
         @Override
@@ -121,14 +133,7 @@ public class PortAttackActivity extends AppCompatActivity {
         mTextPasswordSuggestion.setVisibility(View.INVISIBLE);
         mImageView.setVisibility(View.INVISIBLE);
 
-        //textView_rec1 = findViewById(R.id.textView_rec1);
-
-        //textView_rec1.setText(Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT));
-
-        //Spanned htmlAsSpanned = Html.fromHtml(str); // used by TextView
-
-
-        mTextPasswordSuggestion.setOnClickListener(new View.OnClickListener(){
+        mTextPasswordSuggestion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(v.getContext());
@@ -140,10 +145,10 @@ public class PortAttackActivity extends AppCompatActivity {
                 BlurPopupWindow blurPopupWindow = builder.build();
                 blurPopupWindow.show();
 
-                popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup_pass_suggest);
+                popup = (LinearLayout) blurPopupWindow.findViewById(R.id.relativeLayout_popup_pass_suggest);
 
                 WebView webView = (WebView) blurPopupWindow.findViewById(R.id.webview_test);
-                String str ="<p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Has 12 Characters, Minimum</strong>:&nbsp;</span><span style=\"color: #339966;\">You need to choose a password that&rsquo;s long enough. There&rsquo;s no minimum password length everyone agrees on, but you should generally go for passwords that are a minimum of 12 to 14 characters in length. A longer password would be even better.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters</strong>:&nbsp;</span><span style=\"color: #339966;\">Use a mix of different types of characters to make the password harder to crack.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Isn&rsquo;t a Dictionary Word or Combination of Dictionary Words:&nbsp;</strong></span><span style=\"color: #339966;\">Stay away from obvious dictionary words and combinations of dictionary words. Any word on its own is bad. Any combination of a few words, especially if they&rsquo;re obvious, is also bad.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Doesn&rsquo;t Rely on Obvious Substitutions</strong>:&nbsp;</span><span style=\"color: #339966;\">Don&rsquo;t use common substitutions, either &mdash; for example, &ldquo;H0use&rdquo; isn&rsquo;t strong just because you&rsquo;ve replaced an o with a 0. That&rsquo;s just obvious.</span></p>";
+                String str = "<p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Has 12 Characters, Minimum</strong>:&nbsp;</span><span style=\"color: #339966;\">You need to choose a password that&rsquo;s long enough. There&rsquo;s no minimum password length everyone agrees on, but you should generally go for passwords that are a minimum of 12 to 14 characters in length. A longer password would be even better.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters</strong>:&nbsp;</span><span style=\"color: #339966;\">Use a mix of different types of characters to make the password harder to crack.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Isn&rsquo;t a Dictionary Word or Combination of Dictionary Words:&nbsp;</strong></span><span style=\"color: #339966;\">Stay away from obvious dictionary words and combinations of dictionary words. Any word on its own is bad. Any combination of a few words, especially if they&rsquo;re obvious, is also bad.</span></p> <p style=\"text-align: justify;\"><span style=\"color: #333399;\"><strong>- Doesn&rsquo;t Rely on Obvious Substitutions</strong>:&nbsp;</span><span style=\"color: #339966;\">Don&rsquo;t use common substitutions, either &mdash; for example, &ldquo;H0use&rdquo; isn&rsquo;t strong just because you&rsquo;ve replaced an o with a 0. That&rsquo;s just obvious.</span></p>";
                 webView.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
 
                 popup.setBackgroundResource(R.drawable.shape_score);
@@ -153,19 +158,25 @@ public class PortAttackActivity extends AppCompatActivity {
             }
         });
 
+        // FIXME: Uncomment for mockup
+//        setViewFromResult(mockupJson2);
+//        MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+//        SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+//        masaiViewModel.insertActivityLogEntity("Service Attacking Testing", "finish", mockupJson, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
+
 
         // FIXME: Uncomment for real application
-//        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-//            setResultFromIntent(getIntent());
-//        } else {
-//            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//            if (!mBound) {
-//                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//            }
-//            IntentFilter intentFilter = new IntentFilter();
-//            intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-//            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-//        }
+        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+            setResultFromIntent(getIntent());
+        } else {
+            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+            if (!mBound) {
+                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+            }
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        }
 
     }
 
@@ -190,13 +201,17 @@ public class PortAttackActivity extends AppCompatActivity {
         String jsonString = bundle.getString("payload");
         Log.i(TAG_INFO, "Receive ACTION_PORT_ATTACK: " + jsonString);
         //TODO: load payload to the result
+        setViewFromResult(jsonString);
+    }
+
+    private void setViewFromResult(String jsonString) {
         mPortAttackResult = loadPortAttackResult(jsonString);
         if (mPortAttackResult != null) {
-            mTextViewResult.setText(mPortAttackResult.getResult());
+            mTextViewResult.setText(mPortAttackResult.getResult().toUpperCase());
             if (mPortAttackResult.getResult().equals("success")) {
-                mTextViewResult.setTextColor(Color.GREEN);
-            } else {
                 mTextViewResult.setTextColor(Color.RED);
+            } else {
+                mTextViewResult.setTextColor(Color.GREEN);
             }
             mTextViewName.setText(mPortAttackResult.getServiceModel().getName());
             if (mPortAttackResult.getUsername() != null) {
@@ -215,4 +230,35 @@ public class PortAttackActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.GONE);
         mTextViewProgress.setVisibility(View.GONE);
     }
+
+    private String mockupJson = "{\n" +
+            "    \"resultType\": \"portAttack\",\n" +
+            "    \"payload\": {\n" +
+            "        \"service\": {\n" +
+            "            \"port\": \"22\",\n" +
+            "            \"protocol\": \"tcp\",\n" +
+            "            \"state\": \"open\",\n" +
+            "            \"name\": \"ssh\",\n" +
+            "            \"cpe\": [],\n" +
+            "            \"cves\": []\n" +
+            "        },\n" +
+            "        \"attackResult\": \"success\",\n" +
+            "        \"username\": \"root\",\n" +
+            "        \"password\": \"toor\"\n" +
+            "    }\n" +
+            "}";
+
+    private String mockupJson2 = "{\n" +
+            "        \"service\": {\n" +
+            "            \"port\": \"22\",\n" +
+            "            \"protocol\": \"tcp\",\n" +
+            "            \"state\": \"open\",\n" +
+            "            \"name\": \"ssh\",\n" +
+            "            \"cpe\": [],\n" +
+            "            \"cves\": []\n" +
+            "        },\n" +
+            "        \"attackResult\": \"success\",\n" +
+            "        \"username\": \"root\",\n" +
+            "        \"password\": \"toor\"\n" +
+            "    }";
 }

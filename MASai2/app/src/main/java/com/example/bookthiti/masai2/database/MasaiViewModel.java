@@ -66,6 +66,17 @@ public class MasaiViewModel extends AndroidViewModel {
         return localTestingRepository.insertActivityLogEntity(name, status, jsonOutput, testingId, startTime);
     }
 
+    public long insertActivityLogEntity(String name, String status, String jsonOutput, long testingId, Date startTime, Date finishTime) {
+        ActivityLogEntity activityLogEntity = new ActivityLogEntity();
+        activityLogEntity.setName(name);
+        activityLogEntity.setStatus(status);
+        activityLogEntity.setJsonOutput(jsonOutput);
+        activityLogEntity.setTestingId(testingId);
+        activityLogEntity.setStartTime(startTime);
+        activityLogEntity.setFinishTime(finishTime);
+        return insertActivityLogEntity(activityLogEntity)[0];
+    }
+
     public void deleteActivityLogEntity(ActivityLogEntity... activityLogEntities) {
         localTestingRepository.deleteActivityLogEntity(activityLogEntities);
     }
