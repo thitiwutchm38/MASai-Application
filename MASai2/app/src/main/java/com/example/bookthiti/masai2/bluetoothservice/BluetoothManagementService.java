@@ -330,8 +330,10 @@ public class BluetoothManagementService extends Service {
                             Intent intent = new Intent();
                             Bundle bundle = new Bundle();
                             Gson gson = new Gson();
+                            String fullResponse = gson.toJson(jsonObject);
                             String jsonString = gson.toJson(jsonObject.get("payload"));
                             bundle.putString("payload", jsonString);
+                            bundle.putString("fullResponse", fullResponse);
                             intent.putExtras(bundle);
                             switch (resultType) {
                                 // TODO: Add cases
