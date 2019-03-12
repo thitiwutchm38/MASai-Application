@@ -35,18 +35,6 @@ public class LocalTestingRepository {
         masaiLocalDatabase.close();
     }
 
-    public void setAllTestingEntities(LiveData<List<TestingEntity>> allTestingEntities) {
-        this.allTestingEntities = allTestingEntities;
-    }
-
-    public LiveData<List<ActivityLogEntity>> getAllActivityLogEntities() {
-        return allActivityLogEntities;
-    }
-
-    public void setAllActivityLogEntities(LiveData<List<ActivityLogEntity>> allActivityLogEntities) {
-        this.allActivityLogEntities = allActivityLogEntities;
-    }
-
     public void insertTesting(String title, Date createdAt) {
         TestingEntity testingEntity = new TestingEntity();
         testingEntity.setTitle(title);
@@ -69,11 +57,45 @@ public class LocalTestingRepository {
     }
 
     public LiveData<List<TestingEntity>> getAllTestingEntities() {
-        return masaiLocalDatabase.testingDao().fetchAllTestings();
+        return allTestingEntities;
     }
 
     public LiveData<TestingEntity> getTesting(int id) {
-        return masaiLocalDatabase.testingDao().getTestingById(id);
+        return testingDao.getTestingById(id);
+    }
+
+    public void insertActivityLogEntity(ActivityLogEntity... activityLogEntities) {
+        new InsertActivityLogAsyncTask(activityLogDao).execute(activityLogEntities);
+    }
+
+    public void insertActivityLogEntity(String name, String status, String jsonOutput, int testingId, Date startTime) {
+        ActivityLogEntity activityLogEntity = new ActivityLogEntity();
+        activityLogEntity.setName(name);
+        activityLogEntity.setStatus(status);
+        activityLogEntity.setJsonOutput(jsonOutput);
+        activityLogEntity.setTestingId(testingId);
+        activityLogEntity.setStartTime(startTime);
+        insertActivityLogEntity(activityLogEntity);
+    }
+
+    public void deleteActivityLogEntity(ActivityLogEntity... activityLogEntities) {
+        new DeleteActivityLogAsyncTask(activityLogDao).execute(activityLogEntities);
+    }
+
+    public void updateActivityLogEntity(ActivityLogEntity... activityLogEntities) {
+        new UpdateActivityLogAsyncTask(activityLogDao).execute(activityLogEntities);
+    }
+
+    public LiveData<ActivityLogEntity> getActivityLogEntityById(int id) {
+        return activityLogDao.getActivityLogById(id);
+    }
+
+    public LiveData<List<ActivityLogEntity>> getAllActivityLogEntities() {
+        return allActivityLogEntities;
+    }
+
+    public LiveData<List<ActivityLogEntity>> getActivityLogEntitiesByTestingId(int testingId) {
+        return activityLogDao.getActivityLogEntitiesByTestingId(testingId);
     }
 
     private static class InsertTestingAsyncTask extends AsyncTask<TestingEntity, Void, Void> {
@@ -114,6 +136,50 @@ public class LocalTestingRepository {
         @Override
         protected Void doInBackground(TestingEntity... testingEntities) {
             asyncTestingDao.deleteTesting(testingEntities);
+            return null;
+        }
+    }
+
+    private static class InsertActivityLogAsyncTask extends AsyncTask<ActivityLogEntity, Void, Void> {
+        private ActivityLogDao asyncActivityLogDao;
+
+        public InsertActivityLogAsyncTask(ActivityLogDao dao) {
+            asyncActivityLogDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(ActivityLogEntity... activityLogEntities) {
+            asyncActivityLogDao.insertActivtyLog(activityLogEntities);
+            return null;
+        }
+    }
+
+    private static class DeleteActivityLogAsyncTask extends AsyncTask<ActivityLogEntity, Void, Void> {
+
+        private ActivityLogDao activityLogDao;
+
+        public DeleteActivityLogAsyncTask(ActivityLogDao dao) {
+            activityLogDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(ActivityLogEntity... activityLogEntities) {
+            activityLogDao.deleteActivityLog(activityLogEntities);
+            return null;
+        }
+    }
+
+    private static class UpdateActivityLogAsyncTask extends AsyncTask<ActivityLogEntity, Void, Void> {
+
+        private ActivityLogDao activityLogDao;
+
+        public UpdateActivityLogAsyncTask(ActivityLogDao dao) {
+            activityLogDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(ActivityLogEntity... activityLogEntities) {
+            activityLogDao.updateActivityLog(activityLogEntities);
             return null;
         }
     }

@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2.routercrackingscreen;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
+import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -70,6 +72,9 @@ public class CrackRouterActivity extends AppCompatActivity {
     private ClipboardManager mClipboardManager;
     private ClipData mClipData;
 
+    private SharedPreferences sharedPreferences;
+    private MasaiViewModel masaiViewModel;
+
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -103,6 +108,10 @@ public class CrackRouterActivity extends AppCompatActivity {
         setTitle("Wi-Fi Information");
         mContext = getApplicationContext();
         mActivity = this;
+
+        sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
+
         mTextViewBssid = (TextView) findViewById(R.id.text_crack_router_bssid);
         mTextViewSignal = (TextView) findViewById(R.id.text_crack_router_signal);
         mTextViewSecurity = (TextView) findViewById(R.id.text_crack_router_security);
@@ -170,6 +179,8 @@ public class CrackRouterActivity extends AppCompatActivity {
                     jsonObject.add("payload", payloadJsonElement);
                     String jsonString = jsonObject.toString();
                     mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+
+                    masaiViewModel.insertActivityLogEntity("Router Cracking Testing", "running", null, sharedPreferences.getInt("testing_id", 0));
                 }
 
                 ////////////////////

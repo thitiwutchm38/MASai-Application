@@ -20,9 +20,15 @@ public interface ActivityLogDao {
     @Query("SELECT * FROM activity_log ORDER BY start_time asc")
     public LiveData<List<ActivityLogEntity>> fetchAllActivityLogEntities();
 
+    @Query("SELECT * FROM activity_log WHERE testing_id = :testingId")
+    public LiveData<List<ActivityLogEntity>> getActivityLogEntitiesByTestingId(int testingId);
+
+    @Query("SELECT * FROM activity_log WHERE id = :id")
+    public LiveData<ActivityLogEntity> getActivityLogById(int id);
+
     @Update
-    public void updateActivityLog(ActivityLogEntity activityLogEntity);
+    public void updateActivityLog(ActivityLogEntity... activityLogEntity);
 
     @Delete
-    public void deleteActivityLog(ActivityLogEntity activityLogEntity);
+    public void deleteActivityLog(ActivityLogEntity... activityLogEntity);
 }

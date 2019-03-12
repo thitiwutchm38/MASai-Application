@@ -8,6 +8,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -33,6 +34,7 @@ import android.widget.ImageButton;
 
 import com.example.bookthiti.masai2.MasaiSettingActivity;
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.database.model.TestingEntity;
 import com.example.bookthiti.masai2.homescreen.HomeIconFragment;
 import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
@@ -68,11 +70,15 @@ public class MainActivity extends AppCompatActivity {
 
     private List<TestingEntity> testingEntityList = new ArrayList<>();
 
-    private MainAcitivtyViewModel mainAcitivtyViewModel;
+    private MasaiViewModel masaiViewModel;
 
     private TestingEntity currentTestingEntity;
 
     private int testingPosition = 0;
+
+    private int testingId;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.i("Log info", "Service is already started");
         }
+
+        sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+        testingPosition = sharedPreferences.getInt("testing_position", 0);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -106,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         // TODO: add list of test to the menu
-        mainAcitivtyViewModel = ViewModelProviders.of(this).get(MainAcitivtyViewModel.class);
-        mainAcitivtyViewModel.getAllTestingEntities().observe(this, new Observer<List<TestingEntity>>() {
+        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
+        masaiViewModel.getAllTestingEntities().observe(this, new Observer<List<TestingEntity>>() {
             @Override
             public void onChanged(@Nullable List<TestingEntity> testingEntities) {
                 testingEntityList.clear();
@@ -161,9 +170,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_generate_report:
                 return true;
             case R.id.menu_delete_testing:
-                if (mainAcitivtyViewModel != null && currentTestingEntity != null) {
-                    mainAcitivtyViewModel.deleteTestingEntity(currentTestingEntity);
+                if (masaiViewModel != null && currentTestingEntity != null) {
+                    masaiViewModel.deleteTestingEntity(currentTestingEntity);
                     currentTestingEntity = null;
+                    testingPosition = 0;
                     Log.i(TAG_INFO, "Testing should be deleted");
                 }
                 return true;
@@ -233,6 +243,14 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setChecked(true);
                     currentTestingEntity = testingEntityList.get(index);
                     testingPosition = index;
+                    testingId = currentTestingEntity.getId();
+                    if (sharedPreferences != null) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("testing_position", testingPosition);
+                        editor.putInt("testing_id", testingId);
+                        editor.putString("testing_name", currentTestingEntity.getTitle());
+                        editor.commit();
+                    }
                     Log.i(TAG_INFO, "current testing: " + currentTestingEntity.getTitle());
                     mDrawerLayout.closeDrawers();
                     return true;
@@ -240,13 +258,25 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (currentTestingEntity == null && testingEntityList.size() != 0) {
-            currentTestingEntity = testingEntityList.get(0);
-            testingPosition = 0;
-            menu.getItem(0).setChecked(true);
+            currentTestingEntity = testingEntityList.get(testingPosition);
+            menu.getItem(testingPosition).setChecked(true);
+            if (sharedPreferences != null) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("testing_position", testingPosition);
+                editor.putInt("testing_id", currentTestingEntity.getId());
+                editor.putString("testing_name", currentTestingEntity.getTitle());
+                editor.commit();
+            }
         } else if (currentTestingEntity == null && testingEntityList.size() == 0) {
-            mainAcitivtyViewModel.insertTestingEntity("Default Testing");
+            masaiViewModel.insertTestingEntity("Default Testing");
         } else {
             menu.getItem(testingPosition).setChecked(true);
+//            if (sharedPreferences != null) {
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("testing_position", testingPosition);
+//                editor.putInt("testing_id", currentTestingEntity.getId());
+//                editor.putString("testing_name", currentTestingEntity.getTitle());
+//            }
         }
         menu.add("New Testing");
         menu.getItem(testingEntityList.size()).setIcon(R.drawable.ic_add_indigo_a700_24dp)
@@ -262,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // TODO: Create new Testing Entity and add to database
-                        mainAcitivtyViewModel.insertTestingEntity(input.getText().toString());
+                        masaiViewModel.insertTestingEntity(input.getText().toString());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
