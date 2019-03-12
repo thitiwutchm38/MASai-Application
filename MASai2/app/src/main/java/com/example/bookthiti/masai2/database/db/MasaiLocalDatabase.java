@@ -13,7 +13,7 @@ import com.example.bookthiti.masai2.database.model.TestingEntity;
 import com.example.bookthiti.masai2.database.util.DateTimeConverter;
 
 @Database(entities = {TestingEntity.class, ActivityLogEntity.class},
-        version = 1)
+        version = 2)
 @TypeConverters({DateTimeConverter.class})
 public abstract class MasaiLocalDatabase extends RoomDatabase {
     private static MasaiLocalDatabase INSTANCE;

@@ -53,17 +53,17 @@ public class MasaiViewModel extends AndroidViewModel {
         return localTestingRepository.getActivityLogEntitiesByTestingId(testingId);
     }
 
-    public LiveData<ActivityLogEntity> getActivityLogEntityById(int id) {
+    public LiveData<ActivityLogEntity> getActivityLogEntityById(long id) {
         return localTestingRepository.getActivityLogEntityById(id);
     }
 
-    public void insertActivityLogEntity(ActivityLogEntity... activityLogEntities) {
-        localTestingRepository.insertActivityLogEntity(activityLogEntities);
+    public long[] insertActivityLogEntity(ActivityLogEntity... activityLogEntities) {
+        return localTestingRepository.insertActivityLogEntity(activityLogEntities);
     }
 
-    public void insertActivityLogEntity(String name, String status, String jsonOutput, int testingId) {
+    public long insertActivityLogEntity(String name, String status, String jsonOutput, long testingId) {
         Date startTime = Calendar.getInstance().getTime();
-        localTestingRepository.insertActivityLogEntity(name, status, jsonOutput, testingId, startTime);
+        return localTestingRepository.insertActivityLogEntity(name, status, jsonOutput, testingId, startTime);
     }
 
     public void deleteActivityLogEntity(ActivityLogEntity... activityLogEntities) {
@@ -79,5 +79,9 @@ public class MasaiViewModel extends AndroidViewModel {
         activityLogEntity.setJsonOutput(jsonOutput);
         activityLogEntity.setFinishTime(finishTime);
         localTestingRepository.updateActivityLogEntity(activityLogEntity);
+    }
+
+    public void updateActivityLogEntity(long id, String status, String jsonOutput, Date finishTime) {
+        localTestingRepository.updateActivityLogEntity(id, status, jsonOutput, finishTime);
     }
 }

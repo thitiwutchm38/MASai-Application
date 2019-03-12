@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int testingPosition = 0;
 
-    private int testingId;
+    private long testingId;
 
     private SharedPreferences sharedPreferences;
 
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     if (sharedPreferences != null) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("testing_position", testingPosition);
-                        editor.putInt("testing_id", testingId);
+                        editor.putLong("testing_id", testingId);
                         editor.putString("testing_name", currentTestingEntity.getTitle());
                         editor.commit();
                     }
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
             if (sharedPreferences != null) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("testing_position", testingPosition);
-                editor.putInt("testing_id", currentTestingEntity.getId());
+                editor.putLong("testing_id", currentTestingEntity.getId());
                 editor.putString("testing_name", currentTestingEntity.getTitle());
                 editor.commit();
             }

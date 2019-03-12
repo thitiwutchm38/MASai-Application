@@ -22,11 +22,11 @@ public class ActivityLogEntity {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @NonNull
     @ColumnInfo(name = "testing_id")
-    private int testingId;
+    private long testingId;
 
     @ColumnInfo(name = "start_time")
     private Date startTime;
@@ -43,19 +43,19 @@ public class ActivityLogEntity {
     public ActivityLogEntity() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getTestingId() {
+    public long getTestingId() {
         return testingId;
     }
 
-    public void setTestingId(int testingId) {
+    public void setTestingId(long testingId) {
         this.testingId = testingId;
     }
 

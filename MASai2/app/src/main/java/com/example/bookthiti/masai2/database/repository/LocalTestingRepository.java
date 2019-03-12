@@ -1,6 +1,7 @@
 package com.example.bookthiti.masai2.database.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class LocalTestingRepository {
 
@@ -60,22 +62,34 @@ public class LocalTestingRepository {
         return allTestingEntities;
     }
 
-    public LiveData<TestingEntity> getTesting(int id) {
+    public LiveData<TestingEntity> getTesting(long id) {
         return testingDao.getTestingById(id);
     }
 
-    public void insertActivityLogEntity(ActivityLogEntity... activityLogEntities) {
-        new InsertActivityLogAsyncTask(activityLogDao).execute(activityLogEntities);
+    public long[] insertActivityLogEntity(ActivityLogEntity... activityLogEntities) {
+        try {
+            return new InsertActivityLogAsyncTask(activityLogDao).execute(activityLogEntities).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new long[0];
     }
 
-    public void insertActivityLogEntity(String name, String status, String jsonOutput, int testingId, Date startTime) {
+    public long insertActivityLogEntity(String name, String status, String jsonOutput, long testingId, Date startTime) {
         ActivityLogEntity activityLogEntity = new ActivityLogEntity();
         activityLogEntity.setName(name);
         activityLogEntity.setStatus(status);
         activityLogEntity.setJsonOutput(jsonOutput);
         activityLogEntity.setTestingId(testingId);
         activityLogEntity.setStartTime(startTime);
-        insertActivityLogEntity(activityLogEntity);
+        long[] longs = insertActivityLogEntity(activityLogEntity);
+        if (longs.length == 1) {
+            return longs[0];
+        } else {
+            return -1;
+        }
     }
 
     public void deleteActivityLogEntity(ActivityLogEntity... activityLogEntities) {
@@ -86,7 +100,11 @@ public class LocalTestingRepository {
         new UpdateActivityLogAsyncTask(activityLogDao).execute(activityLogEntities);
     }
 
-    public LiveData<ActivityLogEntity> getActivityLogEntityById(int id) {
+    public void updateActivityLogEntity(long id, String status, String jsonOutput, Date finishTime) {
+        new UpdateActivityLogByIdAsyncTask(activityLogDao, id, status, jsonOutput, finishTime).execute();
+    }
+
+    public LiveData<ActivityLogEntity> getActivityLogEntityById(long id) {
         return activityLogDao.getActivityLogById(id);
     }
 
@@ -94,7 +112,7 @@ public class LocalTestingRepository {
         return allActivityLogEntities;
     }
 
-    public LiveData<List<ActivityLogEntity>> getActivityLogEntitiesByTestingId(int testingId) {
+    public LiveData<List<ActivityLogEntity>> getActivityLogEntitiesByTestingId(long testingId) {
         return activityLogDao.getActivityLogEntitiesByTestingId(testingId);
     }
 
@@ -140,7 +158,7 @@ public class LocalTestingRepository {
         }
     }
 
-    private static class InsertActivityLogAsyncTask extends AsyncTask<ActivityLogEntity, Void, Void> {
+    private static class InsertActivityLogAsyncTask extends AsyncTask<ActivityLogEntity, Void, long[]> {
         private ActivityLogDao asyncActivityLogDao;
 
         public InsertActivityLogAsyncTask(ActivityLogDao dao) {
@@ -148,9 +166,9 @@ public class LocalTestingRepository {
         }
 
         @Override
-        protected Void doInBackground(ActivityLogEntity... activityLogEntities) {
-            asyncActivityLogDao.insertActivtyLog(activityLogEntities);
-            return null;
+        protected long[] doInBackground(ActivityLogEntity... activityLogEntities) {
+            long[] id = asyncActivityLogDao.insertActivtyLog(activityLogEntities);
+            return id;
         }
     }
 
@@ -180,6 +198,28 @@ public class LocalTestingRepository {
         @Override
         protected Void doInBackground(ActivityLogEntity... activityLogEntities) {
             activityLogDao.updateActivityLog(activityLogEntities);
+            return null;
+        }
+    }
+
+    private static class UpdateActivityLogByIdAsyncTask extends AsyncTask<Void, Void, Void> {
+        private ActivityLogDao activityLogDao;
+        private long id;
+        private String status;
+        private String jsonOutput;
+        private Date finishTime;
+
+        public UpdateActivityLogByIdAsyncTask(ActivityLogDao dao, long id, String status, String jsonOutput, Date finishTime) {
+            activityLogDao = dao;
+            this.id = id;
+            this.status = status;
+            this.jsonOutput = jsonOutput;
+            this.finishTime = finishTime;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            activityLogDao.updateActivityLogById(id, status, jsonOutput, finishTime);
             return null;
         }
     }

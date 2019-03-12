@@ -21,7 +21,7 @@ public interface TestingDao {
     LiveData<List<TestingEntity>> fetchAllTestings();
 
     @Query("SELECT * FROM testing WHERE id =:id")
-    LiveData<TestingEntity> getTestingById(int id);
+    LiveData<TestingEntity> getTestingById(long id);
 
     @Update
     void updateTesting(TestingEntity... testingEntities);
