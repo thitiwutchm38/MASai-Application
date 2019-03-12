@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 
 public class OwaspContentFragment extends Fragment {

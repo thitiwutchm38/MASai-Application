@@ -1,8 +1,6 @@
 package com.example.bookthiti.masai2.bluetoothservice;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -18,18 +16,15 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.bookthiti.masai2.MainActivity;
+import com.example.bookthiti.masai2.mainscreen.MainActivity;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
 import com.example.bookthiti.masai2.devicediscoveryscreen.DeviceDiscoveryActivity;
-import com.example.bookthiti.masai2.networksearchingscreen.SearchNetworkActivity;
 import com.example.bookthiti.masai2.portattackscreen.PortAttackActivity;
-import com.example.bookthiti.masai2.portattackscreen.PortAttackResult;
 import com.example.bookthiti.masai2.routercrackingscreen.CrackRouterActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -205,6 +200,15 @@ public class BluetoothManagementService extends Service {
                         Toast.makeText(this, "Already discovering", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        }
+    }
+
+    public void disconnectFromRemoteDevice() {
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+            if (mConnectingThread != null) {
+                mConnectingThread.cancel();
             }
         }
     }

@@ -18,7 +18,6 @@
         <![CDATA[<p style="text-align: justify;"><b>M1</b> covers a platform feature misuse or failure to manage platform security controls usage. The platform in the mContext is related to the mobile operating system such as Android and iOS. Generally, each platform provides developers with the application-developing guidelines, but they usually fail to follow it. Therefore, the violation can raise risks to users unintentionally or intentionally. Moreover, the misuse of API calls is also considered to be this category. One example of this vulnerability is that the application requests a user several permissions, and some of the permissions are not related to the application usage. To prevent such this vulnerability, developers must follow the mobile application developing guidelines according to each platform properly.</p> ]]></string>
 
 
-
     <string-array name="m_topic_id">
         <item>M1</item>
         <item>M2</item>
@@ -65,8 +64,6 @@
         <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M9</strong> refers to the technique which decompiles an application to the original-like source code and analyses vulnerabilities in the source code. Reverse engineering can also cause code tampering attacks or other attacks as all mobile code is susceptible to reverse engineering due to the inherent nature of the code. Attackers are the required skills to perform an analysis of the final core binary to extract useful information embedded within the targeted mobile application. A program written in languages which allow for dynamic introspection at runtimes such as Java and Objective C is more susceptible to reverse engineering. An obfuscation tool can be used to prevent reverse engineering.</span></p>]]></item>
 
         <item><![CDATA[<p style="text-align: justify;"><span style="font-weight: 400;"><strong>M10</strong> refers to hidden backdoor functionality in a mobile application which is attached unintentionally into a production environment by developers. The developers may install the extraneous functions for fixing issues in backdoor feature which can raise the risk of attacks. For example, a developer might declare a variable containing a password for testing, but he/she forgets to exclude it when officially upload the application to the production build. Attackers can exploit extraneous functionality directly from their own systems via reverse engineering. The impact of the risk is severe since it can give the attack the ability to execute unauthorised high-privileged actions. The best practice to prevent such these vulnerabilities is to carefully review and verify code.</span></p>]]></item>
-
-
 
 
     </string-array>
@@ -129,7 +126,6 @@
         <p style="text-align: justify;"><span style="font-weight: 400;">Mishandling encryption becomes easier when a device uses its own encryption algorithms or protocols. Thus, it is highly imperative that a developer uses modern algorithms that are accepted as strong by the security community, and whenever possible leverage the state of the art encryption APIs within the mobile platform.</span></p>
         <p><span style="font-weight: 400;">4.Use of Insecure and/or Deprecated Algorithms </span></p>
         <p style="text-align: justify;"><span style="font-weight: 400;">Cryptographic algorithms and protocols like RC2, MD4, MD5, and SHA1, which are shown to have significant weaknesses or are otherwise insufficient for modern security requirements must not be employed.</span></p>]]></item>
-
 
 
         <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;"><span style="font-weight: 400;">There are a few easy rules to follow when trying to determine if a mobile endpoint is suffering from insecure authorization.</span></span></p>
@@ -268,33 +264,33 @@
         <p style="text-align: justify;"><span style="font-weight: 400;">- Examine all API endpoints accessed by the mobile app to verify that these endpoints are well documented and publicly available.</span></p>
         <p style="text-align: justify;"><span style="font-weight: 400;">- Examine all log statements to ensure nothing overly descriptive about the backend is being written to the logs.</span></p>]]></item>
 
-        </string-array>
+    </string-array>
 
-        <string-array name="i_topic_id">
-            <item>I1</item>
-            <item>I2</item>
-            <item>I3</item>
-            <item>I4</item>
-            <item>I5</item>
-            <item>I6</item>
-            <item>I7</item>
-            <item>I8</item>
-            <item>I9</item>
-            <item>I10</item>
-        </string-array>
+    <string-array name="i_topic_id">
+        <item>I1</item>
+        <item>I2</item>
+        <item>I3</item>
+        <item>I4</item>
+        <item>I5</item>
+        <item>I6</item>
+        <item>I7</item>
+        <item>I8</item>
+        <item>I9</item>
+        <item>I10</item>
+    </string-array>
 
-        <string-array name="i_topic">
-            <item>Insecure Web Interface</item>
-            <item>Insufficient Authentication/Authorization</item>
-            <item>Insecure Network Services</item>
-            <item>Lack of Transport Encryption</item>
-            <item>Privacy Concerns</item>
-            <item>Insecure Cloud Interface</item>
-            <item>Insecure Mobile Interface</item>
-            <item>Insufficient Security Configurability</item>
-            <item>Insecure Software/Firmware</item>
-            <item>Poor Physical Security</item>
-        </string-array>
+    <string-array name="i_topic">
+        <item>Insecure Web Interface</item>
+        <item>Insufficient Authentication/Authorization</item>
+        <item>Insecure Network Services</item>
+        <item>Lack of Transport Encryption</item>
+        <item>Privacy Concerns</item>
+        <item>Insecure Cloud Interface</item>
+        <item>Insecure Mobile Interface</item>
+        <item>Insufficient Security Configurability</item>
+        <item>Insecure Software/Firmware</item>
+        <item>Poor Physical Security</item>
+    </string-array>
 
     <string-array name="i_detail">
 
@@ -326,7 +322,7 @@
         <p><span style="font-weight: 400;">{http://xyz.com/index.php?user=&lt;script&gt;alert(123)&lt;/script&gt; Response from the browser is an alert popup.}</span></p>
         <p><span style="font-weight: 400;">In the cases above, the attacker is able to easily determine if an account is valid or not and is also able to determine that the site is susceptible to cross-site scripting (XSS).</span></p>]]></item>
 
-    <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;">Checking for Insufficient Authentication includes:</span></p>
+        <item><![CDATA[<p style="text-align: justify;"><span style="text-decoration: underline;">Checking for Insufficient Authentication includes:</span></p>
         <p style="text-align: justify;"><span style="font-weight: 400;">- Attempting to use simple passwords such as "1234" is a fast and easy way to determine if the password policy is sufficient across all interfaces</span></p>
         <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing network traffic to determine if credentials are being transmitted in clear text</span></p>
         <p style="text-align: justify;"><span style="font-weight: 400;">- Reviewing requirements around password controls such as password complexity, password history check, password expiration and forced password reset for new users</span></p>
@@ -552,5 +548,8 @@
     <string name="long_text">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
     <string name="channel_name">Notification</string>
     <string name="channel_description">This will allow the application to notify you when the testing is finished</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

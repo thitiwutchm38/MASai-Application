@@ -2,7 +2,6 @@ package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -16,7 +15,7 @@ import com.google.gson.JsonParseException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_ERROR;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_ERROR;
 
 public class AppIcon implements Parcelable {
     private int height;

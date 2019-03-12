@@ -1,14 +1,12 @@
 package com.example.bookthiti.masai2.routercrackingscreen;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
-import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +30,7 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
+import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -41,7 +40,7 @@ import com.google.gson.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class CrackRouterActivity extends AppCompatActivity {
     private Context mContext;
@@ -72,6 +71,9 @@ public class CrackRouterActivity extends AppCompatActivity {
 
     private ClipboardManager mClipboardManager;
     private ClipData mClipData;
+
+    private SharedPreferences sharedPreferences;
+    private MasaiViewModel masaiViewModel;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -106,6 +108,10 @@ public class CrackRouterActivity extends AppCompatActivity {
         setTitle("Wi-Fi Information");
         mContext = getApplicationContext();
         mActivity = this;
+
+        sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
+
         mTextViewBssid = (TextView) findViewById(R.id.text_crack_router_bssid);
         mTextViewSignal = (TextView) findViewById(R.id.text_crack_router_signal);
         mTextViewSecurity = (TextView) findViewById(R.id.text_crack_router_security);

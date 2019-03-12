@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
-import static com.example.bookthiti.masai2.LogConstants.TAG_ERROR;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_ERROR;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;

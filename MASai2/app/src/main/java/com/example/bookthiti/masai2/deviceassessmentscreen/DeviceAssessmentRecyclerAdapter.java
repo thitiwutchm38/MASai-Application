@@ -3,25 +3,20 @@ package com.example.bookthiti.masai2.deviceassessmentscreen;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVERecyclerAdapter;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
 
 import java.util.List;
-
-import static com.example.bookthiti.masai2.LogConstants.TAG_INFO;
 
 public class DeviceAssessmentRecyclerAdapter extends RecyclerView.Adapter<DeviceAssessmentRecyclerAdapter.Holder>{
     private List<ServiceModel> mServiceModelList;

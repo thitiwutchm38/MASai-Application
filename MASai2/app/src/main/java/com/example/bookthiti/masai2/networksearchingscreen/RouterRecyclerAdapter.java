@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import com.example.bookthiti.masai2.OnRecyclerViewItemClickListener;
+import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
