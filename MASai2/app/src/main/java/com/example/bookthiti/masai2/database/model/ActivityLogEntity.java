@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.example.bookthiti.masai2.database.util.DateTimeConverter;
@@ -25,7 +27,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 parentColumns = "id",
                 childColumns = "testing_id",
                 onDelete = CASCADE))
-public class ActivityLogEntity {
+public class ActivityLogEntity implements Parcelable {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
@@ -49,6 +51,28 @@ public class ActivityLogEntity {
 
     public ActivityLogEntity() {
     }
+
+    protected ActivityLogEntity(Parcel in) {
+        id = in.readLong();
+        testingId = in.readLong();
+        startTime = new Date(in.readLong());
+        finishTime = new Date(in.readLong());
+        name = in.readString();
+        status = in.readString();
+        jsonOutput = in.readString();
+    }
+
+    public static final Creator<ActivityLogEntity> CREATOR = new Creator<ActivityLogEntity>() {
+        @Override
+        public ActivityLogEntity createFromParcel(Parcel in) {
+            return new ActivityLogEntity(in);
+        }
+
+        @Override
+        public ActivityLogEntity[] newArray(int size) {
+            return new ActivityLogEntity[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -104,6 +128,22 @@ public class ActivityLogEntity {
 
     public void setJsonOutput(String jsonOutput) {
         this.jsonOutput = jsonOutput;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeLong(testingId);
+        parcel.writeLong(startTime.getTime());
+        parcel.writeLong(finishTime.getTime());
+        parcel.writeString(name);
+        parcel.writeString(status);
+        parcel.writeString(jsonOutput);
     }
 
     public static class ActivityLogEntitySerializer implements JsonSerializer<ActivityLogEntity> {

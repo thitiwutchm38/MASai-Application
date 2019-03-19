@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -81,13 +83,15 @@ public class MainActivity extends AppCompatActivity {
 
     private List<TestingEntity> testingEntityList = new ArrayList<>();
 
+    private List<ActivityLogEntity> activityLogEntityList = new ArrayList<>();
+
     private MasaiViewModel masaiViewModel;
 
     private TestingEntity currentTestingEntity;
 
     private int testingPosition = 0;
 
-    private long testingId;
+    private MutableLiveData<Long> testingId = new MutableLiveData<Long>();
 
     private SharedPreferences sharedPreferences;
 
@@ -116,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
         testingPosition = sharedPreferences.getInt("testing_position", 0);
+        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
+        setViewModel(masaiViewModel);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -129,14 +135,10 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTabLayout.setupWithViewPager(mViewPager, true);
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
-        // TODO: add list of activity log
-        mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
         mViewPager.setAdapter(mPagerAdapter);
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         // TODO: add list of test to the menu
-        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
         masaiViewModel.getAllTestingEntities().observe(this, new Observer<List<TestingEntity>>() {
             @Override
             public void onChanged(@Nullable List<TestingEntity> testingEntities) {
@@ -145,7 +147,37 @@ public class MainActivity extends AppCompatActivity {
                 setMenu();
             }
         });
-        setViewModel(masaiViewModel);
+
+        testingId.observe(this, new Observer<Long>() {
+            @Override
+            public void onChanged(@Nullable Long aLong) {
+                masaiViewModel.getActivityLogEntitiesByTestingId(aLong).observe((LifecycleOwner) mActivity, new Observer<List<ActivityLogEntity>>() {
+                    @Override
+                    public void onChanged(@Nullable List<ActivityLogEntity> activityLogEntities) {
+                        mPagerAdapter.fragmentList.clear();
+                        mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
+                        Log.i(TAG_INFO, "getActivityLogEntitiesByTestingId was on changed");
+                        activityLogEntityList.clear();
+                        activityLogEntityList.addAll(activityLogEntities);
+                        if (activityLogEntityList.size() == 0) {
+                            mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
+                        } else {
+                            for (ActivityLogEntity activityLogEntity : activityLogEntityList) {
+                                mPagerAdapter.addFragment(ActivityLogFragment.newInstance(activityLogEntity), "");
+                            }
+                        }
+//                        mViewPager.setAdapter(mPagerAdapter);
+                        mPagerAdapter.notifyDataSetChanged();
+                        mViewPager.setCurrentItem(0, true);
+                    }
+                });
+            }
+        });
+
+        // TODO: add list of activity log
+//        Log.i(TAG_INFO, "testingId = " + testingId);
+//        mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
+//        mViewPager.setAdapter(mPagerAdapter);
 
         button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
         button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
@@ -335,11 +367,12 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setChecked(true);
                     currentTestingEntity = testingEntityList.get(index);
                     testingPosition = index;
-                    testingId = currentTestingEntity.getId();
+//                    testingId = currentTestingEntity.getId();
+                    testingId.setValue(currentTestingEntity.getId());
                     if (sharedPreferences != null) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("testing_position", testingPosition);
-                        editor.putLong("testing_id", testingId);
+                        editor.putLong("testing_id", currentTestingEntity.getId());
                         editor.putString("testing_name", currentTestingEntity.getTitle());
                         editor.commit();
                     }
@@ -351,6 +384,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if (currentTestingEntity == null && testingEntityList.size() != 0) {
             currentTestingEntity = testingEntityList.get(testingPosition);
+//            testingId = currentTestingEntity.getId();
+            testingId.setValue(currentTestingEntity.getId());
             menu.getItem(testingPosition).setChecked(true);
             if (sharedPreferences != null) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();

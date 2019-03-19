@@ -6,43 +6,35 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.database.model.ActivityLogEntity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ActivityLogFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ActivityLogFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+//    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM_ACTIVTY_LOG = "param_activity_log";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+//    private String mParam1;
+//    private String mParam2;
+    private ActivityLogEntity activityLogEntity;
 
+    private TextView textViewActivityTitle;
+    private TextView textViewActivityStatus;
+    private TextView textViewActivityStartAt;
+    private TextView textViewActivityFinishAt;
+    private TextView textViewSeeDetails;
 
     public ActivityLogFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ActivityLogFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ActivityLogFragment newInstance(String param1, String param2) {
+    public static ActivityLogFragment newInstance(ActivityLogEntity activityLogEntity) {
         ActivityLogFragment fragment = new ActivityLogFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ARG_PARAM_ACTIVTY_LOG, activityLogEntity);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,8 +43,8 @@ public class ActivityLogFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            activityLogEntity = getArguments().getParcelable(ARG_PARAM_ACTIVTY_LOG);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -60,7 +52,23 @@ public class ActivityLogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_activity_log, container, false);
+        View view = inflater.inflate(R.layout.fragment_activity_log, container, false);
+        textViewActivityTitle = view.findViewById(R.id.text_activity_title);
+        textViewActivityStatus = view.findViewById(R.id.text_activity_status);
+        textViewActivityStartAt = view.findViewById(R.id.text_activity_start_at);
+        textViewActivityFinishAt = view.findViewById(R.id.text_activity_finish_at);
+        textViewSeeDetails = view.findViewById(R.id.text_btn_see_details);
+
+        textViewActivityTitle.setText(activityLogEntity.getName());
+        textViewActivityStatus.setText(activityLogEntity.getStatus());
+        textViewActivityStartAt.setText(activityLogEntity.getStartTime().toString());
+        if (activityLogEntity.getFinishTime() == null) {
+            textViewActivityFinishAt.setText("-");
+        } else {
+            textViewActivityFinishAt.setText(activityLogEntity.getFinishTime().toString());
+        }
+
+        return view;
     }
 
 }
