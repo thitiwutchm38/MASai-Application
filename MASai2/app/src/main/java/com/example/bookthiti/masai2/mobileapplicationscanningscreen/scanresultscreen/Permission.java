@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,7 +8,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
 
 import java.lang.reflect.Type;
 

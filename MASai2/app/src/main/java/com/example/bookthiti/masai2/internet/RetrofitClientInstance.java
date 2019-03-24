@@ -1,7 +1,12 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.internet;
 
 import com.example.bookthiti.masai2.database.model.ActivityLogEntity;
 import com.example.bookthiti.masai2.mainscreen.model.PostRequestBody;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.appsearchscreen.AppIcon;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen.AppVulnerability;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen.Permission;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.appsearchscreen.TargetApplicationInfo;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen.TargetApplicationScanningResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

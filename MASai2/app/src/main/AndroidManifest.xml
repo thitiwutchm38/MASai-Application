@@ -27,7 +27,7 @@
         <activity
             android:name=".iotpentestmainscreen.IoTMainPentestActivity"
             android:label="IoT Device Pentest" />
-        <activity android:name=".mobileapplicationscanningscreen.MobileApplicationScannerActivity" />
+        <activity android:name=".mobileapplicationscanningscreen.appsearchscreen.MobileApplicationScannerActivity" />
         <activity
             android:name=".networksearchingscreen.SearchNetworkActivity"
             android:label="Select Network"
@@ -64,7 +64,7 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             tools:replace="android:screenOrientation" />
-        <activity android:name=".mobileapplicationscanningscreen.MobileApplicationScanningResultActivity" />
+        <activity android:name=".mobileapplicationscanningscreen.scanresultscreen.MobileApplicationScanningResultActivity" />
 
         <service android:name=".bluetoothservice.BluetoothManagementService" />
 

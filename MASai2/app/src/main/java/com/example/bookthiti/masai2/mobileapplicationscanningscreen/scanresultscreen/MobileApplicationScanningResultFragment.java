@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,12 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.internet.MasaiServerAPI;
+import com.example.bookthiti.masai2.internet.RetrofitClientInstance;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.appsearchscreen.TargetApplicationInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +53,8 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     private TextView mTextViewProgress;
     private Button mButtonRefresh;
 
-    private ConstraintLayout mConstraintLayout;
+    private ConstraintLayout mConstraintLayoutAppVulnerContainer;
+    private ConstraintLayout mConstraintLayoutAndroidPermissions;
     private TextView mTextViewAndroidFindingHighRisk;
     private TextView mTextViewAndroidFindingWarning;
     private TextView mTextViewAndroidFindingLowRisk;
@@ -56,6 +64,8 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     private TextView mTextViewPermissionSignature;
     private TextView mTextViewPermissionDangerous;
     private TextView mTextViewPermissionSpecial;
+
+    private TextView mTextViewAverageCVSSScore;
 
     private ConstraintLayout mContainerAndroidFindingHighRisk;
     private ConstraintLayout mContainerAndroidFindingWarning;
@@ -68,9 +78,12 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     private ConstraintLayout mContainerPermissionSpecial;
 
     private RecyclerView mRecyclerViewAppVulners;
+    private RecyclerView mRecyclerViewOwaspCategory;
 
     private AppVulnerabilityOwaspRecyclerAdapter mAppVulnerabilityOwaspRecyclerAdapter;
+    private OwaspCategoryRecyclerAdapter mOwaspCategoryRecyclerAdapter;
     private List<AppVulnerability> mAppVulnerabilityList;
+    private Map<String, List<AppVulnerability>> mOwaspSummary;
 
     public MobileApplicationScanningResultFragment() {
         // Required empty public constructor
@@ -110,7 +123,7 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mobile_application_scanning_result, container, false);
+        View view = inflater.inflate(R.layout.fragment_mobile_application_scanning_result2, container, false);
         mTextViewProgress = view.findViewById(R.id.text_progress);
         mButtonRefresh = view.findViewById(R.id.button_refresh);
         mButtonRefresh.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +136,8 @@ public class MobileApplicationScanningResultFragment extends Fragment {
         });
         mTextViewProgress.setVisibility(View.INVISIBLE);
         mButtonRefresh.setVisibility(View.INVISIBLE);
+
+        mTextViewAverageCVSSScore = view.findViewById(R.id.text_cvss_average);
 
         mTextViewAndroidFindingHighRisk = view.findViewById(R.id.text_summary_high);
         mTextViewAndroidFindingWarning = view.findViewById(R.id.text_summary_medium);
@@ -144,15 +159,27 @@ public class MobileApplicationScanningResultFragment extends Fragment {
         mContainerPermissionDangerous = view.findViewById(R.id.layout_container_android_permission_dangerous);
         mContainerPermissionSpecial = view.findViewById(R.id.layout_container_android_permission_special);
 
-        mConstraintLayout = view.findViewById(R.id.layout_container_app_result);
+        mConstraintLayoutAppVulnerContainer = view.findViewById(R.id.layout_container_app_result);
+        mConstraintLayoutAndroidPermissions = view.findViewById(R.id.layout_container_android_permissions);
+
+        mOwaspSummary = new TreeMap<String, List<AppVulnerability>>();
 
         mRecyclerViewAppVulners = view.findViewById(R.id.rv_android_finding);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         mRecyclerViewAppVulners.setLayoutManager(linearLayoutManager);
         mAppVulnerabilityList = new ArrayList<AppVulnerability>();
-        mAppVulnerabilityOwaspRecyclerAdapter = new AppVulnerabilityOwaspRecyclerAdapter(getContext(), mAppVulnerabilityList);
+        mAppVulnerabilityOwaspRecyclerAdapter = new AppVulnerabilityOwaspRecyclerAdapter(getContext(), mOwaspSummary);
         mRecyclerViewAppVulners.setAdapter(mAppVulnerabilityOwaspRecyclerAdapter);
+
+        mRecyclerViewOwaspCategory = view.findViewById(R.id.rv_owasp_category);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        mRecyclerViewOwaspCategory.setLayoutManager(linearLayoutManager1);
+        mOwaspCategoryRecyclerAdapter = new OwaspCategoryRecyclerAdapter(getContext(), mOwaspSummary);
+        mRecyclerViewOwaspCategory.setAdapter(mOwaspCategoryRecyclerAdapter);
+
+
         refreshCall();
 
         return view;
@@ -222,11 +249,15 @@ public class MobileApplicationScanningResultFragment extends Fragment {
                 if(mTargetApplicationScanningResult.getStatus().equals("finish")) {
                     mTextViewProgress.setVisibility(View.GONE);
                     mButtonRefresh.setVisibility(View.GONE);
-                    mConstraintLayout.setVisibility(View.VISIBLE);
+                    mConstraintLayoutAppVulnerContainer.setVisibility(View.VISIBLE);
+                    mConstraintLayoutAndroidPermissions.setVisibility(View.VISIBLE);
                     mRecyclerViewAppVulners.setVisibility(View.VISIBLE);
+
+                    mTextViewAverageCVSSScore.setText("" + mTargetApplicationScanningResult.getAverageCvss());
 
                     int[] findingSummary = TargetApplicationScanningResult.getFindingSummary(mTargetApplicationScanningResult);
                     int[] permissionSummary = TargetApplicationScanningResult.getPermissionSummary(mTargetApplicationScanningResult);
+                    mOwaspSummary = TargetApplicationScanningResult.getOwaspSummary(mTargetApplicationScanningResult);
                     mTextViewAndroidFindingHighRisk.setText(Integer.toString(findingSummary[0]));
                     mTextViewAndroidFindingWarning.setText(Integer.toString(findingSummary[1]));
                     mTextViewAndroidFindingLowRisk.setText(Integer.toString(findingSummary[2]));
@@ -239,8 +270,11 @@ public class MobileApplicationScanningResultFragment extends Fragment {
 
                     mAppVulnerabilityList.clear();
                     mAppVulnerabilityList.addAll(mTargetApplicationScanningResult.getAppVulnerabilityList());
-                    mAppVulnerabilityOwaspRecyclerAdapter.updateOwaspAppVulnerMap();
+                    mAppVulnerabilityOwaspRecyclerAdapter.setOwaspAppVulnerMap(mOwaspSummary);
                     mAppVulnerabilityOwaspRecyclerAdapter.notifyDataSetChanged();
+
+                    mOwaspCategoryRecyclerAdapter.setOwaspCategory(mOwaspSummary);
+                    mOwaspCategoryRecyclerAdapter.notifyDataSetChanged();
 
                     mContainerAndroidFindingHighRisk.setOnClickListener(new ContainerAndroidFindingOnClickListener(mContext, mAppVulnerabilityList, "high"));
                     mContainerAndroidFindingWarning.setOnClickListener(new ContainerAndroidFindingOnClickListener(mContext, mAppVulnerabilityList, "warning"));

@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.internet;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/text_app_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -136,7 +136,7 @@
 
         <fragment
             android:id="@+id/fragment_app_scan_result"
-            android:name="com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScanningResultFragment"
+            android:name="com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen.MobileApplicationScanningResultFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

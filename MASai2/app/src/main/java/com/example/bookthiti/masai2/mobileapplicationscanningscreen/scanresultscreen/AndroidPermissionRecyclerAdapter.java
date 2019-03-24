@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

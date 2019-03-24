@@ -1,10 +1,9 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.internet.DownloadImageTask;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.appsearchscreen.TargetApplicationInfo;
 
 public class MobileApplicationScanningResultActivity extends AppCompatActivity implements MobileApplicationScanningResultFragment.OnFragmentInteractionListener{
 
@@ -32,6 +33,7 @@ public class MobileApplicationScanningResultActivity extends AppCompatActivity i
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_app_scan_result);
         mContext = getApplicationContext();
+        setTitle("App Information");
 
         targetApplicationInfo = (TargetApplicationInfo) getIntent().getParcelableExtra("selectedApplication");
 

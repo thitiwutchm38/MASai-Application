@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen.appsearchscreen;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -27,6 +27,9 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.internet.MasaiServerAPI;
+import com.example.bookthiti.masai2.internet.RetrofitClientInstance;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen.MobileApplicationScanningResultActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.bookthiti.masai2.mobileapplicationscanningscreen;
+package com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,53 +15,57 @@ import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContainerAndroidFindingOnClickListener implements View.OnClickListener {
+public class ContainerAndroidPermissionOnClickListener implements View.OnClickListener {
 
     private Context context;
-    private List<AppVulnerability> appVulnerabilityFromLevelList;
+    private List<Permission> permissionListFromLevel;
     private String level;
 
-    public ContainerAndroidFindingOnClickListener(Context context, List<AppVulnerability> appVulnerabilityList, String level) {
+    public ContainerAndroidPermissionOnClickListener(Context context, List<Permission> permissionList, String level) {
         this.context = context;
         this.level = level;
-        this.setAppVulnerabilityFromLevelList(appVulnerabilityList, level);
+        setPermissionList(permissionList, level);
     }
-
 
     @Override
     public void onClick(View view) {
         BlurPopupWindow.Builder builder = new BlurPopupWindow.Builder(context);
-        builder.setContentView(R.layout.pop_up_android_rule_result);
+        builder.setContentView(R.layout.pop_up_permission_result);
         builder.setGravity(Gravity.CENTER);
         builder.setScaleRatio(0.2f);
-        builder.setBlurRadius(10);
+        builder.setBlurRadius(5);
         builder.setTintColor(0x3000000);
         BlurPopupWindow blurPopupWindow = builder.build();
 
-        RecyclerView recyclerView = blurPopupWindow.findViewById(R.id.recycle_popup_list);
-        LinearLayout popup = (LinearLayout)blurPopupWindow.findViewById(R.id.relativeLayout_popup);
+        RecyclerView recyclerView = blurPopupWindow.findViewById(R.id.recycle_popup_permission_list);
 
+        LinearLayout popup = (LinearLayout) blurPopupWindow.findViewById(R.id.relativeLayout_popup);
         popup.setBackgroundResource(R.drawable.shape_score);
 
         TextView textViewNumResult = (TextView) blurPopupWindow.findViewById(R.id.textView_popup_show_found);
-        textViewNumResult.setText(level + " Level: " + appVulnerabilityFromLevelList.size() +" Founded");
+
+        textViewNumResult.setText(level.toUpperCase() + ": " + permissionListFromLevel.size() + " permissions found");
+
         popup.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         //Toast.makeText(mContext, ""+recyclerView, Toast.LENGTH_SHORT).show();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        AndroidFindingRecyclerAdapter androidFindingRecyclerAdapter = new AndroidFindingRecyclerAdapter(context, appVulnerabilityFromLevelList);
-        recyclerView.setAdapter(androidFindingRecyclerAdapter);
+        AndroidPermissionRecyclerAdapter androidPermissionRecyclerAdapter = new AndroidPermissionRecyclerAdapter(context, permissionListFromLevel);
+
+//        mainRecyclerPAdapter.setOnRecyclerViewItemClickListener(ScanResultActivity.this);
+        recyclerView.setAdapter(androidPermissionRecyclerAdapter);
         blurPopupWindow.show();
     }
 
-    private void setAppVulnerabilityFromLevelList(List<AppVulnerability> appVulnerabilities, String level) {
-        appVulnerabilityFromLevelList = new ArrayList<AppVulnerability>();
-        for (AppVulnerability appVulnerability: appVulnerabilities) {
-            if(appVulnerability.getLevel().equals(level)) {
-                appVulnerabilityFromLevelList.add(appVulnerability);
+    private void setPermissionList(List<Permission> permissionList, String level) {
+        this.permissionListFromLevel = new ArrayList<Permission>();
+        for (Permission permission : permissionList) {
+            if(permission.getLevel().equals(level)) {
+                permissionListFromLevel.add(permission);
             }
         }
     }

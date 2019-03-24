@@ -44,11 +44,11 @@ import com.example.bookthiti.masai2.database.model.TestingEntity;
 import com.example.bookthiti.masai2.iotinformationscreen.IotInformationActivity;
 import com.example.bookthiti.masai2.iotpentestmainscreen.IoTMainPentestActivity;
 import com.example.bookthiti.masai2.mainscreen.model.PostRequestBody;
-import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MasaiServerAPI;
-import com.example.bookthiti.masai2.mobileapplicationscanningscreen.MobileApplicationScannerActivity;
+import com.example.bookthiti.masai2.internet.MasaiServerAPI;
+import com.example.bookthiti.masai2.mobileapplicationscanningscreen.appsearchscreen.MobileApplicationScannerActivity;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 import com.example.bookthiti.masai2.bluetoothservice.ServiceTools;
-import com.example.bookthiti.masai2.mobileapplicationscanningscreen.RetrofitClientInstance;
+import com.example.bookthiti.masai2.internet.RetrofitClientInstance;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         testingId.observe(this, new Observer<Long>() {
             @Override
             public void onChanged(@Nullable Long aLong) {
+                Log.i(TAG_INFO, "Current testing id: " + aLong);
                 masaiViewModel.getActivityLogEntitiesByTestingId(aLong).observe((LifecycleOwner) mActivity, new Observer<List<ActivityLogEntity>>() {
                     @Override
                     public void onChanged(@Nullable List<ActivityLogEntity> activityLogEntities) {
@@ -158,7 +159,12 @@ public class MainActivity extends AppCompatActivity {
                         mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
                         Log.i(TAG_INFO, "getActivityLogEntitiesByTestingId was on changed");
                         activityLogEntityList.clear();
-                        activityLogEntityList.addAll(activityLogEntities);
+                        for (ActivityLogEntity activityLogEntity : activityLogEntities) {
+                            if (!activityLogEntity.getName().equals("Wifi Scanning")) {
+                                activityLogEntityList.add(activityLogEntity);
+                            }
+                        }
+//                        activityLogEntityList.addAll(activityLogEntities);
                         if (activityLogEntityList.size() == 0) {
                             mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
                         } else {
@@ -166,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
                                 mPagerAdapter.addFragment(ActivityLogFragment.newInstance(activityLogEntity), "");
                             }
                         }
-//                        mViewPager.setAdapter(mPagerAdapter);
-                        mPagerAdapter.notifyDataSetChanged();
+                        mViewPager.setAdapter(mPagerAdapter);
+//                        mPagerAdapter.notifyDataSetChanged();
                         mViewPager.setCurrentItem(0, true);
                     }
                 });
