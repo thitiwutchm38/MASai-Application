@@ -122,7 +122,6 @@ public class CrackRouterActivity extends AppCompatActivity {
         mTextViewBssid = (TextView) findViewById(R.id.text_crack_router_bssid);
         mTextViewSignal = (TextView) findViewById(R.id.text_crack_router_signal);
         mTextViewSecurity = (TextView) findViewById(R.id.text_crack_router_security);
-//        mTextViewFrequency = (TextView) findViewById(R.id.text_crack_router_frequency);
         mTextViewChannel = (TextView) findViewById(R.id.text_crack_router_channel);
         mTextViewSsid = (TextView) findViewById(R.id.text_ssid);
         mTextViewCrackStatus = (TextView) findViewById(R.id.text_cracking_status);
@@ -130,6 +129,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         mImageButtonClipboard = (ImageButton) findViewById(R.id.image_crack_router_clipboard);
         mEditTextPassword = (EditText) findViewById(R.id.edit_crack_router_password);
         mTextViewResultHeader = (TextView) findViewById(R.id.text_crack_result_header);
+        mStartCrackingButton = (Button) findViewById(R.id.button_start_wifi_cracking);
 
         mProgressBar.setVisibility(View.INVISIBLE);
         mTextViewCrackStatus.setVisibility(View.INVISIBLE);
@@ -146,7 +146,11 @@ public class CrackRouterActivity extends AppCompatActivity {
             }
         }
 
-        mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        mTextViewSsid.setText("Name: " + mRouterModel.getSsid());
+        mTextViewSecurity.setText(mRouterModel.getSecurity());
+        mTextViewBssid.setText(mRouterModel.getBssid());
+        mTextViewSignal.setText(Float.toString(mRouterModel.getSignal()));
+        mTextViewChannel.setText(Integer.toString(mRouterModel.getChannel()));
 
         if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
             setResultFromIntent(getIntent());
@@ -161,16 +165,6 @@ public class CrackRouterActivity extends AppCompatActivity {
             LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         }
 
-        mTextViewSsid.setText("Name: " + mRouterModel.getSsid());
-        mTextViewSecurity.setText(mRouterModel.getSecurity());
-        mTextViewBssid.setText(mRouterModel.getBssid());
-        mTextViewSignal.setText(Float.toString(mRouterModel.getSignal()));
-//        mTextViewFrequency.setText(mRouterModel.getmFrequency());
-        mTextViewChannel.setText(Integer.toString(mRouterModel.getChannel()));
-
-        mStartCrackingButton = (Button) findViewById(R.id.button_start_wifi_cracking);
-//        ColorDrawable colorDrawable = (ColorDrawable) mStartCrackingButton.getBackground();
-//        final int itsColorId = colorDrawable.getColor();
         mStartCrackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,6 +213,7 @@ public class CrackRouterActivity extends AppCompatActivity {
             }
         });
 
+        mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         mImageButtonClipboard.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -233,6 +228,7 @@ public class CrackRouterActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -305,6 +301,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         mCrackResult = loadCrackResult(jsonString);
         if ("success".equals(mCrackResult.getStatus())) {
             isCrackable = true;
+            mStartCrackingButton.setVisibility(View.INVISIBLE);
         } else {
             isCrackable = false;
         }
