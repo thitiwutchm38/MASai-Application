@@ -232,9 +232,11 @@ public class MobileApplicationScanningResultFragment extends Fragment {
     private void refreshCall() {
         if (mTargetApplicationScanningResultCall != null) {
             if (!mTargetApplicationScanningResultCall.isExecuted()) {
+                Log.i(TAG_INFO, "the call is not yet executed");
                 sendRequest();
             } else {
                 mTargetApplicationScanningResultCall = mTargetApplicationScanningResultCall.clone();
+                Log.i(TAG_INFO, "the call is executed, cloning the call");
                 sendRequest();
             }
         }
@@ -294,12 +296,14 @@ public class MobileApplicationScanningResultFragment extends Fragment {
                     mTextViewProgress.setVisibility(View.VISIBLE);
                     mButtonRefresh.setVisibility(View.VISIBLE);
                 }
+                Log.i(TAG_INFO, "On success");
             }
 
             @Override
             public void onFailure(Call<TargetApplicationScanningResult> call, Throwable t) {
                 mTextViewProgress.setVisibility(View.VISIBLE);
                 mButtonRefresh.setVisibility(View.VISIBLE);
+                Log.i(TAG_INFO, "On failure was called " + t.getMessage());
             }
         });
     }

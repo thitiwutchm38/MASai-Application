@@ -1,5 +1,7 @@
 package com.example.bookthiti.masai2.mobileapplicationscanningscreen.scanresultscreen;
 
+import android.util.Log;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -17,6 +19,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class TargetApplicationScanningResult {
 
@@ -112,11 +116,14 @@ public class TargetApplicationScanningResult {
         @Override
         public TargetApplicationScanningResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
+            Log.i(TAG_INFO, "jsonObject is not null? " + (jsonObject != null));
             String packageName = jsonObject.get("packageName") != null && !jsonObject.get("packageName").isJsonNull() ? jsonObject.get("packageName").getAsString() : null;
             int versionCode = jsonObject.get("versionCode") != null && !jsonObject.get("versionCode").isJsonNull() ? jsonObject.get("versionCode").getAsInt() : null;
             String versionString = jsonObject.get("versionString") != null && !jsonObject.get("versionString").isJsonNull() ? jsonObject.get("versionString").getAsString() : null;
             double averageCvss = jsonObject.get("averageCvss") != null && !jsonObject.get("averageCvss").isJsonNull() ? jsonObject.get("averageCvss").getAsDouble() : null;
-            JsonObject appDetails = jsonObject.get("appDetails") != null && !jsonObject.get("appDetails").isJsonNull() ? jsonObject.get("appDetails").getAsJsonObject() : null;
+            Log.i(TAG_INFO, "averageCvss: " + averageCvss);
+            JsonObject appDetails = jsonObject.get("appNormalDetail") != null && !jsonObject.get("appNormalDetail").isJsonNull() ? jsonObject.get("appNormalDetail").getAsJsonObject() : null;
+            Log.i(TAG_INFO, "appDetails is not null? " + (appDetails != null));
             String status = jsonObject.get("status") != null && !jsonObject.get("status").isJsonNull() ? jsonObject.get("status").getAsString() : null;
             List<Permission> permissionList = new ArrayList<Permission>();
             if (jsonObject.get("permissions") != null && !jsonObject.get("permissions").isJsonNull()) {
@@ -126,7 +133,12 @@ public class TargetApplicationScanningResult {
             List<AppVulnerability> appVulnerabilityList = new ArrayList<AppVulnerability>();
             if (jsonObject.get("findings") != null && !jsonObject.get("findings").isJsonNull()) {
                 AppVulnerability[] findings = context.deserialize(jsonObject.get("findings"), AppVulnerability[].class);
-                appVulnerabilityList = Arrays.asList(findings);
+                for (AppVulnerability finding : findings) {
+                    if (finding != null) {
+                        appVulnerabilityList.add(finding);
+                    }
+                }
+//                appVulnerabilityList = Arrays.asList(findings);
             }
 
             return new TargetApplicationScanningResult(appVulnerabilityList, permissionList, packageName, versionCode, versionString, averageCvss, appDetails, status);
@@ -179,14 +191,16 @@ public class TargetApplicationScanningResult {
 
     public static Map<String, List<AppVulnerability>> getOwaspSummary(TargetApplicationScanningResult targetApplicationScanningResult) {
         Map<String, List<AppVulnerability>> owaspSummary = new TreeMap<String, List<AppVulnerability>>();
-        List<AppVulnerability> appVulnerabilityList = targetApplicationScanningResult.appVulnerabilityList;
+        List<AppVulnerability> appVulnerabilityList = targetApplicationScanningResult.getAppVulnerabilityList();
         for(AppVulnerability appVulnerability: appVulnerabilityList) {
-            if (owaspSummary.containsKey(appVulnerability.getOwaspId())) {
-                owaspSummary.get(appVulnerability.getOwaspId()).add(appVulnerability);
-            } else {
-                List<AppVulnerability> vulnerabilities = new ArrayList<AppVulnerability>();
-                vulnerabilities.add(appVulnerability);
-                owaspSummary.put(appVulnerability.getOwaspId(), vulnerabilities);
+            if (appVulnerability.getOwaspId() != null) {
+                if (owaspSummary.containsKey(appVulnerability.getOwaspId())) {
+                    owaspSummary.get(appVulnerability.getOwaspId()).add(appVulnerability);
+                } else {
+                    List<AppVulnerability> vulnerabilities = new ArrayList<AppVulnerability>();
+                    vulnerabilities.add(appVulnerability);
+                    owaspSummary.put(appVulnerability.getOwaspId(), vulnerabilities);
+                }
             }
         }
         return owaspSummary;

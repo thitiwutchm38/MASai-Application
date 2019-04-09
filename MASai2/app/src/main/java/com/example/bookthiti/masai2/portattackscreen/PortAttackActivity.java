@@ -55,6 +55,12 @@ public class PortAttackActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private TextView mTextViewProgress;
 
+    private TextView mTextViewDeviceIp;
+    private TextView mTextViewDeviceMac;
+    private TextView mTextViewDeviceType;
+    private TextView mTextViewDeviceOpenedPort;
+    private ImageView mImageViewDeviceType;
+
     private TextView mTextPasswordSuggestion;
     private ImageView mImageView;
 
@@ -115,6 +121,7 @@ public class PortAttackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_port_attack2);
+        setTitle("Service Attack Testing");
         this.mContext = getApplicationContext();
 
         mDeviceModel = getIntent().getParcelableExtra("deviceModel");
@@ -132,6 +139,12 @@ public class PortAttackActivity extends AppCompatActivity {
 
         mTextPasswordSuggestion.setVisibility(View.INVISIBLE);
         mImageView.setVisibility(View.INVISIBLE);
+
+        mTextViewDeviceIp = findViewById(R.id.text_data_ip);
+        mTextViewDeviceMac = findViewById(R.id.text_data_mac);
+        mTextViewDeviceType = findViewById(R.id.text_data_device_type);
+        mTextViewDeviceOpenedPort = findViewById(R.id.text_data_port_opened);
+        mImageViewDeviceType = findViewById(R.id.ic_device_type);
 
         mTextPasswordSuggestion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -192,6 +205,7 @@ public class PortAttackActivity extends AppCompatActivity {
         gsonBuilder.registerTypeAdapter(CVEModel.Severity.class, new CVEModel.SeverityDeserializer());
         gsonBuilder.registerTypeAdapter(ServiceModel.class, new ServiceModel.ServiceModelDeserializer());
         gsonBuilder.registerTypeAdapter(PortAttackResult.class, new PortAttackResult.PortAttackResultDeserializer());
+        gsonBuilder.registerTypeAdapter(DeviceModel.class, new DeviceModel.DeviceModelDeserializer());
         PortAttackResult portAttackResult = gsonBuilder.create().fromJson(jsonString, PortAttackResult.class);
         return portAttackResult;
     }
@@ -206,6 +220,7 @@ public class PortAttackActivity extends AppCompatActivity {
 
     private void setViewFromResult(String jsonString) {
         mPortAttackResult = loadPortAttackResult(jsonString);
+        mDeviceModel = mPortAttackResult.getDeviceModel();
         if (mPortAttackResult != null) {
             mTextViewResult.setText(mPortAttackResult.getResult().toUpperCase());
             if (mPortAttackResult.getResult().equals("success")) {
@@ -229,6 +244,18 @@ public class PortAttackActivity extends AppCompatActivity {
         mImageView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
         mTextViewProgress.setVisibility(View.GONE);
+
+        if (mDeviceModel != null) {
+            mTextViewDeviceIp.setText(mDeviceModel.getIpAddress());
+            if(mDeviceModel.getMacAddress() == null || mDeviceModel.getMacAddress().equals("-")) mTextViewDeviceMac.setText("-");
+            else mTextViewDeviceMac.setText(mDeviceModel.getMacAddress());
+
+            if(mDeviceModel.getDeviceType() == null || mDeviceModel.getDeviceType().equals("-")) mTextViewDeviceType.setText("-");
+            else mTextViewDeviceType.setText(mDeviceModel.getDeviceType());
+
+            mTextViewDeviceOpenedPort.setText("" + mDeviceModel.getServiceModels().size());
+            mImageViewDeviceType.setImageResource(mDeviceModel.getIconId());
+        }
     }
 
     private String mockupJson = "{\n" +

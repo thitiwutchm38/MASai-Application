@@ -1,5 +1,6 @@
 package com.example.bookthiti.masai2.portattackscreen;
 
+import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -11,6 +12,7 @@ import java.lang.reflect.Type;
 
 public class PortAttackResult {
 
+    private DeviceModel deviceModel;
     private ServiceModel serviceModel;
     private String result;
     private String username;
@@ -19,7 +21,8 @@ public class PortAttackResult {
     public PortAttackResult() {
     }
 
-    public PortAttackResult(ServiceModel serviceModel, String result, String username, String password) {
+    public PortAttackResult(DeviceModel deviceModel, ServiceModel serviceModel, String result, String username, String password) {
+        this.deviceModel = deviceModel;
         this.serviceModel = serviceModel;
         this.result = result;
         this.username = username;
@@ -58,6 +61,14 @@ public class PortAttackResult {
         this.password = password;
     }
 
+    public DeviceModel getDeviceModel() {
+        return deviceModel;
+    }
+
+    public void setDeviceModel(DeviceModel deviceModel) {
+        this.deviceModel = deviceModel;
+    }
+
     public static class PortAttackResultDeserializer implements JsonDeserializer<PortAttackResult> {
 
         @Override
@@ -66,11 +77,16 @@ public class PortAttackResult {
             String result = jsonObject.get("attackResult").getAsString();
             String username = jsonObject.get("username") != null && !jsonObject.get("username").isJsonNull() ? jsonObject.get("username").getAsString() : null;
             String password = jsonObject.get("password") != null && !jsonObject.get("password").isJsonNull() ? jsonObject.get("password").getAsString() : null;
+            DeviceModel deviceModel = null;
+            if (jsonObject.get("host") != null && !jsonObject.get("host").isJsonNull()) {
+                deviceModel = context.deserialize(jsonObject.get("host"), DeviceModel.class);
+            }
+
             ServiceModel serviceModel = null;
             if (jsonObject.get("service") != null && !jsonObject.get("service").isJsonNull()) {
                 serviceModel = context.deserialize(jsonObject.get("service"), ServiceModel.class);
             }
-            return new PortAttackResult(serviceModel, result, username, password);
+            return new PortAttackResult(deviceModel, serviceModel, result, username, password);
         }
     }
 }

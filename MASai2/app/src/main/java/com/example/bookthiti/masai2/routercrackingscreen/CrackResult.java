@@ -7,17 +7,19 @@ public class CrackResult {
     private String type;
     private String bssid;
     private String essid;
+    private int channel;
     private List<String> keys;
 
     public CrackResult() {
 
     }
 
-    public CrackResult(String status, String type, String bssid, String essid, List<String> keys) {
+    public CrackResult(String status, String type, String bssid, String essid, int channel, List<String> keys) {
         this.status = status;
         this.type = type;
         this.bssid = bssid;
         this.essid = essid;
+        this.channel = channel;
         this.keys = keys;
     }
 
@@ -59,5 +61,13 @@ public class CrackResult {
 
     public void setEssid(String essid) {
         this.essid = essid;
+    }
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
     }
 }

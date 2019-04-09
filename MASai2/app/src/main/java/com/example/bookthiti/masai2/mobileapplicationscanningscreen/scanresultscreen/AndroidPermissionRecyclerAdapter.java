@@ -44,6 +44,7 @@ public class AndroidPermissionRecyclerAdapter extends RecyclerView.Adapter<Andro
 
         viewHolder.mtextViewInfo.setText(permission.getInfo());
         viewHolder.mtextDescription.setText(permission.getDescription());
+        viewHolder.textViewPermissionTitle.setText(permission.getTitle());
 
         viewHolder.rowMainParentLinearLayout.setTag(permission);
 
@@ -105,6 +106,7 @@ public class AndroidPermissionRecyclerAdapter extends RecyclerView.Adapter<Andro
     //    private TextView textView_OWAPS_num;
         private TextView mtextViewInfo;
         private TextView mtextDescription;
+        private TextView textViewPermissionTitle;
 
 
         //private LinearLayout device_lin ;
@@ -121,6 +123,7 @@ public class AndroidPermissionRecyclerAdapter extends RecyclerView.Adapter<Andro
             mtextViewInfo = view.findViewById(R.id.textView_info_detail);
 
             mtextDescription = view.findViewById(R.id.textView_description_detail);
+            textViewPermissionTitle = view.findViewById(R.id.text_permission_title);
 
 
             //device_lin = view.findViewById(R.id.layout_pop_up_result);

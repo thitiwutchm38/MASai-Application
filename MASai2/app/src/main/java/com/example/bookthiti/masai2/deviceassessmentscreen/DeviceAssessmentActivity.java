@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,6 +49,11 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
     private TextView mTextViewProgress;
+    private TextView mTextViewDataIp;
+    private TextView mTextViewDataMac;
+    private TextView mTextViewDataDeviceType;
+    private TextView mTextViewOpenedPort;
+    private ImageView mImageViewIconDeviceType;
 
     private List<ServiceModel> mServiceModelList;
     private DeviceModel mDeviceModel;
@@ -104,6 +110,11 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
         mTextViewProgress = (TextView) findViewById(R.id.text_progress);
+        mTextViewDataIp = findViewById(R.id.text_data_ip);
+        mTextViewDataMac = findViewById(R.id.text_data_mac);
+        mTextViewDataDeviceType = findViewById(R.id.text_data_device_type);
+        mTextViewOpenedPort = findViewById(R.id.text_data_port_opened);
+        mImageViewIconDeviceType = findViewById(R.id.ic_device_type);
 
         // FIXME: Uncomment for mockup
 //        setRecyclerView(loadJsonFromAsset());
@@ -141,8 +152,8 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
         gsonBuilder.registerTypeAdapter(CVEModel.Severity.class, new CVEModel.SeverityDeserializer());
         gsonBuilder.registerTypeAdapter(ServiceModel.class, new ServiceModel.ServiceModelDeserializer());
         gsonBuilder.registerTypeAdapter(DeviceModel.class, new DeviceModel.DeviceModelDeserializer());
-        DeviceModel deviceModel = gsonBuilder.create().fromJson(jsonString, DeviceModel.class);
-        List<ServiceModel> serviceModels = deviceModel.getServiceModels();
+        mDeviceModel = gsonBuilder.create().fromJson(jsonString, DeviceModel.class);
+        List<ServiceModel> serviceModels = mDeviceModel.getServiceModels();
         return serviceModels;
     }
 
@@ -161,6 +172,15 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.GONE);
         mTextViewProgress.setVisibility(View.GONE);
         setRecyclerView(jsonString);
+        mTextViewDataIp.setText(mDeviceModel.getIpAddress());
+        if(mDeviceModel.getMacAddress() == null || mDeviceModel.getMacAddress().equals("-")) mTextViewDataMac.setText("-");
+        else mTextViewDataMac.setText(mDeviceModel.getMacAddress());
+
+        if(mDeviceModel.getDeviceType() == null || mDeviceModel.getDeviceType().equals("-")) mTextViewDataDeviceType.setText("-");
+        else mTextViewDataDeviceType.setText(mDeviceModel.getDeviceType());
+
+        mTextViewOpenedPort.setText("" + mServiceModelList.size());
+        mImageViewIconDeviceType.setImageResource(mDeviceModel.getIconId());
     }
 
     private String mockupJson = "{\n" +

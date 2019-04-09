@@ -267,6 +267,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         String status = crackResultObject.get("status").getAsString();
         String bssid = crackResultObject.get("bssid").getAsString();
         String essid = crackResultObject.get("essid").getAsString();
+        int channel = crackResultObject.get("channel") == null ? 0 : crackResultObject.get("channel").getAsInt();
         List<String> keys = new ArrayList<String>();
         if (crackResultObject.has("key")) {
             keys.add(crackResultObject.get("key").getAsString());
@@ -283,6 +284,7 @@ public class CrackRouterActivity extends AppCompatActivity {
         crackResult.setEssid(essid);
         crackResult.setStatus(status);
         crackResult.setKeys(keys);
+        crackResult.setChannel(channel);
 
         return crackResult;
     }
@@ -299,6 +301,9 @@ public class CrackRouterActivity extends AppCompatActivity {
 
     private void setResultToView(String jsonString) {
         mCrackResult = loadCrackResult(jsonString);
+        mTextViewSsid.setText("Name: " + mCrackResult.getEssid());
+        mTextViewBssid.setText(mCrackResult.getBssid());
+        mTextViewChannel.setText(Integer.toString(mCrackResult.getChannel()));
         if ("success".equals(mCrackResult.getStatus())) {
             isCrackable = true;
             mStartCrackingButton.setVisibility(View.INVISIBLE);
