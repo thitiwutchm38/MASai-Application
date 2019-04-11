@@ -20,6 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
+        <activity android:name=".bluetoothattackscreen.BluetoothDiscoveryActivity"></activity>
         <activity android:name=".portattackscreen.PortAttackActivity" />
         <activity android:name=".SummaryMobileOwaspActivity" />
         <activity android:name=".OwaspSummaryActivity" /> <!-- <activity android:name=".MainActivity" /> -->
@@ -31,7 +32,7 @@
         <activity
             android:name=".networksearchingscreen.SearchNetworkActivity"
             android:label="Select Network"
-            android:parentActivityName=".iotpentestmainscreen.IoTMainPentestActivity"/>
+            android:parentActivityName=".iotpentestmainscreen.IoTMainPentestActivity" />
         <activity
             android:name=".DetailActivity"
             android:label="DetailActivity" />

@@ -44,13 +44,12 @@ import java.util.Calendar;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_DEBUG;
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_ERROR;
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class BluetoothManagementService extends Service {
-    private final static String TAG_INFO = "Log info";
-    private final static String TAG_DEBUG = "Log debug";
-    private final static String TAG_ERROR = "Log error";
-    private static final int REQUEST_ENABLE_CODE = 0;
+    public static final int REQUEST_ENABLE_CODE = 0;
     public static final String ACTION_BLUETOOTH_CONNECTED = "ACTION BLUETOOTH CONNECTED";
     public static final String ACTION_BLUETOOTH_DISCONNECTED = "ACTION_BLUETOOTH_DISCONNECTED";
     public static final String ACTION_WIFI_SCAN = "ACTION WIFI SCAN";
