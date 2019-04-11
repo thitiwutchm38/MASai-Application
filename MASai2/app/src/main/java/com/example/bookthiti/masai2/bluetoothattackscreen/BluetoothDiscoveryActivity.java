@@ -10,6 +10,9 @@ import android.content.IntentFilter;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
@@ -24,13 +29,22 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
     Context mContext;
     BluetoothAdapter bluetoothAdapter;
 
+    List<BluetoothDeviceModel> bluetoothDeviceModelList;
+    BluetoothDeviceRecyclerAdapter bluetoothDeviceRecyclerAdapter;
+
+    RecyclerView recyclerViewBluetoothDevice;
+
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+                Integer rssi = new Integer(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
+                BluetoothDeviceModel bluetoothDeviceModel = new BluetoothDeviceModel(device, rssi);
+                bluetoothDeviceModelList.add(bluetoothDeviceModel);
+                bluetoothDeviceRecyclerAdapter.notifyDataSetChanged();
+
                 String deviceName = device.getName();
                 String deviceMacAddress = device.getAddress();
                 BluetoothClass deviceBluetoothClass = device.getBluetoothClass();
@@ -79,6 +93,15 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bluetooth_discovery);
         mContext = getApplicationContext();
 
+        recyclerViewBluetoothDevice = findViewById(R.id.rv_bluetooth_list);
+        bluetoothDeviceModelList = new ArrayList<BluetoothDeviceModel>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                LinearLayoutManager.VERTICAL, false);
+        bluetoothDeviceRecyclerAdapter = new BluetoothDeviceRecyclerAdapter(mContext, bluetoothDeviceModelList);
+        recyclerViewBluetoothDevice.setLayoutManager(linearLayoutManager);
+        recyclerViewBluetoothDevice.setAdapter(bluetoothDeviceRecyclerAdapter);
+        recyclerViewBluetoothDevice.addItemDecoration(new DividerItemDecoration(recyclerViewBluetoothDevice.getContext(), linearLayoutManager.getOrientation()));
+        
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
@@ -123,11 +146,5 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
                 Log.i(TAG_INFO, "Starting bluetooth discovery");
             }
         }
-    }
-
-    private boolean isDeviceRisk() {
-        // TODO: find oui database that is vulnerable to BlueBorne attack
-
-        return false;
     }
 }

@@ -24,7 +24,7 @@
         android:text="N/A"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:firstBaselineToTopHeight="28dp"
-        app:layout_constraintEnd_toStartOf="@+id/button_launch_attack"
+        app:layout_constraintEnd_toStartOf="@+id/button_launch_bt_attack"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ic_device_class"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,19 +37,20 @@
         android:text="12:34:56:78:90:AB"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:firstBaselineToTopHeight="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/button_launch_attack"
+        app:layout_constraintEnd_toStartOf="@+id/button_launch_bt_attack"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/text_device_name"
         app:layout_constraintTop_toBottomOf="@+id/text_device_name" />
 
     <Button
-        android:id="@+id/button_launch_attack"
+        android:id="@+id/button_launch_bt_attack"
         style="@android:style/Widget.Material.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="Attack"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
