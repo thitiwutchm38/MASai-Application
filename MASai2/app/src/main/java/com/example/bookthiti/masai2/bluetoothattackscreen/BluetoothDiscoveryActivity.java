@@ -124,4 +124,10 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
             }
         }
     }
+
+    private boolean isDeviceRisk() {
+        // TODO: find oui database that is vulnerable to BlueBorne attack
+
+        return false;
+    }
 }
