@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -301,6 +302,10 @@ public class MasaiSettingActivity extends AppCompatActivity {
     private void connectToRemoteDevice(JSONObject deviceInformation) {
         if(mBluetoothManagementService != null && mBound) {
             Log.i(TAG_INFO, "Connect Remote Device start");
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("MASAI_SHARED_PREF", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("need_to_connect_masai", true);
+            editor.commit();
             mBluetoothManagementService.connectRemoteDevice(deviceInformation, activity);
         } else {
             Log.i(TAG_INFO, "Connect Remote Device failed");

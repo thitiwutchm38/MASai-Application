@@ -81,12 +81,15 @@ public class BluetoothManagementService extends Service {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.i(TAG_INFO, "Receive ACTION_FOUND from broadcast receiver");
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("MASAI_SHARED_PREF", Context.MODE_PRIVATE);
+            boolean haveConnectMasai = sharedPreferences.getBoolean("need_to_connect_masai", false);
+            if (BluetoothDevice.ACTION_FOUND.equals(action) && haveConnectMasai) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String deviceAddress = device.getAddress();
                 Log.i(TAG_INFO, "A Device (" + deviceName + " " + deviceAddress + ")" + " is found");
                 if (mBoxName.equals(deviceName) && mBoxAddress.equals(deviceAddress)) {
+                    sharedPreferences.edit().putBoolean("need_to_connect_masai", false).commit();
                     mConnectingThread = new ConnectingThread(device);
                     mConnectingThread.start();
                     Log.i(TAG_INFO, "Connecting to " + deviceName + " " + deviceAddress);

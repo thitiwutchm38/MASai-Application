@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
 
+import java.lang.reflect.Field;
+
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class BluetoothDiscoveryActivity extends AppCompatActivity {
@@ -28,12 +30,45 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
                 String deviceName = device.getName();
                 String deviceMacAddress = device.getAddress();
                 BluetoothClass deviceBluetoothClass = device.getBluetoothClass();
-                int deviceClass = deviceBluetoothClass.getDeviceClass();
-                int deviceMajorClass = deviceBluetoothClass.getMajorDeviceClass();
-                Log.i(TAG_INFO, "Found bluetooth device " + deviceName + " (" + deviceMacAddress + ") class: " + deviceClass + " major class: " + deviceMajorClass);
+                int majorClass = deviceBluetoothClass.getMajorDeviceClass();
+                String deviceClass = "";
+                Class<?> c = BluetoothClass.Device.Major.class;
+                for (Field field : c.getDeclaredFields()) {
+                    try {
+                        if (majorClass == Integer.parseInt(field.get(c).toString())) deviceClass = field.getName();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                String deviceType = "";
+                switch (device.getType()) {
+                    case BluetoothDevice.DEVICE_TYPE_CLASSIC:
+                        deviceType = "Classic";
+                        break;
+                    case BluetoothDevice.DEVICE_TYPE_LE:
+                        deviceType = "LE";
+                        break;
+                    case BluetoothDevice.DEVICE_TYPE_DUAL:
+                        deviceType = "Dual";
+                        break;
+                    case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
+                        deviceType = "Unknown";
+                        break;
+                }
+                Log.i(TAG_INFO, "Found bluetooth device "
+                        + deviceName
+                        + " ("
+                        + deviceMacAddress
+                        + ") class: "
+                        + deviceClass
+                        + " RSSI: "
+                        + rssi
+                        + " Type: "
+                        + deviceType);
             }
         }
     };
