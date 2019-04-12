@@ -22,8 +22,6 @@
         tools:replace="android:label">
         <activity android:name=".bluetoothattackscreen.BluetoothDiscoveryActivity"></activity>
         <activity android:name=".portattackscreen.PortAttackActivity" />
-        <activity android:name=".SummaryMobileOwaspActivity" />
-        <activity android:name=".OwaspSummaryActivity" /> <!-- <activity android:name=".MainActivity" /> -->
         <activity android:name=".MasaiSettingActivity" />
         <activity
             android:name=".iotpentestmainscreen.IoTMainPentestActivity"
@@ -33,10 +31,8 @@
             android:name=".networksearchingscreen.SearchNetworkActivity"
             android:label="Select Network"
             android:parentActivityName=".iotpentestmainscreen.IoTMainPentestActivity" />
-        <activity
-            android:name=".DetailActivity"
-            android:label="DetailActivity" />
-        <activity android:name=".mainscreen.MainActivity">
+        <activity android:name=".mainscreen.MainActivity"
+            android:theme="@style/MasaiMainScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,7 +48,6 @@
         <activity
             android:name=".devicediscoveryscreen.DeviceDiscoveryActivity"
             android:label="List of Devices" />
-        <activity android:name=".ScanResultActivity" />
         <activity
             android:name=".devicediscoveryscreen.device.DeviceInformationActivity"
             android:label="Device Information" />

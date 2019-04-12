@@ -1,10 +1,10 @@
 package com.example.bookthiti.masai2.bluetoothattackscreen;
 
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,7 @@ public class BluetoothDeviceRecyclerAdapter extends RecyclerView.Adapter<Bluetoo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_bluetooth_device, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_bluetooth_device, viewGroup, false);
         return new BluetoothDeviceRecyclerAdapter.ViewHolder(view);
     }
 
@@ -61,8 +61,7 @@ public class BluetoothDeviceRecyclerAdapter extends RecyclerView.Adapter<Bluetoo
             viewHolder.textViewRisk.setText("LOW RISK");
             // TODO: Add text color
         }
-
-
+        viewHolder.imageViewDeviceType.setImageResource(getDeviceIconResource(bluetoothDevice.getBluetoothClass().getMajorDeviceClass()));
     }
 
     @Override
@@ -70,6 +69,28 @@ public class BluetoothDeviceRecyclerAdapter extends RecyclerView.Adapter<Bluetoo
         return bluetoothDeviceModelList.size();
     }
 
+    private int getDeviceIconResource(int majorClass) {
+        switch (majorClass) {
+            case BluetoothClass.Device.Major.AUDIO_VIDEO:
+                return R.drawable.ic_music_video_black_36dp;
+            case BluetoothClass.Device.Major.COMPUTER:
+                return R.drawable.ic_computer_black_36dp;
+            case BluetoothClass.Device.Major.PHONE:
+                return R.drawable.ic_phone_android_black_36dp;
+            case BluetoothClass.Device.Major.TOY:
+                return R.drawable.ic_toys_black_36dp;
+            case BluetoothClass.Device.Major.WEARABLE:
+                return R.drawable.ic_watch_black_36dp;
+            case BluetoothClass.Device.Major.MISC:
+            case BluetoothClass.Device.Major.IMAGING:
+            case BluetoothClass.Device.Major.NETWORKING:
+            case BluetoothClass.Device.Major.HEALTH:
+            case BluetoothClass.Device.Major.UNCATEGORIZED:
+            case BluetoothClass.Device.Major.PERIPHERAL:
+            default:
+                return R.drawable.ic_devices_other_black_36dp;
+        }
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewDeviceType;
@@ -81,7 +102,7 @@ public class BluetoothDeviceRecyclerAdapter extends RecyclerView.Adapter<Bluetoo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewDeviceType = itemView.findViewById(R.id.ic_device_type);
+            imageViewDeviceType = itemView.findViewById(R.id.ic_device_class);
             textViewDeviceName = itemView.findViewById(R.id.text_device_name);
             textViewDeviceMacAddress = itemView.findViewById(R.id.text_mac_address);
             textViewRisk = itemView.findViewById(R.id.text_risk);
