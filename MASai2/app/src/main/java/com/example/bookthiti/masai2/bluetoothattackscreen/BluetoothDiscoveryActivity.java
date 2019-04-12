@@ -101,7 +101,7 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
         recyclerViewBluetoothDevice.setLayoutManager(linearLayoutManager);
         recyclerViewBluetoothDevice.setAdapter(bluetoothDeviceRecyclerAdapter);
         recyclerViewBluetoothDevice.addItemDecoration(new DividerItemDecoration(recyclerViewBluetoothDevice.getContext(), linearLayoutManager.getOrientation()));
-        
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
