@@ -7,10 +7,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,17 +29,17 @@ import java.util.List;
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class BluetoothDiscoveryActivity extends AppCompatActivity {
-    Context mContext;
-    BluetoothAdapter bluetoothAdapter;
+    private Context mContext;
+    private BluetoothAdapter bluetoothAdapter;
 
-    List<BluetoothDeviceModel> bluetoothDeviceModelList;
-    BluetoothDeviceRecyclerAdapter bluetoothDeviceRecyclerAdapter;
+    private List<BluetoothDeviceModel> bluetoothDeviceModelList;
+    private BluetoothDeviceRecyclerAdapter bluetoothDeviceRecyclerAdapter;
 
-    RecyclerView recyclerViewBluetoothDevice;
-    ProgressBar progressBar;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerViewBluetoothDevice;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    boolean discoveryStarted = false;
+    private boolean discoveryStarted = false;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

@@ -20,7 +20,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".bluetoothattackscreen.BluetoothDiscoveryActivity"></activity>
+        <activity android:name=".bluetoothattackscreen.BluetoothAttackActivity"></activity>
+        <activity android:name=".bluetoothattackscreen.BluetoothDiscoveryActivity" />
         <activity android:name=".portattackscreen.PortAttackActivity" />
         <activity android:name=".MasaiSettingActivity" />
         <activity
@@ -31,7 +32,8 @@
             android:name=".networksearchingscreen.SearchNetworkActivity"
             android:label="Select Network"
             android:parentActivityName=".iotpentestmainscreen.IoTMainPentestActivity" />
-        <activity android:name=".mainscreen.MainActivity"
+        <activity
+            android:name=".mainscreen.MainActivity"
             android:theme="@style/MasaiMainScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
