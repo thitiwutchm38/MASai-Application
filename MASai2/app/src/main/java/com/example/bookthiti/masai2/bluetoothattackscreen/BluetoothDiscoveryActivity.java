@@ -107,6 +107,7 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_discovery);
+        setTitle("Bluetooth Devices");
         mContext = getApplicationContext();
 
         recyclerViewBluetoothDevice = findViewById(R.id.rv_bluetooth_list);
