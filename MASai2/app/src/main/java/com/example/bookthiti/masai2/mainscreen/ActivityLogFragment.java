@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
+import com.example.bookthiti.masai2.bluetoothattackscreen.BluetoothAttackActivity;
 import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
 import com.example.bookthiti.masai2.database.model.ActivityLogEntity;
 import com.example.bookthiti.masai2.deviceassessmentscreen.DeviceAssessmentActivity;
@@ -97,6 +98,9 @@ public class ActivityLogFragment extends Fragment {
             case "Device Assessment":
                 imageViewIcon.setImageResource(R.drawable.device1_pen);
                 break;
+            case "Bluetooth Attacking":
+                imageViewIcon.setImageResource(R.drawable.bluetooth_pen);
+                break;
         }
 
         textViewSeeDetails.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +136,9 @@ public class ActivityLogFragment extends Fragment {
                         intent.setClass(context, DeviceAssessmentActivity.class);
                         startActivity(intent);
                         break;
+                    case "Bluetooth Attacking":
+                        intent.setClass(context, BluetoothAttackActivity.class);
+                        startActivity(intent);
                 }
             }
         });

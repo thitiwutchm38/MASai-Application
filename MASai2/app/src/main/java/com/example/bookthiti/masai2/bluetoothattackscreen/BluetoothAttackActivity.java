@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
+import com.example.bookthiti.masai2.bluetoothservice.INotificationId;
 import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.mainscreen.MainActivity;
 import com.google.gson.Gson;
@@ -105,27 +108,28 @@ public class BluetoothAttackActivity extends AppCompatActivity {
         mTextViewDeviceMac = findViewById(R.id.text_bt_device_mac);
         mTextViewDeviceClass = findViewById(R.id.text_bt_device_class);
         mTextViewDeviceType = findViewById(R.id.text_bt_device_type);
+        mTextViewResult = findViewById(R.id.text_result2);
         mImageViewDeviceClass = findViewById(R.id.ic_bt_device_class);
 
         // FIXME: Uncomment for mockup
-        setViewFromResult(mockupJson2);
-        MasaiViewModel masaiViewModel = MainActivity.getViewModel();
-        SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
-        masaiViewModel.insertActivityLogEntity("Bluetooth Attacking", "finish", mockupJson, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
+//        setViewFromResult(mockupJson2);
+//        MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+//        SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+//        masaiViewModel.insertActivityLogEntity("Bluetooth Attacking", "finish", mockupJson, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
 
 
         // FIXME: Uncomment for real application
-//        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-//            setResultFromIntent(getIntent());
-//        } else {
-//            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-//            if (!mBound) {
-//                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//            }
-//            IntentFilter intentFilter = new IntentFilter();
-//            intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_ATTACK);
-//            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
-//        }
+        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+            setResultFromIntent(getIntent());
+        } else {
+            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+            if (!mBound) {
+                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+            }
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothManagementService.ACTION_BLUETOOTH_ATTACK);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        }
     }
 
     private BluetoothAttackResult loadBluetoothAttackResult(String jsonString) {
@@ -161,7 +165,7 @@ public class BluetoothAttackActivity extends AppCompatActivity {
             mTextViewDeviceClass.setText(mBluetoothDeviceModel.getDeviceClass());
             mImageViewDeviceClass.setImageResource(BluetoothDeviceModel.getDeviceIconResource(mBluetoothDeviceModel.getDeviceClass()));
         }
-        
+
     }
 
     private boolean isRemoteDeviceConnected() {
@@ -177,8 +181,8 @@ public class BluetoothAttackActivity extends AppCompatActivity {
             "        \"bluetoothDevice\": {\n" +
             "            \"mac\": \"f0:79:59:2d:ed:b1\",\n" +
             "            \"name\": \"test\",\n" +
-            "            \"device_cls\": \"test\",\n" +
-            "            \"device_type\": \"LE\"\n" +
+            "            \"class\": \"test\",\n" +
+            "            \"type\": \"LE\"\n" +
             "        },\n" +
             "        \"status\": \"success\"\n" +
             "    }\n" +
@@ -188,8 +192,8 @@ public class BluetoothAttackActivity extends AppCompatActivity {
             "        \"bluetoothDevice\": {\n" +
             "            \"mac\": \"f0:79:59:2d:ed:b1\",\n" +
             "            \"name\": \"test\",\n" +
-            "            \"device_cls\": \"test\",\n" +
-            "            \"device_type\": \"LE\"\n" +
+            "            \"class\": \"test\",\n" +
+            "            \"type\": \"LE\"\n" +
             "        },\n" +
             "        \"status\": \"success\"\n" +
             "    }\n";
