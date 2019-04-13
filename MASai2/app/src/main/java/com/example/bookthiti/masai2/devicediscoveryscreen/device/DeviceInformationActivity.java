@@ -68,7 +68,7 @@ public class DeviceInformationActivity extends AppCompatActivity implements OnRe
         mTextViewProtocolLabel = (TextView) findViewById(R.id.textView_show_portstatus);
 
         //List all device summaries
-        mImageViewDeviceType = (ImageView) findViewById(R.id.ic_device_type);
+        mImageViewDeviceType = (ImageView) findViewById(R.id.ic_bt_device_class);
         mTextViewIpAddress = (TextView) findViewById(R.id.textView_data_ip);
         mTextViewMacAddress = (TextView) findViewById(R.id.textView_data_mac);
         mTextViewDeviceType = (TextView) findViewById(R.id.textView_data_device_type);

@@ -1,8 +1,23 @@
 package com.example.bookthiti.masai2.bluetoothattackscreen;
 
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class BluetoothDeviceModel {
+import com.example.bookthiti.masai2.R;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+
+public class BluetoothDeviceModel implements Parcelable {
     private static final String[] VULN_DEVICE_MACS= {"00:07:72", "00:11:8B", "00:16:4D", "00:17:CC", "00:1A:F0", "00:1C:8E", "00:1D:4C", "00:21:05", "00:21:35", "00:21:AE", "00:23:3E", "00:25:BA", "00:C0:BE", "00:D0:95", "00:E0:B1", "00:E0:DA", "04:0A:83", "0C:A4:02", "18:4A:6F", "18:80:F5", "24:AF:4A", "2C:FA:A2", "3C:8B:CD", "4C:5F:D2", "54:A6:19", "54:E3:F6", "68:54:ED", "6C:BE:E9", "7C:20:64", "90:67:B5", "A0:9D:86", "A0:F3:E4", "A8:AD:3D", "AC:9C:E4", "C8:F8:6D", "D0:99:D5", "DC:08:56", "E0:30:05", "E4:A1:E6", "E8:E7:32", "F4:C6:13", "F8:30:94", "00:0E:86", "00:08:9A", "00:11:3F", "00:A0:81", "00:15:3F", "00:20:60", "00:20:32", "00:80:39", "00:0F:62", "00:19:8F", "00:80:9F", "0C:B5:DE", "18:42:2F", "4C:A7:4B", "54:05:5F", "68:59:7F", "84:A7:83", "88:5C:47", "90:67:F3", "94:AE:61", "D4:22:4E",
             "00:03:93", "00:0A:27", "00:0A:95", "00:0D:93", "00:10:FA", "00:11:24", "00:14:51", "00:16:CB", "00:17:F2", "00:19:E3", "00:1B:63", "00:1C:B3", "00:1D:4F", "00:1E:52", "00:1E:C2", "00:1F:5B", "00:1F:F3", "00:21:E9", "00:22:41", "00:23:12", "00:23:32", "00:23:6C", "00:23:DF", "00:24:36", "00:25:00", "00:25:4B", "00:25:BC", "00:26:08", "00:26:4A", "00:26:B0", "00:26:BB", "00:30:65", "00:3E:E1", "00:50:E4", "00:56:CD", "00:61:71", "00:6D:52", "00:88:65", "00:B3:62", "00:C6:10", "00:CD:FE", "00:DB:70", "00:F4:B9", "00:F7:6F", "04:0C:CE", "04:15:52", "04:1E:64", "04:26:65", "04:48:9A", "04:4B:ED", "04:52:F3", "04:54:53", "04:69:F8", "04:D3:CF", "04:DB:56", "04:E5:36", "04:F1:3E", "04:F7:E4", "08:66:98", "08:6D:41", "08:70:45", "08:74:02", "08:F4:AB", "0C:15:39", "0C:30:21", "0C:3E:9F", "0C:4D:E9", "0C:51:01", "0C:74:C2", "0C:77:1A", "0C:BC:9F", "0C:D7:46", "10:1C:0C", "10:40:F3", "10:41:7F", "10:93:E9", "10:9A:DD", "10:DD:B1", "14:10:9F", "14:5A:05", "14:8F:C6", "14:99:E2", "14:BD:61", "18:20:32", "18:34:51", "18:65:90", "18:9E:FC", "18:AF:61", "18:AF:8F", "18:E7:F4", "18:EE:69", "18:F6:43", "1C:1A:C0", "1C:36:BB", "1C:5C:F2", "1C:91:48", "1C:9E:46", "1C:AB:A7", "1C:E6:2B", "20:3C:AE", "20:76:8F", "20:78:F0", "20:7D:74", "20:9B:CD", "20:A2:E4", "20:AB:37", "20:C9:D0", "20:EE:28", "24:1E:EB", "24:24:0E", "24:5B:A7", "24:A0:74", "24:A2:E1", "24:AB:81", "24:E3:14", "24:F0:94", "24:F6:77", "28:0B:5C", "28:37:37", "28:5A:EB", "28:6A:B8", "28:6A:BA", "28:A0:2B", "28:CF:DA", "28:CF:E9", "28:E0:2C", "28:E1:4C", "28:E7:CF", "28:ED:6A", "28:F0:76", "2C:1F:23", "2C:20:0B", "2C:33:61", "2C:B4:3A", "2C:BE:08", "2C:F0:A2", "2C:F0:EE", "30:10:E4", "30:35:AD", "30:63:6B", "30:90:AB", "30:F7:C5", "34:08:BC", "34:12:98", "34:15:9E", "34:36:3B", "34:51:C9", "34:A3:95", "34:AB:37", "34:C0:59", "34:E2:FD", "38:0F:4A", "38:48:4C", "38:66:F0", "38:71:DE", "38:B5:4D", "38:C9:86", "38:CA:DA", "3C:07:54", "3C:15:C2", "3C:2E:F9", "3C:2E:FF", "3C:AB:8E", "3C:D0:F8", "3C:E0:72", "40:30:04", "40:33:1A", "40:3C:FC", "40:4D:7F", "40:6C:8F", "40:9C:28", "40:A6:D9", "40:B3:95", "40:D3:2D", "44:00:10", "44:2A:60", "44:4C:0C", "44:D8:84", "44:FB:42", "48:3B:38", "48:43:7C", "48:4B:AA", "48:60:BC", "48:74:6E", "48:A1:95", "48:BF:6B", "48:D7:05", "48:E9:F1", "4C:32:75", "4C:57:CA", "4C:74:BF", "4C:7C:5F", "4C:8D:79", "4C:B1:99", "50:32:37", "50:7A:55", "50:82:D5", "50:EA:D6", "54:26:96", "54:33:CB", "54:4E:90", "54:72:4F", "54:9F:13", "54:AE:27", "54:E4:3A", "54:EA:A8", "58:1F:AA", "58:40:4E", "58:55:CA", "58:7F:57", "58:B0:35", "58:E2:8F", "5C:59:48", "5C:8D:4E", "5C:95:AE", "5C:96:9D", "5C:97:F3", "5C:AD:CF", "5C:F5:DA", "5C:F7:E6", "5C:F9:38", "60:03:08", "60:33:4B", "60:69:44", "60:92:17", "60:9A:C1", "60:A3:7D", "60:C5:47", "60:D9:C7", "60:F4:45", "60:F8:1D", "60:FA:CD", "60:FB:42", "60:FE:C5", "64:20:0C", "64:76:BA", "64:9A:BE", "64:A3:CB", "64:A5:C3", "64:B0:A6", "64:B9:E8", "64:E6:82", "68:09:27", "68:5B:35", "68:64:4B", "68:96:7B", "68:9C:70", "68:A8:6D", "68:AE:20", "68:D9:3C", "68:DB:CA", "68:FB:7E", "6C:19:C0", "6C:3E:6D", "6C:40:08", "6C:70:9F", "6C:72:E7", "6C:8D:C1", "6C:94:F8", "6C:96:CF", "6C:AB:31", "6C:C2:6B", "70:11:24", "70:14:A6", "70:3E:AC", "70:48:0F", "70:56:81", "70:70:0D", "70:73:CB", "70:81:EB", "70:A2:B3", "70:CD:60", "70:DE:E2", "70:E7:2C", "70:EC:E4", "70:F0:87", "74:1B:B2", "74:81:14", "74:8D:08", "74:E1:B6", "74:E2:F5", "78:31:C1", "78:3A:84", "78:4F:43", "78:67:D7", "78:6C:1C", "78:7B:8A", "78:7E:61", "78:88:6D", "78:9F:70", "78:A3:E4", "78:CA:39", "78:D7:5F", "78:FD:94", "7C:01:91", "7C:04:D0", "7C:11:BE", "7C:50:49", "7C:6D:62", "7C:6D:F8", "7C:C3:A1", "7C:C5:37", "7C:D1:C3", "7C:F0:5F", "7C:FA:DF", "80:00:6E", "80:49:71", "80:92:9F", "80:B0:3D", "80:BE:05", "80:D6:05", "80:E6:50", "80:EA:96", "80:ED:2C", "84:29:99", "84:38:35", "84:41:67", "84:78:8B", "84:85:06", "84:89:AD", "84:8E:0C", "84:A1:34", "84:B1:53", "84:FC:AC", "84:FC:FE", "88:1F:A1", "88:53:95", "88:63:DF", "88:66:A5", "88:6B:6E", "88:C6:63", "88:CB:87", "88:E8:7F", "8C:00:6D", "8C:29:37", "8C:2D:AA", "8C:58:77", "8C:7B:9D", "8C:7C:92", "8C:85:90", "8C:8E:F2", "8C:8F:E9", "8C:FA:BA", "90:27:E4", "90:3C:92", "90:60:F1", "90:72:40", "90:84:0D", "90:8D:6C", "90:B0:ED", "90:B2:1F", "90:B9:31", "90:C1:C6", "90:FD:61", "94:94:26", "94:E9:6A", "94:F6:A3", "98:00:C6", "98:01:A7", "98:03:D8", "98:10:E8", "98:5A:EB", "98:9E:63", "98:B8:E3", "98:D6:BB", "98:E0:D9", "98:F0:AB", "98:FE:94", "9C:04:EB", "9C:20:7B", "9C:29:3F", "9C:35:EB", "9C:4F:DA", "9C:84:BF", "9C:8B:A0", "9C:E3:3F", "9C:F3:87", "9C:F4:8E", "9C:FC:01", "A0:18:28", "A0:3B:E3", "A0:4E:A7", "A0:99:9B", "A0:D7:95", "A0:ED:CD", "A4:31:35", "A4:5E:60", "A4:67:06", "A4:B1:97", "A4:B8:05", "A4:C3:61", "A4:D1:8C", "A4:D1:D2", "A4:E9:75", "A4:F1:E8", "A8:20:66", "A8:5B:78", "A8:5C:2C", "A8:60:B6", "A8:66:7F", "A8:86:DD", "A8:88:08", "A8:8E:24", "A8:96:8A", "A8:BB:CF", "A8:BE:27", "A8:FA:D8", "AC:1F:74", "AC:29:3A", "AC:3C:0B", "AC:61:EA", "AC:7F:3E", "AC:87:A3", "AC:BC:32", "AC:CF:5C", "AC:E4:B5", "AC:FD:EC", "B0:19:C6", "B0:34:95", "B0:48:1A", "B0:65:BD", "B0:70:2D", "B0:9F:BA", "B0:CA:68", "B4:18:D1", "B4:4B:D2", "B4:8B:19", "B4:9C:DF", "B4:F0:AB", "B4:F6:1C", "B8:09:8A", "B8:17:C2", "B8:44:D9", "B8:53:AC", "B8:63:4D", "B8:78:2E", "B8:8D:12", "B8:C1:11", "B8:C7:5D", "B8:E8:56", "B8:F6:B1", "B8:FF:61", "BC:3B:AF", "BC:4C:C4", "BC:52:B7", "BC:54:36", "BC:67:78", "BC:6C:21", "BC:92:6B", "BC:9F:EF", "BC:A9:20", "BC:EC:5D", "C0:1A:DA", "C0:63:94", "C0:84:7A", "C0:9F:42", "C0:A5:3E", "C0:CC:F8", "C0:CE:CD", "C0:D0:12", "C0:F2:FB", "C4:2C:03", "C4:B3:01", "C8:1E:E7", "C8:2A:14", "C8:33:4B", "C8:3C:85", "C8:69:CD", "C8:6F:1D", "C8:85:50", "C8:B5:B7", "C8:BC:C8", "C8:E0:EB", "C8:F6:50", "CC:08:8D", "CC:08:E0", "CC:20:E8", "CC:25:EF", "CC:29:F5", "CC:44:63", "CC:78:5F", "CC:C7:60", "D0:03:4B", "D0:23:DB", "D0:25:98", "D0:33:11", "D0:4F:7E", "D0:A6:37", "D0:C5:F3", "D0:D2:B0", "D0:E1:40", "D4:61:9D", "D4:9A:20", "D4:DC:CD", "D4:F4:6F", "D8:00:4D", "D8:1D:72", "D8:30:62", "D8:8F:76", "D8:96:95", "D8:9E:3F", "D8:A2:5E", "D8:BB:2C", "D8:CF:9C", "D8:D1:CB", "DC:0C:5C", "DC:2B:2A", "DC:2B:61", "DC:37:14", "DC:41:5F", "DC:86:D8", "DC:9B:9C", "DC:A4:CA", "DC:A9:04", "E0:5F:45", "E0:66:78", "E0:AC:CB", "E0:B5:2D", "E0:B9:BA", "E0:C7:67", "E0:C9:7A", "E0:F5:C6", "E0:F8:47", "E4:25:E7", "E4:2B:34", "E4:8B:7F", "E4:98:D6", "E4:9A:79", "E4:9A:DC", "E4:C6:3D", "E4:CE:8F", "E4:E4:AB", "E8:04:0B", "E8:06:88", "E8:80:2E", "E8:8D:28", "E8:B2:AC", "EC:35:86", "EC:85:2F", "EC:AD:B8", "F0:24:75", "F0:79:60", "F0:98:9D", "F0:99:BF", "F0:B0:E7", "F0:B4:79", "F0:C1:F1", "F0:CB:A1", "F0:D1:A9", "F0:DB:E2", "F0:DB:F8", "F0:DC:E2", "F0:F6:1C", "F4:0F:24", "F4:1B:A1", "F4:31:C3", "F4:37:B7", "F4:5C:89", "F4:F1:5A", "F4:F9:51", "F8:03:77", "F8:1E:DF", "F8:27:93", "F8:62:14", "FC:25:3F", "FC:D8:48", "FC:E9:98", "FC:FC:48", "10:00:E0", "00:80:D6", "00:05:02",
             "00:0C:6E", "00:0E:A6", "00:11:2F", "00:11:D8", "00:13:D4", "00:15:F2", "00:17:31", "00:18:F3", "00:1A:92", "00:1B:FC", "00:1D:60", "00:1E:8C", "00:1F:C6", "00:22:15", "00:23:54", "00:24:8C", "00:26:18", "08:60:6E", "08:62:66", "10:7B:44", "10:BF:48", "10:C3:7B", "14:DA:E9", "14:DD:A9", "1C:87:2C", "1C:B7:2C", "20:CF:30", "2C:4D:54", "2C:56:DC", "30:5A:3A", "30:85:A9", "34:97:F6", "38:2C:4A", "38:D5:47", "40:16:7E", "48:5B:39", "50:46:5D", "54:04:A6", "54:A0:50", "60:45:CB", "60:A4:4C", "70:4D:7B", "70:8B:CD", "74:D0:2B", "78:24:AF", "88:D7:F6", "90:E6:BA", "9C:5C:8E", "AC:22:0B", "AC:9E:17", "B0:6E:BF", "BC:AE:C5", "BC:EE:7B", "C8:60:00", "D0:17:C2", "D8:50:E6", "E0:3F:49", "E0:CB:4E", "F0:79:59", "F4:6D:04", "F8:32:E4",
@@ -22,23 +37,75 @@ public class BluetoothDeviceModel {
             "00:15:EB", "00:19:C6", "00:1E:73", "00:22:93", "00:25:12", "00:26:ED", "00:4A:77", "04:95:73", "08:18:1A", "08:3F:BC", "0C:12:62", "0C:37:47", "0C:72:D9", "10:D0:AB", "14:3E:BF", "14:60:80", "18:44:E6", "18:68:6A", "20:89:86", "24:C4:4A", "28:7B:09", "28:8C:B8", "28:FF:3E", "2C:26:C5", "2C:95:7F", "30:0C:23", "30:99:35", "30:D3:86", "30:F3:1D", "34:37:59", "34:4B:50", "34:4D:EA", "34:69:87", "34:DE:34", "34:E0:CF", "38:46:08", "38:D8:2F", "38:E2:DD", "3C:DA:2A", "44:F4:36", "48:28:2F", "48:59:A4", "48:A7:4E", "4C:09:B4", "4C:16:F1", "4C:AC:0A", "4C:CB:F5", "54:09:55", "54:22:F8", "54:BE:53", "60:14:66", "60:18:88", "60:73:BC", "64:13:6C", "68:1A:B2", "68:8A:F0", "68:9F:F0", "6C:8B:2F", "6C:A7:5F", "70:2E:22", "70:9F:2D", "74:4A:A4", "74:97:81", "74:A7:8E", "74:B5:7E", "78:31:2B", "78:96:82", "78:C1:A7", "78:E8:B6", "84:74:2A", "88:5D:FB", "88:D2:74", "8C:79:67", "8C:E0:81", "8C:E1:17", "90:1D:27", "90:C7:D8", "90:D8:F3", "94:A7:B7", "98:13:33", "98:6C:F5", "98:F4:28", "98:F5:37", "9C:63:ED", "9C:6F:52", "9C:A9:E4", "9C:D2:4B", "A0:91:C8", "A0:EC:80", "A4:7E:39", "A8:A6:68", "AC:64:62", "B0:75:D5", "B0:C1:9E", "B4:98:42", "B4:B3:62", "B8:05:AB", "C4:A3:66", "C8:64:C7", "C8:7B:5B", "CC:1A:FA", "CC:7B:35", "D0:15:4A", "D0:58:A8", "D0:5B:A8", "D0:60:8C", "D0:71:C4", "D4:37:D7", "D4:76:EA", "D4:C1:C8", "D8:55:A3", "D8:74:95", "DC:02:8E", "E0:7C:13", "E0:C3:F3", "E4:77:23", "E4:BD:4B", "EC:1D:7F", "EC:23:7B", "EC:8A:4C", "F0:84:C9", "F4:1F:88", "F4:6D:E2", "F4:B8:A7", "F4:E4:AD", "F8:A3:4F", "F8:DF:A8", "FC:2D:5E", "FC:C8:97"};
 
     private BluetoothDevice bluetoothDevice;
+
     private Integer rssi;
+
+    @Expose
     private boolean isAtRisk;
+
+    @Expose
+    private String name;
+
+    @Expose
+    private String mac;
+
+    @Expose
+    @SerializedName("class")
+    private String deviceClass;
+
+    @Expose
+    @SerializedName("type")
+    private String deviceType;
 
     public BluetoothDeviceModel(BluetoothDevice bluetoothDevice, Integer rssi, boolean isAtRisk) {
         this.bluetoothDevice = bluetoothDevice;
         this.rssi = rssi;
         this.isAtRisk = isAtRisk;
+        setMisc();
     }
 
     public BluetoothDeviceModel(BluetoothDevice bluetoothDevice, Integer rssi) {
         this.bluetoothDevice = bluetoothDevice;
         this.rssi = rssi;
         this.isAtRisk = isAtRisk(bluetoothDevice.getAddress());
+        setMisc();
+    }
+
+    public BluetoothDeviceModel(String name, String mac, String deviceClass, String deviceType) {
+        this.name = name;
+        this.mac = mac;
+        this.deviceClass = deviceClass;
+        this.deviceType = deviceType;
     }
 
     public BluetoothDeviceModel() {
     }
+
+    protected BluetoothDeviceModel(Parcel in) {
+        bluetoothDevice = in.readParcelable(BluetoothDevice.class.getClassLoader());
+        if (in.readByte() == 0) {
+            rssi = null;
+        } else {
+            rssi = in.readInt();
+        }
+        isAtRisk = in.readByte() != 0;
+        name = in.readString();
+        mac = in.readString();
+        deviceClass = in.readString();
+        deviceType = in.readString();
+    }
+
+    public static final Creator<BluetoothDeviceModel> CREATOR = new Creator<BluetoothDeviceModel>() {
+        @Override
+        public BluetoothDeviceModel createFromParcel(Parcel in) {
+            return new BluetoothDeviceModel(in);
+        }
+
+        @Override
+        public BluetoothDeviceModel[] newArray(int size) {
+            return new BluetoothDeviceModel[size];
+        }
+    };
 
     public BluetoothDevice getBluetoothDevice() {
         return bluetoothDevice;
@@ -70,5 +137,136 @@ public class BluetoothDeviceModel {
             if (mac.equals(oui)) return true;
         }
         return false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getDeviceClass() {
+        return deviceClass;
+    }
+
+    public void setDeviceClass(String deviceClass) {
+        this.deviceClass = deviceClass;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    private void setMisc() {
+        this.name = this.bluetoothDevice.getName();
+        this.mac = this.bluetoothDevice.getAddress();
+        switch (this.bluetoothDevice.getType()) {
+            case BluetoothDevice.DEVICE_TYPE_CLASSIC:
+                this.deviceType = "Classic";
+                break;
+            case BluetoothDevice.DEVICE_TYPE_LE:
+                this.deviceType = "LE";
+                break;
+            case BluetoothDevice.DEVICE_TYPE_DUAL:
+                this.deviceType = "Dual";
+                break;
+            case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
+                this.deviceType = "Unknown";
+                break;
+        }
+        int majorClass = this.bluetoothDevice.getBluetoothClass().getMajorDeviceClass();
+        this.deviceClass = "";
+        Class<?> c = BluetoothClass.Device.Major.class;
+        for (Field field : c.getDeclaredFields()) {
+            try {
+                if (majorClass == Integer.parseInt(field.get(c).toString()))
+                    this.deviceClass = field.getName();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(bluetoothDevice, i);
+        if (rssi == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(rssi);
+        }
+        parcel.writeByte((byte) (isAtRisk ? 1 : 0));
+        parcel.writeString(name);
+        parcel.writeString(mac);
+        parcel.writeString(deviceClass);
+        parcel.writeString(deviceType);
+    }
+
+    public static int getDeviceIconResource(String majorClass) {
+        switch (majorClass) {
+//            case BluetoothClass.Device.Major.AUDIO_VIDEO:
+            case "AUDIO_VIDEO":
+                return R.drawable.ic_music_video_black_36dp;
+//            case BluetoothClass.Device.Major.COMPUTER:
+            case "COMPUTER":
+                return R.drawable.ic_computer_black_36dp;
+//            case BluetoothClass.Device.Major.PHONE:
+            case "PHONE":
+                return R.drawable.ic_phone_android_black_36dp;
+//            case BluetoothClass.Device.Major.TOY:
+            case "TOY":
+                return R.drawable.ic_toys_black_36dp;
+//            case BluetoothClass.Device.Major.WEARABLE:
+            case "WEARABLE":
+                return R.drawable.ic_watch_black_36dp;
+//            case BluetoothClass.Device.Major.MISC:
+//            case BluetoothClass.Device.Major.IMAGING:
+//            case BluetoothClass.Device.Major.NETWORKING:
+//            case BluetoothClass.Device.Major.HEALTH:
+//            case BluetoothClass.Device.Major.UNCATEGORIZED:
+//            case BluetoothClass.Device.Major.PERIPHERAL:
+            case "MISC":
+            case "IMAGING":
+            case "NETWORKING":
+            case "HEALTH":
+            case "UNCATEGORIZED":
+            case "PERIPHERAL":
+            default:
+                return R.drawable.ic_devices_other_black_36dp;
+        }
+    }
+
+    public static class BluetoothDeviceModelDeserializer implements JsonDeserializer<BluetoothDeviceModel> {
+
+        @Override
+        public BluetoothDeviceModel deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            String name = jsonObject.get("name") != null && !jsonObject.get("name").isJsonNull() ? jsonObject.get("name").getAsString() : null;
+            String mac = jsonObject.get("mac") != null && !jsonObject.get("mac").isJsonNull() ? jsonObject.get("mac").getAsString() : null;
+            String deviceClass = jsonObject.get("class") != null && !jsonObject.get("class").isJsonNull() ? jsonObject.get("class").getAsString() : null;
+            String deviceType = jsonObject.get("type") != null && !jsonObject.get("type").isJsonNull() ? jsonObject.get("type").getAsString() : null;
+            BluetoothDeviceModel bluetoothDeviceModel = new BluetoothDeviceModel(name, mac, deviceClass, deviceType);
+            return bluetoothDeviceModel;
+        }
     }
 }

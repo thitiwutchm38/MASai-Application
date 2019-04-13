@@ -33,7 +33,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.Calendar;
 import java.util.List;
 
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
@@ -114,7 +113,7 @@ public class DeviceAssessmentActivity extends AppCompatActivity {
         mTextViewDataMac = findViewById(R.id.text_data_mac);
         mTextViewDataDeviceType = findViewById(R.id.text_data_device_type);
         mTextViewOpenedPort = findViewById(R.id.text_data_port_opened);
-        mImageViewIconDeviceType = findViewById(R.id.ic_device_type);
+        mImageViewIconDeviceType = findViewById(R.id.ic_bt_device_class);
 
         // FIXME: Uncomment for mockup
 //        setRecyclerView(loadJsonFromAsset());

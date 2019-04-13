@@ -36,8 +36,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 
-import java.util.Calendar;
-
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
 public class PortAttackActivity extends AppCompatActivity {
@@ -144,7 +142,7 @@ public class PortAttackActivity extends AppCompatActivity {
         mTextViewDeviceMac = findViewById(R.id.text_data_mac);
         mTextViewDeviceType = findViewById(R.id.text_data_device_type);
         mTextViewDeviceOpenedPort = findViewById(R.id.text_data_port_opened);
-        mImageViewDeviceType = findViewById(R.id.ic_device_type);
+        mImageViewDeviceType = findViewById(R.id.ic_bt_device_class);
 
         mTextPasswordSuggestion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -220,8 +218,8 @@ public class PortAttackActivity extends AppCompatActivity {
 
     private void setViewFromResult(String jsonString) {
         mPortAttackResult = loadPortAttackResult(jsonString);
-        mDeviceModel = mPortAttackResult.getDeviceModel();
         if (mPortAttackResult != null) {
+            mDeviceModel = mPortAttackResult.getDeviceModel();
             mTextViewResult.setText(mPortAttackResult.getResult().toUpperCase());
             if (mPortAttackResult.getResult().equals("success")) {
                 mTextViewResult.setTextColor(Color.RED);

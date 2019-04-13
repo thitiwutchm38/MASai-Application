@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp">
+    android:layout_height="wrap_content"
+    android:minHeight="88dp">
 
     <ImageView
         android:id="@+id/ic_device_class"
@@ -59,12 +60,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="LOW RISK"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/text_mac_address"
-        app:layout_constraintTop_toBottomOf="@+id/text_mac_address" />
+        app:layout_constraintTop_toBottomOf="@+id/text_mac_address"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/text_rssi"

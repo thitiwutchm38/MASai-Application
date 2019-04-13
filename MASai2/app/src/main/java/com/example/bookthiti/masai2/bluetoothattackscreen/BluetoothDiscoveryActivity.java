@@ -155,6 +155,8 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i(TAG_INFO, "On destroy is called");
+        bluetoothAdapter.cancelDiscovery();
         unregisterReceiver(broadcastReceiver);
     }
 

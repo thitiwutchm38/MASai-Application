@@ -22,6 +22,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.bookthiti.masai2.bluetoothattackscreen.BluetoothAttackActivity;
 import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.mainscreen.MainActivity;
 import com.example.bookthiti.masai2.R;
@@ -60,6 +61,7 @@ public class BluetoothManagementService extends Service {
     public static final String ACTION_DEVICE_SCAN = "ACTION DEVICE SCAN";
     public static final String ACTION_DEVICE_ASSESS = "ACTION DEVICE ASSESS";
     public static final String ACTION_PORT_ATTACK = "ACTION PORT ATTACK";
+    public static final String ACTION_BLUETOOTH_ATTACK = "ACTION BLUETOOTH ATTACK";
 
     private BluetoothAdapter mBluetoothAdapter;
     private Set<BluetoothDevice> mPairedDevices;
@@ -376,6 +378,10 @@ public class BluetoothManagementService extends Service {
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
                                     sendNotification("Service attacking is done", intent, PortAttackActivity.class);
                                     break;
+                                case "bluetoothAttack":
+                                    isAttacking = true;
+                                    intent.setAction(BluetoothManagementService.ACTION_BLUETOOTH_ATTACK);
+                                    sendNotification("Bluetooth attacking is done", intent, BluetoothAttackActivity.class);
                             }
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                             if (isAttacking) {
