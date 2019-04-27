@@ -549,7 +549,7 @@
     <string name="channel_name">Notification</string>
     <string name="channel_description">This will allow the application to notify you when the testing is finished</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bt_attack_success_description">This device is vulnerable to the Bluetooth attack (BlueBorne)\nThis device can be cracked by the adversary.\nThe adversary might obtain virtually full control over the device, spread malware, or gain access to data and networks because the Bluetooth process has high privileges on all operating systems.\nPlease update the latest security update or Android version of your device, or contact your manufacturer.</string>
+    <string name="bt_attack_failure_description">This device is not vulnerable to the Bluetooth attack (BlueBorne)\nPlease keep your device updated to the security patch or Android version when it is released to keep your device safe from attacker and turn off Bluetooth connection when not in use.</string>
 
 </resources>

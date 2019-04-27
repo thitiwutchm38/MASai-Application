@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
+
 public class ActivityLogFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //    private static final String ARG_PARAM1 = "param1";
@@ -40,6 +43,7 @@ public class ActivityLogFragment extends Fragment {
     private TextView textViewActivityFinishAt;
     private TextView textViewSeeDetails;
     private ImageView imageViewIcon;
+    private String jsonOutput;
 
     public ActivityLogFragment() {
         // Required empty public constructor
@@ -76,7 +80,7 @@ public class ActivityLogFragment extends Fragment {
         imageViewIcon = view.findViewById(R.id.image_activity_icon);
 
         textViewActivityTitle.setText(activityLogEntity.getName());
-        textViewActivityStatus.setText(activityLogEntity.getStatus());
+        textViewActivityStatus.setText(activityLogEntity.getStatus().toUpperCase());
         textViewActivityStartAt.setText(activityLogEntity.getStartTime().toString());
         if (activityLogEntity.getFinishTime() == null) {
             textViewActivityFinishAt.setText("-");
@@ -102,14 +106,19 @@ public class ActivityLogFragment extends Fragment {
                 imageViewIcon.setImageResource(R.drawable.bluetooth_pen);
                 break;
         }
-
+        jsonOutput = activityLogEntity.getJsonOutput();
+        if (jsonOutput == null) {
+            textViewSeeDetails.setVisibility(View.INVISIBLE);
+            textViewSeeDetails.setEnabled(false);
+        }
         textViewSeeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG_INFO, "Activity Log id: " + activityLogEntity.getId() + " was selected to see details");
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 Gson gson = new Gson();
-                String jsonOutput = activityLogEntity.getJsonOutput();
+                jsonOutput = activityLogEntity.getJsonOutput();
                 JsonParser jsonParser = new JsonParser();
                 JsonObject jsonObject = jsonParser.parse(jsonOutput).getAsJsonObject();
 //                String resultType = jsonObject.get("resultType").getAsString();

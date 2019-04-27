@@ -7,4 +7,5 @@ public interface LogConstants {
     public static final String TAG_WARN = "Log warn";
     public static final String TAG_ERROR = "Log error";
     public static final String TAG_ASSERT = "Log Assert";
+    public static final boolean IS_MOCK = false; // FIXME: true for mockup, false for real application; need to re-build
 }

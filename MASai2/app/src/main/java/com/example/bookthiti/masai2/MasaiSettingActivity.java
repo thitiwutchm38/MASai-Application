@@ -42,22 +42,16 @@ public class MasaiSettingActivity extends AppCompatActivity {
     private final Activity activity = this;
 
     private boolean mBound = false;
-    private boolean enableClicking = true;
+    private boolean isConnected = false;
 
     private TextView mTextViewInstructionDescription;
     private ImageView mImageViewInstructionConnect;
-
     private ImageView mImageViewInstruction;
-
     private ImageView mImageViewMobile;
-
     private ImageView mImageViewBox;
-
-
-    private Button mScanQrButton;
     private ToggleButton mScanQrToggleButton;
-
     private LoadingDots mLoadingDot;
+
     private Context mContext;
     private BluetoothManagementService mBluetoothManagementService;
     JSONObject boxInformation;
@@ -68,9 +62,9 @@ public class MasaiSettingActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 Log.i(TAG_INFO, "Discovering is stopped");
-                mImageViewMobile.setVisibility(View.INVISIBLE);
-                mImageViewBox.setVisibility(View.INVISIBLE);
-                mLoadingDot.setVisibility(View.INVISIBLE);
+//                mImageViewMobile.setVisibility(View.INVISIBLE);
+//                mImageViewBox.setVisibility(View.INVISIBLE);
+//                mLoadingDot.setVisibility(View.INVISIBLE);
 //                mImageViewInstructionConnect.setVisibility(View.VISIBLE);
             }
         }
@@ -88,18 +82,20 @@ public class MasaiSettingActivity extends AppCompatActivity {
                 mLoadingDot.setVisibility(View.INVISIBLE);
                 mImageViewInstructionConnect.setVisibility(View.VISIBLE);
                 mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
-                mScanQrButton.setText("Disconnect");
+                isConnected = true;
                 mScanQrToggleButton.setTextOff("Disconnect");
+                SharedPreferences sharedPreferences = mContext.getSharedPreferences("MASAI_SHARED_PREF", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("need_to_connect_masai", false);
+                editor.commit();
 
             } else if (BluetoothManagementService.ACTION_PAIRED_DEVICE_FOUND.equals(action)) {
             } else if (BluetoothManagementService.ACTION_BLUETOOTH_UNABLE_TO_CONNECT.equals(action)) {
-//                Toast.makeText(mContext, "Please Check The Box", Toast.LENGTH_SHORT).show();
                 mImageViewMobile.setVisibility(View.INVISIBLE);
                 mImageViewBox.setVisibility(View.INVISIBLE);
                 mLoadingDot.setVisibility(View.INVISIBLE);
                 mImageViewInstruction.setVisibility(View.VISIBLE);
                 mTextViewInstructionDescription.setText("Cannot connect to MASai Box. Please check whether the box is turned on.");
-                mScanQrButton.setText("Reconnect");
                 mScanQrToggleButton.setChecked(true);
                 mScanQrToggleButton.setTextOff("Reconnect");
         }
@@ -112,12 +108,19 @@ public class MasaiSettingActivity extends AppCompatActivity {
             BluetoothManagementService.LocalBinder binder = (BluetoothManagementService.LocalBinder) service;
             mBluetoothManagementService = binder.getBluetoothManagementServiceInstance();
             mBound = true;
+            Log.i(TAG_INFO, "Service is connected");
             if(isRemoteDeviceConnected()) {
                 mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
-                mScanQrButton.setText("Disconnect");
+                mImageViewInstruction.setVisibility(View.INVISIBLE);
+                mImageViewInstructionConnect.setVisibility(View.VISIBLE);
+                isConnected = true;
+                mScanQrToggleButton.setChecked(false);
+                mScanQrToggleButton.setTextOff("Disconnect");
             } else {
-                mScanQrButton.setText("Connect");
                 mTextViewInstructionDescription.setText("Click connect to start QR-Code scanner, scan QR code at MASai Box, ensure that MASai Box is working");
+                mImageViewInstruction.setVisibility(View.VISIBLE);
+                isConnected = false;
+                mScanQrToggleButton.setTextOn("Connect");
             }
         }
 
@@ -136,13 +139,10 @@ public class MasaiSettingActivity extends AppCompatActivity {
         mContext = this.getApplicationContext();
         setTitle("MASai Box Setting");
 
-        mScanQrButton = (Button) this.findViewById(R.id.button_scan_qr);
         mScanQrToggleButton = (ToggleButton) this.findViewById(R.id.toggle_btn_scan_qr);
-
         mImageViewMobile = (ImageView) this.findViewById(R.id.imageView_Mobile);
         mImageViewBox = (ImageView) this.findViewById(R.id.imageView_Box);
         mImageViewInstruction = (ImageView) this.findViewById(R.id.image_setting_instruction);
-
         mImageViewInstructionConnect = (ImageView) this.findViewById(R.id.image_setting_instruction2);
         mTextViewInstructionDescription = (TextView) this.findViewById(R.id.text_description);
 
@@ -155,66 +155,30 @@ public class MasaiSettingActivity extends AppCompatActivity {
         mImageViewBox.setVisibility(View.INVISIBLE);
         mLoadingDot.setVisibility(View.INVISIBLE);
         mImageViewInstruction.setVisibility(View.VISIBLE);
-        mScanQrButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                intentIntegrator.setPrompt("Scan QR Code at MASai Box");
-                intentIntegrator.setCameraId(0);
-                intentIntegrator.setBeepEnabled(false);
-                intentIntegrator.setBarcodeImageEnabled(false);
-                intentIntegrator.initiateScan();
-
-//                mImageViewMobile.setVisibility(View.VISIBLE);
-//                mImageViewBox.setVisibility(View.VISIBLE);
-//                mLoadingDot.setVisibility(View.VISIBLE);
-//                mImageViewInstruction.setVisibility(View.INVISIBLE);
-
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//
-//                        mImageViewMobile.setVisibility(View.INVISIBLE);
-//                        mImageViewBox.setVisibility(View.INVISIBLE);
-//                        mLoadingDot.setVisibility(View.INVISIBLE);
-//                        mImageViewInstructionConnect.setVisibility(View.VISIBLE);
-//                        mTextViewInstructionDescription.setText("Click disconnect button to disconnect MASai box and mobile application.");
-//                        mScanQrButton.setText("Disconnect");
-//
-//
-//                    }
-//                }, 5000); // Millisecond 1000 = 1 sec
-
-            }
-        });
-
-        mScanQrButton.setVisibility(View.GONE);
 
         mScanQrToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (!b) {
-                    int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
-                    ActivityCompat.requestPermissions(activity,
-                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                            MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-                    IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-                    intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                    intentIntegrator.setPrompt("Scan QR Code at MASai Box");
-                    intentIntegrator.setCameraId(0);
-                    intentIntegrator.setBeepEnabled(false);
-                    intentIntegrator.setBarcodeImageEnabled(false);
-                    intentIntegrator.initiateScan();
-                    mScanQrToggleButton.setEnabled(false);
+                    Log.i(TAG_INFO, "Toggle button is changed from true to false");
+                    if (!isConnected) {
+                        int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+                        ActivityCompat.requestPermissions(activity,
+                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+                        IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+                        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                        intentIntegrator.setPrompt("Scan QR Code at MASai Box");
+                        intentIntegrator.setCameraId(0);
+                        intentIntegrator.setBeepEnabled(false);
+                        intentIntegrator.setBarcodeImageEnabled(false);
+                        intentIntegrator.initiateScan();
+                        mScanQrToggleButton.setEnabled(false);
+                    }
                 } else {
-                    disconnectFromRemoteDevice();
+                    Log.i(TAG_INFO, "Toggle button is changed from false to true");
+                    if (isConnected)
+                        disconnectFromRemoteDevice();
                     mScanQrToggleButton.setTextOn("Connect");
                     mImageViewMobile.setVisibility(View.INVISIBLE);
                     mImageViewBox.setVisibility(View.INVISIBLE);
@@ -281,7 +245,6 @@ public class MasaiSettingActivity extends AppCompatActivity {
                         mLoadingDot.setVisibility(View.VISIBLE);
                         mImageViewInstruction.setVisibility(View.INVISIBLE);
                         mTextViewInstructionDescription.setText("Connecting to MASai Box. Please wait for a moment.");
-                        mScanQrButton.setText("Connecting...");
                         mScanQrToggleButton.setTextOn("Connecting...");
                         mScanQrToggleButton.setEnabled(false);
                         String readQrCode = result.getContents();
@@ -316,6 +279,7 @@ public class MasaiSettingActivity extends AppCompatActivity {
         if(mBluetoothManagementService != null && mBound) {
             Log.i(TAG_INFO, "Disconnect from remote device");
             mBluetoothManagementService.disconnectFromRemoteDevice();
+            isConnected = false;
         } else {
             Log.i(TAG_INFO, "Disconnection failed");
         }

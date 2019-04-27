@@ -85,6 +85,18 @@ public class AppIcon implements Parcelable {
         this.bitmap = bitmap;
     }
 
+    public void setBitmap(String url) {
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(url).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e(TAG_ERROR, e.getMessage());
+            e.printStackTrace();
+        }
+        this.bitmap = mIcon11;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,15 +118,7 @@ public class AppIcon implements Parcelable {
             int width = jsonObject.get("width").getAsInt();
             int height = jsonObject.get("height").getAsInt();
             AppIcon appIcon = getAppIconInstance(height, width, url);
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(url).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e(TAG_ERROR, e.getMessage());
-                e.printStackTrace();
-            }
-            appIcon.bitmap = mIcon11;
+            appIcon.setBitmap(url);
             return appIcon;
         }
     }

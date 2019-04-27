@@ -3,7 +3,6 @@ package com.example.bookthiti.masai2.bluetoothservice;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.arch.lifecycle.ViewModelProviders;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -130,11 +129,6 @@ public class BluetoothManagementService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG_DEBUG, "Bluetooth service is stopped");
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("command", "wifiDisconnect");
-        jsonObject.add("payload", null);
-        String jsonString = jsonObject.toString();
-        sendMessageToRemoteDevice(jsonString + "|");
         mThreadStopped = true;
         if (mConnectedThread != null) {
             mConnectedThread.cancel();
@@ -224,7 +218,7 @@ public class BluetoothManagementService extends Service {
     }
 
     private boolean isBluetoothAdapterSupported(BluetoothAdapter bluetoothAdapter) {
-        if (mBluetoothAdapter == null) {
+        if (bluetoothAdapter == null) {
             Log.i(TAG_INFO, "This device does not support bluetooth");
             Toast.makeText(this, "Does not support bluetooth", Toast.LENGTH_SHORT).show();
             return false;
@@ -337,6 +331,7 @@ public class BluetoothManagementService extends Service {
                         if (jsonElement.isJsonObject()) {
                             JsonObject jsonObject = jsonElement.getAsJsonObject();
                             String resultType = jsonObject.get("resultType").getAsString();
+                            long activityId = jsonObject.get("activityId") != null && !jsonObject.get("activityId").isJsonNull() ? jsonObject.get("activityId").getAsLong() : 0;
                             Intent intent = new Intent();
                             Bundle bundle = new Bundle();
                             Gson gson = new Gson();
@@ -361,33 +356,35 @@ public class BluetoothManagementService extends Service {
                                 case "wifiCracking":
                                     isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_WIFI_ATTACK);
-                                    sendNotification("WiFi cracking is done", intent, CrackRouterActivity.class);
+                                    sendNotification("WiFi cracking is done", intent, CrackRouterActivity.class, activityId);
                                     break;
                                 case "nmapScan":
                                     isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-                                    sendNotification("Device scanning is done", intent, DeviceDiscoveryActivity.class);
+                                    sendNotification("Device scanning is done", intent, DeviceDiscoveryActivity.class, activityId);
                                     break;
                                 case "portAssessment":
                                     isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_DEVICE_ASSESS);
-                                    sendNotification("Device assessment is done", intent, DeviceAssessmentActivity.class);
+                                    sendNotification("Device assessment is done", intent, DeviceAssessmentActivity.class, activityId);
                                     break;
                                 case "portAttack":
                                     isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-                                    sendNotification("Service attacking is done", intent, PortAttackActivity.class);
+                                    sendNotification("Service attacking is done", intent, PortAttackActivity.class, activityId);
                                     break;
                                 case "bluetoothAttack":
                                     isAttacking = true;
                                     intent.setAction(BluetoothManagementService.ACTION_BLUETOOTH_ATTACK);
-                                    sendNotification("Bluetooth attacking is done", intent, BluetoothAttackActivity.class);
+                                    sendNotification("Bluetooth attacking is done", intent, BluetoothAttackActivity.class, activityId);
+                                    break;
                             }
                             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                             if (isAttacking) {
                                 SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
                                 MasaiViewModel masaiViewModel = MainActivity.getViewModel();
-                                masaiViewModel.updateActivityLogEntity(sharedPreferences.getLong("running_activity_id", 0), "finish", fullResponse, Calendar.getInstance().getTime());
+//                                masaiViewModel.updateActivityLogEntity(sharedPreferences.getLong("running_activity_id", 0), "finish", fullResponse, Calendar.getInstance().getTime());
+                                masaiViewModel.updateActivityLogEntity(activityId, "finish", fullResponse, Calendar.getInstance().getTime());
                                 Log.i(TAG_INFO, "Running activity should be updated to finish from Service");
                             }
                         }
@@ -412,6 +409,7 @@ public class BluetoothManagementService extends Service {
 
         public void cancel() {
             try {
+                mThreadStopped = true;
                 mmInputStream.close();
                 mmOutputStream.close();
             } catch (IOException e) {
@@ -426,7 +424,7 @@ public class BluetoothManagementService extends Service {
         }
     }
 
-    private void sendNotification(String title, Intent intent1, Class<?> cls) {
+    private void sendNotification(String title, Intent intent1, Class<?> cls, long activityId) {
         Intent intent = (Intent )intent1.clone();
         intent.setClass(this, cls);
         intent.setAction(Intent.ACTION_MAIN);
@@ -443,6 +441,6 @@ public class BluetoothManagementService extends Service {
                 .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(INotificationId.NOTIFICATION_ID_WIFI_SCAN, builder.build());
+        notificationManagerCompat.notify((int) activityId, builder.build());
     }
 }

@@ -53,6 +53,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
     private boolean flag = false;
     private boolean hasSuggestionClicked = false;
     private String mQuery;
+    private long startTime;
 
     private CursorAdapter mCursorAdapter;
     private List<TargetApplicationInfo> mSuggestions;
@@ -241,6 +242,7 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
     }
 
     private void searchApplication(String query, final CursorAdapter cursorAdapter, final List<TargetApplicationInfo> suggestions) {
+        startTime = System.nanoTime();
         MasaiServerAPI masaiServerAPI = RetrofitClientInstance.getRetrofitInstance().create(MasaiServerAPI.class);
         Call<List<TargetApplicationInfo>> listCall = masaiServerAPI.getAllTargetApplicationInfo(query);
         mMenu.findItem(R.id.search_google_play_spinner).setVisible(true);
@@ -273,11 +275,12 @@ public class MobileApplicationScannerActivity extends AppCompatActivity {
                 mCursorAdapter.swapCursor(cursor);
                 mMenu.findItem(R.id.search_google_play_spinner).setVisible(false);
                 mSearchView.setIconified(false);
+                Log.i(TAG_INFO, String.format("Device Discovery is finished using %.3f secs", (double) (System.nanoTime() - startTime) / 1000000000));
             }
 
             @Override
             public void onFailure(Call<List<TargetApplicationInfo>> call, Throwable t) {
-                Toast.makeText(mContext, "Get failure response", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Please check your Internet connection", Toast.LENGTH_SHORT).show();
                 mMenu.findItem(R.id.search_google_play_spinner).setVisible(false);
                 Log.i(TAG_INFO, t.getMessage());
             }

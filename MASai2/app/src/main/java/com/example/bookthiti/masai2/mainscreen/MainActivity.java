@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mActivity = this;
         createNotificationChannel();
-        if(!ServiceTools.isServiceRunning(BluetoothManagementService.class, getApplicationContext())) {
+        if (!ServiceTools.isServiceRunning(BluetoothManagementService.class, getApplicationContext())) {
             startService(new Intent(MainActivity.this, BluetoothManagementService.class));
         } else {
             Log.i("Log info", "Service is already started");
@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mPagerAdapter);
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        // TODO: add list of test to the menu
         masaiViewModel.getAllTestingEntities().observe(this, new Observer<List<TestingEntity>>() {
             @Override
             public void onChanged(@Nullable List<TestingEntity> testingEntities) {
@@ -160,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG_INFO, "getActivityLogEntitiesByTestingId was on changed");
                         activityLogEntityList.clear();
                         for (ActivityLogEntity activityLogEntity : activityLogEntities) {
-                            if (!activityLogEntity.getName().equals("Wifi Scanning")) {
+                            if (!activityLogEntity.getName().equals("Wifi Scanning") && !activityLogEntity.getName().equals("Mobile App Scan")) {
                                 activityLogEntityList.add(activityLogEntity);
                             }
                         }
@@ -180,41 +179,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: add list of activity log
-//        Log.i(TAG_INFO, "testingId = " + testingId);
-//        mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
-//        mViewPager.setAdapter(mPagerAdapter);
-
-        button_MobileApp_att = (ImageButton)findViewById(R.id.imageButton_MobileApp_att);
-        button_iot_att = (ImageButton)findViewById(R.id.imageButton_iot_att);
-        button_Tips = (ImageButton)findViewById(R.id.imageButton_Tips);
-        button__MASaibox_setting = (ImageButton)findViewById(R.id.imageButton_MASaibox);
+        button_MobileApp_att = (ImageButton) findViewById(R.id.imageButton_MobileApp_att);
+        button_iot_att = (ImageButton) findViewById(R.id.imageButton_iot_att);
+        button_Tips = (ImageButton) findViewById(R.id.imageButton_Tips);
+        button__MASaibox_setting = (ImageButton) findViewById(R.id.imageButton_MASaibox);
 
 
         button_MobileApp_att.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 openActivity_MobileApp_att();
             }
         });
 
         button_iot_att.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 openActivity_iot_att();
             }
         });
 
         button__MASaibox_setting.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 openActivity_MASaibox_setting();
             }
         });
 
         button_Tips.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 openActivity_Tips();
             }
         });
@@ -253,22 +247,32 @@ public class MainActivity extends AppCompatActivity {
                     List<ActivityLogEntity> deviceDiscovery = new ArrayList<ActivityLogEntity>();
                     List<ActivityLogEntity> deviceAssessment = new ArrayList<ActivityLogEntity>();
                     List<ActivityLogEntity> portAttack = new ArrayList<ActivityLogEntity>();
-                    for (ActivityLogEntity activityLogEntity: activityLogEntities) {
-                        String name = activityLogEntity.getName();
-
-                        switch (name) {
-                            case "Router Cracking Testing":
-                                crackingRouter.add(activityLogEntity);
-                                break;
-                            case "Device Discovery":
-                                deviceDiscovery.add(activityLogEntity);
-                                break;
-                            case "Device Assessment":
-                                deviceAssessment.add(activityLogEntity);
-                                break;
-                            case "Service Attacking Testing":
-                                portAttack.add(activityLogEntity);
-                                break;
+                    List<ActivityLogEntity> bluetoothAttack = new ArrayList<>();
+                    List<ActivityLogEntity> mobileAppScan = new ArrayList<>();
+                    for (ActivityLogEntity activityLogEntity : activityLogEntities) {
+                        if ("finish".equals(activityLogEntity.getStatus())) {
+                            String name = activityLogEntity.getName();
+                            switch (name) {
+                                //TODO: add cases for generate report
+                                case "Router Cracking Testing":
+                                    crackingRouter.add(activityLogEntity);
+                                    break;
+                                case "Device Discovery":
+                                    deviceDiscovery.add(activityLogEntity);
+                                    break;
+                                case "Device Assessment":
+                                    deviceAssessment.add(activityLogEntity);
+                                    break;
+                                case "Service Attacking Testing":
+                                    portAttack.add(activityLogEntity);
+                                    break;
+                                case "Bluetooth Attacking":
+                                    bluetoothAttack.add(activityLogEntity);
+                                    break;
+                                case "Mobile App Scan":
+                                    mobileAppScan.add(activityLogEntity);
+                                    break;
+                            }
                         }
                     }
                     postRequestBody.setTestingId(currentTestingEntity.getId());
@@ -278,6 +282,8 @@ public class MainActivity extends AppCompatActivity {
                     postRequestBody.setDeviceDiscovery(deviceDiscovery);
                     postRequestBody.setDeviceAssessment(deviceAssessment);
                     postRequestBody.setPortAttack(portAttack);
+                    postRequestBody.setBluetoothAttack(bluetoothAttack);
+                    postRequestBody.setMobileAppScan(mobileAppScan);
                     sendRequest(postRequestBody);
                     Log.i(TAG_INFO, "Created post request");
                     activityLogEntitiesByTestingId.removeObserver(this);
@@ -294,10 +300,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 Log.i(TAG_INFO, "GET Response");
                 try {
-                    String path = response.body().string();
-                    Log.i(TAG_INFO, path);
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(RetrofitClientInstance.BASE_URL + "api/testreport/" + path));
-                    startActivity(browserIntent);
+                    if (response.body() != null) {
+                        String path = response.body().string();
+                        Log.i(TAG_INFO, path);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(RetrofitClientInstance.BASE_URL + "api/testreport/" + path));
+                        startActivity(browserIntent);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -320,15 +328,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity_MobileApp_att() {
 
-        Intent intent = new Intent(this,MobileApplicationScannerActivity.class);
+        Intent intent = new Intent(this, MobileApplicationScannerActivity.class);
 //        Intent intent = new Intent(this, MobileApplicationScanningResultActivity.class);
         startActivity(intent);
     }
+
     public void openActivity_iot_att() {
 
-        Intent intent = new Intent(this,IoTMainPentestActivity.class);
+        Intent intent = new Intent(this, IoTMainPentestActivity.class);
         startActivity(intent);
     }
+
     public void openActivity_MASaibox_setting() {
 
         Intent intent = new Intent(this, MasaiSettingActivity.class);
@@ -362,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         for (int i = 0; i < testingEntityList.size(); i++) {
             final int index = i;
-            menu.add(Menu.NONE, 0, Menu.NONE,  testingEntityList.get(i).getTitle());
+            menu.add(Menu.NONE, 0, Menu.NONE, testingEntityList.get(i).getTitle());
             MenuItem menuItem = menu.getItem(i);
             menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -414,30 +424,29 @@ public class MainActivity extends AppCompatActivity {
         menu.add("New Testing");
         menu.getItem(testingEntityList.size()).setIcon(R.drawable.ic_add_indigo_a700_24dp)
                 .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                final EditText input = new EditText(mActivity);
-                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setTitle("Create a new testing");
-                builder.setMessage("Please enter a name of a new testing");
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // TODO: Create new Testing Entity and add to database
-                        masaiViewModel.insertTestingEntity(input.getText().toString());
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        final EditText input = new EditText(mActivity);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                        builder.setTitle("Create a new testing");
+                        builder.setMessage("Please enter a name of a new testing");
+                        builder.setView(input);
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                masaiViewModel.insertTestingEntity(input.getText().toString());
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        builder.show();
+                        return true;
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.show();
-                return true;
-            }
-        });
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {

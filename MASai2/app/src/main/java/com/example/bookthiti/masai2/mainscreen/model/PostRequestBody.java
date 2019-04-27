@@ -21,8 +21,10 @@ public class PostRequestBody {
     private List<ActivityLogEntity> deviceDiscovery;
     private List<ActivityLogEntity> deviceAssessment;
     private List<ActivityLogEntity> portAttack;
+    private List<ActivityLogEntity> bluetoothAttack;
+    private List<ActivityLogEntity> mobileAppScan;
 
-    public PostRequestBody(long testingId, String testingName, Date createdAt, List<ActivityLogEntity> routerCracking, List<ActivityLogEntity> deviceDiscovery, List<ActivityLogEntity> deviceAssessment, List<ActivityLogEntity> portAttack) {
+    public PostRequestBody(long testingId, String testingName, Date createdAt, List<ActivityLogEntity> routerCracking, List<ActivityLogEntity> deviceDiscovery, List<ActivityLogEntity> deviceAssessment, List<ActivityLogEntity> portAttack, List<ActivityLogEntity> bluetoothAttack, List<ActivityLogEntity> mobileAppScan) {
         this.testingId = testingId;
         this.testingName = testingName;
         this.createdAt = createdAt;
@@ -30,6 +32,8 @@ public class PostRequestBody {
         this.deviceDiscovery = deviceDiscovery;
         this.deviceAssessment = deviceAssessment;
         this.portAttack = portAttack;
+        this.bluetoothAttack = bluetoothAttack;
+        this.mobileAppScan = mobileAppScan;
     }
 
     public PostRequestBody() {
@@ -91,6 +95,22 @@ public class PostRequestBody {
         this.portAttack = portAttack;
     }
 
+    public List<ActivityLogEntity> getBluetoothAttack() {
+        return bluetoothAttack;
+    }
+
+    public void setBluetoothAttack(List<ActivityLogEntity> bluetoothAttack) {
+        this.bluetoothAttack = bluetoothAttack;
+    }
+
+    public List<ActivityLogEntity> getMobileAppScan() {
+        return mobileAppScan;
+    }
+
+    public void setMobileAppScan(List<ActivityLogEntity> mobileAppScan) {
+        this.mobileAppScan = mobileAppScan;
+    }
+
     public static class PostRequestBodySerializer implements JsonSerializer<PostRequestBody> {
         @Override
         public JsonElement serialize(PostRequestBody src, Type typeOfSrc, JsonSerializationContext context) {
@@ -98,15 +118,20 @@ public class PostRequestBody {
             jsonObject.add("testingId", new JsonPrimitive(src.testingId));
             jsonObject.addProperty("testingName", src.testingName);
             jsonObject.addProperty("createdAt", src.createdAt.toString());
-            Type listOfActivityLogEntity = new TypeToken<List<ActivityLogEntity>>() {}.getType();
+            Type listOfActivityLogEntity = new TypeToken<List<ActivityLogEntity>>() {
+            }.getType();
             JsonElement routerCrackingArray = context.serialize(src.routerCracking, listOfActivityLogEntity);
             JsonElement deviceDiscoveryArray = context.serialize(src.deviceDiscovery, listOfActivityLogEntity);
             JsonElement deviceAssessmentArray = context.serialize(src.deviceAssessment, listOfActivityLogEntity);
             JsonElement portAttackArray = context.serialize(src.portAttack, listOfActivityLogEntity);
+            JsonElement bluetoothAttackArray = context.serialize(src.bluetoothAttack, listOfActivityLogEntity);
+            JsonElement mobileAppScanArray = context.serialize(src.mobileAppScan, listOfActivityLogEntity);
             jsonObject.add("routerCracking", routerCrackingArray);
             jsonObject.add("deviceDiscovery", deviceDiscoveryArray);
             jsonObject.add("deviceAssessment", deviceAssessmentArray);
             jsonObject.add("portAttack", portAttackArray);
+            jsonObject.add("bluetoothAttack", bluetoothAttackArray);
+            jsonObject.add("mobileAppScan", mobileAppScanArray);
             return jsonObject;
         }
     }

@@ -32,6 +32,7 @@ public class TargetApplicationScanningResult {
     private double averageCvss;
     private JsonObject appDetails;
     private String status;
+    private JsonObject jsonObject;
 
     public TargetApplicationScanningResult() {
     }
@@ -111,6 +112,14 @@ public class TargetApplicationScanningResult {
         this.appDetails = appDetails;
     }
 
+    public JsonObject getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(JsonObject jsonObject) {
+        this.jsonObject = jsonObject;
+    }
+
     public static class TargetApplicationScanningResultDeserializer implements JsonDeserializer<TargetApplicationScanningResult> {
 
         @Override
@@ -138,10 +147,11 @@ public class TargetApplicationScanningResult {
                         appVulnerabilityList.add(finding);
                     }
                 }
-//                appVulnerabilityList = Arrays.asList(findings);
             }
 
-            return new TargetApplicationScanningResult(appVulnerabilityList, permissionList, packageName, versionCode, versionString, averageCvss, appDetails, status);
+            TargetApplicationScanningResult targetApplicationScanningResult = new TargetApplicationScanningResult(appVulnerabilityList, permissionList, packageName, versionCode, versionString, averageCvss, appDetails, status);
+            targetApplicationScanningResult.setJsonObject(jsonObject);
+            return targetApplicationScanningResult;
         }
     }
 

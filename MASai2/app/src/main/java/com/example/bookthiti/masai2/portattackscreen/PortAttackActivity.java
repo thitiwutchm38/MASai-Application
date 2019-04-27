@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.IBinder;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,12 +30,15 @@ import com.example.bookthiti.masai2.devicediscoveryscreen.device.CVEModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.DeviceModel;
 import com.example.bookthiti.masai2.devicediscoveryscreen.device.ServiceModel;
 import com.example.bookthiti.masai2.mainscreen.MainActivity;
+import com.example.bookthiti.masai2.utils.LogConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
+
+import java.util.Calendar;
 
 import static com.example.bookthiti.masai2.utils.LogConstants.TAG_INFO;
 
@@ -45,6 +49,7 @@ public class PortAttackActivity extends AppCompatActivity {
     private BluetoothManagementService mBluetoothManagementService;
     private boolean mBound = false;
     private boolean isRemoteDeviceConnected = false;
+    private long startTime;
 
     private TextView mTextViewResult;
     private TextView mTextViewName;
@@ -52,6 +57,7 @@ public class PortAttackActivity extends AppCompatActivity {
     private TextView mTextViewPassword;
     private ProgressBar mProgressBar;
     private TextView mTextViewProgress;
+    private ConstraintLayout mLayoutContainerPortAttackResult;
 
     private TextView mTextViewDeviceIp;
     private TextView mTextViewDeviceMac;
@@ -75,6 +81,7 @@ public class PortAttackActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_PORT_ATTACK.equals(action)) {
                 setResultFromIntent(intent);
+                Log.i(TAG_INFO, String.format("Port attack is finished using %.3f secs", (double) (System.nanoTime() - startTime) / 1000000000));
             }
         }
     };
@@ -97,12 +104,16 @@ public class PortAttackActivity extends AppCompatActivity {
             payloadObject.add("host", hostElement);
             payloadObject.addProperty("targetService", mTargetService);
             jsonObject.add("payload", payloadObject);
-            String jsonString = jsonObject.toString();
-            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
 
             MasaiViewModel masaiViewModel = MainActivity.getViewModel();
             SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
             long id = masaiViewModel.insertActivityLogEntity("Service Attacking Testing", "running", null, sharedPreferences.getLong("testing_id", 0));
+
+            jsonObject.addProperty("activityId", id);
+            String jsonString = jsonObject.toString();
+            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+            startTime = System.nanoTime();
+
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong("running_activity_id", id);
             editor.commit();
@@ -134,6 +145,7 @@ public class PortAttackActivity extends AppCompatActivity {
         mTextViewProgress = findViewById(R.id.text_progress);
         mTextPasswordSuggestion = findViewById(R.id.textView_password_suggestion);
         mImageView = findViewById(R.id.imageView);
+        mLayoutContainerPortAttackResult = findViewById(R.id.layout_container_port_attack_result);
 
         mTextPasswordSuggestion.setVisibility(View.INVISIBLE);
         mImageView.setVisibility(View.INVISIBLE);
@@ -170,25 +182,37 @@ public class PortAttackActivity extends AppCompatActivity {
         });
 
         // FIXME: Uncomment for mockup
-//        setViewFromResult(mockupJson2);
-//        MasaiViewModel masaiViewModel = MainActivity.getViewModel();
-//        SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
-//        masaiViewModel.insertActivityLogEntity("Service Attacking Testing", "finish", mockupJson, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
-
-
-        // FIXME: Uncomment for real application
-        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-            setResultFromIntent(getIntent());
-        } else {
-            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-            if (!mBound) {
-                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-            }
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+        if (LogConstants.IS_MOCK) {
+            setViewFromResult(mockupJson2);
+            MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+            SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+            masaiViewModel.insertActivityLogEntity("Service Attacking Testing", "finish", mockupJson, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
         }
 
+        // FIXME: Uncomment for real application
+        if (!LogConstants.IS_MOCK) {
+            if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+                setResultFromIntent(getIntent());
+            } else {
+                Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+                if (!mBound) {
+                    bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+                }
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(BluetoothManagementService.ACTION_PORT_ATTACK);
+                LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mBound) {
+            unbindService(mConnection);
+        }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalBroadcastReceiver);
+        super.onDestroy();
     }
 
     private boolean isRemoteDeviceConnected() {
@@ -212,7 +236,6 @@ public class PortAttackActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         String jsonString = bundle.getString("payload");
         Log.i(TAG_INFO, "Receive ACTION_PORT_ATTACK: " + jsonString);
-        //TODO: load payload to the result
         setViewFromResult(jsonString);
     }
 
@@ -238,6 +261,7 @@ public class PortAttackActivity extends AppCompatActivity {
                 mTextViewPassword.setText("-");
             }
         }
+        mLayoutContainerPortAttackResult.setVisibility(View.VISIBLE);
         mTextPasswordSuggestion.setVisibility(View.VISIBLE);
         mImageView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
@@ -259,6 +283,40 @@ public class PortAttackActivity extends AppCompatActivity {
     private String mockupJson = "{\n" +
             "    \"resultType\": \"portAttack\",\n" +
             "    \"payload\": {\n" +
+            "        \"host\": {\n" +
+            "            \"status\": \"up\",\n" +
+            "            \"ipv4\": \"192.168.1.102\",\n" +
+            "            \"deviceType\": null,\n" +
+            "            \"osName\": \"Linux 3.8 - 4.14\",\n" +
+            "            \"osVendor\": null,\n" +
+            "            \"osCpe\": [],\n" +
+            "            \"services\": [\n" +
+            "                {\n" +
+            "                    \"port\": \"22\",\n" +
+            "                    \"protocol\": \"tcp\",\n" +
+            "                    \"state\": \"open\",\n" +
+            "                    \"name\": \"ssh\",\n" +
+            "                    \"cpe\": [],\n" +
+            "                    \"cves\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"port\": \"5901\",\n" +
+            "                    \"protocol\": \"tcp\",\n" +
+            "                    \"state\": \"open\",\n" +
+            "                    \"name\": \"vnc-1\",\n" +
+            "                    \"cpe\": [],\n" +
+            "                    \"cves\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"port\": \"6001\",\n" +
+            "                    \"protocol\": \"tcp\",\n" +
+            "                    \"state\": \"open\",\n" +
+            "                    \"name\": \"X11:1\",\n" +
+            "                    \"cpe\": [],\n" +
+            "                    \"cves\": []\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
             "        \"service\": {\n" +
             "            \"port\": \"22\",\n" +
             "            \"protocol\": \"tcp\",\n" +
@@ -274,6 +332,40 @@ public class PortAttackActivity extends AppCompatActivity {
             "}";
 
     private String mockupJson2 = "{\n" +
+            "        \"host\": {\n" +
+            "            \"status\": \"up\",\n" +
+            "            \"ipv4\": \"192.168.1.102\",\n" +
+            "            \"deviceType\": null,\n" +
+            "            \"osName\": \"Linux 3.8 - 4.14\",\n" +
+            "            \"osVendor\": null,\n" +
+            "            \"osCpe\": [],\n" +
+            "            \"services\": [\n" +
+            "                {\n" +
+            "                    \"port\": \"22\",\n" +
+            "                    \"protocol\": \"tcp\",\n" +
+            "                    \"state\": \"open\",\n" +
+            "                    \"name\": \"ssh\",\n" +
+            "                    \"cpe\": [],\n" +
+            "                    \"cves\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"port\": \"5901\",\n" +
+            "                    \"protocol\": \"tcp\",\n" +
+            "                    \"state\": \"open\",\n" +
+            "                    \"name\": \"vnc-1\",\n" +
+            "                    \"cpe\": [],\n" +
+            "                    \"cves\": []\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"port\": \"6001\",\n" +
+            "                    \"protocol\": \"tcp\",\n" +
+            "                    \"state\": \"open\",\n" +
+            "                    \"name\": \"X11:1\",\n" +
+            "                    \"cpe\": [],\n" +
+            "                    \"cves\": []\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
             "        \"service\": {\n" +
             "            \"port\": \"22\",\n" +
             "            \"protocol\": \"tcp\",\n" +

@@ -56,7 +56,14 @@ public class ActivityLogEntity implements Parcelable {
         id = in.readLong();
         testingId = in.readLong();
         startTime = new Date(in.readLong());
-        finishTime = new Date(in.readLong());
+        int indicator = in.readInt();
+        long finishTimeInLong = in.readLong();
+        if (indicator == 0 ) {
+            // finishTime is null
+            finishTime = null;
+        } else {
+            finishTime = new Date(finishTimeInLong);
+        }
         name = in.readString();
         status = in.readString();
         jsonOutput = in.readString();
@@ -140,7 +147,10 @@ public class ActivityLogEntity implements Parcelable {
         parcel.writeLong(id);
         parcel.writeLong(testingId);
         parcel.writeLong(startTime.getTime());
-        parcel.writeLong(finishTime.getTime());
+        int indicator = (finishTime == null) ? 0 : 1;
+        long finishTimeInLong = (finishTime == null) ? 0 : finishTime.getTime();
+        parcel.writeInt(indicator);
+        parcel.writeLong(finishTimeInLong);
         parcel.writeString(name);
         parcel.writeString(status);
         parcel.writeString(jsonOutput);

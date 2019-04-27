@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.mainscreen.MainActivity;
+import com.example.bookthiti.masai2.utils.LogConstants;
 import com.example.bookthiti.masai2.utils.OnRecyclerViewItemClickListener;
 import com.example.bookthiti.masai2.R;
 import com.example.bookthiti.masai2.bluetoothservice.BluetoothManagementService;
@@ -50,6 +51,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
     private RecyclerView mRecyclerView;
 
     private boolean isFromNotification = false;
+    private long startTime;
 
     private BroadcastReceiver mLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -57,6 +59,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_DEVICE_SCAN.equals(action)) {
                 setResultFromIntent(intent);
+                Log.i(TAG_INFO, String.format("Device Discovery is finished using %.3f secs", (double) (System.nanoTime() - startTime) / 1000000000));
             }
         }
     };
@@ -71,11 +74,16 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("command", "deviceScan");
             jsonObject.add("payload", null);
-            String jsonString = jsonObject.toString();
-            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+
             MasaiViewModel masaiViewModel = MainActivity.getViewModel();
             SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
             long id = masaiViewModel.insertActivityLogEntity("Device Discovery", "running", null, sharedPreferences.getLong("testing_id", 0));
+
+            jsonObject.addProperty("activityId", id);
+            String jsonString = jsonObject.toString();
+            mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+            startTime = System.nanoTime();
+
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong("running_activity_id", id);
             editor.commit();
@@ -96,27 +104,29 @@ public class DeviceDiscoveryActivity extends AppCompatActivity implements OnRecy
         mContext = getApplicationContext();
         mActivity = this;
         // FIXME: uncomment for mockup
-//        setRecyclerView(mockJson);
-//        MasaiViewModel masaiViewModel = MainActivity.getViewModel();
-//        SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
-//        masaiViewModel.insertActivityLogEntity("Device Discovery", "finish", mockJson2, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
-//        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
-//        progressBar.setVisibility(View.GONE);
-//        TextView textView = (TextView) findViewById(R.id.text_progress);
-//        textView.setVisibility(View.GONE);
-        
-        // FIXME: uncomment for real code
-        if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
-            isFromNotification = true;
-            setResultFromIntent(getIntent());
+        if (LogConstants.IS_MOCK) {
+            setRecyclerView(mockJson);
+            MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+            SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+            masaiViewModel.insertActivityLogEntity("Device Discovery", "finish", mockJson2, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_device_discovery);
+            progressBar.setVisibility(View.GONE);
+            TextView textView = (TextView) findViewById(R.id.text_progress);
+            textView.setVisibility(View.GONE);
         } else {
-            Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
-            if (!mBound) {
-                bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+            // FIXME: uncomment for real code
+            if (getIntent().getBooleanExtra(INotificationId.FLAG_IS_FROM_NOTIFICATION, false)) {
+                isFromNotification = true;
+                setResultFromIntent(getIntent());
+            } else {
+                Intent bindServiceIntent = new Intent(this, BluetoothManagementService.class);
+                if (!mBound) {
+                    bindService(bindServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+                }
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
+                LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
             }
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(BluetoothManagementService.ACTION_DEVICE_SCAN);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcastReceiver, intentFilter);
         }
 
     }

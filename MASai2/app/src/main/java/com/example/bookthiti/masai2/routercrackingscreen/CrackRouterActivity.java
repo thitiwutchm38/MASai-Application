@@ -38,6 +38,7 @@ import com.example.bookthiti.masai2.database.MasaiViewModel;
 import com.example.bookthiti.masai2.database.model.ActivityLogEntity;
 import com.example.bookthiti.masai2.mainscreen.MainActivity;
 import com.example.bookthiti.masai2.networksearchingscreen.RouterModel;
+import com.example.bookthiti.masai2.utils.LogConstants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -75,6 +76,7 @@ public class CrackRouterActivity extends AppCompatActivity {
     private CrackResult mCrackResult;
 
     private boolean isCrackable = false;
+    private long startTime;
 
     private ClipboardManager mClipboardManager;
     private ClipData mClipData;
@@ -88,6 +90,7 @@ public class CrackRouterActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothManagementService.ACTION_WIFI_ATTACK.equals(action)) {
                 setResultFromIntent(intent);
+                Log.i(TAG_INFO, String.format("Crack router is finished using %.3f secs", (double) (System.nanoTime() - startTime) / 1000000000));
             }
         }
     };
@@ -169,23 +172,28 @@ public class CrackRouterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // FIXME: Uncomment for real application
-                if (isRemoteDeviceConnected) {
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("command", "wifiCracking");
-                    Gson gson = new Gson();
-                    String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
-                    Log.i(TAG_INFO, payloadJsonString);
-                    JsonParser jsonParser = new JsonParser();
-                    JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
-                    jsonObject.add("payload", payloadJsonElement);
-                    String jsonString = jsonObject.toString();
-                    mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                if (!LogConstants.IS_MOCK) {
+                    if (isRemoteDeviceConnected) {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("command", "wifiCracking");
+                        Gson gson = new Gson();
+                        String payloadJsonString = gson.toJson(mRouterModel, RouterModel.class);
+                        Log.i(TAG_INFO, payloadJsonString);
+                        JsonParser jsonParser = new JsonParser();
+                        JsonElement payloadJsonElement = jsonParser.parse(payloadJsonString);
+                        jsonObject.add("payload", payloadJsonElement);
 
-                    long id = masaiViewModel.insertActivityLogEntity("Router Cracking Testing", "running", null, sharedPreferences.getLong("testing_id", 0));
-                    Log.i(TAG_INFO, "Id returned from database = " + id);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putLong("running_activity_id", id);
-                    editor.commit();
+                        long id = masaiViewModel.insertActivityLogEntity("Router Cracking Testing", "running", null, sharedPreferences.getLong("testing_id", 0));
+
+                        jsonObject.addProperty("activityId", id);
+                        String jsonString = jsonObject.toString();
+                        mBluetoothManagementService.sendMessageToRemoteDevice(jsonString + "|");
+                        startTime = System.nanoTime();
+                        Log.i(TAG_INFO, "Id returned from database = " + id);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putLong("running_activity_id", id);
+                        editor.commit();
+                    }
                 }
 
                 ////////////////////
@@ -197,19 +205,20 @@ public class CrackRouterActivity extends AppCompatActivity {
                 mStartCrackingButton.setBackgroundColor(Color.parseColor("#FFFF0000"));
 
                 // FIXME: Uncomment for mock up
-//                final Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        // Do something after 5s = 5000ms
-//                        setResultToView(mockJson);
-//                        MasaiViewModel masaiViewModel = MainActivity.getViewModel();
-//                        SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
-//                        masaiViewModel.insertActivityLogEntity("Router Cracking Testing", "finish", mockJson2, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
-//                    }
-//                }, 5000);
-//                mProgressBar.setVisibility(View.INVISIBLE);
-
+                if (LogConstants.IS_MOCK) {
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do something after 5s = 5000ms
+                            setResultToView(mockJson);
+                            MasaiViewModel masaiViewModel = MainActivity.getViewModel();
+                            SharedPreferences sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
+                            masaiViewModel.insertActivityLogEntity("Router Cracking Testing", "finish", mockJson2, sharedPreferences.getLong("testing_id", 0), Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
+                        }
+                    }, 5000);
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -294,7 +303,6 @@ public class CrackRouterActivity extends AppCompatActivity {
         String jsonString = bundle.getString("payload");
 //        String fullResponse = bundle.getString("fullResponse");
         Log.i(TAG_INFO, "Receive ACTION_WIFI_ATTACK: " + jsonString);
-        //TODO: load payload to crack result
         setResultToView(jsonString);
 //        saveResultToDatabase(fullResponse); // Not use, save to database using service instead
     }

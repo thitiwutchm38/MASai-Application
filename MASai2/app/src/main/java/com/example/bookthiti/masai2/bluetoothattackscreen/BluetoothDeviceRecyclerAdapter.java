@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,8 +50,7 @@ public class BluetoothDeviceRecyclerAdapter extends RecyclerView.Adapter<Bluetoo
         viewHolder.textViewRssi.setText(Integer.toString(rssi) + " dBm");
         if (isAtRisk) {
             viewHolder.textViewRisk.setText("HIGH RISK");
-            // TODO: Add text color
-
+            viewHolder.textViewRisk.setTextColor(Color.RED);
             viewHolder.buttonLaunchAttack.setVisibility(View.VISIBLE);
             viewHolder.buttonLaunchAttack.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -62,8 +62,9 @@ public class BluetoothDeviceRecyclerAdapter extends RecyclerView.Adapter<Bluetoo
                 }
             });
         } else {
+            viewHolder.buttonLaunchAttack.setVisibility(View.INVISIBLE);
             viewHolder.textViewRisk.setText("LOW RISK");
-            // TODO: Add text color
+            viewHolder.textViewRisk.setTextColor(Color.BLUE);
         }
 //        viewHolder.imageViewDeviceType.setImageResource(getDeviceIconResource(bluetoothDevice.getBluetoothClass().getMajorDeviceClass()));
         viewHolder.imageViewDeviceType.setImageResource(BluetoothDeviceModel.getDeviceIconResource(bluetoothDeviceModel.getDeviceClass()));
