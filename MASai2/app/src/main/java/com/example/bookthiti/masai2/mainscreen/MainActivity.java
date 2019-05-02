@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.bookthiti.masai2.MasaiSettingActivity;
 import com.example.bookthiti.masai2.R;
@@ -93,6 +94,34 @@ public class MainActivity extends AppCompatActivity {
 
     private MutableLiveData<Long> testingId = new MutableLiveData<Long>();
 
+    private LiveData<List<ActivityLogEntity>> activityLogEntitiesByTestingIdLiveData;
+
+    private Observer<List<ActivityLogEntity>> observer = new Observer<List<ActivityLogEntity>>() {
+        @Override
+        public void onChanged(@Nullable List<ActivityLogEntity> activityLogEntities) {
+            mPagerAdapter.fragmentList.clear();
+            mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
+            Log.i(TAG_INFO, "getActivityLogEntitiesByTestingId was on changed");
+            activityLogEntityList.clear();
+            for (ActivityLogEntity activityLogEntity : activityLogEntities) {
+                if (!activityLogEntity.getName().equals("Wifi Scanning") && !activityLogEntity.getName().equals("Mobile App Scan")) {
+                    activityLogEntityList.add(activityLogEntity);
+                }
+            }
+//                        activityLogEntityList.addAll(activityLogEntities);
+            if (activityLogEntityList.size() == 0) {
+                mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
+            } else {
+                for (ActivityLogEntity activityLogEntity : activityLogEntityList) {
+                    mPagerAdapter.addFragment(ActivityLogFragment.newInstance(activityLogEntity), "");
+                }
+            }
+            mViewPager.setAdapter(mPagerAdapter);
+//                        mPagerAdapter.notifyDataSetChanged();
+            mViewPager.setCurrentItem(0, true);
+        }
+    };
+
     private SharedPreferences sharedPreferences;
 
     private static MasaiViewModel viewModel;
@@ -112,16 +141,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mActivity = this;
         createNotificationChannel();
+        Log.i(TAG_INFO, "MainAcitivty onCreate");
         if (!ServiceTools.isServiceRunning(BluetoothManagementService.class, getApplicationContext())) {
             startService(new Intent(MainActivity.this, BluetoothManagementService.class));
         } else {
             Log.i("Log info", "Service is already started");
         }
+        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
+        setViewModel(masaiViewModel);
 
         sharedPreferences = getSharedPreferences("MASAI_SHARED_PREF", MODE_PRIVATE);
         testingPosition = sharedPreferences.getInt("testing_position", 0);
-        masaiViewModel = ViewModelProviders.of(this).get(MasaiViewModel.class);
-        setViewModel(masaiViewModel);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -151,31 +181,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Long aLong) {
                 Log.i(TAG_INFO, "Current testing id: " + aLong);
-                masaiViewModel.getActivityLogEntitiesByTestingId(aLong).observe((LifecycleOwner) mActivity, new Observer<List<ActivityLogEntity>>() {
-                    @Override
-                    public void onChanged(@Nullable List<ActivityLogEntity> activityLogEntities) {
-                        mPagerAdapter.fragmentList.clear();
-                        mPagerAdapter.addFragment(HomeIconFragment.newInstance(), "");
-                        Log.i(TAG_INFO, "getActivityLogEntitiesByTestingId was on changed");
-                        activityLogEntityList.clear();
-                        for (ActivityLogEntity activityLogEntity : activityLogEntities) {
-                            if (!activityLogEntity.getName().equals("Wifi Scanning") && !activityLogEntity.getName().equals("Mobile App Scan")) {
-                                activityLogEntityList.add(activityLogEntity);
-                            }
-                        }
-//                        activityLogEntityList.addAll(activityLogEntities);
-                        if (activityLogEntityList.size() == 0) {
-                            mPagerAdapter.addFragment(NoActivityFragment.newInstance(), "");
-                        } else {
-                            for (ActivityLogEntity activityLogEntity : activityLogEntityList) {
-                                mPagerAdapter.addFragment(ActivityLogFragment.newInstance(activityLogEntity), "");
-                            }
-                        }
-                        mViewPager.setAdapter(mPagerAdapter);
-//                        mPagerAdapter.notifyDataSetChanged();
-                        mViewPager.setCurrentItem(0, true);
-                    }
-                });
+//                LiveData<List<ActivityLogEntity>> activityLogEntitiesByTestingIdLiveData = masaiViewModel.getActivityLogEntitiesByTestingId(aLong);
+                if (activityLogEntitiesByTestingIdLiveData == null)
+                    activityLogEntitiesByTestingIdLiveData = masaiViewModel.getActivityLogEntitiesByTestingId(aLong);
+                if (activityLogEntitiesByTestingIdLiveData.hasObservers()) {
+                    Log.i(TAG_INFO, "activityLogEntitiesByTestingIdLiveData has Observers, removesObservers");
+                    activityLogEntitiesByTestingIdLiveData.removeObservers((LifecycleOwner) mActivity);
+                }
+                activityLogEntitiesByTestingIdLiveData = masaiViewModel.getActivityLogEntitiesByTestingId(aLong);
+                activityLogEntitiesByTestingIdLiveData.observe((LifecycleOwner) mActivity, observer);
+
             }
         });
 
@@ -315,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
                 Log.i(TAG_INFO, call.request().toString());
                 Log.i(TAG_INFO, "On Failure");
+                Toast.makeText(mActivity, "Please check the Internet connection", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -368,12 +384,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMenu() {
+        Log.i(TAG_INFO, "setMenu is called");
         final Menu menu = mNavigationView.getMenu();
         menu.clear();
         for (int i = 0; i < testingEntityList.size(); i++) {
             final int index = i;
             menu.add(Menu.NONE, 0, Menu.NONE, testingEntityList.get(i).getTitle());
-            MenuItem menuItem = menu.getItem(i);
+            MenuItem menuItem = menu.getItem(index);
             menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
