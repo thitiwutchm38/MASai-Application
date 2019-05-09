@@ -10,4 +10,9 @@
         android:id="@+id/menu_delete_testing"
         android:title="Delete Testing"
         app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/menu_set_api_server_address"
+        android:title="Setup API Address"
+        app:showAsAction="collapseActionView" />
 </menu>

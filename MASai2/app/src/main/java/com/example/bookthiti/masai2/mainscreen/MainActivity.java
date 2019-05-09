@@ -247,6 +247,31 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG_INFO, "Testing should be deleted");
                 }
                 return true;
+            case R.id.menu_set_api_server_address:
+                final EditText input = new EditText(mActivity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setTitle("Set MASai API Server Address");
+                builder.setMessage("Please enter a domain name (http://xxxx.ngrok.io/) of MASai API Server");
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            RetrofitClientInstance.getRetrofitInstance(input.getText().toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(mActivity.getApplicationContext(), "Wrong format of MASai API Server Domain", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

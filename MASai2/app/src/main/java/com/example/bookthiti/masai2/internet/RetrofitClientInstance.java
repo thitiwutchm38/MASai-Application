@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -18,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
     private static Retrofit retrofit;
-    public static final String BASE_URL = "http://192.168.137.1:5001/";
+    public static String BASE_URL = "http://192.168.137.1:5000/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
@@ -38,5 +40,22 @@ public class RetrofitClientInstance {
                     .build();
         }
         return retrofit;
+    }
+
+    public static Retrofit getRetrofitInstance(String url) throws Exception {
+        Pattern pattern = Pattern.compile("http://.+\\.ngrok\\.io/");
+        Matcher matcher = pattern.matcher(url);
+        if (! matcher.matches()) {
+            throw new Exception("The url is not corrected to the API Server");
+        }
+        BASE_URL = url;
+        if (retrofit != null) {
+            clear();
+        }
+        return getRetrofitInstance();
+    }
+
+    public static void clear() {
+        retrofit = null;
     }
 }
