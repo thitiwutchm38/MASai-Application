@@ -3,275 +3,122 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context=".MASai_setting"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="301dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="12dp"
-        android:gravity="top|center"
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/image_setting_instruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/preview_scan"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/text_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.341" />
 
-        <TextView
-            android:id="@+id/textView_boxconnect"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:text="Box Connection"
-            android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
+    <ImageView
+        android:id="@+id/image_setting_instruction2"
+        android:layout_width="284dp"
+        android:layout_height="192dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/preview_scan_2"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/text_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.168" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout_connect_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="68dp">
-
-            <ImageView
-                android:id="@+id/img_connect_status"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/connection_status" />
-
-            <TextView
-                android:id="@+id/textView_connect_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-
-                android:text="MASai Box Status"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout_blu_connect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="68dp">
-
-            <ImageView
-                android:id="@+id/img_blu_connect"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/masaibox_gray" />
-
-            <TextView
-                android:id="@+id/textView_blu_connect"
-                android:layout_width="192dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                android:text="Bluetooth Connection"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout_wifi_setup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="68dp">
-
-            <ImageView
-                android:id="@+id/img_wifi_setup"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/wifi_setup" />
-
-            <TextView
-                android:id="@+id/textView_wifi_setup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-
-                android:text=" Box's Wi-Fi Setup"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:id="@+id/button_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="68dp">
-
-            <ImageView
-                android:id="@+id/img_more"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/more" />
-
-            <TextView
-                android:id="@+id/textView_more"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-
-                android:text="More"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout_masaibox"
+    <TextView
+        android:id="@+id/text_description"
         android:layout_width="0dp"
-        android:layout_height="301dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="1dp"
-        android:gravity="top|bottom"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="Description"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_btn_scan_qr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.eyalbira.loadingdots.LoadingDots xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading_dot"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        app:LoadingDots_auto_play="true"
+
+        app:LoadingDots_dots_color="@android:color/holo_blue_dark"
+
+        app:LoadingDots_jump_duration="200"
+        app:LoadingDots_jump_height="4dp"
+        app:LoadingDots_loop_duration="800"
+        app:LoadingDots_loop_start_delay="100"
+        app:layout_constraintBottom_toBottomOf="@+id/image_setting_instruction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_setting_instruction"
+        app:layout_constraintVertical_bias="0.634" />
+
+    <ImageView
+        android:id="@+id/imageView_Mobile"
+        android:layout_width="79dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/preview_scan_connection"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326" />
 
-        <TextView
-            android:id="@+id/textView_device"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:text="MASai Box Control"
-            android:textAppearance="@style/TextAppearance.AppCompat.Menu" />
+    <ImageView
+        android:id="@+id/imageView_Box"
+        android:layout_width="97dp"
+        android:layout_height="123dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/preview_scan_box_connection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.683"
+        app:layout_constraintStart_toEndOf="@+id/imageView_Mobile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
 
-
-        <LinearLayout
-            android:id="@+id/linearLayout_ble_on_off"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="68dp">
-
-            <ImageView
-                android:id="@+id/img_ble_on_off"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/bluetooth" />
-
-            <Switch
-                android:id="@+id/switch_ble_on_off"
-                style="@style/MySwitch"
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:text="Bluetooth"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_ble_on_off3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/wifi_device" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/switchCompat_wireless_onoff"
-                style="@style/MySwitch"
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="Wireless"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_ble_on_off2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/power_on" />
-
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/switchCompat_power_onoff"
-                style="@style/MySwitch"
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:checked="true"
-                android:text="Power On/Off"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    <ToggleButton
+        android:id="@+id/toggle_btn_scan_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:checked="true"
+        android:text="ToggleButton"
+        android:textOff="Disconnect"
+        android:textOn="Connect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

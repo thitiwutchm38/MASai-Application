@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_generate_report"
+        android:title="Generate Report"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/menu_delete_testing"
+        android:title="Delete Testing"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/menu_set_api_server_address"
+        android:title="Setup API Address"
+        app:showAsAction="collapseActionView" />
+</menu>

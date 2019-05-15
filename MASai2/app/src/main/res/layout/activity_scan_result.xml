@@ -5,436 +5,625 @@
     android:id="@+id/scan_result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanResultActivity"
+    tools:mContext=".ScanResultActivity"
     tools:layout_editor_absoluteY="81dp">
-    <LinearLayout
-        android:id="@+id/linearLayout_scan_result"
-        android:layout_width="324dp"
-        android:layout_height="479dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical"
-        android:scrollbars="vertical"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView_scan_finish"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="5dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_scan_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Android Application Scan Finished"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="54dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <RelativeLayout
-            android:id="@+id/rela_app_information"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:id="@+id/icon_device_type"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="20dp"
+            android:scrollbars="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView_label_ip_address"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_scan_finish"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/icon_device_type"
-                android:layout_toRightOf="@+id/icon_device_type"
-                android:text="App Name:"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView_data_ip_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="49dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/textView_label_ip_address"
-                android:layout_toRightOf="@id/textView_label_ip_address"
-                android:text="result"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/textView_label_port_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_label_ip_address"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/icon_device_type"
-                android:layout_toRightOf="@+id/icon_device_type"
-                android:text="App ID:"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/app_data_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_data_ip_address"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/textView_label_ip_address"
-                android:layout_toRightOf="@id/textView_label_ip_address"
-                android:text="result"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/port_cvss_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_label_port_address"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/icon_device_type"
-                android:layout_toRightOf="@+id/icon_device_type"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="App Version:"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/app_data_version"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/app_data_id"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/textView_label_ip_address"
-                android:layout_toRightOf="@id/textView_label_ip_address"
-                android:text="result"
-                android:textSize="12sp" />
-
-
-            <TextView
-                android:id="@+id/app_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/port_cvss_score"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="4dp"
-                android:layout_toEndOf="@+id/icon_device_type"
-                android:layout_toRightOf="@+id/icon_device_type"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="App Type:"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/app_data_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/app_data_version"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/textView_label_ip_address"
-                android:layout_toRightOf="@id/textView_label_ip_address"
-                android:text="result"
-                android:textSize="12sp" />
-
-
-        </RelativeLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_weight="0" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/app_result_shape_top"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="Potential Security Flaw"
-            android:textColor="@color/colorbgS"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:id="@+id/rela_app_security_flow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/app_result_shape">
-
-            <RelativeLayout
-                android:id="@+id/score_warning"
-                android:layout_width="125dp"
-                android:layout_height="65dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="9dp"
-                android:shadowColor="@color/colorPrimaryDark"
-                android:shadowDx="3"
-                android:shadowDy="-3"
-                android:shadowRadius="1.5"
-                android:background="@drawable/background_with_shadow"
-                android:backgroundTint="#13CE66"
-                android:clickable="true">
-
-                <TextView
-                    android:id="@+id/textView_warning"
-                    android:layout_width="63dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="27dp"
-                    android:layout_marginTop="34dp"
-                    android:layout_marginEnd="33dp"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:text="WARNING"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_warning_result"
-                    android:layout_width="11dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="61dp"
-                    android:text="#"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/score_low_risk"
-                android:layout_width="125dp"
-                android:layout_height="65dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="178dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/background_with_shadow"
-                android:backgroundTint="#F0E544">
-
-                <TextView
-                    android:id="@+id/textView_low_risk"
-                    android:layout_width="66dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="36dp"
-                    android:layout_marginEnd="33dp"
-                    android:text="LOW RISK"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_low_risk_result"
-                    android:layout_width="14dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="54dp"
-                    android:text="#"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/score_high_risk"
-                android:layout_width="125dp"
-                android:layout_height="65dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="179dp"
-                android:layout_marginTop="82dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/background_with_shadow"
-                android:backgroundTint="#F95F62">
-
-                <TextView
-                    android:id="@+id/textView_high_risk"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="27dp"
-                    android:layout_marginTop="33dp"
-                    android:layout_marginEnd="28dp"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:text="HIGH RISK"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_high_risk_result"
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="57dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="58dp"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:text="#"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/score_medium_risk"
-                android:layout_width="125dp"
-                android:layout_height="65dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="83dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/background_with_shadow"
-                android:backgroundTint="#FFBA5C">
-
-                <TextView
-                    android:id="@+id/textView_medium"
-                    android:layout_width="88dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="31dp"
-                    android:layout_marginEnd="17dp"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:text="MEDIUM RISK"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_medium_result"
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="56dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginEnd="59dp"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:shadowDx="3"
-                    android:shadowDy="-3"
-                    android:shadowRadius="1.5"
-                    android:text="#"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_weight="0"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="140dp" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/app_result_shape_top"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="Mobile Application Behavior"
-            android:textColor="@color/colorbgS"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/app_result_shape">
-
-
-            <TextView
-                android:id="@+id/textView_App_fun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="14dp"
-                android:text="Mobile Application Functionallity:"
-                android:textColor="@color/colorPrimaryDark"
+                android:padding="10dp"
+                android:text="Android Application Scan Finished"
+                android:textSize="19sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="54dp"
-                tools:layout_editor_absoluteY="392dp" />
+                tools:layout_editor_absoluteY="16dp" />
 
-            <TextView
-                android:id="@+id/textView_mobile_app_"
-                android:layout_width="301dp"
+            <RelativeLayout
+                android:id="@+id/rela_app_information"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+
+                <ImageView
+                    android:id="@+id/image_device_type"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+                <TextView
+                    android:id="@+id/text_static_ip_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/image_device_type"
+                    android:layout_toRightOf="@+id/image_device_type"
+                    android:text="App Name:"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_ip_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="49dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/text_static_ip_address"
+                    android:layout_toRightOf="@id/text_static_ip_address"
+                    android:text="result"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/text_static_mac_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_static_ip_address"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/image_device_type"
+                    android:layout_toRightOf="@+id/image_device_type"
+                    android:text="App ID:"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_mac_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_ip_address"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/text_static_ip_address"
+                    android:layout_toRightOf="@id/text_static_ip_address"
+                    android:text="result"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/text_static_device_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_static_mac_address"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/image_device_type"
+                    android:layout_toRightOf="@+id/image_device_type"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="App Version:"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/app_data_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_mac_address"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/text_static_ip_address"
+                    android:layout_toRightOf="@id/text_static_ip_address"
+                    android:text="result"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/app_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_static_device_type"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toEndOf="@+id/image_device_type"
+                    android:layout_toRightOf="@+id/image_device_type"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="App Type:"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/app_data_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/app_data_version"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/text_static_ip_address"
+                    android:layout_toRightOf="@id/text_static_ip_address"
+                    android:text="result"
+                    android:textSize="12sp" />
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btt_OWAPS_sum"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/app_result_shape_m"
+                android:gravity="center"
+                android:text="OWASP  Summary" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginBottom="27dp"
-                android:text="result"
-                android:textAlignment="viewStart" />
+                android:layout_weight="0" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/app_result_shape_top"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text="Find by Android Rules"
+                android:textColor="@color/colorbgS"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rela_app_security_flow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/app_result_shape">
+
+                <RelativeLayout
+                    android:id="@+id/score_warning"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="#13CE66"
+                    android:clickable="true"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="3"
+                    android:shadowDy="-3"
+                    android:shadowRadius="1.5">
+
+                    <TextView
+                        android:id="@+id/textView_warning"
+                        android:layout_width="63dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginTop="34dp"
+                        android:layout_marginEnd="33dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="WARNING"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_warning_result"
+                        android:layout_width="11dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="53dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="61dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/score_low_risk"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="178dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="#F0E544">
+
+                    <TextView
+                        android:id="@+id/textView_low_risk"
+                        android:layout_width="66dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="31dp"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="28dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="LOW RISK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_low_risk_result"
+                        android:layout_width="14dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="54dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/score_high_risk"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="179dp"
+                    android:layout_marginTop="82dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="#F95F62">
+
+                    <TextView
+                        android:id="@+id/textView_high_risk"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginTop="33dp"
+                        android:layout_marginEnd="28dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="HIGH RISK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_high_risk_result"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="57dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="58dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/score_medium_risk"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="83dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="#FFBA5C">
+
+                    <TextView
+                        android:id="@+id/textView_medium"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="31dp"
+                        android:layout_marginEnd="17dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="MEDIUM RISK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_medium_result"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="59dp"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="0"
+                tools:layout_editor_absoluteX="30dp"
+                tools:layout_editor_absoluteY="140dp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/app_result_shape_top"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text="Permission"
+                android:textColor="@color/colorbgS"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rela_app_permissin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/app_result_shape">
+
+                <RelativeLayout
+                    android:id="@+id/permission_sig"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="@color/colorAccent"
+                    android:clickable="true"
+                    android:shadowColor="@color/colorPrimaryDark"
+                    android:shadowDx="3"
+                    android:shadowDy="-3"
+                    android:shadowRadius="1.5">
+
+                    <TextView
+                        android:id="@+id/textView_signature"
+                        android:layout_width="82dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="SIGNATURE"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_signature_result"
+                        android:layout_width="11dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/permission_sig_sys"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="178dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="@color/colorAccent">
+
+                    <TextView
+                        android:id="@+id/textView_sig_sys"
+                        android:layout_width="111dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="SIGNATURE or SYSTEM"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_sig_sys_result"
+                        android:layout_width="14dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/permission_high_risk"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="179dp"
+                    android:layout_marginTop="82dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="#F95F62">
+
+                    <TextView
+                        android:id="@+id/textView_high"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="HIGH"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_high_result"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/permission_normal_risk"
+                    android:layout_width="125dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="83dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background_with_shadow"
+                    android:backgroundTint="#FFBA5C">
+
+                    <TextView
+                        android:id="@+id/textView_normal"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="NORMAL"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView_normal_result"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="@color/colorPrimaryDark"
+                        android:shadowDx="1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1.5"
+                        android:text="#"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </RelativeLayout>
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar_app_scan"

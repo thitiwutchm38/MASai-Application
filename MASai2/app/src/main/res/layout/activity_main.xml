@@ -1,154 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:visibility="visible"
+    android:id="@+id/drawer_layout">
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></LinearLayout>
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView_Masai_box_set"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@android:style/ThemeOverlay.Material.ActionBar" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_dots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabBackground="@drawable/tab_selector"/>
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/imageView_Logo2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="16dp"-->
+                    <!--android:maxWidth="42dp"-->
+                    <!--android:maxHeight="42dp"-->
+                    <!--android:scaleType="fitEnd"-->
+                    <!--app:srcCompat="@drawable/logo_masai" />-->
+
+            </RelativeLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/imageButton_iot_att"
+                    android:layout_width="68dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#00000000"
+                    android:contentDescription="@string/descrip"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toTopOf="@+id/textView_iot_device_att2"
+                    app:layout_constraintEnd_toEndOf="@+id/textView_iot_device_att2"
+                    app:layout_constraintStart_toStartOf="@+id/textView_iot_device_att2"
+                    app:srcCompat="@drawable/iot_device_attack" />
+
+                <ImageButton
+                    android:id="@+id/imageButton_MobileApp_att"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#00000000"
+                    android:contentDescription="@string/descrip"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toTopOf="@+id/textView_mobileapp_attack2"
+                    app:layout_constraintEnd_toEndOf="@+id/textView_mobileapp_attack2"
+                    app:layout_constraintStart_toStartOf="@+id/textView_mobileapp_attack2"
+                    app:srcCompat="@drawable/mobileapp_attack" />
+
+                <TextView
+                    android:id="@+id/textView_mobileapp_attack2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="32dp"
+                    android:text="Mobile App Scan"
+                    app:layout_constraintBottom_toTopOf="@+id/imageButton_Tips"
+                    app:layout_constraintEnd_toEndOf="@+id/textView_iot_security4"
+                    app:layout_constraintStart_toStartOf="@+id/textView_iot_security4" />
+
+                <TextView
+                    android:id="@+id/textView_iot_device_att2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="IoT Device Attack"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/textView_mobileapp_attack2"
+                    app:layout_constraintEnd_toEndOf="@+id/textView_Masai_box_set3"
+                    app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set3" />
+
+                <ImageButton
+                    android:id="@+id/imageButton_Tips"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#00000000"
+                    android:contentDescription="@string/descrip"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toTopOf="@+id/textView_iot_security4"
+                    app:layout_constraintEnd_toEndOf="@+id/textView_iot_security4"
+                    app:layout_constraintStart_toStartOf="@+id/textView_iot_security4"
+                    app:srcCompat="@drawable/tips" />
+
+                <ImageButton
+                    android:id="@+id/imageButton_MASaibox"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+
+                    android:layout_marginBottom="16dp"
+                    android:adjustViewBounds="true"
+                    android:background="#00000000"
+                    android:contentDescription="@string/descrip"
+                    android:maxWidth="42dp"
+                    android:maxHeight="42dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toTopOf="@+id/textView_Masai_box_set3"
+                    app:layout_constraintEnd_toEndOf="@+id/textView_Masai_box_set3"
+                    app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set3"
+                    app:srcCompat="@drawable/masai_setting" />
+
+                <TextView
+                    android:id="@+id/textView_iot_security4"
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="48dp"
+                    android:text="IoT Security Information"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/textView_Masai_box_set3"
+                    android:layout_width="156dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="MASai box Setting"
+                    android:textAlignment="center"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/textView_iot_security4"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="56dp"
-        android:text="MASai box Setting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
 
-    <TextView
-        android:id="@+id/textView_iot_device_att"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="180dp"
-        android:text="IoT Device Attack"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.786"
-        app:layout_constraintStart_toEndOf="@+id/textView_mobileapp_attack" />
 
-    <ImageButton
-        android:id="@+id/imageButton_iot_att"
-        android:layout_width="68dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="32dp"
-        android:background="#00000000"
-        android:contentDescription="@string/descrip"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/textView_iot_device_att"
-        app:layout_constraintEnd_toEndOf="@+id/textView_iot_device_att"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set"
-        app:srcCompat="@drawable/iot_device_attack" />
-
-    <TextView
-        android:id="@+id/textView_iot_security"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:text="IoT Security Information"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton_Tips" />
-
-    <TextView
-        android:id="@+id/textView_mobileapp_attack"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="180dp"
-        android:text="Mobile App Attack"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imageButton_Tips"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:background="#00000000"
-        android:contentDescription="@string/descrip"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton_MASaibox"
-        app:layout_constraintEnd_toEndOf="@+id/textView_iot_security"
-        app:layout_constraintStart_toStartOf="@+id/textView_iot_security"
-        app:layout_constraintTop_toTopOf="@+id/imageButton_MASaibox"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/tips" />
-
-    <ImageButton
-        android:id="@+id/imageButton_MobileApp_att"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginBottom="39dp"
-        android:background="#00000000"
-        android:contentDescription="@string/descrip"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_mobileapp_attack"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton_Tips"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageButton_Tips"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_Logo"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/mobileapp_attack" />
-
-    <ImageButton
-        android:id="@+id/imageButton_MASaibox"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="28dp"
-        android:adjustViewBounds="true"
-        android:background="#00000000"
-        android:contentDescription="@string/descrip"
-        android:maxWidth="42dp"
-        android:maxHeight="42dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_Masai_box_set"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_Logo"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/textView_Masai_box_set"
-        app:layout_constraintTop_toBottomOf="@+id/textView_iot_device_att"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/masai_setting" />
-
-    <ImageView
-        android:id="@+id/imageView_Logo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="130dp"
-        android:maxWidth="42dp"
-        android:maxHeight="42dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/textView_mobileapp_attack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/logo_masai" />
-
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.DrawerLayout>

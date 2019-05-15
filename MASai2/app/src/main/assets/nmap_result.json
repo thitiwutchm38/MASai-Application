@@ -1,0 +1,382 @@
+{
+  "timeStats": {
+    "startTime": "Sun Jan 20 23:47:33 2019",
+    "finishTime": "Sun Jan 20 23:49:16 2019",
+    "elapsed": "106.65"
+  },
+  "hostStats": {
+    "up": "8",
+    "down": "248",
+    "total": "256"
+  },
+  "hosts": [
+    {
+      "status": "up",
+      "ipv4": "192.168.1.1",
+      "deviceType": "general purpose",
+      "osName": "Linux 2.6.23",
+      "osVendor": "Linux",
+      "osCpe": "cpe:/o:linux:linux_kernel:2.6.23",
+      "services": [
+        {
+          "port": "21",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "ftp",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "22",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "ssh",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "23",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "telnet",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "53",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "domain",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "80",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "http",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "443",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "https",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "990",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "ftps",
+          "cpe": [],
+          "cves": []
+        }
+      ],
+      "mac": "8C:15:C7:22:CB:7F"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.4",
+      "deviceType": null,
+      "osName": null,
+      "osVendor": null,
+      "osCpe": null,
+      "services": [],
+      "mac": "BC:83:85:13:70:CE"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.5",
+      "deviceType": "general purpose",
+      "osName": "Microsoft Windows Server 2008 SP1 or Windows Server 2008 R2",
+      "osVendor": "Microsoft",
+      "osCpe": [
+        "cpe:/o:microsoft:windows_server_2008::sp1",
+        "cpe:/o:microsoft:windows_server_2008:r2"
+      ],
+      "services": [
+        {
+          "port": "135",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "msrpc",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "139",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "netbios-ssn",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "445",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "microsoft-ds",
+          "cpe": [],
+          "cves": []
+        }
+      ],
+      "mac": "D4:6A:6A:5B:CE:AF"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.6",
+      "deviceType": "phone",
+      "osName": "Apple iOS 11.0",
+      "osVendor": "Apple",
+      "osCpe": "cpe:/o:apple:iphone_os:11.0",
+      "services": [
+        {
+          "port": "83",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "mit-ml-dev",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "458",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "appleqtc",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "777",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "multiling-http",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1033",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "netinfo",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1044",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "dcutility",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1201",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "nucleus-sand",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1533",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "virtual-places",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1583",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "simbaexpress",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1812",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "radius",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "1974",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "drp",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "8400",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "cvd",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "10004",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "emcrmirccd",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "16018",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "unknown",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "40911",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "unknown",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "62078",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "iphone-sync",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "64680",
+          "protocol": "tcp",
+          "state": "filtered",
+          "name": "unknown",
+          "cpe": [],
+          "cves": []
+        }
+      ],
+      "mac": "14:20:5E:9A:D9:69"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.7",
+      "deviceType": null,
+      "osName": "Linux 2.6.32 - 3.10",
+      "osVendor": null,
+      "osCpe": null,
+      "services": [
+        {
+          "port": "8008",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "http",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "8009",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "ajp13",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "8443",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "https-alt",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "9000",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "cslistener",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "10001",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "scp-config",
+          "cpe": [],
+          "cves": []
+        }
+      ],
+      "mac": "20:DF:B9:AC:92:10"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.9",
+      "deviceType": null,
+      "osName": null,
+      "osVendor": null,
+      "osCpe": null,
+      "services": [],
+      "mac": "B4:6B:FC:4C:F5:81"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.14",
+      "deviceType": "specialized",
+      "osName": "AVtech Room Alert 26W environmental monitor",
+      "osVendor": "AVtech",
+      "osCpe": null,
+      "services": [
+        {
+          "port": "8081",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "blackice-icecap",
+          "cpe": [],
+          "cves": []
+        }
+      ],
+      "mac": "3C:F8:62:EB:FD:7A"
+    },
+    {
+      "status": "up",
+      "ipv4": "192.168.1.13",
+      "deviceType": null,
+      "osName": "Linux 3.8 - 4.14",
+      "osVendor": null,
+      "osCpe": null,
+      "services": [
+        {
+          "port": "22",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "ssh",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "5901",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "vnc-1",
+          "cpe": [],
+          "cves": []
+        },
+        {
+          "port": "6001",
+          "protocol": "tcp",
+          "state": "open",
+          "name": "X11:1",
+          "cpe": [],
+          "cves": []
+        }
+      ]
+    }
+  ]
+}

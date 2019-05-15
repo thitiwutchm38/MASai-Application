@@ -5,7 +5,7 @@
     "App Version" : "1.3.1",
     "App Type" : "Tools"
   },
-  "Poten_security" : {
+  "android_rules" : {
     "warning" : [
       {
         "Problem" : "Weak hashing algorithms",
@@ -44,6 +44,112 @@
       {
         "Problem" : "Possible Man-in-the-middle attack",
         "OWASP" : "M3"
+      }
+    ]
+  },
+  "android_permission" : {
+    "signature" : [
+      {
+        "Problem" : "Insecure Communication",
+        "OWASP" : "M3",
+        "Info" : "Change Wi-Fi status",
+        "Description" : "Allows an application to connect to and disconnect from Wi-Fi access points and to make changes to configured Wi-Fi networks."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Manage the accounts list",
+        "Description" : "Allows an application to perform operations like adding and removing accounts and deleting their password."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Coarse (network-based) location",
+        "Description" : "Access coarse location sources, such as the mobile network database, to determine an approximate phone location, where available. Malicious applications can use this to determine approximately where you are."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Read phone state and identity",
+        "Description" : "Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on."
+      }
+    ],
+    "system" : [
+      {
+        "Problem" : "Insecure Communication",
+        "OWASP" : "M3",
+        "Info" : "Change Wi-Fi status",
+        "Description" : "Allows an application to connect to and disconnect from Wi-Fi access points and to make changes to configured Wi-Fi networks."
+      }
+    ],
+    "normal" : [
+      {
+        "Problem" : "Insecure Communication",
+        "OWASP" : "M3",
+        "Info" : "Change Wi-Fi status",
+        "Description" : "Allows an application to connect to and disconnect from Wi-Fi access points and to make changes to configured Wi-Fi networks."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Manage the accounts list",
+        "Description" : "Allows an application to perform operations like adding and removing accounts and deleting their password."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Coarse (network-based) location",
+        "Description" : "Access coarse location sources, such as the mobile network database, to determine an approximate phone location, where available. Malicious applications can use this to determine approximately where you are."
+      }
+    ],
+    "high" : [
+      {
+        "Problem" : "Insecure Communication",
+        "OWASP" : "M3",
+        "Info" : "Change Wi-Fi status",
+        "Description" : "Allows an application to connect to and disconnect from Wi-Fi access points and to make changes to configured Wi-Fi networks."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Manage the accounts list",
+        "Description" : "Allows an application to perform operations like adding and removing accounts and deleting their password."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Coarse (network-based) location",
+        "Description" : "Access coarse location sources, such as the mobile network database, to determine an approximate phone location, where available. Malicious applications can use this to determine approximately where you are."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Read phone state and identity",
+        "Description" : "Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on."
+      },
+      {
+        "Problem" : "Insecure Communication",
+        "OWASP" : "M3",
+        "Info" : "Change Wi-Fi status",
+        "Description" : "Allows an application to connect to and disconnect from Wi-Fi access points and to make changes to configured Wi-Fi networks."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Manage the accounts list",
+        "Description" : "Allows an application to perform operations like adding and removing accounts and deleting their password."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Coarse (network-based) location",
+        "Description" : "Access coarse location sources, such as the mobile network database, to determine an approximate phone location, where available. Malicious applications can use this to determine approximately where you are."
+      },
+      {
+        "Problem" : "Improper Platform Usage\n",
+        "OWASP" : "M1",
+        "Info" : "Read phone state and identity",
+        "Description" : "Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on."
       }
     ]
   }

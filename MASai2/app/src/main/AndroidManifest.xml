@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bookthiti.masai2">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/masai_launcher"
@@ -10,24 +17,24 @@
         android:roundIcon="@mipmap/masai_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MASai_setting" />
+        <activity android:name=".bluetoothattackscreen.BluetoothAttackActivity"></activity>
+        <activity android:name=".bluetoothattackscreen.BluetoothDiscoveryActivity" />
+        <activity android:name=".portattackscreen.PortAttackActivity" />
+        <activity android:name=".MasaiSettingActivity" />
         <activity
-            android:name=".iot_main_pentest"
+            android:name=".iotpentestmainscreen.IoTMainPentestActivity"
             android:label="IoT Device Pentest" />
-        <activity android:name=".Mobile_Appscan" />
+        <activity android:name=".mobileapplicationscanningscreen.appsearchscreen.MobileApplicationScannerActivity" />
         <activity
-            android:name=".Search_Network"
-            android:label="Select Network" />
+            android:name=".networksearchingscreen.SearchNetworkActivity"
+            android:label="Select Network"
+            android:parentActivityName=".iotpentestmainscreen.IoTMainPentestActivity" />
         <activity
-            android:name=".Router_information"
-            android:label="Router information" />
-        <activity
-            android:name=".DetailActivity"
-            android:label="DetailActivity" />
-        <activity android:name=".ActivitySplash">
+            android:name=".mainscreen.MainActivity"
+            android:theme="@style/MasaiMainScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,23 +42,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".iot_suggestion"
-            android:label="IoT Security Information" />
-
-        <activity android:name=".CrackRouterActivity" />
+            android:name=".iotinformationscreen.IotInformationActivity"
+            android:label="@string/title_activity_iot_suggestion"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".routercrackingscreen.CrackRouterActivity" />
         <activity android:name=".Bluetooth_attackActivity" />
         <activity
-            android:name=".Device_list"
+            android:name=".devicediscoveryscreen.DeviceDiscoveryActivity"
             android:label="List of Devices" />
-        <activity android:name=".ScanResultActivity" />
         <activity
-            android:name=".Device_information"
+            android:name=".devicediscoveryscreen.device.DeviceInformationActivity"
             android:label="Device Information" />
         <activity
-            android:name=".CvssScoreActivity"
+            android:name=".deviceassessmentscreen.DeviceAssessmentActivity"
             android:label="Service Assessment" />
-        <activity android:name=".Port_attackActivity" />
-        <activity android:name=".OwaspMobileActivity"></activity>
+        <activity android:name=".iotinformationscreen.OwaspContentActivity" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
+        <activity android:name=".mobileapplicationscanningscreen.scanresultscreen.MobileApplicationScanningResultActivity" />
+
+        <service android:name=".bluetoothservice.BluetoothManagementService" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

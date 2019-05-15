@@ -9,6 +9,15 @@
 
     </style>
 
+    <style name="MasaiMainScreenTheme" parent="AppTheme">
+        <item name="actionOverflowButtonStyle">@style/AppTheme.OverflowButtonMainScreen</item>
+    </style>
+
+    <style name="AppTheme.OverflowButtonMainScreen">
+        <item name="android:src">@drawable/ic_more_vert_primary_color_24dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <!--<item name="android:layout_marginEnd">16dp</item>-->
+    </style>
 
     <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
         <item name="android:textColorPrimaryDisableOnly">@android:color/black</item>
@@ -25,6 +34,10 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BackgroundRoundedRectangle" >
+        <item name="android:backgroundTint">#13CE66</item>
+    </style>
 
 
 </resources>
